@@ -59,7 +59,7 @@ function App() {
     setMenuOpen(false);
     document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
   };
-
+// ok
   return (
     <div className="min-h-screen bg-white text-gray-900 font-sans">
       {/* Navigation */}
