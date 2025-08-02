@@ -470,9 +470,9 @@ export default function Home() {
   ]
 
   return (
-    <div className="min-h-screen bg-primary">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-gray-800">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 bg-primary/95 backdrop-blur-sm border-b border-border-primary">
+      <nav className="fixed top-0 w-full z-50 nav-glass">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-8">
@@ -491,8 +491,8 @@ export default function Home() {
                     onClick={() => smoothScroll(item.id)}
                     className={`text-sm transition-colors ${
                       activeSection === item.id 
-                        ? 'text-accent-blue' 
-                        : 'text-text-secondary hover:text-text-primary'
+                        ? 'text-cyan-500' 
+                        : 'text-gray-300 hover:text-white'
                     }`}
                   >
                     {item.label}
@@ -502,14 +502,14 @@ export default function Home() {
             </div>
 
             <div className="flex items-center space-x-4">
-              <div className="hidden md:flex items-center space-x-2 text-text-secondary text-sm">
-                <FaMapMarkerAlt className="text-accent-blue" />
+              <div className="hidden md:flex items-center space-x-2 text-gray-300 text-sm">
+                <FaMapMarkerAlt className="text-cyan-500" />
                 <span>Cairo, Egypt</span>
               </div>
               
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="md:hidden p-2 text-text-secondary hover:text-text-primary"
+                className="md:hidden p-2 text-gray-300 hover:text-white"
               >
                 {isMenuOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
               </button>
@@ -523,13 +523,13 @@ export default function Home() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-primary-dark border-t border-border-primary"
+            className="md:hidden bg-gray-800/80 backdrop-blur-md border-t border-gray-700/50"
           >
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => smoothScroll(item.id)}
-                className="block w-full text-left px-6 py-4 text-text-secondary hover:text-text-primary hover:bg-primary transition-colors"
+                className="block w-full text-left px-6 py-4 text-gray-300 hover:text-white hover:bg-gray-700/50 transition-colors"
               >
                 {item.label}
               </button>
@@ -547,7 +547,7 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="text-center"
           >
-            <div className="text-accent-blue text-sm font-mono mb-4">
+            <div className="text-cyan-500 text-sm font-mono mb-4">
               $ whoami
             </div>
             
@@ -555,8 +555,8 @@ export default function Home() {
               Mahmoud Mamdoh Soliman
             </h1>
             
-            <div className="text-2xl md:text-3xl text-text-secondary mb-8 min-h-[3rem] flex items-center justify-center">
-              <span className="text-accent-blue mr-2">&gt;</span>
+            <div className="text-2xl md:text-3xl text-gray-300 mb-8 min-h-[3rem] flex items-center justify-center">
+              <span className="text-cyan-500 mr-2">&gt;</span>
               <Typewriter
                 words={[
                   'Data Engineer',
@@ -573,7 +573,7 @@ export default function Home() {
               />
             </div>
 
-            <p className="text-xl text-text-secondary max-w-4xl mx-auto mb-12 leading-relaxed">
+            <p className="text-xl text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed">
               Transforming data into actionable insights that drive strategic decisions and accelerate business growth. 
               Skilled in designing and optimizing complex data pipelines and workflows using modern data stacks.
             </p>
@@ -610,21 +610,21 @@ export default function Home() {
 
             {/* Contact Info */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto mb-12">
-              <div className="flex items-center justify-center space-x-2 text-text-secondary">
-                <FaEnvelope className="text-accent-blue" />
-                <span className="text-sm">mahmoud.mamdoh0812@gmail.com</span>
+              <div className="flex items-center justify-center space-x-2 text-gray-300">
+                <FaEnvelope className="text-cyan-500" />
+                <span className="text-sm">Email</span>
               </div>
-              <div className="flex items-center justify-center space-x-2 text-text-secondary">
-                <FaPhone className="text-accent-blue" />
-                <span className="text-sm">+(20) 1102007021</span>
+              <div className="flex items-center justify-center space-x-2 text-gray-300">
+                <FaPhone className="text-cyan-500" />
+                <span className="text-sm">Phone</span>
               </div>
-              <div className="flex items-center justify-center space-x-2 text-text-secondary">
-                <FaLinkedin className="text-accent-blue" />
-                <span className="text-sm">linkedin.com/in/mahmoud-mamdoh-47a68a203/</span>
+              <div className="flex items-center justify-center space-x-2 text-gray-300">
+                <FaLinkedin className="text-cyan-500" />
+                <span className="text-sm">LinkedIn</span>
               </div>
-              <div className="flex items-center justify-center space-x-2 text-text-secondary">
-                <FaGithub className="text-accent-blue" />
-                <span className="text-sm">github.com/MAHMOUDMAMDOH8</span>
+              <div className="flex items-center justify-center space-x-2 text-gray-300">
+                <FaGithub className="text-cyan-500" />
+                <span className="text-sm">GitHub</span>
               </div>
             </div>
 
@@ -635,7 +635,7 @@ export default function Home() {
                 href="https://github.com/MAHMOUDMAMDOH8" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-text-secondary hover:text-accent-blue transition-colors"
+                className="text-gray-300 hover:text-cyan-500 transition-colors"
               >
                 <FaGithub size={24} />
               </motion.a>
@@ -644,14 +644,14 @@ export default function Home() {
                 href="https://www.linkedin.com/in/mahmoud-mamdoh-47a68a203/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-text-secondary hover:text-accent-blue transition-colors"
+                className="text-gray-300 hover:text-cyan-500 transition-colors"
               >
                 <FaLinkedin size={24} />
               </motion.a>
               <motion.a 
                 whileHover={{ scale: 1.2, y: -5 }}
                 href="mailto:mahmoud.mamdoh0812@gmail.com"
-                className="text-text-secondary hover:text-accent-blue transition-colors"
+                className="text-gray-300 hover:text-cyan-500 transition-colors"
               >
                 <FaEnvelope size={24} />
               </motion.a>
@@ -671,13 +671,13 @@ export default function Home() {
             className="grid lg:grid-cols-2 gap-16 items-center"
           >
             <div>
-              <div className="text-accent-blue text-sm font-mono mb-4">
+              <div className="text-cyan-500 text-sm font-mono mb-4">
                 $ cat about.txt
               </div>
               
               <h2 className="text-4xl font-bold mb-8 gradient-text">About Me</h2>
               
-              <div className="space-y-6 text-text-secondary leading-relaxed">
+              <div className="space-y-6 text-gray-300 leading-relaxed">
                 <p>
                   Data Engineer focused on transforming data into actionable insights that drive strategic decisions and accelerate business growth. 
                   Skilled in designing and optimizing complex data pipelines and workflows using modern data stacks to improve operational efficiency and scalability. 
@@ -686,11 +686,11 @@ export default function Home() {
                 
                 <div className="space-y-4">
                   <div className="flex items-center space-x-3">
-                    <FaGraduationCap className="text-accent-blue" />
+                    <FaGraduationCap className="text-cyan-500" />
                     <span>Computer Science and Mathematics student at Menofia University (2021-2025)</span>
                   </div>
                   <div className="flex items-center space-x-3">
-                    <FaMapMarkerAlt className="text-accent-blue" />
+                    <FaMapMarkerAlt className="text-cyan-500" />
                     <span>Cairo, Egypt (open to relocate)</span>
                   </div>
                 </div>
@@ -699,16 +699,16 @@ export default function Home() {
             
             <div className="space-y-6">
               <div className="card">
-                <h3 className="text-xl font-semibold mb-4 text-text-primary">Professional Approach</h3>
-                <p className="text-text-secondary">
+                <h3 className="text-xl font-semibold mb-4 text-white">Professional Approach</h3>
+                <p className="text-gray-300">
                   I emphasize a collaborative and impact-driven mindset, focusing on delivering solutions that not only meet technical requirements 
                   but also drive measurable business value and strategic decision-making.
                 </p>
               </div>
               
               <div className="card">
-                <h3 className="text-xl font-semibold mb-4 text-text-primary">Current Focus</h3>
-                <p className="text-text-secondary">
+                <h3 className="text-xl font-semibold mb-4 text-white">Current Focus</h3>
+                <p className="text-gray-300">
                   Currently pursuing my degree while actively working on data engineering projects and staying updated with the latest 
                   technologies in the modern data stack ecosystem.
                 </p>
@@ -719,7 +719,7 @@ export default function Home() {
       </section>
 
       {/* Experience Section */}
-      <section id="experience" className="section-padding bg-primary-dark">
+      <section id="experience" className="section-padding section-alt">
         <div className="max-w-7xl mx-auto container-padding">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -729,7 +729,7 @@ export default function Home() {
           >
             <div className="text-center mb-16">
               <h2 className="text-4xl font-bold mb-8 gradient-text">Experience</h2>
-              <p className="text-text-secondary max-w-2xl mx-auto">
+              <p className="text-gray-300 max-w-2xl mx-auto">
                 Professional experience in data engineering and business intelligence roles
               </p>
             </div>
@@ -746,38 +746,38 @@ export default function Home() {
                 >
                   <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
                     <div>
-                      <h3 className="text-2xl font-semibold text-text-primary mb-2">{exp.title}</h3>
-                      <p className="text-accent-blue font-medium">{exp.company}</p>
+                      <h3 className="text-2xl font-semibold text-white mb-2">{exp.title}</h3>
+                      <p className="text-cyan-500 font-medium">{exp.company}</p>
                     </div>
                     <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 mt-4 lg:mt-0">
-                      <span className="text-text-secondary">{exp.period}</span>
-                      <span className="text-accent-green text-sm font-medium">{exp.type}</span>
-                      <div className="flex items-center space-x-1 text-text-secondary">
-                        <FaMapMarkerAlt className="text-accent-blue" />
+                      <span className="text-gray-300">{exp.period}</span>
+                      <span className="text-green-400 text-sm font-medium">{exp.type}</span>
+                      <div className="flex items-center space-x-1 text-gray-300">
+                        <FaMapMarkerAlt className="text-cyan-500" />
                         <span className="text-sm">{exp.location}</span>
                       </div>
                     </div>
                   </div>
                   
-                  <p className="text-text-secondary mb-6">{exp.description}</p>
+                  <p className="text-gray-300 mb-6">{exp.description}</p>
                   
                   <div className="space-y-4">
-                    <h4 className="font-semibold text-text-primary">Key Achievements:</h4>
+                    <h4 className="font-semibold text-white">Key Achievements:</h4>
                     <ul className="space-y-2">
                       {exp.achievements.map((achievement, idx) => (
                         <li key={idx} className="flex items-start space-x-2">
-                          <FaCheckCircle className="text-accent-green mt-1 flex-shrink-0" />
-                          <span className="text-text-secondary">{achievement}</span>
+                          <FaCheckCircle className="text-green-400 mt-1 flex-shrink-0" />
+                          <span className="text-gray-300">{achievement}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
                   
                   <div className="mt-6">
-                    <h4 className="font-semibold text-text-primary mb-3">Technologies:</h4>
+                    <h4 className="font-semibold text-white mb-3">Technologies:</h4>
                     <div className="flex flex-wrap gap-2">
                       {exp.technologies.map((tech, idx) => (
-                        <span key={idx} className="px-3 py-1 bg-primary rounded-full text-sm text-accent-blue border border-accent-blue">
+                        <span key={idx} className="px-3 py-1 bg-gray-700/50 rounded-full text-sm text-cyan-500 border border-cyan-500/30">
                           {tech}
                         </span>
                       ))}
@@ -801,7 +801,7 @@ export default function Home() {
           >
             <div className="text-center mb-16">
               <h2 className="text-4xl font-bold mb-8 gradient-text">Bootcamps & Training</h2>
-              <p className="text-text-secondary max-w-2xl mx-auto">
+              <p className="text-gray-300 max-w-2xl mx-auto">
                 Continuous learning through intensive training programs and bootcamps
               </p>
             </div>
@@ -821,21 +821,21 @@ export default function Home() {
                       <bootcamp.icon className="text-white" size={24} />
                     </div>
                     <div>
-                      <h3 className="text-xl font-semibold text-text-primary mb-1">{bootcamp.title}</h3>
-                      <p className="text-accent-blue font-medium">{bootcamp.organization}</p>
-                      <p className="text-text-secondary text-sm">{bootcamp.period}</p>
+                      <h3 className="text-xl font-semibold text-white mb-1">{bootcamp.title}</h3>
+                      <p className="text-cyan-500 font-medium">{bootcamp.organization}</p>
+                      <p className="text-gray-300 text-sm">{bootcamp.period}</p>
                     </div>
                   </div>
                   
-                  <p className="text-text-secondary mb-6">{bootcamp.description}</p>
+                  <p className="text-gray-300 mb-6">{bootcamp.description}</p>
                   
                   <div>
-                    <h4 className="font-semibold text-text-primary mb-3">Skills Gained:</h4>
+                    <h4 className="font-semibold text-white mb-3">Skills Gained:</h4>
                     <ul className="space-y-2">
                       {bootcamp.skills.map((skill, idx) => (
                         <li key={idx} className="flex items-start space-x-2">
-                          <FaCheckCircle className="text-accent-green mt-1 flex-shrink-0" />
-                          <span className="text-text-secondary text-sm">{skill}</span>
+                          <FaCheckCircle className="text-green-400 mt-1 flex-shrink-0" />
+                          <span className="text-gray-300 text-sm">{skill}</span>
                         </li>
                       ))}
                     </ul>
@@ -848,7 +848,7 @@ export default function Home() {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="section-padding bg-primary-dark">
+      <section id="projects" className="section-padding section-alt">
         <div className="max-w-7xl mx-auto container-padding">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -858,19 +858,19 @@ export default function Home() {
           >
             <div className="text-center mb-16">
               <h2 className="text-4xl font-bold mb-8 gradient-text">Projects</h2>
-              <p className="text-text-secondary max-w-2xl mx-auto">
+              <p className="text-gray-300 max-w-2xl mx-auto">
                 Showcase of data engineering projects demonstrating modern data stack expertise
               </p>
             </div>
 
-            <div className="grid lg:grid-cols-2 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {projects.map((project, index) => {
                 // Determine category and color based on project title
                 const getCategoryAndColor = (title) => {
                   if (title.toLowerCase().includes('streaming') || title.toLowerCase().includes('kafka')) {
                     return { category: 'Streaming', color: 'from-purple-500 to-pink-500', borderColor: 'border-purple-500' };
                   } else if (title.toLowerCase().includes('elt') || title.toLowerCase().includes('etl')) {
-                    return { category: 'ETL/ELT', color: 'from-blue-500 to-cyan-500', borderColor: 'border-blue-500' };
+                    return { category: 'ETL/ELT', color: 'from-cyan-500 to-blue-500', borderColor: 'border-cyan-500' };
                   } else if (title.toLowerCase().includes('olap') || title.toLowerCase().includes('dimensional')) {
                     return { category: 'Analytics', color: 'from-green-500 to-emerald-500', borderColor: 'border-green-500' };
                   } else if (title.toLowerCase().includes('dbt')) {
@@ -893,16 +893,16 @@ export default function Home() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: index * 0.1 }}
                     viewport={{ once: true }}
-                    className={`relative group bg-primary border-2 ${borderColor} rounded-xl p-6 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-black/50 overflow-hidden ${
-                      project.featured ? 'ring-2 ring-accent-blue ring-opacity-50' : ''
+                    className={`relative group bg-gray-800/50 backdrop-blur-md border-2 ${borderColor} rounded-xl p-6 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-black/50 overflow-hidden ${
+                      project.featured ? 'ring-2 ring-cyan-500 ring-opacity-50' : ''
                     }`}
                     style={{
-                      background: `linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.9) 100%)`,
+                      background: `linear-gradient(135deg, rgba(31, 41, 55, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%)`,
                     }}
                   >
                     {/* Featured Badge */}
                     {project.featured && (
-                      <div className="absolute -top-3 -right-3 bg-gradient-to-r from-accent-blue to-accent-teal text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg z-10">
+                      <div className="absolute -top-3 -right-3 bg-gradient-to-r from-cyan-500 to-teal-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg z-10">
                         Featured
                       </div>
                     )}
@@ -932,7 +932,7 @@ export default function Home() {
                     </h3>
 
                     {/* Description */}
-                    <p className="text-text-secondary text-sm leading-relaxed mb-6 line-clamp-3">
+                    <p className="text-gray-300 text-sm leading-relaxed mb-6 line-clamp-3">
                       {project.description}
                     </p>
 
@@ -967,7 +967,7 @@ export default function Home() {
                           href={project.demo} 
                           target="_blank" 
                           rel="noopener noreferrer"
-                          className="flex-1 flex items-center justify-center space-x-2 px-4 py-2 bg-gradient-to-r from-accent-blue to-accent-teal text-white rounded-lg hover:from-accent-teal hover:to-accent-blue transition-all duration-300 group/btn shadow-lg"
+                          className="flex-1 flex items-center justify-center space-x-2 px-4 py-2 bg-gradient-to-r from-cyan-500 to-teal-500 text-white rounded-lg hover:from-cyan-600 hover:to-teal-600 transition-all duration-300 group/btn shadow-lg"
                         >
                           <FaExternalLinkAlt className="group-hover/btn:scale-110 transition-transform" />
                           <span className="text-sm font-medium">Live Demo</span>
@@ -1066,7 +1066,7 @@ export default function Home() {
                 className="card"
               >
                 <div className="flex items-start space-x-6">
-                  <div className="p-4 bg-accent-blue rounded-lg">
+                  <div className="p-4 bg-gradient-to-r from-cyan-500 to-teal-500 rounded-lg">
                     <FaGraduationCap className="text-white" size={32} />
                   </div>
                   <div className="flex-1">
@@ -1155,60 +1155,60 @@ export default function Home() {
                 
                 <div className="space-y-6">
                   <div className="flex items-center space-x-4">
-                    <div className="p-3 bg-accent-blue rounded-lg">
+                    <div className="p-3 bg-gradient-to-r from-cyan-500 to-teal-500 rounded-lg">
                       <FaEnvelope className="text-white" />
                     </div>
                     <div>
-                      <p className="text-text-primary font-medium">Email</p>
-                      <a href="mailto:mahmoud.mamdoh0812@gmail.com" className="text-accent-blue hover:text-accent-teal transition-colors">
+                      <p className="text-white font-medium">Email</p>
+                      <a href="mailto:mahmoud.mamdoh0812@gmail.com" className="text-cyan-500 hover:text-cyan-400 transition-colors">
                         mahmoud.mamdoh0812@gmail.com
                       </a>
                     </div>
                   </div>
                   
                   <div className="flex items-center space-x-4">
-                    <div className="p-3 bg-accent-blue rounded-lg">
+                    <div className="p-3 bg-gradient-to-r from-cyan-500 to-teal-500 rounded-lg">
                       <FaPhone className="text-white" />
                     </div>
                     <div>
-                      <p className="text-text-primary font-medium">Phone</p>
-                      <a href="tel:+201102007021" className="text-accent-blue hover:text-accent-teal transition-colors">
+                      <p className="text-white font-medium">Phone</p>
+                      <a href="tel:+201102007021" className="text-cyan-500 hover:text-cyan-400 transition-colors">
                         +(20) 1102007021
                       </a>
                     </div>
                   </div>
                   
                   <div className="flex items-center space-x-4">
-                    <div className="p-3 bg-accent-blue rounded-lg">
+                    <div className="p-3 bg-gradient-to-r from-cyan-500 to-teal-500 rounded-lg">
                       <FaLinkedin className="text-white" />
                     </div>
                     <div>
-                      <p className="text-text-primary font-medium">LinkedIn</p>
-                      <a href="https://linkedin.com/in/mahmoud-mamdoh-47a68a203/" target="_blank" rel="noopener noreferrer" className="text-accent-blue hover:text-accent-teal transition-colors">
-                        linkedin.com/in/mahmoud-mamdoh-47a68a203/
+                      <p className="text-white font-medium">LinkedIn</p>
+                      <a href="https://linkedin.com/in/mahmoud-mamdoh-47a68a203/" target="_blank" rel="noopener noreferrer" className="text-cyan-500 hover:text-cyan-400 transition-colors">
+                        /in/mahmoud-mamdoh-47a68a203
                       </a>
                     </div>
                   </div>
                   
                   <div className="flex items-center space-x-4">
-                    <div className="p-3 bg-accent-blue rounded-lg">
+                    <div className="p-3 bg-gradient-to-r from-cyan-500 to-teal-500 rounded-lg">
                       <FaGithub className="text-white" />
                     </div>
                     <div>
-                      <p className="text-text-primary font-medium">GitHub</p>
-                      <a href="https://github.com/MAHMOUDMAMDOH8" target="_blank" rel="noopener noreferrer" className="text-accent-blue hover:text-accent-teal transition-colors">
-                        github.com/MAHMOUDMAMDOH8
+                      <p className="text-white font-medium">GitHub</p>
+                      <a href="https://github.com/MAHMOUDMAMDOH8" target="_blank" rel="noopener noreferrer" className="text-cyan-500 hover:text-cyan-400 transition-colors">
+                        @MAHMOUDMAMDOH8
                       </a>
                     </div>
                   </div>
                   
                   <div className="flex items-center space-x-4">
-                    <div className="p-3 bg-accent-blue rounded-lg">
+                    <div className="p-3 bg-gradient-to-r from-cyan-500 to-teal-500 rounded-lg">
                       <FaMapMarkerAlt className="text-white" />
                     </div>
                     <div>
-                      <p className="text-text-primary font-medium">Location</p>
-                      <p className="text-text-secondary">Cairo, Egypt (open to relocate)</p>
+                      <p className="text-white font-medium">Location</p>
+                      <p className="text-gray-300">Cairo, Egypt (open to relocate)</p>
                     </div>
                   </div>
                 </div>
