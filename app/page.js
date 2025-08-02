@@ -100,12 +100,7 @@ export default function Home() {
   }
 
   const downloadResume = () => {
-    const link = document.createElement('a')
-    link.href = '/Mahmoud.Mamdoh.Data.Engineer.pdf'
-    link.download = 'Mahmoud_Mamdoh_Data_Engineer_Resume.pdf'
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
+    window.open('https://drive.google.com/drive/folders/1r_W7J5KxBZpHfO5mf29G9qRon9PtXeZA', '_blank');
   }
 
   const navItems = [
@@ -205,6 +200,8 @@ export default function Home() {
       title: 'End-to-End Big Data Pipeline for E-commerce Event Logs',
       description: 'Comprehensive big data pipeline for processing, storing, and analyzing e-commerce event logs. Features Kafka for high-throughput streaming ingestion, HDFS for robust raw storage, Spark processing with PostgreSQL for analytics, Apache Airflow orchestration, dbt models for dimensional schema, Streamlit for real-time monitoring, and Power BI for comprehensive business insights.',
       tech: ['Kafka', 'HDFS', 'Spark', 'PostgreSQL', 'Apache Airflow', 'dbt', 'Streamlit', 'Power BI', 'Docker', 'Python'],
+      tools: ['Apache Kafka', 'Apache Spark', 'Apache Airflow', 'dbt (Data Build Tool)', 'PostgreSQL', 'HDFS', 'Streamlit', 'Power BI', 'Docker', 'Python', 'SQL', 'Jupyter Notebooks', 'Git', 'GitHub Actions'],
+      concepts: ['Real-time Data Streaming', 'Event-Driven Architecture', 'Data Lake Design', 'Medallion Architecture', 'Dimensional Modeling', 'Data Quality Management', 'CI/CD for Data', 'Monitoring & Alerting', 'Business Intelligence', 'Data Visualization'],
       github: 'https://github.com/MAHMOUDMAMDOH8/end-to-end-log-processing',
       demo: 'https://mahmoud-ecommerce-dashboard.streamlit.app',
       featured: true,
@@ -214,6 +211,8 @@ export default function Home() {
       title: 'Telecom Streaming Pipeline',
       description: 'Near real-time streaming data pipeline for telecom events (calls, SMS). Kafka and HDFS for data ingestion, Spark processing with Snowflake storage, Medallion Architecture implementation, Apache Airflow orchestration, dbt models with SCD Type 2 logic, Power BI dashboards for user activity, cell site performance, and regional trends.',
       tech: ['Kafka', 'HDFS', 'Spark', 'Snowflake', 'dbt', 'Docker', 'Apache Airflow', 'Python', 'Power BI'],
+      tools: ['Apache Kafka', 'Apache Spark', 'Apache Airflow', 'Snowflake', 'dbt', 'Docker', 'Python', 'Power BI', 'SQL', 'Git', 'Terraform', 'Kubernetes', 'Prometheus', 'Grafana'],
+      concepts: ['Streaming Data Architecture', 'Medallion Architecture', 'SCD Type 2 Implementation', 'Real-time Analytics', 'Data Pipeline Orchestration', 'Cloud Data Warehouse', 'Data Modeling', 'Business Intelligence', 'Operational Monitoring'],
       github: 'https://github.com/MAHMOUDMAMDOH8/telecom-streaming-pipeline',
       demo: '',
       featured: false,
@@ -223,6 +222,8 @@ export default function Home() {
       title: 'ELT-Engine',
       description: 'Scalable ELT pipeline leveraging Apache Airflow for orchestration and dbt for data transformations in Snowflake. Implements Medallion Architecture (Bronze, Silver, Gold layers) to optimize data processing workflows for advanced analytics, featuring interactive Power BI dashboards for comprehensive business insights visualization.',
       tech: ['SQL', 'dbt', 'Snowflake', 'Docker', 'Apache Airflow', 'Python', 'Power BI'],
+      tools: ['Apache Airflow', 'dbt', 'Snowflake', 'Docker', 'Python', 'Power BI', 'SQL', 'Git', 'Terraform', 'Azure DevOps', 'Data Vault', 'Star Schema'],
+      concepts: ['ELT Architecture', 'Medallion Architecture', 'Data Vault Modeling', 'Cloud Data Engineering', 'Data Pipeline Design', 'Business Intelligence', 'Data Governance', 'Performance Optimization', 'Scalable Architecture'],
       github: 'https://github.com/MAHMOUDMAMDOH8/elt-engine',
       demo: '',
       featured: false,
@@ -411,9 +412,7 @@ export default function Home() {
       description: 'Designed and developed Power BI dashboards to monitor customer satisfaction.',
       achievements: [
         'Designed and developed Power BI dashboards to monitor customer satisfaction',
-        'Created interactive visualizations for key business metrics',
-        'Collaborated with stakeholders to understand data requirements',
-        'Implemented data quality monitoring and reporting systems'
+        'Created interactive visualizations for key business metrics'
       ],
       technologies: ['Power BI', 'SQL', 'Data Visualization', 'Customer Analytics']
     },
@@ -446,6 +445,8 @@ export default function Home() {
         'Built real-world ELT project using Medallion Architecture',
         'Modern data stack tools'
       ],
+      tools: ['Apache Airflow', 'dbt', 'Docker', 'Google Cloud Platform', 'PostgreSQL', 'Terraform', 'Kubernetes', 'Data Build Tool', 'Medallion Architecture', 'ELT Pipelines', 'Data Orchestration', 'Cloud Deployment'],
+      concepts: ['Data Pipeline Design', 'ETL vs ELT', 'Data Lake Architecture', 'Data Warehouse Design', 'Data Quality Management', 'CI/CD for Data', 'Infrastructure as Code', 'Containerization', 'Microservices Architecture'],
       icon: FaDatabase,
       color: 'bg-blue-500'
     },
@@ -460,6 +461,8 @@ export default function Home() {
         'Data warehouse solutions and business analytics',
         'Microsoft stack and open tools'
       ],
+      tools: ['SQL', 'Excel', 'Power BI', 'SSIS', 'SSAS', 'SSRS', 'DWH', 'DAX'],
+      concepts: ['Dimensional Modeling', 'Star Schema', 'Snowflake Schema', 'ETL Process Design', 'Data Mart Design', 'Business Intelligence', 'KPI Development', 'Dashboard Design', 'Data Storytelling', 'Performance Optimization'],
       icon: FaChartLine,
       color: 'bg-green-500'
     }
@@ -470,36 +473,46 @@ export default function Home() {
       title: 'Data Engineering Zoomcamp',
       issuer: 'DataTalks Club',
       year: 'April 2025',
+      summary: 'Comprehensive program covering modern data engineering technologies including data ingestion, orchestration with Airflow, transformation with dbt, Docker containerization, and cloud deployment on GCP.',
+      skills: ['Apache Airflow', 'dbt', 'Docker', 'GCP', 'Medallion Architecture', 'ELT Pipelines'],
       icon: FaDatabase,
-      color: 'bg-blue-500'
+      color: 'from-blue-600 to-blue-700'
     },
     {
       title: 'Business Intelligence Train ITI',
       issuer: 'Information Technology Institute (ITI)',
       year: 'July 2023',
+      summary: 'Intensive training program focused on BI tools and data visualization techniques for business intelligence and analytics.',
+      skills: ['Power BI', 'Data Modeling', 'ETL Pipelines', 'Data Visualization', 'Business Analytics'],
       icon: FaChartLine,
-      color: 'bg-green-500'
+      color: 'from-green-600 to-green-700'
     },
     {
       title: 'Data Engineering Foundations',
       issuer: 'IBM',
       year: 'November 2023',
+      summary: 'Foundational course covering core data engineering concepts, big data technologies, and data pipeline development.',
+      skills: ['Big Data', 'Hadoop', 'Spark', 'Data Pipelines', 'Data Architecture'],
       icon: FaCloud,
-      color: 'bg-purple-500'
+      color: 'from-purple-600 to-purple-700'
     },
     {
       title: 'Data Engineer',
       issuer: 'Datacamp',
       year: 'October 2023',
+      summary: 'Comprehensive data engineering certification covering Python, SQL, and data processing techniques for building scalable data solutions.',
+      skills: ['Python', 'SQL', 'Data Processing', 'ETL', 'Data Analysis'],
       icon: FaAward,
-      color: 'bg-orange-500'
+      color: 'from-orange-600 to-orange-700'
     },
     {
       title: 'Google Business Intelligence',
       issuer: 'Google',
       year: 'May 2023',
+      summary: 'Google-certified program focusing on business intelligence tools, data analysis, and creating actionable insights for business decision-making.',
+      skills: ['Google Analytics', 'Data Analysis', 'Business Intelligence', 'Reporting', 'Data Visualization'],
       icon: FaChartLine,
-      color: 'bg-red-500'
+      color: 'from-red-600 to-red-700'
     }
   ]
 
@@ -639,7 +652,7 @@ export default function Home() {
                 className="btn-secondary"
               >
                 <FaDownload className="mr-2" />
-                Download CV
+                View CV
               </motion.button>
               <motion.button 
                 whileHover={{ scale: 1.05 }}
@@ -998,16 +1011,40 @@ export default function Home() {
                   
                   <p className="text-gray-600 dark:text-gray-300 mb-6">{bootcamp.description}</p>
                   
-                  <div>
-                    <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Skills Gained:</h4>
-                    <ul className="space-y-2">
-                      {bootcamp.skills.map((skill, idx) => (
-                        <li key={idx} className="flex items-start space-x-2">
-                          <FaCheckCircle className="text-green-600 dark:text-green-400 mt-1 flex-shrink-0" />
-                          <span className="text-gray-600 dark:text-gray-300 text-sm">{skill}</span>
-                        </li>
-                      ))}
-                    </ul>
+                  <div className="space-y-6">
+                    <div>
+                      <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Skills Gained:</h4>
+                      <ul className="space-y-2">
+                        {bootcamp.skills.map((skill, idx) => (
+                          <li key={idx} className="flex items-start space-x-2">
+                            <FaCheckCircle className="text-green-600 dark:text-green-400 mt-1 flex-shrink-0" />
+                            <span className="text-gray-600 dark:text-gray-300 text-sm">{skill}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div>
+                      <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Tools & Technologies:</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {bootcamp.tools.map((tool, idx) => (
+                          <span key={idx} className="px-2 py-1 bg-blue-100/80 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded text-xs border border-blue-200 dark:border-blue-700">
+                            {tool}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Concepts Learned:</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {bootcamp.concepts.map((concept, idx) => (
+                          <span key={idx} className="px-2 py-1 bg-green-100/80 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded text-xs border border-green-200 dark:border-green-700">
+                            {concept}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </motion.div>
               ))}
@@ -1123,17 +1160,6 @@ export default function Home() {
                         <FaGithub className="group-hover/btn:scale-110 transition-transform" />
                         <span className="text-sm font-medium">View Code</span>
                       </a>
-                      {project.demo && (
-                        <a 
-                          href={project.demo} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="flex-1 flex items-center justify-center space-x-2 px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:from-red-700 hover:to-red-800 transition-all duration-300 group/btn shadow-lg"
-                        >
-                          <FaExternalLinkAlt className="group-hover/btn:scale-110 transition-transform" />
-                          <span className="text-sm font-medium">Live Demo</span>
-                        </a>
-                      )}
                     </div>
 
                     {/* Date Badge */}
@@ -1248,10 +1274,50 @@ export default function Home() {
                       <span>2021 - 2025</span>
                       <span className="text-green-600 dark:text-green-400 font-medium">Graduated</span>
                     </div>
-                    <p className="text-gray-600 dark:text-gray-300">
+                    <p className="text-gray-600 dark:text-gray-300 mb-6">
                       Completed a comprehensive Bachelor's degree that combines theoretical computer science with mathematical foundations, 
                       providing a strong base for data engineering and analytics work.
                     </p>
+                    
+                    {/* Skills Section */}
+                    <div>
+                      <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Key Skills & Concepts:</h4>
+                      <div className="flex flex-wrap gap-2">
+                        <span className="px-3 py-1 bg-blue-100/80 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm border border-blue-200 dark:border-blue-700">
+                          Data Structures
+                        </span>
+                        <span className="px-3 py-1 bg-blue-100/80 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm border border-blue-200 dark:border-blue-700">
+                          Algorithms
+                        </span>
+                        <span className="px-3 py-1 bg-blue-100/80 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm border border-blue-200 dark:border-blue-700">
+                          Object-Oriented Programming
+                        </span>
+                        <span className="px-3 py-1 bg-blue-100/80 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm border border-blue-200 dark:border-blue-700">
+                          C#
+                        </span>
+                        <span className="px-3 py-1 bg-blue-100/80 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm border border-blue-200 dark:border-blue-700">
+                          System Design
+                        </span>
+                        <span className="px-3 py-1 bg-blue-100/80 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm border border-blue-200 dark:border-blue-700">
+                          Database Design
+                        </span>
+                        <span className="px-3 py-1 bg-blue-100/80 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm border border-blue-200 dark:border-blue-700">
+                          Software Engineering
+                        </span>
+                        <span className="px-3 py-1 bg-blue-100/80 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm border border-blue-200 dark:border-blue-700">
+                          Mathematics
+                        </span>
+                        <span className="px-3 py-1 bg-blue-100/80 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm border border-blue-200 dark:border-blue-700">
+                          Problem Solving
+                        </span>
+                        <span className="px-3 py-1 bg-blue-100/80 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm border border-blue-200 dark:border-blue-700">
+                          Computer Architecture
+                        </span>
+                        <span className="px-3 py-1 bg-blue-100/80 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm border border-blue-200 dark:border-blue-700">
+                          Operating Systems
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -1276,7 +1342,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {certifications.map((cert, index) => (
                 <motion.div 
                   key={index}
@@ -1284,14 +1350,50 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="cert-card text-center"
+                  className="relative group project-card border-2 border-gray-200 dark:border-gray-700 rounded-xl p-6 transition-all duration-300 hover:scale-105 hover:shadow-2xl overflow-hidden"
                 >
-                  <div className={`inline-flex p-4 rounded-lg ${cert.color} mb-4`}>
-                    <cert.icon className="text-white" size={32} />
+                  {/* Certification Icon */}
+                  <div className="mb-6">
+                    <div className={`w-16 h-16 rounded-xl bg-gradient-to-r ${cert.color} flex items-center justify-center mb-4 shadow-lg`}>
+                      <cert.icon className="text-white text-2xl" />
+                    </div>
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{cert.title}</h3>
-                  <p className="text-red-600 font-medium mb-1">{cert.issuer}</p>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm">{cert.year}</p>
+
+                  {/* Certification Title */}
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 leading-tight">
+                    {cert.title}
+                  </h3>
+
+                  {/* Issuer */}
+                  <p className="text-red-600 font-medium mb-3">{cert.issuer}</p>
+
+                  {/* Summary */}
+                  <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-6 line-clamp-3">
+                    {cert.summary}
+                  </p>
+
+                  {/* Skills */}
+                  <div className="mb-6">
+                    <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-3 uppercase tracking-wide">Skills Covered</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {cert.skills.map((skill, idx) => (
+                        <span 
+                          key={idx} 
+                          className="px-2 py-1 bg-gray-100/80 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 rounded text-xs border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-colors"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Year Badge */}
+                  <div className="absolute top-4 right-4 bg-white/90 dark:bg-gray-800/80 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50">
+                    {cert.year}
+                  </div>
+
+                  {/* Gradient Border Effect */}
+                  <div className={`absolute inset-0 rounded-xl bg-gradient-to-r ${cert.color} opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none`}></div>
                 </motion.div>
               ))}
             </div>
