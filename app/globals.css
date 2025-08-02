@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-primary text-text-primary font-sans;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-accent-blue hover:bg-accent-teal text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl;
+  }
+  
+  .btn-secondary {
+    @apply border-2 border-accent-blue text-accent-blue hover:bg-accent-blue hover:text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105;
+  }
+  
+  .card {
+    @apply bg-primary-dark border border-border-primary rounded-xl p-6 hover:border-accent-blue transition-all duration-300 transform hover:scale-105;
+  }
+  
+  .section-padding {
+    @apply py-20 px-4;
+  }
+  
+  .container-padding {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+  
+  .gradient-text {
+    @apply bg-gradient-to-r from-accent-blue to-accent-teal bg-clip-text text-transparent;
+  }
+  
+  .data-pattern {
+    background-image: 
+      radial-gradient(circle at 25% 25%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(22, 160, 133, 0.1) 0%, transparent 50%);
+  }
+
+  /* Project Card Enhancements */
+  .project-card {
+    @apply relative group bg-primary border-2 rounded-xl p-6 transition-all duration-300 overflow-hidden;
+    background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.9) 100%);
+  }
+
+  .project-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+  }
+
+  .project-card.streaming:hover {
+    border-color: #a855f7;
+    box-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
+  }
+
+  .project-card.etl:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+  }
+
+  .project-card.analytics:hover {
+    border-color: #10b981;
+    box-shadow: 0 0 30px rgba(16, 185, 129, 0.5);
+  }
+
+  .project-card.modeling:hover {
+    border-color: #f97316;
+    box-shadow: 0 0 30px rgba(249, 115, 22, 0.5);
+  }
+
+  .project-card.ecommerce:hover {
+    border-color: #6366f1;
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+  }
+
+  .project-card.transportation:hover {
+    border-color: #14b8a6;
+    box-shadow: 0 0 30px rgba(20, 184, 166, 0.5);
+  }
+
+  .project-card.engineering:hover {
+    border-color: #6b7280;
+    box-shadow: 0 0 30px rgba(107, 114, 128, 0.5);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+} 

@@ -1,0 +1,1275 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
+import { Typewriter } from 'react-simple-typewriter'
+import { 
+  FaGithub, 
+  FaLinkedin, 
+  FaEnvelope, 
+  FaMapMarkerAlt,
+  FaPhone,
+  FaExternalLinkAlt,
+  FaCode,
+  FaDatabase,
+  FaChartLine,
+  FaCloud,
+  FaDownload,
+  FaCheckCircle,
+  FaCertificate,
+  FaGraduationCap,
+  FaBars,
+  FaTimes,
+  FaTerminal,
+  FaServer,
+  FaCodeBranch,
+  FaAward,
+  FaTools,
+  FaProjectDiagram,
+  FaUsers,
+  FaLightbulb,
+  FaRocket,
+  FaTrophy
+} from 'react-icons/fa'
+
+export default function Home() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState('home')
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['home', 'about', 'experience', 'projects', 'skills', 'education', 'contact']
+      const scrollPosition = window.scrollY + 100
+
+      for (const section of sections) {
+        const element = document.getElementById(section)
+        if (element) {
+          const { offsetTop, offsetHeight } = element
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(section)
+            break
+          }
+        }
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const smoothScroll = (id) => {
+    const element = document.getElementById(id)
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' })
+      setIsMenuOpen(false)
+    }
+  }
+
+  const downloadResume = () => {
+    const link = document.createElement('a')
+    link.href = '/Mahmoud.Mamdoh.Data.Engineer.pdf'
+    link.download = 'Mahmoud_Mamdoh_Data_Engineer_Resume.pdf'
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
+
+  const navItems = [
+    { id: 'home', label: 'Home' },
+    { id: 'about', label: 'About' },
+    { id: 'experience', label: 'Experience' },
+    { id: 'projects', label: 'Projects' },
+    { id: 'skills', label: 'Skills' },
+    { id: 'education', label: 'Education' },
+    { id: 'contact', label: 'Contact' }
+  ]
+
+  const skills = [
+    {
+      category: 'Programming Languages',
+      items: [
+        { name: 'Python', level: 75, icon: FaCode },
+        { name: 'SQL', level: 75, icon: FaDatabase },
+        { name: 'Spark', level: 70, icon: FaRocket },
+        { name: 'C#', level: 65, icon: FaCode }
+      ]
+    },
+    {
+      category: 'Orchestration & Workflow',
+      items: [
+        { name: 'Apache Airflow', level: 75, icon: FaTools },
+        { name: 'Mage', level: 70, icon: FaProjectDiagram }
+      ]
+    },
+    {
+      category: 'ETL & ELT Tools',
+      items: [
+        { name: 'dbt', level: 75, icon: FaTools },
+        { name: 'SSIS', level: 70, icon: FaDatabase }
+      ]
+    },
+    {
+      category: 'Big Data Technologies',
+      items: [
+        { name: 'Hadoop', level: 70, icon: FaServer },
+        { name: 'Hive', level: 65, icon: FaDatabase }
+      ]
+    },
+    {
+      category: 'Data Streaming',
+      items: [
+        { name: 'Kafka', level: 70, icon: FaProjectDiagram }
+      ]
+    },
+    {
+      category: 'Data Warehousing',
+      items: [
+        { name: 'Snowflake', level: 75, icon: FaCloud },
+        { name: 'Dimensional Modeling', level: 70, icon: FaDatabase },
+        { name: 'Medallion Architecture', level: 75, icon: FaProjectDiagram }
+      ]
+    },
+    {
+      category: 'Databases',
+      items: [
+        { name: 'PostgreSQL', level: 75, icon: FaDatabase },
+        { name: 'MySQL', level: 70, icon: FaDatabase },
+        { name: 'MS SQL Server', level: 70, icon: FaDatabase }
+      ]
+    },
+    {
+      category: 'Containerization',
+      items: [
+        { name: 'Docker', level: 70, icon: FaServer }
+      ]
+    },
+    {
+      category: 'Version Control',
+      items: [
+        { name: 'Git', level: 75, icon: FaCodeBranch },
+        { name: 'GitHub', level: 75, icon: FaGithub }
+      ]
+    },
+    {
+      category: 'Operating Systems',
+      items: [
+        { name: 'Linux', level: 70, icon: FaTerminal },
+        { name: 'Windows', level: 65, icon: FaServer }
+      ]
+    },
+    {
+      category: 'Data Quality',
+      items: [
+        { name: 'Data Quality Checks', level: 70, icon: FaCheckCircle },
+        { name: 'Schema Validation', level: 65, icon: FaCheckCircle }
+      ]
+    }
+  ]
+
+  const projects = [
+    {
+      title: 'End-to-End Big Data Pipeline for E-commerce Event Logs',
+      description: 'Comprehensive big data pipeline for processing, storing, and analyzing e-commerce event logs. Features Kafka for high-throughput streaming ingestion, HDFS for robust raw storage, Spark processing with PostgreSQL for analytics, Apache Airflow orchestration, dbt models for dimensional schema, Streamlit for real-time monitoring, and Power BI for comprehensive business insights.',
+      tech: ['Kafka', 'HDFS', 'Spark', 'PostgreSQL', 'Apache Airflow', 'dbt', 'Streamlit', 'Power BI', 'Docker', 'Python'],
+      github: 'https://github.com/MAHMOUDMAMDOH8/end-to-end-log-processing',
+      demo: 'https://mahmoud-ecommerce-dashboard.streamlit.app',
+      featured: true,
+      date: 'Aug 2025'
+    },
+    {
+      title: 'Telecom Streaming Pipeline',
+      description: 'Near real-time streaming data pipeline for telecom events (calls, SMS). Kafka and HDFS for data ingestion, Spark processing with Snowflake storage, Medallion Architecture implementation, Apache Airflow orchestration, dbt models with SCD Type 2 logic, Power BI dashboards for user activity, cell site performance, and regional trends.',
+      tech: ['Kafka', 'HDFS', 'Spark', 'Snowflake', 'dbt', 'Docker', 'Apache Airflow', 'Python', 'Power BI'],
+      github: 'https://github.com/MAHMOUDMAMDOH8/telecom-streaming-pipeline',
+      demo: '',
+      featured: false,
+      date: 'May 2025'
+    },
+    {
+      title: 'ELT-Engine',
+      description: 'Scalable ELT pipeline leveraging Apache Airflow for orchestration and dbt for data transformations in Snowflake. Implements Medallion Architecture (Bronze, Silver, Gold layers) to optimize data processing workflows for advanced analytics, featuring interactive Power BI dashboards for comprehensive business insights visualization.',
+      tech: ['SQL', 'dbt', 'Snowflake', 'Docker', 'Apache Airflow', 'Python', 'Power BI'],
+      github: 'https://github.com/MAHMOUDMAMDOH8/elt-engine',
+      demo: '',
+      featured: false,
+      date: 'Mar 2025'
+    },
+    {
+      title: 'E2E-ELT-Data-Pipeline',
+      description: 'End-to-end data-aware ELT pipeline engineered with Apache Airflow orchestration and Python automation. Features dbt transformations for data modeling, PostgreSQL as the primary data warehouse, and interactive Power BI dashboards delivering actionable business intelligence and data-driven insights.',
+      tech: ['SQL', 'Python', 'dbt', 'Apache Airflow', 'PostgreSQL', 'Power BI'],
+      github: 'https://github.com/MAHMOUDMAMDOH8/e2e-elt-data-pipeline',
+      demo: '',
+      featured: false,
+      date: '2025'
+    },
+    {
+      title: 'OLAP Dimensional Modeling for Advanced Analytics',
+      description: 'Comprehensive OLAP data warehouse solution implementing dimensional modeling techniques for advanced analytics. Features Docker containerization for scalable deployment, Apache Airflow for ETL orchestration, and customized visualization components tracking key business performance metrics and operational KPIs.',
+      tech: ['Python', 'SQL', 'Docker', 'Apache Airflow', 'PostgreSQL'],
+      github: 'https://github.com/MAHMOUDMAMDOH8/olap-dimensional-modeling',
+      demo: '',
+      featured: false,
+      date: '2025'
+    },
+    {
+      title: 'DBT-Orchestrator',
+      description: 'Data transformation orchestration platform leveraging dbt for SQL-based transformations and Apache Airflow for workflow management. Implements automated testing, documentation generation, and lineage tracking for maintainable data transformation pipelines.',
+      tech: ['Python', 'dbt', 'Apache Airflow', 'SQL'],
+      github: 'https://github.com/MAHMOUDMAMDOH8/dbt-orchestrator',
+      demo: '',
+      featured: false,
+      date: 'Mar 2025'
+    },
+    {
+      title: 'OLAPify',
+      description: 'OLAP data warehouse solution implementing dimensional modeling for advanced analytics. Features star schema design, aggregated data marts, automated cube processing, and optimized query performance for business intelligence and reporting applications.',
+      tech: ['Python', 'SQL', 'PostgreSQL', 'Docker'],
+      github: 'https://github.com/MAHMOUDMAMDOH8/olapify',
+      demo: '',
+      featured: false,
+      date: 'Dec 2024'
+    },
+    {
+      title: 'Northwind Project (ETL & Building DWH & Data Analysis)',
+      description: 'Enterprise-grade data warehouse solution extracting data from operational systems using SSIS ETL workflows. Implements SQL Server Analysis Services (SSAS) cubes for multidimensional data analysis, star schema design with SCD Type 2 logic, and interactive Power BI dashboards for comprehensive sales, customer, and product analytics.',
+      tech: ['SSIS', 'SSAS', 'SQL Server', 'Power BI'],
+      github: 'https://github.com/MAHMOUDMAMDOH8/northwind-project',
+      demo: '',
+      featured: false,
+      date: '2024-2025'
+    },
+    {
+      title: 'E2E-ELT-pipeline',
+      description: 'End-to-end ELT pipeline with data-aware orchestration using Apache Airflow. Implements PostgreSQL data warehouse, automated data quality validation, error handling, and monitoring for reliable data integration and transformation workflows.',
+      tech: ['Python', 'SQL', 'Apache Airflow', 'PostgreSQL'],
+      github: 'https://github.com/MAHMOUDMAMDOH8/e2e-elt-pipeline',
+      demo: '',
+      featured: false,
+      date: 'Oct 2024'
+    },
+    {
+      title: 'E2E E-commerce Data Pipeline',
+      description: 'Complete e-commerce data pipeline processing customer transactions, inventory, and sales data. Implements automated ETL workflows, dimensional modeling for analytics, real-time inventory tracking, and business intelligence dashboards for retail performance optimization.',
+      tech: ['Python', 'Apache Airflow', 'PostgreSQL', 'Docker'],
+      github: 'https://github.com/MAHMOUDMAMDOH8/e2e-ecommerce-data-pipeline',
+      demo: '',
+      featured: false,
+      date: 'Jun 2024'
+    },
+    {
+      title: 'E-commerce Data Analysis Pipeline',
+      description: 'Data analysis pipeline for e-commerce business intelligence focusing on customer behavior, sales trends, and market insights. Features statistical analysis, data visualization, customer segmentation, and predictive analytics for data-driven business decision making.',
+      tech: ['Python', 'Pandas', 'SQL', 'Jupyter Notebook'],
+      github: 'https://github.com/MAHMOUDMAMDOH8/ecommerce-data-analysis-pipeline',
+      demo: '',
+      featured: false,
+      date: 'Apr 2024'
+    },
+    {
+      title: 'E-commerce DWH',
+      description: 'Enterprise data warehouse solution for e-commerce analytics using Microsoft SQL Server stack. Features SSIS ETL processes, dimensional modeling, automated data integration from multiple sources, and Power BI reporting for comprehensive business intelligence.',
+      tech: ['T-SQL', 'SQL Server', 'SSIS', 'Power BI'],
+      github: 'https://github.com/MAHMOUDMAMDOH8/ecommerce-dwh',
+      demo: '',
+      featured: false,
+      date: 'Apr 2024'
+    },
+    {
+      title: 'TLC Trip Pipeline Data Engineering',
+      description: 'NYC Taxi and Limousine Commission trip data engineering project analyzing transportation patterns and operational metrics. Implements data cleaning, transformation, statistical analysis, and visualization for urban transportation insights and trend analysis.',
+      tech: ['Jupyter Notebook', 'Python', 'Pandas', 'SQL'],
+      github: 'https://github.com/MAHMOUDMAMDOH8/tlc-trip-pipeline-data-engineering',
+      demo: '',
+      featured: false,
+      date: 'Apr 2024'
+    },
+    {
+      title: 'TLC Trip Data Pipeline Project',
+      description: 'Automated data pipeline for TLC trip data processing with Apache Airflow orchestration. Features containerized deployment, PostgreSQL data warehouse, automated data quality checks, and scheduled processing for continuous transportation analytics.',
+      tech: ['Python', 'Apache Airflow', 'Docker', 'PostgreSQL'],
+      github: 'https://github.com/MAHMOUDMAMDOH8/tlc-trip-data-pipeline-project',
+      demo: '',
+      featured: false,
+      date: 'Apr 2024'
+    },
+    {
+      title: 'Uber Data Pipeline',
+      description: 'Real-time ride-sharing data pipeline processing trip information, driver analytics, and operational metrics. Implements streaming data architecture with Kafka ingestion, Spark processing, GCP cloud storage, and real-time dashboards for operational intelligence.',
+      tech: ['Python', 'Apache Kafka', 'Spark', 'Google Cloud Platform'],
+      github: 'https://github.com/MAHMOUDMAMDOH8/uber-data-pipeline',
+      demo: '',
+      featured: false,
+      date: '2024'
+    },
+    {
+      title: 'Bike Store Analytics',
+      description: 'Retail analytics solution for bike store operations analyzing sales performance, inventory management, and customer insights. Features comprehensive data modeling, automated reporting, and business intelligence dashboards for retail optimization.',
+      tech: ['SQL Server', 'Power BI', 'T-SQL'],
+      github: 'https://github.com/MAHMOUDMAMDOH8/bike-store',
+      demo: '',
+      featured: false,
+      date: 'Nov 2023'
+    },
+    {
+      title: 'ETL Telecom',
+      description: 'Telecommunications data integration solution implementing ETL processes for customer data, call records, and network analytics. Features automated data extraction, transformation workflows, and data quality validation for telecom business intelligence.',
+      tech: ['T-SQL', 'SSIS', 'SQL Server'],
+      github: 'https://github.com/MAHMOUDMAMDOH8/etl-telecom',
+      demo: '',
+      featured: false,
+      date: 'Sep 2023'
+    },
+    {
+      title: 'AdventureWorks Analysis',
+      description: 'Comprehensive business analysis of AdventureWorks sample database focusing on sales performance, product analytics, and customer segmentation. Features advanced SQL queries, data visualization, and business intelligence reporting for enterprise insights.',
+      tech: ['SQL Server', 'Power BI', 'T-SQL'],
+      github: 'https://github.com/MAHMOUDMAMDOH8/adventureworks-analysis',
+      demo: '',
+      featured: false,
+      date: 'Aug 2023'
+    },
+    {
+      title: 'Northwind Traders Analysis',
+      description: 'Business intelligence analysis of Northwind Traders database examining sales trends, customer behavior, and operational efficiency. Features interactive dashboards, KPI tracking, and comprehensive reporting for data-driven business insights.',
+      tech: ['Power BI', 'SQL', 'Excel'],
+      github: 'https://github.com/MAHMOUDMAMDOH8/northwind-traders-analysis',
+      demo: '',
+      featured: false,
+      date: 'Aug 2023'
+    },
+    {
+      title: 'DataCamp Project',
+      description: 'Data science and analysis projects from DataCamp certification coursework. Features statistical analysis, data manipulation, visualization techniques, and machine learning fundamentals for comprehensive data science skill development.',
+      tech: ['Jupyter Notebook', 'Python', 'Pandas'],
+      github: 'https://github.com/MAHMOUDMAMDOH8/datacamp-project',
+      demo: '',
+      featured: false,
+      date: 'Jul 2023'
+    },
+    {
+      title: 'Adidas Market Analysis',
+      description: 'Market analysis of Adidas sales data examining regional performance, product trends, and market penetration. Features comprehensive data visualization, trend analysis, and business intelligence reporting for strategic market insights.',
+      tech: ['Power BI', 'Excel', 'SQL'],
+      github: 'https://github.com/MAHMOUDMAMDOH8/adidas-market-analysis',
+      demo: '',
+      featured: false,
+      date: 'Jul 2023'
+    },
+    {
+      title: 'HR Analysis',
+      description: 'Human resources analytics solution analyzing employee performance, retention patterns, and organizational metrics. Features workforce analytics, predictive modeling for turnover, and comprehensive HR dashboards for strategic workforce management.',
+      tech: ['Power BI', 'Excel', 'SQL'],
+      github: 'https://github.com/MAHMOUDMAMDOH8/hr-analysis',
+      demo: '',
+      featured: false,
+      date: 'Jul 2023'
+    }
+  ]
+
+  const experiences = [
+    {
+      title: 'Business Intelligence Analyst',
+      company: 'Addiction Treatment Center',
+      period: 'Jul 2024 - Oct 2024',
+      type: 'Internship',
+      location: 'Cairo, Egypt',
+      description: 'Designed and developed Power BI dashboards to monitor customer satisfaction.',
+      achievements: [
+        'Designed and developed Power BI dashboards to monitor customer satisfaction',
+        'Created interactive visualizations for key business metrics',
+        'Collaborated with stakeholders to understand data requirements',
+        'Implemented data quality monitoring and reporting systems'
+      ],
+      technologies: ['Power BI', 'SQL', 'Data Visualization', 'Customer Analytics']
+    },
+    {
+      title: 'Data Analysis Professional Internship',
+      company: 'ASDC',
+      period: 'Nov 2023 - Jan 2024',
+      type: 'Internship',
+      location: 'October, Cairo',
+      description: 'Created an interactive dashboard using Power BI to visualize key business metrics.',
+      achievements: [
+        'Created an interactive dashboard using Power BI to visualize key business metrics',
+        'Developed ETL pipelines for data processing',
+        'Performed data analysis and generated insights',
+        'Collaborated with cross-functional teams on data requirements'
+      ],
+      technologies: ['Power BI', 'SQL', 'Data Analysis', 'Business Intelligence']
+    }
+  ]
+
+  const bootcamps = [
+    {
+      title: 'Data Engineering Zoomcamp',
+      organization: 'DataTalks Club',
+      period: 'Jan 2025 - May 2025',
+      description: 'Comprehensive program covering modern data engineering technologies and best practices.',
+      skills: [
+        'Data ingestion, orchestration (Airflow), transformation (dbt)',
+        'Docker and cloud (GCP)',
+        'Built real-world ELT project using Medallion Architecture',
+        'Modern data stack tools'
+      ],
+      icon: FaDatabase,
+      color: 'bg-blue-500'
+    },
+    {
+      title: 'Business Intelligence Track',
+      organization: 'Information Technology Institute (ITI)',
+      period: 'Jul 2023 - Aug 2023',
+      description: 'Intensive training program focused on BI tools and data visualization techniques.',
+      skills: [
+        'Data modeling, ETL pipelines',
+        'Power BI dashboard development',
+        'Data warehouse solutions and business analytics',
+        'Microsoft stack and open tools'
+      ],
+      icon: FaChartLine,
+      color: 'bg-green-500'
+    }
+  ]
+
+  const certifications = [
+    {
+      title: 'Data Engineering Zoomcamp',
+      issuer: 'DataTalks Club',
+      year: 'April 2025',
+      icon: FaDatabase,
+      color: 'bg-blue-500'
+    },
+    {
+      title: 'Business Intelligence Train ITI',
+      issuer: 'Information Technology Institute (ITI)',
+      year: 'July 2023',
+      icon: FaChartLine,
+      color: 'bg-green-500'
+    },
+    {
+      title: 'Data Engineering Foundations',
+      issuer: 'IBM',
+      year: 'November 2023',
+      icon: FaCloud,
+      color: 'bg-purple-500'
+    },
+    {
+      title: 'Data Engineer',
+      issuer: 'Datacamp',
+      year: 'October 2023',
+      icon: FaAward,
+      color: 'bg-orange-500'
+    },
+    {
+      title: 'Google Business Intelligence',
+      issuer: 'Google',
+      year: 'May 2023',
+      icon: FaChartLine,
+      color: 'bg-red-500'
+    }
+  ]
+
+  return (
+    <div className="min-h-screen bg-primary">
+      {/* Navigation */}
+      <nav className="fixed top-0 w-full z-50 bg-primary/95 backdrop-blur-sm border-b border-border-primary">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center space-x-8">
+              <motion.div 
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="text-xl font-bold gradient-text"
+              >
+                Mahmoud Mamdoh Soliman
+              </motion.div>
+              
+              <div className="hidden md:flex space-x-8">
+                {navItems.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => smoothScroll(item.id)}
+                    className={`text-sm transition-colors ${
+                      activeSection === item.id 
+                        ? 'text-accent-blue' 
+                        : 'text-text-secondary hover:text-text-primary'
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex items-center space-x-4">
+              <div className="hidden md:flex items-center space-x-2 text-text-secondary text-sm">
+                <FaMapMarkerAlt className="text-accent-blue" />
+                <span>Cairo, Egypt</span>
+              </div>
+              
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="md:hidden p-2 text-text-secondary hover:text-text-primary"
+              >
+                {isMenuOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Navigation */}
+        {isMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden bg-primary-dark border-t border-border-primary"
+          >
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => smoothScroll(item.id)}
+                className="block w-full text-left px-6 py-4 text-text-secondary hover:text-text-primary hover:bg-primary transition-colors"
+              >
+                {item.label}
+              </button>
+            ))}
+          </motion.div>
+        )}
+      </nav>
+
+      {/* Hero Section */}
+      <section id="home" className="min-h-screen flex items-center justify-center pt-16 data-pattern">
+        <div className="max-w-7xl mx-auto container-padding">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center"
+          >
+            <div className="text-accent-blue text-sm font-mono mb-4">
+              $ whoami
+            </div>
+            
+            <h1 className="text-5xl md:text-7xl font-bold mb-8 gradient-text">
+              Mahmoud Mamdoh Soliman
+            </h1>
+            
+            <div className="text-2xl md:text-3xl text-text-secondary mb-8 min-h-[3rem] flex items-center justify-center">
+              <span className="text-accent-blue mr-2">&gt;</span>
+              <Typewriter
+                words={[
+                  'Data Engineer',
+                  'BI Analyst', 
+                  'ETL Developer',
+                  'Pipeline Architect'
+                ]}
+                loop={0}
+                cursor
+                cursorStyle='_'
+                typeSpeed={70}
+                deleteSpeed={50}
+                delaySpeed={1000}
+              />
+            </div>
+
+            <p className="text-xl text-text-secondary max-w-4xl mx-auto mb-12 leading-relaxed">
+              Transforming data into actionable insights that drive strategic decisions and accelerate business growth. 
+              Skilled in designing and optimizing complex data pipelines and workflows using modern data stacks.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => smoothScroll('projects')} 
+                className="btn-primary"
+              >
+                <FaExternalLinkAlt className="mr-2" />
+                View Projects
+              </motion.button>
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={downloadResume} 
+                className="btn-secondary"
+              >
+                <FaDownload className="mr-2" />
+                Download CV
+              </motion.button>
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => smoothScroll('contact')} 
+                className="btn-secondary"
+              >
+                <FaEnvelope className="mr-2" />
+                Contact Me
+              </motion.button>
+            </div>
+
+            {/* Contact Info */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto mb-12">
+              <div className="flex items-center justify-center space-x-2 text-text-secondary">
+                <FaEnvelope className="text-accent-blue" />
+                <span className="text-sm">mahmoud.mamdoh0812@gmail.com</span>
+              </div>
+              <div className="flex items-center justify-center space-x-2 text-text-secondary">
+                <FaPhone className="text-accent-blue" />
+                <span className="text-sm">+(20) 1102007021</span>
+              </div>
+              <div className="flex items-center justify-center space-x-2 text-text-secondary">
+                <FaLinkedin className="text-accent-blue" />
+                <span className="text-sm">linkedin.com/in/mahmoud-mamdoh-47a68a203/</span>
+              </div>
+              <div className="flex items-center justify-center space-x-2 text-text-secondary">
+                <FaGithub className="text-accent-blue" />
+                <span className="text-sm">github.com/MAHMOUDMAMDOH8</span>
+              </div>
+            </div>
+
+            {/* Social Links */}
+            <div className="flex gap-6 justify-center">
+              <motion.a 
+                whileHover={{ scale: 1.2, y: -5 }}
+                href="https://github.com/MAHMOUDMAMDOH8" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-text-secondary hover:text-accent-blue transition-colors"
+              >
+                <FaGithub size={24} />
+              </motion.a>
+              <motion.a 
+                whileHover={{ scale: 1.2, y: -5 }}
+                href="https://www.linkedin.com/in/mahmoud-mamdoh-47a68a203/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-text-secondary hover:text-accent-blue transition-colors"
+              >
+                <FaLinkedin size={24} />
+              </motion.a>
+              <motion.a 
+                whileHover={{ scale: 1.2, y: -5 }}
+                href="mailto:mahmoud.mamdoh0812@gmail.com"
+                className="text-text-secondary hover:text-accent-blue transition-colors"
+              >
+                <FaEnvelope size={24} />
+              </motion.a>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section id="about" className="section-padding">
+        <div className="max-w-7xl mx-auto container-padding">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="grid lg:grid-cols-2 gap-16 items-center"
+          >
+            <div>
+              <div className="text-accent-blue text-sm font-mono mb-4">
+                $ cat about.txt
+              </div>
+              
+              <h2 className="text-4xl font-bold mb-8 gradient-text">About Me</h2>
+              
+              <div className="space-y-6 text-text-secondary leading-relaxed">
+                <p>
+                  Data Engineer focused on transforming data into actionable insights that drive strategic decisions and accelerate business growth. 
+                  Skilled in designing and optimizing complex data pipelines and workflows using modern data stacks to improve operational efficiency and scalability. 
+                  Collaborative and impact-driven.
+                </p>
+                
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-3">
+                    <FaGraduationCap className="text-accent-blue" />
+                    <span>Computer Science and Mathematics student at Menofia University (2021-2025)</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <FaMapMarkerAlt className="text-accent-blue" />
+                    <span>Cairo, Egypt (open to relocate)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="space-y-6">
+              <div className="card">
+                <h3 className="text-xl font-semibold mb-4 text-text-primary">Professional Approach</h3>
+                <p className="text-text-secondary">
+                  I emphasize a collaborative and impact-driven mindset, focusing on delivering solutions that not only meet technical requirements 
+                  but also drive measurable business value and strategic decision-making.
+                </p>
+              </div>
+              
+              <div className="card">
+                <h3 className="text-xl font-semibold mb-4 text-text-primary">Current Focus</h3>
+                <p className="text-text-secondary">
+                  Currently pursuing my degree while actively working on data engineering projects and staying updated with the latest 
+                  technologies in the modern data stack ecosystem.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Experience Section */}
+      <section id="experience" className="section-padding bg-primary-dark">
+        <div className="max-w-7xl mx-auto container-padding">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold mb-8 gradient-text">Experience</h2>
+              <p className="text-text-secondary max-w-2xl mx-auto">
+                Professional experience in data engineering and business intelligence roles
+              </p>
+            </div>
+
+            <div className="space-y-12">
+              {experiences.map((exp, index) => (
+                <motion.div 
+                  key={index}
+                  initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, delay: index * 0.2 }}
+                  viewport={{ once: true }}
+                  className="card"
+                >
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
+                    <div>
+                      <h3 className="text-2xl font-semibold text-text-primary mb-2">{exp.title}</h3>
+                      <p className="text-accent-blue font-medium">{exp.company}</p>
+                    </div>
+                    <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 mt-4 lg:mt-0">
+                      <span className="text-text-secondary">{exp.period}</span>
+                      <span className="text-accent-green text-sm font-medium">{exp.type}</span>
+                      <div className="flex items-center space-x-1 text-text-secondary">
+                        <FaMapMarkerAlt className="text-accent-blue" />
+                        <span className="text-sm">{exp.location}</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <p className="text-text-secondary mb-6">{exp.description}</p>
+                  
+                  <div className="space-y-4">
+                    <h4 className="font-semibold text-text-primary">Key Achievements:</h4>
+                    <ul className="space-y-2">
+                      {exp.achievements.map((achievement, idx) => (
+                        <li key={idx} className="flex items-start space-x-2">
+                          <FaCheckCircle className="text-accent-green mt-1 flex-shrink-0" />
+                          <span className="text-text-secondary">{achievement}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  
+                  <div className="mt-6">
+                    <h4 className="font-semibold text-text-primary mb-3">Technologies:</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {exp.technologies.map((tech, idx) => (
+                        <span key={idx} className="px-3 py-1 bg-primary rounded-full text-sm text-accent-blue border border-accent-blue">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Bootcamps Section */}
+      <section className="section-padding">
+        <div className="max-w-7xl mx-auto container-padding">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold mb-8 gradient-text">Bootcamps & Training</h2>
+              <p className="text-text-secondary max-w-2xl mx-auto">
+                Continuous learning through intensive training programs and bootcamps
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              {bootcamps.map((bootcamp, index) => (
+                <motion.div 
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: index * 0.2 }}
+                  viewport={{ once: true }}
+                  className="card"
+                >
+                  <div className="flex items-start space-x-4 mb-6">
+                    <div className={`p-3 rounded-lg ${bootcamp.color}`}>
+                      <bootcamp.icon className="text-white" size={24} />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold text-text-primary mb-1">{bootcamp.title}</h3>
+                      <p className="text-accent-blue font-medium">{bootcamp.organization}</p>
+                      <p className="text-text-secondary text-sm">{bootcamp.period}</p>
+                    </div>
+                  </div>
+                  
+                  <p className="text-text-secondary mb-6">{bootcamp.description}</p>
+                  
+                  <div>
+                    <h4 className="font-semibold text-text-primary mb-3">Skills Gained:</h4>
+                    <ul className="space-y-2">
+                      {bootcamp.skills.map((skill, idx) => (
+                        <li key={idx} className="flex items-start space-x-2">
+                          <FaCheckCircle className="text-accent-green mt-1 flex-shrink-0" />
+                          <span className="text-text-secondary text-sm">{skill}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Projects Section */}
+      <section id="projects" className="section-padding bg-primary-dark">
+        <div className="max-w-7xl mx-auto container-padding">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold mb-8 gradient-text">Projects</h2>
+              <p className="text-text-secondary max-w-2xl mx-auto">
+                Showcase of data engineering projects demonstrating modern data stack expertise
+              </p>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-8">
+              {projects.map((project, index) => {
+                // Determine category and color based on project title
+                const getCategoryAndColor = (title) => {
+                  if (title.toLowerCase().includes('streaming') || title.toLowerCase().includes('kafka')) {
+                    return { category: 'Streaming', color: 'from-purple-500 to-pink-500', borderColor: 'border-purple-500' };
+                  } else if (title.toLowerCase().includes('elt') || title.toLowerCase().includes('etl')) {
+                    return { category: 'ETL/ELT', color: 'from-blue-500 to-cyan-500', borderColor: 'border-blue-500' };
+                  } else if (title.toLowerCase().includes('olap') || title.toLowerCase().includes('dimensional')) {
+                    return { category: 'Analytics', color: 'from-green-500 to-emerald-500', borderColor: 'border-green-500' };
+                  } else if (title.toLowerCase().includes('dbt')) {
+                    return { category: 'Data Modeling', color: 'from-orange-500 to-red-500', borderColor: 'border-orange-500' };
+                  } else if (title.toLowerCase().includes('e-commerce') || title.toLowerCase().includes('retail')) {
+                    return { category: 'E-commerce', color: 'from-indigo-500 to-purple-500', borderColor: 'border-indigo-500' };
+                  } else if (title.toLowerCase().includes('transport') || title.toLowerCase().includes('taxi') || title.toLowerCase().includes('uber')) {
+                    return { category: 'Transportation', color: 'from-teal-500 to-blue-500', borderColor: 'border-teal-500' };
+                  } else {
+                    return { category: 'Data Engineering', color: 'from-gray-500 to-gray-600', borderColor: 'border-gray-500' };
+                  }
+                };
+
+                const { category, color, borderColor } = getCategoryAndColor(project.title);
+
+                return (
+                  <motion.div 
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    className={`relative group bg-primary border-2 ${borderColor} rounded-xl p-6 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-black/50 overflow-hidden ${
+                      project.featured ? 'ring-2 ring-accent-blue ring-opacity-50' : ''
+                    }`}
+                    style={{
+                      background: `linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.9) 100%)`,
+                    }}
+                  >
+                    {/* Featured Badge */}
+                    {project.featured && (
+                      <div className="absolute -top-3 -right-3 bg-gradient-to-r from-accent-blue to-accent-teal text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg z-10">
+                        Featured
+                      </div>
+                    )}
+
+                    {/* Date Badge */}
+                    <div className="absolute top-4 right-4 bg-gray-800/80 text-gray-300 px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm">
+                      {project.date}
+                    </div>
+
+                    {/* Project Icon/Image */}
+                    <div className="mb-6">
+                      <div className={`w-16 h-16 rounded-xl bg-gradient-to-r ${color} flex items-center justify-center mb-4 shadow-lg`}>
+                        <FaProjectDiagram className="text-white text-2xl" />
+                      </div>
+                    </div>
+
+                    {/* Category Badge */}
+                    <div className="mb-4">
+                      <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r ${color} text-white`}>
+                        {category}
+                      </span>
+                    </div>
+
+                    {/* Project Title */}
+                    <h3 className="text-xl font-bold text-white mb-4 leading-tight">
+                      {project.title}
+                    </h3>
+
+                    {/* Description */}
+                    <p className="text-text-secondary text-sm leading-relaxed mb-6 line-clamp-3">
+                      {project.description}
+                    </p>
+
+                    {/* Technology Stack */}
+                    <div className="mb-6">
+                      <h4 className="text-xs font-semibold text-gray-400 mb-3 uppercase tracking-wide">Technologies</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {project.tech.map((tech, idx) => (
+                          <span 
+                            key={idx} 
+                            className="px-2 py-1 bg-gray-800/60 text-gray-300 rounded text-xs border border-gray-700 hover:border-gray-600 transition-colors"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="flex gap-3">
+                      <a 
+                        href={project.github} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex-1 flex items-center justify-center space-x-2 px-4 py-2 bg-gray-800/60 border border-gray-700 rounded-lg text-gray-300 hover:text-white hover:bg-gray-800 hover:border-gray-600 transition-all duration-300 group/btn"
+                      >
+                        <FaGithub className="group-hover/btn:scale-110 transition-transform" />
+                        <span className="text-sm font-medium">View Code</span>
+                      </a>
+                      {project.demo && (
+                        <a 
+                          href={project.demo} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="flex-1 flex items-center justify-center space-x-2 px-4 py-2 bg-gradient-to-r from-accent-blue to-accent-teal text-white rounded-lg hover:from-accent-teal hover:to-accent-blue transition-all duration-300 group/btn shadow-lg"
+                        >
+                          <FaExternalLinkAlt className="group-hover/btn:scale-110 transition-transform" />
+                          <span className="text-sm font-medium">Live Demo</span>
+                        </a>
+                      )}
+                    </div>
+
+                    {/* Gradient Border Effect */}
+                    <div className={`absolute inset-0 rounded-xl bg-gradient-to-r ${color} opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none`}></div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Skills Section */}
+      <section id="skills" className="section-padding">
+        <div className="max-w-7xl mx-auto container-padding">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold mb-8 gradient-text">Skills</h2>
+              <p className="text-text-secondary max-w-2xl mx-auto">
+                Technical expertise across modern data engineering tools and technologies
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {skills.map((category, index) => (
+                <motion.div 
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="card"
+                >
+                  <h3 className="text-xl font-semibold text-text-primary mb-6">{category.category}</h3>
+                  <div className="space-y-4">
+                    {category.items.map((skill, idx) => (
+                      <div key={idx}>
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center space-x-2">
+                            <skill.icon className="text-accent-blue" />
+                            <span className="text-text-primary font-medium">{skill.name}</span>
+                          </div>
+                          <span className="text-text-secondary text-sm">{skill.level}%</span>
+                        </div>
+                        <div className="w-full bg-primary rounded-full h-2">
+                          <motion.div 
+                            initial={{ width: 0 }}
+                            whileInView={{ width: `${skill.level}%` }}
+                            transition={{ duration: 1, delay: 0.5 }}
+                            viewport={{ once: true }}
+                            className="bg-gradient-to-r from-accent-blue to-accent-teal h-2 rounded-full"
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Education Section */}
+      <section id="education" className="section-padding bg-primary-dark">
+        <div className="max-w-7xl mx-auto container-padding">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold mb-8 gradient-text">Education</h2>
+              <p className="text-text-secondary max-w-2xl mx-auto">
+                Academic background and continuous learning journey
+              </p>
+            </div>
+
+            <div className="max-w-4xl mx-auto">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+                className="card"
+              >
+                <div className="flex items-start space-x-6">
+                  <div className="p-4 bg-accent-blue rounded-lg">
+                    <FaGraduationCap className="text-white" size={32} />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-semibold text-text-primary mb-2">
+                      Bachelor's in Computer Science and Mathematics
+                    </h3>
+                    <p className="text-accent-blue font-medium mb-2">Menofia University</p>
+                    <div className="flex items-center space-x-4 text-text-secondary mb-4">
+                      <div className="flex items-center space-x-1">
+                        <FaMapMarkerAlt className="text-accent-blue" />
+                        <span>Menofia, Egypt</span>
+                      </div>
+                      <span>2021 - 2025</span>
+                      <span className="text-accent-green font-medium">Current Student</span>
+                    </div>
+                    <p className="text-text-secondary">
+                      Pursuing a comprehensive degree that combines theoretical computer science with mathematical foundations, 
+                      providing a strong base for data engineering and analytics work.
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Certifications Section */}
+      <section className="section-padding">
+        <div className="max-w-7xl mx-auto container-padding">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold mb-8 gradient-text">Certifications</h2>
+              <p className="text-text-secondary max-w-2xl mx-auto">
+                Professional certifications demonstrating expertise in data engineering and business intelligence
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {certifications.map((cert, index) => (
+                <motion.div 
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="card text-center"
+                >
+                  <div className={`inline-flex p-4 rounded-lg ${cert.color} mb-4`}>
+                    <cert.icon className="text-white" size={32} />
+                  </div>
+                  <h3 className="text-lg font-semibold text-text-primary mb-2">{cert.title}</h3>
+                  <p className="text-accent-blue font-medium mb-1">{cert.issuer}</p>
+                  <p className="text-text-secondary text-sm">{cert.year}</p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="section-padding bg-primary-dark">
+        <div className="max-w-7xl mx-auto container-padding">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold mb-8 gradient-text">Contact</h2>
+              <p className="text-text-secondary max-w-2xl mx-auto">
+                Open to relocate for the right opportunity. Let's discuss how I can contribute to your data engineering initiatives.
+              </p>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-12">
+              <div>
+                <h3 className="text-2xl font-semibold text-text-primary mb-8">Get In Touch</h3>
+                
+                <div className="space-y-6">
+                  <div className="flex items-center space-x-4">
+                    <div className="p-3 bg-accent-blue rounded-lg">
+                      <FaEnvelope className="text-white" />
+                    </div>
+                    <div>
+                      <p className="text-text-primary font-medium">Email</p>
+                      <a href="mailto:mahmoud.mamdoh0812@gmail.com" className="text-accent-blue hover:text-accent-teal transition-colors">
+                        mahmoud.mamdoh0812@gmail.com
+                      </a>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center space-x-4">
+                    <div className="p-3 bg-accent-blue rounded-lg">
+                      <FaPhone className="text-white" />
+                    </div>
+                    <div>
+                      <p className="text-text-primary font-medium">Phone</p>
+                      <a href="tel:+201102007021" className="text-accent-blue hover:text-accent-teal transition-colors">
+                        +(20) 1102007021
+                      </a>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center space-x-4">
+                    <div className="p-3 bg-accent-blue rounded-lg">
+                      <FaLinkedin className="text-white" />
+                    </div>
+                    <div>
+                      <p className="text-text-primary font-medium">LinkedIn</p>
+                      <a href="https://linkedin.com/in/mahmoud-mamdoh-47a68a203/" target="_blank" rel="noopener noreferrer" className="text-accent-blue hover:text-accent-teal transition-colors">
+                        linkedin.com/in/mahmoud-mamdoh-47a68a203/
+                      </a>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center space-x-4">
+                    <div className="p-3 bg-accent-blue rounded-lg">
+                      <FaGithub className="text-white" />
+                    </div>
+                    <div>
+                      <p className="text-text-primary font-medium">GitHub</p>
+                      <a href="https://github.com/MAHMOUDMAMDOH8" target="_blank" rel="noopener noreferrer" className="text-accent-blue hover:text-accent-teal transition-colors">
+                        github.com/MAHMOUDMAMDOH8
+                      </a>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center space-x-4">
+                    <div className="p-3 bg-accent-blue rounded-lg">
+                      <FaMapMarkerAlt className="text-white" />
+                    </div>
+                    <div>
+                      <p className="text-text-primary font-medium">Location</p>
+                      <p className="text-text-secondary">Cairo, Egypt (open to relocate)</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <h3 className="text-2xl font-semibold text-text-primary mb-8">Send Message</h3>
+                <form className="space-y-6">
+                  <div>
+                    <label htmlFor="name" className="block text-text-primary font-medium mb-2">Name</label>
+                    <input
+                      type="text"
+                      id="name"
+                      className="w-full px-4 py-3 bg-primary border border-border-primary rounded-lg text-text-primary focus:border-accent-blue focus:outline-none transition-colors"
+                      placeholder="Your name"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="email" className="block text-text-primary font-medium mb-2">Email</label>
+                    <input
+                      type="email"
+                      id="email"
+                      className="w-full px-4 py-3 bg-primary border border-border-primary rounded-lg text-text-primary focus:border-accent-blue focus:outline-none transition-colors"
+                      placeholder="your.email@example.com"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="message" className="block text-text-primary font-medium mb-2">Message</label>
+                    <textarea
+                      id="message"
+                      rows={6}
+                      className="w-full px-4 py-3 bg-primary border border-border-primary rounded-lg text-text-primary focus:border-accent-blue focus:outline-none transition-colors resize-none"
+                      placeholder="Your message..."
+                    />
+                  </div>
+                  
+                  <motion.button 
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    type="submit"
+                    className="w-full btn-primary"
+                  >
+                    Send Message
+                  </motion.button>
+                </form>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-primary border-t border-border-primary py-8">
+        <div className="max-w-7xl mx-auto container-padding text-center">
+          <p className="text-text-secondary">
+            © 2024 Mahmoud Mamdoh Soliman. All rights reserved.
+          </p>
+        </div>
+      </footer>
+    </div>
+  )
+} 
