@@ -601,6 +601,7 @@ export default function Home() {
               <Typewriter
                 words={[
                   'Data Engineer',
+                  'big data engineer',
                   'BI engineer', 
                   'ETL Developer',
                   'Pipeline Architect',
