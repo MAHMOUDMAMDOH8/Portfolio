@@ -29,12 +29,46 @@ import {
   FaUsers,
   FaLightbulb,
   FaRocket,
-  FaTrophy
+  FaTrophy,
+  FaSun,
+  FaMoon,
+  FaPython,
+  FaDocker,
+  FaLinux,
+  FaWindows,
+  FaGitAlt
 } from 'react-icons/fa'
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
+  const [isDarkMode, setIsDarkMode] = useState(true)
+
+  useEffect(() => {
+    // Check for saved theme preference or default to dark mode
+    const savedTheme = localStorage.getItem('theme')
+    if (savedTheme) {
+      setIsDarkMode(savedTheme === 'dark')
+    } else {
+      // Default to dark mode
+      setIsDarkMode(true)
+    }
+  }, [])
+
+  useEffect(() => {
+    // Update document class and save preference
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark')
+      localStorage.setItem('theme', 'dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+      localStorage.setItem('theme', 'light')
+    }
+  }, [isDarkMode])
+
+  const toggleTheme = () => {
+    setIsDarkMode(!isDarkMode)
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -88,7 +122,7 @@ export default function Home() {
     {
       category: 'Programming Languages',
       items: [
-        { name: 'Python', level: 75, icon: FaCode },
+        { name: 'Python', level: 75, icon: FaPython },
         { name: 'SQL', level: 75, icon: FaDatabase },
         { name: 'Spark', level: 70, icon: FaRocket },
         { name: 'C#', level: 65, icon: FaCode }
@@ -97,15 +131,15 @@ export default function Home() {
     {
       category: 'Orchestration & Workflow',
       items: [
-        { name: 'Apache Airflow', level: 75, icon: FaTools },
-        { name: 'Mage', level: 70, icon: FaProjectDiagram }
+        { name: 'Apache Airflow', level: 75, icon: FaProjectDiagram },
+        { name: 'Mage', level: 70, icon: FaTools }
       ]
     },
     {
       category: 'ETL & ELT Tools',
       items: [
-        { name: 'dbt', level: 75, icon: FaTools },
-        { name: 'SSIS', level: 70, icon: FaDatabase }
+        { name: 'dbt', level: 75, icon: FaDatabase },
+        { name: 'SSIS', level: 70, icon: FaTools }
       ]
     },
     {
@@ -140,21 +174,21 @@ export default function Home() {
     {
       category: 'Containerization',
       items: [
-        { name: 'Docker', level: 70, icon: FaServer }
+        { name: 'Docker', level: 70, icon: FaDocker }
       ]
     },
     {
       category: 'Version Control',
       items: [
-        { name: 'Git', level: 75, icon: FaCodeBranch },
+        { name: 'Git', level: 75, icon: FaGitAlt },
         { name: 'GitHub', level: 75, icon: FaGithub }
       ]
     },
     {
       category: 'Operating Systems',
       items: [
-        { name: 'Linux', level: 70, icon: FaTerminal },
-        { name: 'Windows', level: 65, icon: FaServer }
+        { name: 'Linux', level: 70, icon: FaLinux },
+        { name: 'Windows', level: 65, icon: FaWindows }
       ]
     },
     {
@@ -470,7 +504,7 @@ export default function Home() {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-gray-800">
+    <div className="min-h-screen transition-colors duration-300">
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 nav-glass">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -491,8 +525,8 @@ export default function Home() {
                     onClick={() => smoothScroll(item.id)}
                     className={`text-sm transition-colors ${
                       activeSection === item.id 
-                        ? 'text-cyan-500' 
-                        : 'text-gray-300 hover:text-white'
+                        ? 'text-red-600' 
+                        : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
                     }`}
                   >
                     {item.label}
@@ -502,14 +536,25 @@ export default function Home() {
             </div>
 
             <div className="flex items-center space-x-4">
-              <div className="hidden md:flex items-center space-x-2 text-gray-300 text-sm">
-                <FaMapMarkerAlt className="text-cyan-500" />
+              <div className="hidden md:flex items-center space-x-2 text-gray-600 dark:text-gray-300 text-sm">
+                <FaMapMarkerAlt className="text-red-600" />
                 <span>Cairo, Egypt</span>
               </div>
               
+              {/* Theme Toggle Button */}
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={toggleTheme}
+                className="p-2 rounded-lg bg-gray-200/50 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-300/50 dark:border-gray-700/50 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-300/50 dark:hover:bg-gray-700/50 transition-all duration-300"
+                aria-label="Toggle theme"
+              >
+                {isDarkMode ? <FaSun size={18} /> : <FaMoon size={18} />}
+              </motion.button>
+              
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="md:hidden p-2 text-gray-300 hover:text-white"
+                className="md:hidden p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
               >
                 {isMenuOpen ? <FaTimes size={20} /> : <FaBars size={20} />}
               </button>
@@ -523,13 +568,13 @@ export default function Home() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-gray-800/80 backdrop-blur-md border-t border-gray-700/50"
+            className="md:hidden bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border-t border-gray-200/50 dark:border-gray-700/50"
           >
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => smoothScroll(item.id)}
-                className="block w-full text-left px-6 py-4 text-gray-300 hover:text-white hover:bg-gray-700/50 transition-colors"
+                className="block w-full text-left px-6 py-4 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100/50 dark:hover:bg-gray-700/50 transition-colors"
               >
                 {item.label}
               </button>
@@ -547,22 +592,20 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="text-center"
           >
-            <div className="text-cyan-500 text-sm font-mono mb-4">
-              $ whoami
-            </div>
-            
             <h1 className="text-5xl md:text-7xl font-bold mb-8 gradient-text">
               Mahmoud Mamdoh Soliman
             </h1>
             
-            <div className="text-2xl md:text-3xl text-gray-300 mb-8 min-h-[3rem] flex items-center justify-center">
-              <span className="text-cyan-500 mr-2">&gt;</span>
+            <div className="text-2xl md:text-3xl text-gray-600 dark:text-gray-300 mb-8 min-h-[3rem] flex items-center justify-center">
+              <span className="text-red-600 mr-2">&gt;</span>
               <Typewriter
                 words={[
                   'Data Engineer',
-                  'BI Analyst', 
+                  'BI engineer', 
                   'ETL Developer',
-                  'Pipeline Architect'
+                  'Pipeline Architect',
+                  'Data Analyst',
+                  'Analytics Engineer'   
                 ]}
                 loop={0}
                 cursor
@@ -573,7 +616,7 @@ export default function Home() {
               />
             </div>
 
-            <p className="text-xl text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed">
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed">
               Transforming data into actionable insights that drive strategic decisions and accelerate business growth. 
               Skilled in designing and optimizing complex data pipelines and workflows using modern data stacks.
             </p>
@@ -608,26 +651,6 @@ export default function Home() {
               </motion.button>
             </div>
 
-            {/* Contact Info */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto mb-12">
-              <div className="flex items-center justify-center space-x-2 text-gray-300">
-                <FaEnvelope className="text-cyan-500" />
-                <span className="text-sm">Email</span>
-              </div>
-              <div className="flex items-center justify-center space-x-2 text-gray-300">
-                <FaPhone className="text-cyan-500" />
-                <span className="text-sm">Phone</span>
-              </div>
-              <div className="flex items-center justify-center space-x-2 text-gray-300">
-                <FaLinkedin className="text-cyan-500" />
-                <span className="text-sm">LinkedIn</span>
-              </div>
-              <div className="flex items-center justify-center space-x-2 text-gray-300">
-                <FaGithub className="text-cyan-500" />
-                <span className="text-sm">GitHub</span>
-              </div>
-            </div>
-
             {/* Social Links */}
             <div className="flex gap-6 justify-center">
               <motion.a 
@@ -635,7 +658,7 @@ export default function Home() {
                 href="https://github.com/MAHMOUDMAMDOH8" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-300 hover:text-cyan-500 transition-colors"
+                className="text-gray-600 dark:text-gray-300 hover:text-red-600 transition-colors"
               >
                 <FaGithub size={24} />
               </motion.a>
@@ -644,17 +667,73 @@ export default function Home() {
                 href="https://www.linkedin.com/in/mahmoud-mamdoh-47a68a203/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-300 hover:text-cyan-500 transition-colors"
+                className="text-gray-600 dark:text-gray-300 hover:text-red-600 transition-colors"
               >
                 <FaLinkedin size={24} />
               </motion.a>
               <motion.a 
                 whileHover={{ scale: 1.2, y: -5 }}
                 href="mailto:mahmoud.mamdoh0812@gmail.com"
-                className="text-gray-300 hover:text-cyan-500 transition-colors"
+                className="text-gray-600 dark:text-gray-300 hover:text-red-600 transition-colors"
               >
                 <FaEnvelope size={24} />
               </motion.a>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Statistics Section */}
+      <section className="section-padding">
+        <div className="max-w-7xl mx-auto container-padding">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold mb-8 gradient-text">Achievements & Expertise</h2>
+              <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                Proven track record in data engineering and analytics with comprehensive project experience
+              </p>
+            </div>
+
+            {/* Achievement Cards */}
+            <div className="grid md:grid-cols-2 gap-8 mb-16">
+              <motion.div 
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.1 }}
+                viewport={{ once: true }}
+                className="card text-center"
+              >
+                <div className="p-6 bg-gradient-to-r from-red-600 to-red-700 rounded-full w-20 h-20 mx-auto mb-6 flex items-center justify-center">
+                  <FaProjectDiagram className="text-white text-3xl" />
+                </div>
+                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">+30</h3>
+                <p className="text-xl text-red-600 font-semibold mb-2">Projects Completed</p>
+                <p className="text-gray-600 dark:text-gray-300">
+                  Comprehensive data engineering projects demonstrating expertise across the modern data stack
+                </p>
+              </motion.div>
+
+              <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                viewport={{ once: true }}
+                className="card text-center"
+              >
+                <div className="p-6 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full w-20 h-20 mx-auto mb-6 flex items-center justify-center">
+                  <FaTrophy className="text-white text-3xl" />
+                </div>
+                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">+1</h3>
+                <p className="text-xl text-purple-500 font-semibold mb-2">Year of Experience</p>
+                <p className="text-gray-600 dark:text-gray-300">
+                  Professional experience in data engineering, business intelligence, and analytics roles
+                </p>
+              </motion.div>
             </div>
           </motion.div>
         </div>
@@ -671,13 +750,9 @@ export default function Home() {
             className="grid lg:grid-cols-2 gap-16 items-center"
           >
             <div>
-              <div className="text-cyan-500 text-sm font-mono mb-4">
-                $ cat about.txt
-              </div>
-              
               <h2 className="text-4xl font-bold mb-8 gradient-text">About Me</h2>
               
-              <div className="space-y-6 text-gray-300 leading-relaxed">
+              <div className="space-y-6 text-gray-600 dark:text-gray-300 leading-relaxed">
                 <p>
                   Data Engineer focused on transforming data into actionable insights that drive strategic decisions and accelerate business growth. 
                   Skilled in designing and optimizing complex data pipelines and workflows using modern data stacks to improve operational efficiency and scalability. 
@@ -686,11 +761,11 @@ export default function Home() {
                 
                 <div className="space-y-4">
                   <div className="flex items-center space-x-3">
-                    <FaGraduationCap className="text-cyan-500" />
-                    <span>Computer Science and Mathematics student at Menofia University (2021-2025)</span>
+                    <FaGraduationCap className="text-red-600" />
+                    <span>Computer Science and Mathematics graduate from Menofia University (2021-2025)</span>
                   </div>
                   <div className="flex items-center space-x-3">
-                    <FaMapMarkerAlt className="text-cyan-500" />
+                    <FaMapMarkerAlt className="text-red-600" />
                     <span>Cairo, Egypt (open to relocate)</span>
                   </div>
                 </div>
@@ -698,21 +773,114 @@ export default function Home() {
             </div>
             
             <div className="space-y-6">
-              <div className="card">
-                <h3 className="text-xl font-semibold mb-4 text-white">Professional Approach</h3>
-                <p className="text-gray-300">
-                  I emphasize a collaborative and impact-driven mindset, focusing on delivering solutions that not only meet technical requirements 
-                  but also drive measurable business value and strategic decision-making.
-                </p>
-              </div>
-              
-              <div className="card">
-                <h3 className="text-xl font-semibold mb-4 text-white">Current Focus</h3>
-                <p className="text-gray-300">
-                  Currently pursuing my degree while actively working on data engineering projects and staying updated with the latest 
-                  technologies in the modern data stack ecosystem.
-                </p>
-              </div>
+              {/* Data Engineer Card */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.1 }}
+                viewport={{ once: true }}
+                className="card hover:scale-105 transition-transform duration-300 relative"
+              >
+                <div className="flex items-start space-x-4">
+                  <div className="p-3 bg-gradient-to-r from-red-600 to-red-700 rounded-full w-14 h-14 flex items-center justify-center flex-shrink-0">
+                    <FaDatabase className="text-white text-xl" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Data Engineer</h3>
+                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                      Building scalable ETL pipelines, data warehouses, and real-time streaming solutions
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded text-xs">Spark</span>
+                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded text-xs">Hadoop</span>
+                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded text-xs">Kafka</span>
+                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded text-xs">Airflow</span>
+                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded text-xs">SQL</span>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Analytics Engineer Card */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                viewport={{ once: true }}
+                className="card hover:scale-105 transition-transform duration-300 relative"
+              >
+                <div className="flex items-start space-x-4">
+                  <div className="p-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full w-14 h-14 flex items-center justify-center flex-shrink-0">
+                    <FaChartLine className="text-white text-xl" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Analytics Engineer</h3>
+                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                      Designing and implementing data models for advanced analytics and business intelligence
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded text-xs">dbt</span>
+                      <span className="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded text-xs">Snowflake</span>
+                      <span className="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded text-xs">Python</span>
+                      <span className="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded text-xs">SQL</span>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* BI Developer Card */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                viewport={{ once: true }}
+                className="card hover:scale-105 transition-transform duration-300 relative"
+              >
+                <div className="flex items-start space-x-4">
+                  <div className="p-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full w-14 h-14 flex items-center justify-center flex-shrink-0">
+                    <FaLightbulb className="text-white text-xl" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">BI Developer</h3>
+                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                      Creating interactive dashboards and reports for data-driven decision making
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-xs">Power BI</span>
+                      <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-xs">Tableau</span>
+                      <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-xs">SSIS</span>
+                      <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-xs">SSAS</span>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Data Analyst Card */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                viewport={{ once: true }}
+                className="card hover:scale-105 transition-transform duration-300 relative"
+              >
+                <div className="flex items-start space-x-4">
+                  <div className="p-3 bg-gradient-to-r from-orange-500 to-red-500 rounded-full w-14 h-14 flex items-center justify-center flex-shrink-0">
+                    <FaUsers className="text-white text-xl" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Data Analyst</h3>
+                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                      Transforming raw data into actionable insights for business strategy and optimization
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      <span className="px-2 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 rounded text-xs">Python</span>
+                      <span className="px-2 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 rounded text-xs">Pandas</span>
+                      <span className="px-2 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 rounded text-xs">SQL</span>
+                      <span className="px-2 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 rounded text-xs">Excel</span>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
             </div>
           </motion.div>
         </div>
@@ -746,38 +914,38 @@ export default function Home() {
                 >
                   <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
                     <div>
-                      <h3 className="text-2xl font-semibold text-white mb-2">{exp.title}</h3>
-                      <p className="text-cyan-500 font-medium">{exp.company}</p>
+                      <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">{exp.title}</h3>
+                      <p className="text-red-600 font-medium">{exp.company}</p>
                     </div>
                     <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 mt-4 lg:mt-0">
-                      <span className="text-gray-300">{exp.period}</span>
-                      <span className="text-green-400 text-sm font-medium">{exp.type}</span>
-                      <div className="flex items-center space-x-1 text-gray-300">
-                        <FaMapMarkerAlt className="text-cyan-500" />
+                      <span className="text-gray-600 dark:text-gray-300">{exp.period}</span>
+                      <span className="text-green-600 dark:text-green-400 text-sm font-medium">{exp.type}</span>
+                      <div className="flex items-center space-x-1 text-gray-600 dark:text-gray-300">
+                        <FaMapMarkerAlt className="text-red-600" />
                         <span className="text-sm">{exp.location}</span>
                       </div>
                     </div>
                   </div>
                   
-                  <p className="text-gray-300 mb-6">{exp.description}</p>
+                  <p className="text-gray-600 dark:text-gray-300 mb-6">{exp.description}</p>
                   
                   <div className="space-y-4">
-                    <h4 className="font-semibold text-white">Key Achievements:</h4>
+                    <h4 className="font-semibold text-gray-900 dark:text-white">Key Achievements:</h4>
                     <ul className="space-y-2">
                       {exp.achievements.map((achievement, idx) => (
                         <li key={idx} className="flex items-start space-x-2">
-                          <FaCheckCircle className="text-green-400 mt-1 flex-shrink-0" />
-                          <span className="text-gray-300">{achievement}</span>
+                          <FaCheckCircle className="text-green-600 dark:text-green-400 mt-1 flex-shrink-0" />
+                          <span className="text-gray-600 dark:text-gray-300">{achievement}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
                   
                   <div className="mt-6">
-                    <h4 className="font-semibold text-white mb-3">Technologies:</h4>
+                    <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Technologies:</h4>
                     <div className="flex flex-wrap gap-2">
                       {exp.technologies.map((tech, idx) => (
-                        <span key={idx} className="px-3 py-1 bg-gray-700/50 rounded-full text-sm text-cyan-500 border border-cyan-500/30">
+                        <span key={idx} className="px-3 py-1 bg-gray-100/80 dark:bg-gray-700/50 rounded-full text-sm text-red-600 dark:text-red-400 border border-red-600/30">
                           {tech}
                         </span>
                       ))}
@@ -821,21 +989,21 @@ export default function Home() {
                       <bootcamp.icon className="text-white" size={24} />
                     </div>
                     <div>
-                      <h3 className="text-xl font-semibold text-white mb-1">{bootcamp.title}</h3>
-                      <p className="text-cyan-500 font-medium">{bootcamp.organization}</p>
-                      <p className="text-gray-300 text-sm">{bootcamp.period}</p>
+                      <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-1">{bootcamp.title}</h3>
+                      <p className="text-red-600 font-medium">{bootcamp.organization}</p>
+                      <p className="text-gray-600 dark:text-gray-300 text-sm">{bootcamp.period}</p>
                     </div>
                   </div>
                   
-                  <p className="text-gray-300 mb-6">{bootcamp.description}</p>
+                  <p className="text-gray-600 dark:text-gray-300 mb-6">{bootcamp.description}</p>
                   
                   <div>
-                    <h4 className="font-semibold text-white mb-3">Skills Gained:</h4>
+                    <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Skills Gained:</h4>
                     <ul className="space-y-2">
                       {bootcamp.skills.map((skill, idx) => (
                         <li key={idx} className="flex items-start space-x-2">
-                          <FaCheckCircle className="text-green-400 mt-1 flex-shrink-0" />
-                          <span className="text-gray-300 text-sm">{skill}</span>
+                          <FaCheckCircle className="text-green-600 dark:text-green-400 mt-1 flex-shrink-0" />
+                          <span className="text-gray-600 dark:text-gray-300 text-sm">{skill}</span>
                         </li>
                       ))}
                     </ul>
@@ -870,7 +1038,7 @@ export default function Home() {
                   if (title.toLowerCase().includes('streaming') || title.toLowerCase().includes('kafka')) {
                     return { category: 'Streaming', color: 'from-purple-500 to-pink-500', borderColor: 'border-purple-500' };
                   } else if (title.toLowerCase().includes('elt') || title.toLowerCase().includes('etl')) {
-                    return { category: 'ETL/ELT', color: 'from-cyan-500 to-blue-500', borderColor: 'border-cyan-500' };
+                    return { category: 'ETL/ELT', color: 'from-red-600 to-red-700', borderColor: 'border-red-600' };
                   } else if (title.toLowerCase().includes('olap') || title.toLowerCase().includes('dimensional')) {
                     return { category: 'Analytics', color: 'from-green-500 to-emerald-500', borderColor: 'border-green-500' };
                   } else if (title.toLowerCase().includes('dbt')) {
@@ -893,24 +1061,16 @@ export default function Home() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: index * 0.1 }}
                     viewport={{ once: true }}
-                    className={`relative group bg-gray-800/50 backdrop-blur-md border-2 ${borderColor} rounded-xl p-6 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-black/50 overflow-hidden ${
-                      project.featured ? 'ring-2 ring-cyan-500 ring-opacity-50' : ''
+                    className={`relative group project-card border-2 ${borderColor} rounded-xl p-6 transition-all duration-300 hover:scale-105 hover:shadow-2xl overflow-hidden ${
+                      project.featured ? 'ring-2 ring-red-500 ring-opacity-50' : ''
                     }`}
-                    style={{
-                      background: `linear-gradient(135deg, rgba(31, 41, 55, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%)`,
-                    }}
                   >
                     {/* Featured Badge */}
                     {project.featured && (
-                      <div className="absolute -top-3 -right-3 bg-gradient-to-r from-cyan-500 to-teal-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg z-10">
+                      <div className="absolute -top-3 -right-3 bg-gradient-to-r from-red-600 to-red-700 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg z-10">
                         Featured
                       </div>
                     )}
-
-                    {/* Date Badge */}
-                    <div className="absolute top-4 right-4 bg-gray-800/80 text-gray-300 px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm">
-                      {project.date}
-                    </div>
 
                     {/* Project Icon/Image */}
                     <div className="mb-6">
@@ -927,23 +1087,23 @@ export default function Home() {
                     </div>
 
                     {/* Project Title */}
-                    <h3 className="text-xl font-bold text-white mb-4 leading-tight">
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 leading-tight">
                       {project.title}
                     </h3>
 
                     {/* Description */}
-                    <p className="text-gray-300 text-sm leading-relaxed mb-6 line-clamp-3">
+                    <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-6 line-clamp-3">
                       {project.description}
                     </p>
 
                     {/* Technology Stack */}
                     <div className="mb-6">
-                      <h4 className="text-xs font-semibold text-gray-400 mb-3 uppercase tracking-wide">Technologies</h4>
+                      <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-3 uppercase tracking-wide">Technologies</h4>
                       <div className="flex flex-wrap gap-2">
                         {project.tech.map((tech, idx) => (
                           <span 
                             key={idx} 
-                            className="px-2 py-1 bg-gray-800/60 text-gray-300 rounded text-xs border border-gray-700 hover:border-gray-600 transition-colors"
+                            className="px-2 py-1 bg-gray-100/80 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 rounded text-xs border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-colors"
                           >
                             {tech}
                           </span>
@@ -957,7 +1117,7 @@ export default function Home() {
                         href={project.github} 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="flex-1 flex items-center justify-center space-x-2 px-4 py-2 bg-gray-800/60 border border-gray-700 rounded-lg text-gray-300 hover:text-white hover:bg-gray-800 hover:border-gray-600 transition-all duration-300 group/btn"
+                        className="flex-1 flex items-center justify-center space-x-2 px-4 py-2 bg-gray-100/80 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-300 group/btn"
                       >
                         <FaGithub className="group-hover/btn:scale-110 transition-transform" />
                         <span className="text-sm font-medium">View Code</span>
@@ -967,12 +1127,17 @@ export default function Home() {
                           href={project.demo} 
                           target="_blank" 
                           rel="noopener noreferrer"
-                          className="flex-1 flex items-center justify-center space-x-2 px-4 py-2 bg-gradient-to-r from-cyan-500 to-teal-500 text-white rounded-lg hover:from-cyan-600 hover:to-teal-600 transition-all duration-300 group/btn shadow-lg"
+                          className="flex-1 flex items-center justify-center space-x-2 px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:from-red-700 hover:to-red-800 transition-all duration-300 group/btn shadow-lg"
                         >
                           <FaExternalLinkAlt className="group-hover/btn:scale-110 transition-transform" />
                           <span className="text-sm font-medium">Live Demo</span>
                         </a>
                       )}
+                    </div>
+
+                    {/* Date Badge */}
+                    <div className="absolute top-4 right-4 bg-white/90 dark:bg-gray-800/80 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50">
+                      {project.date}
                     </div>
 
                     {/* Gradient Border Effect */}
@@ -1011,24 +1176,24 @@ export default function Home() {
                   viewport={{ once: true }}
                   className="card"
                 >
-                  <h3 className="text-xl font-semibold text-text-primary mb-6">{category.category}</h3>
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">{category.category}</h3>
                   <div className="space-y-4">
                     {category.items.map((skill, idx) => (
                       <div key={idx}>
                         <div className="flex items-center justify-between mb-2">
                           <div className="flex items-center space-x-2">
-                            <skill.icon className="text-accent-blue" />
-                            <span className="text-text-primary font-medium">{skill.name}</span>
+                            <skill.icon className="text-red-600" />
+                            <span className="text-gray-900 dark:text-white font-medium">{skill.name}</span>
                           </div>
-                          <span className="text-text-secondary text-sm">{skill.level}%</span>
+                          <span className="text-gray-600 dark:text-gray-300 text-sm">{skill.level}%</span>
                         </div>
-                        <div className="w-full bg-primary rounded-full h-2">
+                        <div className="skill-bar">
                           <motion.div 
                             initial={{ width: 0 }}
                             whileInView={{ width: `${skill.level}%` }}
                             transition={{ duration: 1, delay: 0.5 }}
                             viewport={{ once: true }}
-                            className="bg-gradient-to-r from-accent-blue to-accent-teal h-2 rounded-full"
+                            className="skill-progress"
                           />
                         </div>
                       </div>
@@ -1042,7 +1207,7 @@ export default function Home() {
       </section>
 
       {/* Education Section */}
-      <section id="education" className="section-padding bg-primary-dark">
+      <section id="education" className="section-padding section-alt">
         <div className="max-w-7xl mx-auto container-padding">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -1052,7 +1217,7 @@ export default function Home() {
           >
             <div className="text-center mb-16">
               <h2 className="text-4xl font-bold mb-8 gradient-text">Education</h2>
-              <p className="text-text-secondary max-w-2xl mx-auto">
+              <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
                 Academic background and continuous learning journey
               </p>
             </div>
@@ -1066,24 +1231,24 @@ export default function Home() {
                 className="card"
               >
                 <div className="flex items-start space-x-6">
-                  <div className="p-4 bg-gradient-to-r from-cyan-500 to-teal-500 rounded-lg">
+                  <div className="p-4 bg-gradient-to-r from-red-600 to-red-700 rounded-lg">
                     <FaGraduationCap className="text-white" size={32} />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-2xl font-semibold text-text-primary mb-2">
+                    <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">
                       Bachelor's in Computer Science and Mathematics
                     </h3>
-                    <p className="text-accent-blue font-medium mb-2">Menofia University</p>
-                    <div className="flex items-center space-x-4 text-text-secondary mb-4">
+                    <p className="text-red-600 font-medium mb-2">Menofia University</p>
+                    <div className="flex items-center space-x-4 text-gray-600 dark:text-gray-300 mb-4">
                       <div className="flex items-center space-x-1">
-                        <FaMapMarkerAlt className="text-accent-blue" />
+                        <FaMapMarkerAlt className="text-red-600" />
                         <span>Menofia, Egypt</span>
                       </div>
                       <span>2021 - 2025</span>
-                      <span className="text-accent-green font-medium">Current Student</span>
+                      <span className="text-green-600 dark:text-green-400 font-medium">Graduated</span>
                     </div>
-                    <p className="text-text-secondary">
-                      Pursuing a comprehensive degree that combines theoretical computer science with mathematical foundations, 
+                    <p className="text-gray-600 dark:text-gray-300">
+                      Completed a comprehensive Bachelor's degree that combines theoretical computer science with mathematical foundations, 
                       providing a strong base for data engineering and analytics work.
                     </p>
                   </div>
@@ -1118,14 +1283,14 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="card text-center"
+                  className="cert-card text-center"
                 >
                   <div className={`inline-flex p-4 rounded-lg ${cert.color} mb-4`}>
                     <cert.icon className="text-white" size={32} />
                   </div>
-                  <h3 className="text-lg font-semibold text-text-primary mb-2">{cert.title}</h3>
-                  <p className="text-accent-blue font-medium mb-1">{cert.issuer}</p>
-                  <p className="text-text-secondary text-sm">{cert.year}</p>
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">{cert.title}</h3>
+                  <p className="text-red-600 font-medium mb-1">{cert.issuer}</p>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm">{cert.year}</p>
                 </motion.div>
               ))}
             </div>
@@ -1134,7 +1299,7 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="section-padding bg-primary-dark">
+      <section id="contact" className="section-padding section-alt">
         <div className="max-w-7xl mx-auto container-padding">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -1144,105 +1309,105 @@ export default function Home() {
           >
             <div className="text-center mb-16">
               <h2 className="text-4xl font-bold mb-8 gradient-text">Contact</h2>
-              <p className="text-text-secondary max-w-2xl mx-auto">
+              <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
                 Open to relocate for the right opportunity. Let's discuss how I can contribute to your data engineering initiatives.
               </p>
             </div>
 
             <div className="grid lg:grid-cols-2 gap-12">
               <div>
-                <h3 className="text-2xl font-semibold text-text-primary mb-8">Get In Touch</h3>
+                <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-8">Get In Touch</h3>
                 
                 <div className="space-y-6">
                   <div className="flex items-center space-x-4">
-                    <div className="p-3 bg-gradient-to-r from-cyan-500 to-teal-500 rounded-lg">
+                    <div className="p-3 bg-gradient-to-r from-red-600 to-red-700 rounded-lg">
                       <FaEnvelope className="text-white" />
                     </div>
                     <div>
-                      <p className="text-white font-medium">Email</p>
-                      <a href="mailto:mahmoud.mamdoh0812@gmail.com" className="text-cyan-500 hover:text-cyan-400 transition-colors">
+                      <p className="text-gray-900 dark:text-white font-medium">Email</p>
+                      <a href="mailto:mahmoud.mamdoh0812@gmail.com" className="text-red-600 hover:text-red-500 transition-colors">
                         mahmoud.mamdoh0812@gmail.com
                       </a>
                     </div>
                   </div>
                   
                   <div className="flex items-center space-x-4">
-                    <div className="p-3 bg-gradient-to-r from-cyan-500 to-teal-500 rounded-lg">
+                    <div className="p-3 bg-gradient-to-r from-red-600 to-red-700 rounded-lg">
                       <FaPhone className="text-white" />
                     </div>
                     <div>
-                      <p className="text-white font-medium">Phone</p>
-                      <a href="tel:+201102007021" className="text-cyan-500 hover:text-cyan-400 transition-colors">
+                      <p className="text-gray-900 dark:text-white font-medium">Phone</p>
+                      <a href="tel:+201102007021" className="text-red-600 hover:text-red-500 transition-colors">
                         +(20) 1102007021
                       </a>
                     </div>
                   </div>
                   
                   <div className="flex items-center space-x-4">
-                    <div className="p-3 bg-gradient-to-r from-cyan-500 to-teal-500 rounded-lg">
+                    <div className="p-3 bg-gradient-to-r from-red-600 to-red-700 rounded-lg">
                       <FaLinkedin className="text-white" />
                     </div>
                     <div>
-                      <p className="text-white font-medium">LinkedIn</p>
-                      <a href="https://linkedin.com/in/mahmoud-mamdoh-47a68a203/" target="_blank" rel="noopener noreferrer" className="text-cyan-500 hover:text-cyan-400 transition-colors">
+                      <p className="text-gray-900 dark:text-white font-medium">LinkedIn</p>
+                      <a href="https://linkedin.com/in/mahmoud-mamdoh-47a68a203/" target="_blank" rel="noopener noreferrer" className="text-red-600 hover:text-red-500 transition-colors">
                         /in/mahmoud-mamdoh-47a68a203
                       </a>
                     </div>
                   </div>
                   
                   <div className="flex items-center space-x-4">
-                    <div className="p-3 bg-gradient-to-r from-cyan-500 to-teal-500 rounded-lg">
+                    <div className="p-3 bg-gradient-to-r from-red-600 to-red-700 rounded-lg">
                       <FaGithub className="text-white" />
                     </div>
                     <div>
-                      <p className="text-white font-medium">GitHub</p>
-                      <a href="https://github.com/MAHMOUDMAMDOH8" target="_blank" rel="noopener noreferrer" className="text-cyan-500 hover:text-cyan-400 transition-colors">
+                      <p className="text-gray-900 dark:text-white font-medium">GitHub</p>
+                      <a href="https://github.com/MAHMOUDMAMDOH8" target="_blank" rel="noopener noreferrer" className="text-red-600 hover:text-red-500 transition-colors">
                         @MAHMOUDMAMDOH8
                       </a>
                     </div>
                   </div>
                   
                   <div className="flex items-center space-x-4">
-                    <div className="p-3 bg-gradient-to-r from-cyan-500 to-teal-500 rounded-lg">
+                    <div className="p-3 bg-gradient-to-r from-red-600 to-red-700 rounded-lg">
                       <FaMapMarkerAlt className="text-white" />
                     </div>
                     <div>
-                      <p className="text-white font-medium">Location</p>
-                      <p className="text-gray-300">Cairo, Egypt (open to relocate)</p>
+                      <p className="text-gray-900 dark:text-white font-medium">Location</p>
+                      <p className="text-gray-600 dark:text-gray-300">Cairo, Egypt (open to relocate)</p>
                     </div>
                   </div>
                 </div>
               </div>
               
               <div>
-                <h3 className="text-2xl font-semibold text-text-primary mb-8">Send Message</h3>
+                <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-8">Send Message</h3>
                 <form className="space-y-6">
                   <div>
-                    <label htmlFor="name" className="block text-text-primary font-medium mb-2">Name</label>
+                    <label htmlFor="name" className="block text-gray-900 dark:text-white font-medium mb-2">Name</label>
                     <input
                       type="text"
                       id="name"
-                      className="w-full px-4 py-3 bg-primary border border-border-primary rounded-lg text-text-primary focus:border-accent-blue focus:outline-none transition-colors"
+                      className="form-input"
                       placeholder="Your name"
                     />
                   </div>
                   
                   <div>
-                    <label htmlFor="email" className="block text-text-primary font-medium mb-2">Email</label>
+                    <label htmlFor="email" className="block text-gray-900 dark:text-white font-medium mb-2">Email</label>
                     <input
                       type="email"
                       id="email"
-                      className="w-full px-4 py-3 bg-primary border border-border-primary rounded-lg text-text-primary focus:border-accent-blue focus:outline-none transition-colors"
+                      className="form-input"
                       placeholder="your.email@example.com"
                     />
                   </div>
                   
                   <div>
-                    <label htmlFor="message" className="block text-text-primary font-medium mb-2">Message</label>
+                    <label htmlFor="message" className="block text-gray-900 dark:text-white font-medium mb-2">Message</label>
                     <textarea
                       id="message"
                       rows={6}
-                      className="w-full px-4 py-3 bg-primary border border-border-primary rounded-lg text-text-primary focus:border-accent-blue focus:outline-none transition-colors resize-none"
+                      className="form-input resize-none"
                       placeholder="Your message..."
                     />
                   </div>
@@ -1263,9 +1428,9 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-primary border-t border-border-primary py-8">
+      <footer className="footer-light dark:from-gray-900/80 dark:via-gray-900/90 dark:to-gray-900/80 backdrop-blur-md border-t border-gray-200/80 dark:border-gray-700/50 py-8 shadow-sm">
         <div className="max-w-7xl mx-auto container-padding text-center">
-          <p className="text-text-secondary">
+          <p className="text-gray-600 dark:text-gray-300">
             © 2024 Mahmoud Mamdoh Soliman. All rights reserved.
           </p>
         </div>

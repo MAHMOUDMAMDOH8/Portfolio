@@ -11,22 +11,44 @@
   }
   
   body {
-    @apply bg-gradient-to-br from-gray-900 via-slate-900 to-gray-800 text-white font-sans min-h-screen;
+    @apply text-gray-900 dark:text-white font-sans min-h-screen transition-colors duration-300;
     background-attachment: fixed;
+  }
+
+  /* Light mode background - Enhanced */
+  body {
+    @apply bg-gradient-to-br from-white via-red-50 to-red-100;
+    background-image: 
+      radial-gradient(circle at 20% 80%, rgba(220, 38, 38, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(220, 38, 38, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 40% 40%, rgba(220, 38, 38, 0.03) 0%, transparent 50%),
+      linear-gradient(90deg, rgba(220, 38, 38, 0.02) 1px, transparent 1px),
+      linear-gradient(rgba(220, 38, 38, 0.02) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 100% 100%, 60px 60px, 60px 60px;
+  }
+
+  /* Dark mode background */
+  .dark body {
+    @apply bg-gradient-to-br from-gray-900 via-slate-900 to-gray-800;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-gradient-to-r from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl hover:shadow-cyan-500/25;
+    @apply bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl hover:shadow-red-600/25;
   }
   
   .btn-secondary {
-    @apply border-2 border-cyan-500 text-cyan-500 hover:bg-cyan-500 hover:text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/25;
+    @apply border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-red-600/25;
   }
   
   .card {
-    @apply bg-gray-800/50 backdrop-blur-md border border-gray-700/50 rounded-xl p-6 hover:border-cyan-500/50 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/10;
+    @apply bg-white/95 dark:bg-gray-800/50 backdrop-blur-md border border-gray-200/80 dark:border-gray-700/50 rounded-xl p-6 hover:border-red-600/50 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-red-600/10 shadow-sm;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(254, 242, 242, 0.98) 100%);
+  }
+
+  .dark .card {
+    background: linear-gradient(135deg, rgba(31, 41, 55, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
   }
   
   .section-padding {
@@ -38,26 +60,46 @@
   }
   
   .gradient-text {
-    @apply bg-gradient-to-r from-cyan-500 to-teal-500 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent;
   }
   
   .data-pattern {
     background-image: 
-      radial-gradient(circle at 25% 25%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 75% 75%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 25% 25%, rgba(220, 38, 38, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(220, 38, 38, 0.1) 0%, transparent 50%),
+      linear-gradient(90deg, rgba(0,0,0,0.02) 1px, transparent 1px),
+      linear-gradient(rgba(0,0,0,0.02) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 50px 50px, 50px 50px;
+  }
+
+  .dark .data-pattern {
+    background-image: 
+      radial-gradient(circle at 25% 25%, rgba(220, 38, 38, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(220, 38, 38, 0.1) 0%, transparent 50%),
       linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px),
       linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px);
-    background-size: 100% 100%, 100% 100%, 50px 50px, 50px 50px;
   }
 
   /* Project Card Enhancements */
   .project-card {
-    @apply relative group bg-gray-800/50 backdrop-blur-md border-2 rounded-xl p-6 transition-all duration-300 overflow-hidden;
+    @apply relative bg-white/95 dark:bg-gray-800/50 backdrop-blur-md border-2 rounded-xl p-6 transition-all duration-300 overflow-hidden shadow-sm;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.98) 100%);
+  }
+
+  .project-card.group {
+    /* Group utility applied separately */
+  }
+
+  .dark .project-card {
     background: linear-gradient(135deg, rgba(31, 41, 55, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
   }
 
   .project-card:hover {
     transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+  }
+
+  .dark .project-card:hover {
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
   }
 
@@ -67,8 +109,8 @@
   }
 
   .project-card.etl:hover {
-    border-color: #00d4ff;
-    box-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+    border-color: #dc2626;
+    box-shadow: 0 0 30px rgba(220, 38, 38, 0.5);
   }
 
   .project-card.analytics:hover {
@@ -98,36 +140,54 @@
 
   /* Navigation Enhancements */
   .nav-glass {
-    @apply bg-gray-900/80 backdrop-blur-md border-b border-gray-700/50;
+    @apply bg-white/95 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200/80 dark:border-gray-700/50 shadow-sm;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(254, 242, 242, 0.98) 100%);
   }
 
-  /* Section Backgrounds */
+  .dark .nav-glass {
+    background: linear-gradient(135deg, rgba(17, 24, 39, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+  }
+
+  /* Section Backgrounds - Enhanced */
   .section-alt {
-    @apply bg-gray-800/30 backdrop-blur-sm;
+    @apply bg-gradient-to-br from-white/90 via-red-50/70 to-red-100/70 dark:from-gray-800/30 dark:via-gray-800/20 dark:to-gray-800/30 backdrop-blur-sm;
+    background-image: 
+      radial-gradient(circle at 25% 25%, rgba(220, 38, 38, 0.03) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(220, 38, 38, 0.03) 0%, transparent 50%);
   }
 
   /* Skill Bar Enhancements */
   .skill-bar {
-    @apply bg-gray-700/50 rounded-full h-2 overflow-hidden;
+    @apply bg-gray-200/80 dark:bg-gray-700/50 rounded-full h-2 overflow-hidden;
   }
 
   .skill-progress {
-    @apply bg-gradient-to-r from-cyan-500 to-teal-500 h-2 rounded-full transition-all duration-1000;
+    @apply bg-gradient-to-r from-red-600 to-red-700 h-2 rounded-full transition-all duration-1000;
   }
 
   /* Certification Card */
   .cert-card {
-    @apply bg-gray-800/50 backdrop-blur-md border border-gray-700/50 rounded-xl p-6 hover:border-cyan-500/50 transition-all duration-300 transform hover:scale-105;
+    @apply bg-white/95 dark:bg-gray-800/50 backdrop-blur-md border border-gray-200/80 dark:border-gray-700/50 rounded-xl p-6 hover:border-red-600/50 transition-all duration-300 transform hover:scale-105 shadow-sm;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(254, 242, 242, 0.98) 100%);
+  }
+
+  .dark .cert-card {
+    background: linear-gradient(135deg, rgba(31, 41, 55, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
   }
 
   /* Contact Form */
   .form-input {
-    @apply w-full px-4 py-3 bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-lg text-white focus:border-cyan-500 focus:outline-none transition-colors placeholder-gray-400;
+    @apply w-full px-4 py-3 bg-white/95 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200/80 dark:border-gray-700/50 rounded-lg text-gray-900 dark:text-white focus:border-red-600 focus:outline-none transition-colors placeholder-gray-500 dark:placeholder-gray-400 shadow-sm;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(254, 242, 242, 0.98) 100%);
+  }
+
+  .dark .form-input {
+    background: linear-gradient(135deg, rgba(31, 41, 55, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
   }
 
   /* Glow Effects */
-  .glow-cyan {
-    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+  .glow-red {
+    box-shadow: 0 0 20px rgba(220, 38, 38, 0.3);
   }
 
   .glow-purple {
@@ -136,6 +196,15 @@
 
   .glow-green {
     box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+  }
+
+  /* Footer Enhancements */
+  .footer-light {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(254, 242, 242, 0.98) 100%);
+  }
+
+  .dark .footer-light {
+    background: linear-gradient(135deg, rgba(17, 24, 39, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
   }
 }
 
