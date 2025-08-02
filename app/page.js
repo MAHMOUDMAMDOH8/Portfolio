@@ -43,6 +43,7 @@ export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
   const [isDarkMode, setIsDarkMode] = useState(true)
+  const [selectedCategory, setSelectedCategory] = useState('All')
 
   useEffect(() => {
     // Check for saved theme preference or default to dark mode
@@ -515,6 +516,41 @@ export default function Home() {
       color: 'from-red-600 to-red-700'
     }
   ]
+
+  // Helper function to determine project category
+  const getProjectCategory = (title, description) => {
+    const titleLower = title.toLowerCase();
+    
+    // Manual mapping for specific projects
+    if (titleLower.includes('dbt-orchestrator') || titleLower.includes('elt-engine') ||
+        titleLower.includes('olap dimensional modeling for advanced analytics') || titleLower.includes('olapify')) {
+      return 'Analytics Engineer';
+    }
+    
+    if (titleLower.includes('e-commerce dwh') || titleLower.includes('bike store analytics') ||
+        titleLower.includes('adventureworks analysis') || titleLower.includes('hr analysis') ||
+        titleLower.includes('northwind project (etl & building dwh & data analysis)') || 
+        titleLower.includes('northwind traders analysis') || titleLower.includes('adidas market analysis')) {
+      return 'BI Engineer';
+    }
+    
+    // Default to Data Engineer for all other projects
+    return 'Data Engineer';
+  };
+
+  // Helper function to get category color
+  const getCategoryColor = (category) => {
+    switch (category) {
+      case 'Data Engineer':
+        return { color: 'from-red-600 to-red-700', borderColor: 'border-red-600' };
+      case 'Analytics Engineer':
+        return { color: 'from-blue-600 to-blue-700', borderColor: 'border-blue-600' };
+      case 'BI Engineer':
+        return { color: 'from-green-600 to-green-700', borderColor: 'border-green-600' };
+      default:
+        return { color: 'from-red-600 to-red-700', borderColor: 'border-red-600' };
+    }
+  };
 
   return (
     <div className="min-h-screen transition-colors duration-300">
@@ -996,53 +1032,56 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: index * 0.2 }}
                   viewport={{ once: true }}
-                  className="card"
+                  className="card overflow-hidden"
                 >
-                  <div className="flex items-start space-x-4 mb-6">
-                    <div className={`p-3 rounded-lg ${bootcamp.color}`}>
-                      <bootcamp.icon className="text-white" size={24} />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-1">{bootcamp.title}</h3>
-                      <p className="text-red-600 font-medium">{bootcamp.organization}</p>
-                      <p className="text-gray-600 dark:text-gray-300 text-sm">{bootcamp.period}</p>
-                    </div>
-                  </div>
-                  
-                  <p className="text-gray-600 dark:text-gray-300 mb-6">{bootcamp.description}</p>
-                  
-                  <div className="space-y-6">
-                    <div>
-                      <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Skills Gained:</h4>
-                      <ul className="space-y-2">
-                        {bootcamp.skills.map((skill, idx) => (
-                          <li key={idx} className="flex items-start space-x-2">
-                            <FaCheckCircle className="text-green-600 dark:text-green-400 mt-1 flex-shrink-0" />
-                            <span className="text-gray-600 dark:text-gray-300 text-sm">{skill}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div>
-                      <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Tools & Technologies:</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {bootcamp.tools.map((tool, idx) => (
-                          <span key={idx} className="px-2 py-1 bg-blue-100/80 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded text-xs border border-blue-200 dark:border-blue-700">
-                            {tool}
-                          </span>
-                        ))}
+                  {/* Content Section */}
+                  <div className="p-6">
+                    <div className="flex items-start space-x-4 mb-6">
+                      <div className={`p-3 rounded-lg ${bootcamp.color}`}>
+                        <bootcamp.icon className="text-white" size={24} />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-1">{bootcamp.title}</h3>
+                        <p className="text-red-600 font-medium">{bootcamp.organization}</p>
+                        <p className="text-gray-600 dark:text-gray-300 text-sm">{bootcamp.period}</p>
                       </div>
                     </div>
+                    
+                    <p className="text-gray-600 dark:text-gray-300 mb-6">{bootcamp.description}</p>
+                    
+                    <div className="space-y-6">
+                      <div>
+                        <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Skills Gained:</h4>
+                        <ul className="space-y-2">
+                          {bootcamp.skills.map((skill, idx) => (
+                            <li key={idx} className="flex items-start space-x-2">
+                              <FaCheckCircle className="text-green-600 dark:text-green-400 mt-1 flex-shrink-0" />
+                              <span className="text-gray-600 dark:text-gray-300 text-sm">{skill}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
 
-                    <div>
-                      <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Concepts Learned:</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {bootcamp.concepts.map((concept, idx) => (
-                          <span key={idx} className="px-2 py-1 bg-green-100/80 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded text-xs border border-green-200 dark:border-green-700">
-                            {concept}
-                          </span>
-                        ))}
+                      <div>
+                        <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Tools & Technologies:</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {bootcamp.tools.map((tool, idx) => (
+                            <span key={idx} className="px-2 py-1 bg-blue-100/80 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded text-xs border border-blue-200 dark:border-blue-700">
+                              {tool}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div>
+                        <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Concepts Learned:</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {bootcamp.concepts.map((concept, idx) => (
+                            <span key={idx} className="px-2 py-1 bg-green-100/80 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded text-xs border border-green-200 dark:border-green-700">
+                              {concept}
+                            </span>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1069,109 +1108,252 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {projects.map((project, index) => {
-                // Determine category and color based on project title
-                const getCategoryAndColor = (title) => {
-                  if (title.toLowerCase().includes('streaming') || title.toLowerCase().includes('kafka')) {
-                    return { category: 'Streaming', color: 'from-purple-500 to-pink-500', borderColor: 'border-purple-500' };
-                  } else if (title.toLowerCase().includes('elt') || title.toLowerCase().includes('etl')) {
-                    return { category: 'ETL/ELT', color: 'from-red-600 to-red-700', borderColor: 'border-red-600' };
-                  } else if (title.toLowerCase().includes('olap') || title.toLowerCase().includes('dimensional')) {
-                    return { category: 'Analytics', color: 'from-green-500 to-emerald-500', borderColor: 'border-green-500' };
-                  } else if (title.toLowerCase().includes('dbt')) {
-                    return { category: 'Data Modeling', color: 'from-orange-500 to-red-500', borderColor: 'border-orange-500' };
-                  } else if (title.toLowerCase().includes('e-commerce') || title.toLowerCase().includes('retail')) {
-                    return { category: 'E-commerce', color: 'from-indigo-500 to-purple-500', borderColor: 'border-indigo-500' };
-                  } else if (title.toLowerCase().includes('transport') || title.toLowerCase().includes('taxi') || title.toLowerCase().includes('uber')) {
-                    return { category: 'Transportation', color: 'from-teal-500 to-blue-500', borderColor: 'border-teal-500' };
-                  } else {
-                    return { category: 'Data Engineering', color: 'from-gray-500 to-gray-600', borderColor: 'border-gray-500' };
-                  }
-                };
-
-                const { category, color, borderColor } = getCategoryAndColor(project.title);
-
-                return (
-                  <motion.div 
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className={`relative group project-card border-2 ${borderColor} rounded-xl p-6 transition-all duration-300 hover:scale-105 hover:shadow-2xl overflow-hidden ${
-                      project.featured ? 'ring-2 ring-red-500 ring-opacity-50' : ''
+            {/* Category Filter */}
+            <div className="flex justify-center mb-12">
+              <div className="flex flex-wrap gap-4 bg-white/10 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl p-2 border border-gray-200/20 dark:border-gray-700/50">
+                {['All', 'Data Engineer', 'Analytics Engineer', 'BI Engineer'].map((category) => (
+                  <motion.button
+                    key={category}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setSelectedCategory(category)}
+                    className={`px-6 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${
+                      selectedCategory === category
+                        ? 'bg-red-600 text-white shadow-lg shadow-red-600/25'
+                        : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100/50 dark:hover:bg-gray-700/50'
                     }`}
                   >
-                    {/* Featured Badge */}
-                    {project.featured && (
-                      <div className="absolute -top-3 -right-3 bg-gradient-to-r from-red-600 to-red-700 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg z-10">
-                        Featured
-                      </div>
-                    )}
+                    {category}
+                  </motion.button>
+                ))}
+              </div>
+            </div>
 
-                    {/* Project Icon/Image */}
-                    <div className="mb-6">
-                      <div className={`w-16 h-16 rounded-xl bg-gradient-to-r ${color} flex items-center justify-center mb-4 shadow-lg`}>
-                        <FaProjectDiagram className="text-white text-2xl" />
-                      </div>
-                    </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {(() => {
+                const filteredProjects = projects.filter(project => {
+                  if (selectedCategory === 'All') return true;
+                  return getProjectCategory(project.title, project.description) === selectedCategory;
+                });
 
-                    {/* Category Badge */}
-                    <div className="mb-4">
-                      <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r ${color} text-white`}>
-                        {category}
-                      </span>
-                    </div>
-
-                    {/* Project Title */}
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 leading-tight">
-                      {project.title}
-                    </h3>
-
-                    {/* Description */}
-                    <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-6 line-clamp-3">
-                      {project.description}
-                    </p>
-
-                    {/* Technology Stack */}
-                    <div className="mb-6">
-                      <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-3 uppercase tracking-wide">Technologies</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {project.tech.map((tech, idx) => (
-                          <span 
-                            key={idx} 
-                            className="px-2 py-1 bg-gray-100/80 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 rounded text-xs border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-colors"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Action Buttons */}
-                    <div className="flex gap-3">
-                      <a 
-                        href={project.github} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="flex-1 flex items-center justify-center space-x-2 px-4 py-2 bg-gray-100/80 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-300 group/btn"
+                if (filteredProjects.length === 0) {
+                  return (
+                    <div className="col-span-full text-center py-12">
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                        className="space-y-4"
                       >
-                        <FaGithub className="group-hover/btn:scale-110 transition-transform" />
-                        <span className="text-sm font-medium">View Code</span>
-                      </a>
+                        <div className="text-6xl mb-4">🔍</div>
+                        <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                          No projects found for "{selectedCategory}"
+                        </h3>
+                        <p className="text-gray-600 dark:text-gray-300 max-w-md mx-auto">
+                          Try selecting a different category or check back later for new projects.
+                        </p>
+                        <button
+                          onClick={() => setSelectedCategory('All')}
+                          className="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-200"
+                        >
+                          View All Projects
+                        </button>
+                      </motion.div>
                     </div>
+                  );
+                }
 
-                    {/* Date Badge */}
-                    <div className="absolute top-4 right-4 bg-white/90 dark:bg-gray-800/80 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50">
-                      {project.date}
-                    </div>
+                return filteredProjects.map((project, index) => {
+                  const category = getProjectCategory(project.title, project.description);
+                  const { color, borderColor } = getCategoryColor(category);
 
-                    {/* Gradient Border Effect */}
-                    <div className={`absolute inset-0 rounded-xl bg-gradient-to-r ${color} opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none`}></div>
-                  </motion.div>
-                );
-              })}
+                  return (
+                    <motion.div 
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.8, delay: index * 0.1 }}
+                      viewport={{ once: true }}
+                      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group"
+                    >
+                      {/* Full Width Image Section with Hover Overlay */}
+                      <div className={`relative h-48 bg-gradient-to-br ${color} overflow-hidden`}>
+                        {/* Background Icon */}
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="text-6xl text-white opacity-30">
+                            {/* Data Engineer Icon */}
+                            {category === 'Data Engineer' ? (
+                              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                              </svg>
+                            ) : 
+                            /* Analytics Engineer Icon */
+                            category === 'Analytics Engineer' ? (
+                              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M3 3v18h18"></path>
+                                <path d="M18 17V9"></path>
+                                <path d="M13 17V5"></path>
+                                <path d="M8 17v-3"></path>
+                              </svg>
+                            ) : 
+                            /* BI Engineer Icon */
+                            category === 'BI Engineer' ? (
+                              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                                <polyline points="16 7 22 7 22 13"></polyline>
+                              </svg>
+                            ) : 
+                            /* Default Data Engineer Icon */
+                            (
+                              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                              </svg>
+                            )}
+                          </div>
+                        </div>
+                        
+                        {/* Hover Overlay with Action Buttons */}
+                        <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4">
+                          <a 
+                            href={project.github} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="p-3 bg-white rounded-full text-gray-900 hover:bg-gray-100 transition-colors duration-200"
+                          >
+                            <FaGithub className="w-6 h-6" />
+                          </a>
+                          {project.demo && (
+                            <a 
+                              href={project.demo} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="p-3 bg-white rounded-full text-gray-900 hover:bg-gray-100 transition-colors duration-200"
+                            >
+                              <FaExternalLinkAlt className="w-6 h-6" />
+                            </a>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Content Section */}
+                      <div className="p-6">
+                        {/* Project Title */}
+                        <div className="flex items-center justify-between mb-3">
+                          <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                            {project.title}
+                          </h3>
+                        </div>
+
+                        {/* Description */}
+                        <p className="text-gray-600 dark:text-gray-300 mb-4 text-sm leading-relaxed">
+                          {project.description}
+                        </p>
+
+                        {/* Technology Stack with Icons */}
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {project.tech.slice(0, 4).map((tech, idx) => (
+                            <div key={idx} className="flex items-center space-x-1 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full text-sm">
+                              {/* Technology Icons */}
+                              {tech.toLowerCase().includes('python') ? (
+                                <FaPython className="w-4 h-4 text-blue-600" />
+                              ) : tech.toLowerCase().includes('sql') ? (
+                                <FaDatabase className="w-4 h-4 text-green-600" />
+                              ) : tech.toLowerCase().includes('docker') ? (
+                                <FaDocker className="w-4 h-4 text-blue-500" />
+                              ) : tech.toLowerCase().includes('kafka') ? (
+                                <FaProjectDiagram className="w-4 h-4 text-orange-500" />
+                              ) : tech.toLowerCase().includes('spark') ? (
+                                <FaRocket className="w-4 h-4 text-red-500" />
+                              ) : tech.toLowerCase().includes('airflow') ? (
+                                <FaProjectDiagram className="w-4 h-4 text-blue-600" />
+                              ) : tech.toLowerCase().includes('dbt') ? (
+                                <FaDatabase className="w-4 h-4 text-orange-600" />
+                              ) : tech.toLowerCase().includes('power bi') ? (
+                                <FaChartLine className="w-4 h-4 text-yellow-600" />
+                              ) : tech.toLowerCase().includes('postgresql') ? (
+                                <FaDatabase className="w-4 h-4 text-blue-700" />
+                              ) : tech.toLowerCase().includes('snowflake') ? (
+                                <FaCloud className="w-4 h-4 text-blue-400" />
+                              ) : tech.toLowerCase().includes('hadoop') ? (
+                                <FaServer className="w-4 h-4 text-gray-600" />
+                              ) : tech.toLowerCase().includes('hive') ? (
+                                <FaDatabase className="w-4 h-4 text-purple-600" />
+                              ) : tech.toLowerCase().includes('git') ? (
+                                <FaGitAlt className="w-4 h-4 text-orange-600" />
+                              ) : tech.toLowerCase().includes('linux') ? (
+                                <FaLinux className="w-4 h-4 text-yellow-600" />
+                              ) : tech.toLowerCase().includes('windows') ? (
+                                <FaWindows className="w-4 h-4 text-blue-600" />
+                              ) : (
+                                <FaCode className="w-4 h-4 text-gray-600" />
+                              )}
+                              <span className="text-gray-700 dark:text-gray-300">{tech}</span>
+                            </div>
+                          ))}
+                          {project.tech.length > 4 && (
+                            <div className="flex items-center space-x-1 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full text-sm">
+                              <FaCode className="w-4 h-4 text-gray-600" />
+                              <span className="text-gray-700 dark:text-gray-300">+{project.tech.length - 4} more</span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Statistics Section */}
+                        <div className="grid grid-cols-2 gap-2 mb-4">
+                          <div className="text-center">
+                            <div className="text-sm font-bold text-red-600 dark:text-red-400">
+                              {project.featured ? 'Featured' : 'Active'}
+                            </div>
+                            <div className="text-xs text-gray-500 dark:text-gray-400">Status</div>
+                          </div>
+                          <div className="text-center">
+                            <div className="text-sm font-bold text-red-600 dark:text-red-400">
+                              {project.date}
+                            </div>
+                            <div className="text-xs text-gray-500 dark:text-gray-400">Date</div>
+                          </div>
+                          <div className="text-center">
+                            <div className="text-sm font-bold text-red-600 dark:text-red-400">
+                              {category}
+                            </div>
+                            <div className="text-xs text-gray-500 dark:text-gray-400">Category</div>
+                          </div>
+                          <div className="text-center">
+                            <div className="text-sm font-bold text-red-600 dark:text-red-400">
+                              {project.tech.length}
+                            </div>
+                            <div className="text-xs text-gray-500 dark:text-gray-400">Technologies</div>
+                          </div>
+                        </div>
+
+                        {/* Action Buttons */}
+                        <div className="flex space-x-2">
+                          <a 
+                            href={project.github} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="flex-1 bg-gray-900 dark:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors duration-200 flex items-center justify-center space-x-2"
+                          >
+                            <FaGithub className="w-4 h-4" />
+                            <span>Code</span>
+                          </a>
+                          {project.demo && (
+                            <a 
+                              href={project.demo} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors duration-200 flex items-center justify-center space-x-2"
+                            >
+                              <FaExternalLinkAlt className="w-4 h-4" />
+                              <span>Live Demo</span>
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    </motion.div>
+                  );
+                });
+              })()}
             </div>
           </motion.div>
         </div>
@@ -1350,50 +1532,138 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="relative group project-card border-2 border-gray-200 dark:border-gray-700 rounded-xl p-6 transition-all duration-300 hover:scale-105 hover:shadow-2xl overflow-hidden"
+                  className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group"
                 >
-                  {/* Certification Icon */}
-                  <div className="mb-6">
-                    <div className={`w-16 h-16 rounded-xl bg-gradient-to-r ${cert.color} flex items-center justify-center mb-4 shadow-lg`}>
-                      <cert.icon className="text-white text-2xl" />
+                  {/* Full Width Image Section with Hover Overlay */}
+                  <div className={`relative h-48 bg-gradient-to-br ${cert.color} overflow-hidden`}>
+                    {/* Background Icon */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="text-6xl text-white opacity-30">
+                        {/* DataTalks Club Icon */}
+                        {cert.issuer.toLowerCase().includes('datatalks') ? (
+                          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                          </svg>
+                        ) : 
+                        /* ITI Icon */
+                        cert.issuer.toLowerCase().includes('iti') ? (
+                          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                          </svg>
+                        ) : 
+                        /* IBM Icon */
+                        cert.issuer.toLowerCase().includes('ibm') ? (
+                          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <polyline points="21,15 16,10 5,21"></polyline>
+                          </svg>
+                        ) : 
+                        /* Datacamp Icon */
+                        cert.issuer.toLowerCase().includes('datacamp') ? (
+                          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                            <path d="M2 17l10 5 10-5"></path>
+                            <path d="M2 12l10 5 10-5"></path>
+                          </svg>
+                        ) : 
+                        /* Google Icon */
+                        cert.issuer.toLowerCase().includes('google') ? (
+                          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                            <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                            <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                          </svg>
+                        ) : 
+                        /* Default Icon */
+                        (
+                          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                            <path d="M2 17l10 5 10-5"></path>
+                            <path d="M2 12l10 5 10-5"></path>
+                          </svg>
+                        )}
+                      </div>
+                    </div>
+                    
+                    {/* Hover Overlay with Action Buttons */}
+                    <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4">
+                      <div className="p-3 bg-white rounded-full text-gray-900 hover:bg-gray-100 transition-colors duration-200">
+                        <FaCertificate className="w-6 h-6" />
+                      </div>
                     </div>
                   </div>
 
-                  {/* Certification Title */}
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 leading-tight">
-                    {cert.title}
-                  </h3>
+                  {/* Content Section */}
+                  <div className="p-6">
+                    {/* Certification Title */}
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                        {cert.title}
+                      </h3>
+                    </div>
 
-                  {/* Issuer */}
-                  <p className="text-red-600 font-medium mb-3">{cert.issuer}</p>
+                    {/* Issuer */}
+                    <p className="text-red-600 font-medium mb-3">{cert.issuer}</p>
 
-                  {/* Summary */}
-                  <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed mb-6 line-clamp-3">
-                    {cert.summary}
-                  </p>
+                    {/* Summary */}
+                    <p className="text-gray-600 dark:text-gray-300 mb-4 text-sm leading-relaxed">
+                      {cert.summary}
+                    </p>
 
-                  {/* Skills */}
-                  <div className="mb-6">
-                    <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-3 uppercase tracking-wide">Skills Covered</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {cert.skills.map((skill, idx) => (
-                        <span 
-                          key={idx} 
-                          className="px-2 py-1 bg-gray-100/80 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 rounded text-xs border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-colors"
-                        >
-                          {skill}
-                        </span>
-                      ))}
+                    {/* Skills */}
+                    <div className="mb-6">
+                      <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-3 uppercase tracking-wide">Skills Covered</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {cert.skills.map((skill, idx) => (
+                          <span 
+                            key={idx} 
+                            className="px-2 py-1 bg-gray-100/80 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 rounded text-xs border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-colors"
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Statistics Section */}
+                    <div className="grid grid-cols-2 gap-2 mb-4">
+                      <div className="text-center">
+                        <div className="text-sm font-bold text-red-600 dark:text-red-400">
+                          {cert.year}
+                        </div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">Year</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-sm font-bold text-red-600 dark:text-red-400">
+                          {cert.skills.length}
+                        </div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">Skills</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-sm font-bold text-red-600 dark:text-red-400">
+                          {cert.issuer.split(' ')[0]}
+                        </div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">Issuer</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-sm font-bold text-red-600 dark:text-red-400">
+                          Certified
+                        </div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">Status</div>
+                      </div>
+                    </div>
+
+                    {/* Action Button */}
+                    <div className="flex space-x-2">
+                      <button className="flex-1 bg-gray-900 dark:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors duration-200 flex items-center justify-center space-x-2">
+                        <FaCertificate className="w-4 h-4" />
+                        <span>View Certificate</span>
+                      </button>
                     </div>
                   </div>
-
-                  {/* Year Badge */}
-                  <div className="absolute top-4 right-4 bg-white/90 dark:bg-gray-800/80 text-gray-600 dark:text-gray-300 px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50">
-                    {cert.year}
-                  </div>
-
-                  {/* Gradient Border Effect */}
-                  <div className={`absolute inset-0 rounded-xl bg-gradient-to-r ${cert.color} opacity-0 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none`}></div>
                 </motion.div>
               ))}
             </div>
