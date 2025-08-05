@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Typewriter } from 'react-simple-typewriter'
 import Image from 'next/image'
+import Link from 'next/link'
 import { 
   FaGithub, 
   FaLinkedin, 
@@ -42,7 +43,8 @@ import {
   FaUser,
   FaTag,
   FaComment,
-  FaPaperPlane
+  FaPaperPlane,
+  FaChartBar
 } from 'react-icons/fa'
 
 export default function Home() {
@@ -79,7 +81,7 @@ export default function Home() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'about', 'experience', 'projects', 'skills', 'education', 'contact']
+      const sections = ['home', 'about', 'experience', 'projects', 'dashboards', 'skills', 'education', 'contact']
       const scrollPosition = window.scrollY + 100
 
       for (const section of sections) {
@@ -115,6 +117,7 @@ export default function Home() {
     { id: 'about', label: 'About' },
     { id: 'experience', label: 'Experience' },
     { id: 'projects', label: 'Projects' },
+    { id: 'dashboards', label: 'Dashboards' },
     { id: 'skills', label: 'Skills' },
     { id: 'education', label: 'Education' },
     { id: 'contact', label: 'Contact' }
@@ -258,7 +261,7 @@ export default function Home() {
       title: 'OLAP Dimensional Modeling for Advanced Analytics',
       description: 'Comprehensive OLAP data warehouse solution implementing dimensional modeling techniques for advanced analytics. Features Docker containerization for scalable deployment, Apache Airflow for ETL orchestration, and customized visualization components tracking key business performance metrics and operational KPIs.',
       tech: ['Python', 'SQL', 'Docker', 'Apache Airflow', 'PostgreSQL'],
-      github: 'https://github.com/MAHMOUDMAMDOH8/olap-dimensional-modeling',
+      github: 'https://github.com/MAHMOUDMAMDOH8/OLAP_Dimensional_Modeling_for_Advanced_Analytics',
       demo: '',
       featured: false,
       date: '2025'
@@ -267,7 +270,7 @@ export default function Home() {
       title: 'DBT-Orchestrator',
       description: 'Data transformation orchestration platform leveraging dbt for SQL-based transformations and Apache Airflow for workflow management. Implements automated testing, documentation generation, and lineage tracking for maintainable data transformation pipelines.',
       tech: ['Python', 'dbt', 'Apache Airflow', 'SQL'],
-      github: 'https://github.com/MAHMOUDMAMDOH8/dbt-orchestrator',
+      github: 'https://github.com/MAHMOUDMAMDOH8/DBT-Orchestrator',
       demo: '',
       featured: false,
       date: 'Mar 2025'
@@ -276,7 +279,7 @@ export default function Home() {
       title: 'OLAPify',
       description: 'OLAP data warehouse solution implementing dimensional modeling for advanced analytics. Features star schema design, aggregated data marts, automated cube processing, and optimized query performance for business intelligence and reporting applications.',
       tech: ['Python', 'SQL', 'PostgreSQL', 'Docker'],
-      github: 'https://github.com/MAHMOUDMAMDOH8/olapify',
+      github: 'https://github.com/MAHMOUDMAMDOH8/OLAPify',
       demo: '',
       featured: false,
       date: 'Dec 2024'
@@ -288,13 +291,13 @@ export default function Home() {
       github: 'https://github.com/MAHMOUDMAMDOH8/northwind-project',
       demo: '',
       featured: false,
-      date: '2024-2025'
+      date: '2023'
     },
     {
       title: 'E2E-ELT-pipeline',
       description: 'End-to-end ELT pipeline with data-aware orchestration using Apache Airflow. Implements PostgreSQL data warehouse, automated data quality validation, error handling, and monitoring for reliable data integration and transformation workflows.',
       tech: ['Python', 'SQL', 'Apache Airflow', 'PostgreSQL'],
-      github: 'https://github.com/MAHMOUDMAMDOH8/e2e-elt-pipeline',
+      github: 'https://github.com/MAHMOUDMAMDOH8/E2E-ELT-pipeline',
       demo: '',
       featured: false,
       date: 'Oct 2024'
@@ -303,7 +306,7 @@ export default function Home() {
       title: 'E2E E-commerce Data Pipeline',
       description: 'Complete e-commerce data pipeline processing customer transactions, inventory, and sales data. Implements automated ETL workflows, dimensional modeling for analytics, real-time inventory tracking, and business intelligence dashboards for retail performance optimization.',
       tech: ['Python', 'Apache Airflow', 'PostgreSQL', 'Docker'],
-      github: 'https://github.com/MAHMOUDMAMDOH8/e2e-ecommerce-data-pipeline',
+      github: 'https://github.com/MAHMOUDMAMDOH8/E2E-e-commerce-data-pipeline',
       demo: '',
       featured: false,
       date: 'Jun 2024'
@@ -633,6 +636,12 @@ export default function Home() {
                     {item.label}
                   </button>
                 ))}
+                <Link
+                  href="/case-studies"
+                  className="text-sm text-gray-600 dark:text-gray-300 hover:text-red-600 transition-colors"
+                >
+                  Case Studies
+                </Link>
               </div>
             </div>
 
@@ -680,6 +689,12 @@ export default function Home() {
                 {item.label}
               </button>
             ))}
+            <Link
+              href="/case-studies"
+              className="block w-full text-left px-6 py-4 text-gray-600 dark:text-gray-300 hover:text-red-600 transition-colors"
+            >
+              Case Studies
+            </Link>
           </motion.div>
         )}
       </nav>
@@ -980,6 +995,7 @@ export default function Home() {
                 {/* Border Glow */}
                 <div className="absolute inset-0 rounded-xl border-2 border-red-400/50 group-hover:border-red-300 transition-colors duration-300"></div>
               </motion.button>
+              
               <motion.button 
                 whileHover={{ scale: 1.05, y: -5 }}
                 whileTap={{ scale: 0.95 }}
@@ -1911,6 +1927,145 @@ export default function Home() {
                           </div>
                         </motion.div>
                       ))}
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Interactive Dashboards Section */}
+      <section id="dashboards" className="section-padding">
+        <div className="max-w-7xl mx-auto container-padding">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold mb-8 gradient-text">Interactive Dashboards</h2>
+              <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                Published interactive dashboards on NovyPro showcasing data visualization and business intelligence expertise
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[
+                {
+                  title: 'Order Analysis Dashboard',
+                  description: 'Comprehensive order analytics with sales performance, customer insights, and trend analysis',
+                  url: 'https://project.novypro.com/1Qxh8Y',
+                  category: 'E-commerce',
+                  icon: '📊',
+                  color: 'from-blue-500 to-blue-600'
+                },
+                {
+                  title: 'Store Analysis Dashboard',
+                  description: 'Store performance metrics, geographic analysis, and operational insights',
+                  url: 'https://project.novypro.com/1Qxh8Y',
+                  category: 'Retail',
+                  icon: '🏪',
+                  color: 'from-green-500 to-green-600'
+                },
+                {
+                  title: 'E-commerce Dashboard',
+                  description: 'Complete e-commerce analytics with product performance, customer behavior, and sales trends',
+                  url: 'https://project.novypro.com/Huo1Ep',
+                  category: 'E-commerce',
+                  icon: '🛒',
+                  color: 'from-purple-500 to-purple-600'
+                },
+                {
+                  title: 'Bike Store Dashboard',
+                  description: 'Bicycle retail analytics with inventory management, sales performance, and customer insights',
+                  url: 'https://project.novypro.com/OlOb72',
+                  category: 'Retail',
+                  icon: '🚲',
+                  color: 'from-orange-500 to-orange-600'
+                },
+                {
+                  title: 'Northwind Dashboard',
+                  description: 'Classic Northwind database analytics with comprehensive business intelligence insights',
+                  url: 'https://project.novypro.com/tVmUo1',
+                  category: 'Business Intelligence',
+                  icon: '📈',
+                  color: 'from-red-500 to-red-600'
+                },
+                {
+                  title: 'HR Analysis Dashboard',
+                  description: 'Human resources analytics with employee performance, recruitment metrics, and workforce insights',
+                  url: 'https://project.novypro.com/UfeUUu',
+                  category: 'Human Resources',
+                  icon: '👥',
+                  color: 'from-indigo-500 to-indigo-600'
+                }
+              ].map((dashboard, index) => (
+                <motion.div 
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group transform hover:scale-105 hover:-translate-y-2"
+                  whileHover={{ 
+                    rotateY: 2,
+                    rotateX: 2,
+                    transition: { duration: 0.3 }
+                  }}
+                >
+                  {/* Full Width Image Section with Hover Overlay */}
+                  <div className={`relative h-48 bg-gradient-to-br ${dashboard.color} overflow-hidden`}>
+                    {/* Background Icon */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="text-6xl text-white opacity-30">
+                        {dashboard.icon}
+                      </div>
+                    </div>
+                    
+                    {/* Hover Overlay with Action Buttons */}
+                    <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4">
+                      <a
+                        href={dashboard.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-3 bg-white rounded-full text-gray-900 hover:bg-gray-100 transition-colors duration-200"
+                      >
+                        <FaExternalLinkAlt className="w-6 h-6" />
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Content Section */}
+                  <div className="p-6">
+                    {/* Dashboard Title */}
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                        {dashboard.title}
+                      </h3>
+                    </div>
+
+                    {/* Category */}
+                    <p className="text-red-600 font-medium mb-3">{dashboard.category}</p>
+
+                    {/* Description */}
+                    <p className="text-gray-600 dark:text-gray-300 mb-4 text-sm leading-relaxed">
+                      {dashboard.description}
+                    </p>
+
+                    {/* Action Button */}
+                    <div className="flex space-x-2">
+                      <a
+                        href={dashboard.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 bg-gray-900 dark:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors duration-200 flex items-center justify-center space-x-2"
+                      >
+                        <FaExternalLinkAlt className="w-4 h-4" />
+                        <span>View Dashboard</span>
+                      </a>
                     </div>
                   </div>
                 </motion.div>
