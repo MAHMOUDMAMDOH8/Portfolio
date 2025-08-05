@@ -36,7 +36,12 @@ import {
   FaDocker,
   FaLinux,
   FaWindows,
-  FaGitAlt
+  FaGitAlt,
+  FaCalendarAlt,
+  FaUser,
+  FaTag,
+  FaComment,
+  FaPaperPlane
 } from 'react-icons/fa'
 
 export default function Home() {
@@ -118,10 +123,10 @@ export default function Home() {
     {
       category: 'Programming Languages',
       items: [
-        { name: 'Python', level: 75, icon: FaPython },
-        { name: 'SQL', level: 75, icon: FaDatabase },
-        { name: 'Spark', level: 70, icon: FaRocket },
-        { name: 'C#', level: 65, icon: FaCode }
+        { name: 'Python', level: 80, icon: FaPython },
+        { name: 'SQL', level: 80, icon: FaDatabase },
+        { name: 'Spark', level: 60, icon: FaRocket },
+        { name: 'C#', level: 60, icon: FaCode }
       ]
     },
     {
@@ -134,43 +139,52 @@ export default function Home() {
     {
       category: 'ETL & ELT Tools',
       items: [
-        { name: 'dbt', level: 75, icon: FaDatabase },
-        { name: 'SSIS', level: 70, icon: FaTools }
+        { name: 'dbt', level: 90, icon: FaDatabase },
+        { name: 'SSIS', level: 80, icon: FaTools }
       ]
     },
     {
       category: 'Big Data Technologies',
       items: [
-        { name: 'Hadoop', level: 70, icon: FaServer },
-        { name: 'Hive', level: 65, icon: FaDatabase }
+        { name: 'Hadoop', level: 80, icon: FaServer },
+        { name: 'Hive', level: 70, icon: FaDatabase }
       ]
     },
     {
       category: 'Data Streaming',
       items: [
-        { name: 'Kafka', level: 70, icon: FaProjectDiagram }
+        { name: 'Kafka', level: 60, icon: FaProjectDiagram }
       ]
     },
     {
       category: 'Data Warehousing',
       items: [
         { name: 'Snowflake', level: 75, icon: FaCloud },
-        { name: 'Dimensional Modeling', level: 70, icon: FaDatabase },
+        { name: 'Dimensional Modeling', level: 75, icon: FaDatabase },
         { name: 'Medallion Architecture', level: 75, icon: FaProjectDiagram }
       ]
     },
     {
       category: 'Databases',
       items: [
-        { name: 'PostgreSQL', level: 75, icon: FaDatabase },
+        { name: 'PostgreSQL', level: 80, icon: FaDatabase },
         { name: 'MySQL', level: 70, icon: FaDatabase },
         { name: 'MS SQL Server', level: 70, icon: FaDatabase }
       ]
     },
     {
+      category: 'Business Intelligence',
+      items: [
+        { name: 'Power BI', level: 85, icon: FaChartLine },
+        { name: 'SSAS', level: 60, icon: FaDatabase },
+        { name: 'SSRS', level: 60, icon: FaChartLine },
+        { name: 'Excel', level: 75, icon: FaChartLine }
+      ]
+    },
+    {
       category: 'Containerization',
       items: [
-        { name: 'Docker', level: 70, icon: FaDocker }
+        { name: 'Docker', level: 75, icon: FaDocker }
       ]
     },
     {
@@ -183,15 +197,15 @@ export default function Home() {
     {
       category: 'Operating Systems',
       items: [
-        { name: 'Linux', level: 70, icon: FaLinux },
-        { name: 'Windows', level: 65, icon: FaWindows }
+        { name: 'Linux', level: 90, icon: FaLinux },
+        { name: 'Windows', level: 90, icon: FaWindows }
       ]
     },
     {
       category: 'Data Quality',
       items: [
-        { name: 'Data Quality Checks', level: 70, icon: FaCheckCircle },
-        { name: 'Schema Validation', level: 65, icon: FaCheckCircle }
+        { name: 'Data Quality Checks', level: 75, icon: FaCheckCircle },
+        { name: 'Schema Validation', level: 70, icon: FaCheckCircle }
       ]
     }
   ]
@@ -552,6 +566,43 @@ export default function Home() {
     }
   };
 
+  // Enhanced animations and effects
+  const floatingAnimation = {
+    y: [0, -10, 0],
+    transition: {
+      duration: 3,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }
+  };
+
+  const pulseAnimation = {
+    scale: [1, 1.05, 1],
+    transition: {
+      duration: 2,
+      repeat: Infinity,
+      ease: "easeInOut"
+    }
+  };
+
+  const slideInFromLeft = {
+    initial: { x: -100, opacity: 0 },
+    animate: { x: 0, opacity: 1 },
+    transition: { duration: 0.8, ease: "easeOut" }
+  };
+
+  const slideInFromRight = {
+    initial: { x: 100, opacity: 0 },
+    animate: { x: 0, opacity: 1 },
+    transition: { duration: 0.8, ease: "easeOut" }
+  };
+
+  const fadeInUp = {
+    initial: { y: 50, opacity: 0 },
+    animate: { y: 0, opacity: 1 },
+    transition: { duration: 0.6, ease: "easeOut" }
+  };
+
   return (
     <div className="min-h-screen transition-colors duration-300">
       {/* Navigation */}
@@ -633,19 +684,49 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section id="home" className="min-h-screen flex items-center justify-center pt-16 data-pattern">
-        <div className="max-w-7xl mx-auto container-padding">
+      <section id="home" className="min-h-screen flex items-center justify-center pt-16 data-pattern relative overflow-hidden">
+        {/* Animated Background Particles */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-2 h-2 bg-red-500/20 rounded-full"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, -100, 0],
+                opacity: [0.2, 0.8, 0.2],
+                scale: [1, 1.5, 1],
+              }}
+              transition={{
+                duration: 3 + Math.random() * 2,
+                repeat: Infinity,
+                delay: Math.random() * 2,
+              }}
+            />
+          ))}
+        </div>
+
+        <div className="max-w-7xl mx-auto container-padding relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="text-center"
           >
-            <h1 className="text-5xl md:text-7xl font-bold mb-8 gradient-text">
+            <motion.h1 
+              className="text-5xl md:text-7xl font-bold mb-8 gradient-text"
+              animate={pulseAnimation}
+            >
               Mahmoud Mamdoh Soliman
-            </h1>
+            </motion.h1>
             
-            <div className="text-2xl md:text-3xl text-gray-600 dark:text-gray-300 mb-8 min-h-[3rem] flex items-center justify-center">
+            <motion.div 
+              className="text-2xl md:text-3xl text-gray-600 dark:text-gray-300 mb-8 min-h-[3rem] flex items-center justify-center"
+              animate={floatingAnimation}
+            >
               <span className="text-red-600 mr-2">&gt;</span>
               <Typewriter
                 words={[
@@ -664,71 +745,103 @@ export default function Home() {
                 deleteSpeed={50}
                 delaySpeed={1000}
               />
-            </div>
+            </motion.div>
 
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed">
+            <motion.p 
+              className="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed"
+              variants={fadeInUp}
+              initial="initial"
+              animate="animate"
+            >
               Transforming data into actionable insights that drive strategic decisions and accelerate business growth. 
               Skilled in designing and optimizing complex data pipelines and workflows using modern data stacks.
-            </p>
+            </motion.p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+            <motion.div 
+              className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
+              variants={fadeInUp}
+              initial="initial"
+              animate="animate"
+              transition={{ delay: 0.2 }}
+            >
               <motion.button 
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.05, y: -5 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => smoothScroll('projects')} 
-                className="btn-primary"
+                className="relative overflow-hidden group bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-red-600/25 border-0"
               >
-                <FaExternalLinkAlt className="mr-2" />
-                View Projects
+                {/* Shimmer Effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                
+                {/* Glow Effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-red-600/50 to-red-700/50 rounded-xl blur-xl group-hover:blur-2xl transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
+                
+                {/* Button Content */}
+                <div className="relative z-10 flex items-center space-x-3">
+                  <FaExternalLinkAlt className="text-lg group-hover:rotate-12 transition-transform duration-300" />
+                  <span className="text-lg font-bold">View Projects</span>
+                  <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                </div>
+                
+                {/* Border Glow */}
+                <div className="absolute inset-0 rounded-xl border-2 border-red-400/50 group-hover:border-red-300 transition-colors duration-300"></div>
               </motion.button>
               <motion.button 
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.05, y: -5 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={downloadResume} 
-                className="btn-secondary"
+                className="btn-secondary relative overflow-hidden group"
               >
-                <FaDownload className="mr-2" />
-                View CV
+                <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 to-red-700/10 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                <FaDownload className="mr-2 relative z-10" />
+                <span className="relative z-10">View CV</span>
               </motion.button>
               <motion.button 
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.05, y: -5 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => smoothScroll('contact')} 
-                className="btn-secondary"
+                className="btn-secondary relative overflow-hidden group"
               >
-                <FaEnvelope className="mr-2" />
-                Contact Me
+                <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 to-red-700/10 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                <FaEnvelope className="mr-2 relative z-10" />
+                <span className="relative z-10">Contact Me</span>
               </motion.button>
-            </div>
+            </motion.div>
 
-            {/* Social Links */}
-            <div className="flex gap-6 justify-center">
+            {/* Social Links with Enhanced Animations */}
+            <motion.div 
+              className="flex gap-6 justify-center"
+              variants={fadeInUp}
+              initial="initial"
+              animate="animate"
+              transition={{ delay: 0.4 }}
+            >
               <motion.a 
-                whileHover={{ scale: 1.2, y: -5 }}
+                whileHover={{ scale: 1.3, y: -8, rotate: 360 }}
                 href="https://github.com/MAHMOUDMAMDOH8" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-600 dark:text-gray-300 hover:text-red-600 transition-colors"
+                className="text-gray-600 dark:text-gray-300 hover:text-red-600 transition-colors p-3 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20"
               >
                 <FaGithub size={24} />
               </motion.a>
               <motion.a 
-                whileHover={{ scale: 1.2, y: -5 }}
+                whileHover={{ scale: 1.3, y: -8, rotate: 360 }}
                 href="https://www.linkedin.com/in/mahmoud-mamdoh-47a68a203/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-gray-600 dark:text-gray-300 hover:text-red-600 transition-colors"
+                className="text-gray-600 dark:text-gray-300 hover:text-red-600 transition-colors p-3 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20"
               >
                 <FaLinkedin size={24} />
               </motion.a>
               <motion.a 
-                whileHover={{ scale: 1.2, y: -5 }}
+                whileHover={{ scale: 1.3, y: -8, rotate: 360 }}
                 href="mailto:mahmoud.mamdoh0812@gmail.com"
-                className="text-gray-600 dark:text-gray-300 hover:text-red-600 transition-colors"
+                className="text-gray-600 dark:text-gray-300 hover:text-red-600 transition-colors p-3 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20"
               >
                 <FaEnvelope size={24} />
               </motion.a>
-            </div>
+            </motion.div>
           </motion.div>
         </div>
       </section>
@@ -756,16 +869,40 @@ export default function Home() {
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.1 }}
                 viewport={{ once: true }}
-                className="card text-center"
+                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group transform hover:scale-105 hover:-translate-y-2 relative"
+                whileHover={{ 
+                  rotateY: 1,
+                  rotateX: 1,
+                  transition: { duration: 0.3 }
+                }}
               >
-                <div className="p-6 bg-gradient-to-r from-red-600 to-red-700 rounded-full w-20 h-20 mx-auto mb-6 flex items-center justify-center">
-                  <FaProjectDiagram className="text-white text-3xl" />
+                {/* Top Colored Section */}
+                <div className="h-32 bg-gradient-to-r from-red-600 to-red-700 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-black/10"></div>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-white text-6xl opacity-30">
+                      <FaProjectDiagram />
+                    </div>
+                  </div>
+                  <div className="relative z-10 p-6 text-white text-center">
+                    <div className="text-4xl font-bold mb-2">+30</div>
+                    <div className="text-xl font-semibold">Projects Completed</div>
+                  </div>
                 </div>
-                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">+30</h3>
-                <p className="text-xl text-red-600 font-semibold mb-2">Projects Completed</p>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Comprehensive data engineering projects demonstrating expertise across the modern data stack
-                </p>
+
+                {/* Content Section */}
+                <div className="p-6">
+                  <p className="text-gray-600 dark:text-gray-300 text-center leading-relaxed">
+                    Comprehensive data engineering projects demonstrating expertise across the modern data stack
+                  </p>
+                  <div className="mt-4 flex justify-center">
+                    <div className="flex space-x-2">
+                      <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                      <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                      <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                    </div>
+                  </div>
+                </div>
               </motion.div>
 
               <motion.div 
@@ -773,16 +910,40 @@ export default function Home() {
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
                 viewport={{ once: true }}
-                className="card text-center"
+                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group transform hover:scale-105 hover:-translate-y-2 relative"
+                whileHover={{ 
+                  rotateY: 1,
+                  rotateX: 1,
+                  transition: { duration: 0.3 }
+                }}
               >
-                <div className="p-6 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full w-20 h-20 mx-auto mb-6 flex items-center justify-center">
-                  <FaTrophy className="text-white text-3xl" />
+                {/* Top Colored Section */}
+                <div className="h-32 bg-gradient-to-r from-purple-500 to-pink-500 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-black/10"></div>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-white text-6xl opacity-30">
+                      <FaTrophy />
+                    </div>
+                  </div>
+                  <div className="relative z-10 p-6 text-white text-center">
+                    <div className="text-4xl font-bold mb-2">+1</div>
+                    <div className="text-xl font-semibold">Year of Experience</div>
+                  </div>
                 </div>
-                <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">+1</h3>
-                <p className="text-xl text-purple-500 font-semibold mb-2">Year of Experience</p>
-                <p className="text-gray-600 dark:text-gray-300">
-                  Professional experience in data engineering, business intelligence, and analytics roles
-                </p>
+
+                {/* Content Section */}
+                <div className="p-6">
+                  <p className="text-gray-600 dark:text-gray-300 text-center leading-relaxed">
+                    Professional experience in data engineering, business intelligence, and analytics roles
+                  </p>
+                  <div className="mt-4 flex justify-center">
+                    <div className="flex space-x-2">
+                      <div className="w-3 h-3 bg-purple-500 rounded-full animate-pulse"></div>
+                      <div className="w-3 h-3 bg-purple-500 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                      <div className="w-3 h-3 bg-purple-500 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                    </div>
+                  </div>
+                </div>
               </motion.div>
             </div>
           </motion.div>
@@ -829,9 +990,14 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.1 }}
                 viewport={{ once: true }}
-                className="card hover:scale-105 transition-transform duration-300 relative"
+                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-2 relative overflow-hidden group"
+                whileHover={{ 
+                  rotateY: 1,
+                  rotateX: 1,
+                  transition: { duration: 0.3 }
+                }}
               >
-                <div className="flex items-start space-x-4">
+                <div className="flex items-start space-x-4 p-6">
                   <div className="p-3 bg-gradient-to-r from-red-600 to-red-700 rounded-full w-14 h-14 flex items-center justify-center flex-shrink-0">
                     <FaDatabase className="text-white text-xl" />
                   </div>
@@ -857,9 +1023,14 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
                 viewport={{ once: true }}
-                className="card hover:scale-105 transition-transform duration-300 relative"
+                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-2 relative overflow-hidden group"
+                whileHover={{ 
+                  rotateY: 1,
+                  rotateX: 1,
+                  transition: { duration: 0.3 }
+                }}
               >
-                <div className="flex items-start space-x-4">
+                <div className="flex items-start space-x-4 p-6">
                   <div className="p-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full w-14 h-14 flex items-center justify-center flex-shrink-0">
                     <FaChartLine className="text-white text-xl" />
                   </div>
@@ -884,9 +1055,14 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
                 viewport={{ once: true }}
-                className="card hover:scale-105 transition-transform duration-300 relative"
+                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-2 relative overflow-hidden group"
+                whileHover={{ 
+                  rotateY: 1,
+                  rotateX: 1,
+                  transition: { duration: 0.3 }
+                }}
               >
-                <div className="flex items-start space-x-4">
+                <div className="flex items-start space-x-4 p-6">
                   <div className="p-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full w-14 h-14 flex items-center justify-center flex-shrink-0">
                     <FaLightbulb className="text-white text-xl" />
                   </div>
@@ -897,9 +1073,9 @@ export default function Home() {
                     </p>
                     <div className="flex flex-wrap gap-2">
                       <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-xs">Power BI</span>
-                      <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-xs">Tableau</span>
-                      <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-xs">SSIS</span>
                       <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-xs">SSAS</span>
+                      <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-xs">SSRS</span>
+                      <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-xs">Excel</span>
                     </div>
                   </div>
                 </div>
@@ -911,9 +1087,14 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
                 viewport={{ once: true }}
-                className="card hover:scale-105 transition-transform duration-300 relative"
+                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-2 relative overflow-hidden group"
+                whileHover={{ 
+                  rotateY: 1,
+                  rotateX: 1,
+                  transition: { duration: 0.3 }
+                }}
               >
-                <div className="flex items-start space-x-4">
+                <div className="flex items-start space-x-4 p-6">
                   <div className="p-3 bg-gradient-to-r from-orange-500 to-red-500 rounded-full w-14 h-14 flex items-center justify-center flex-shrink-0">
                     <FaUsers className="text-white text-xl" />
                   </div>
@@ -960,45 +1141,93 @@ export default function Home() {
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.8, delay: index * 0.2 }}
                   viewport={{ once: true }}
-                  className="card"
+                  className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group transform hover:scale-105 hover:-translate-y-2 relative"
+                  whileHover={{ 
+                    rotateY: 1,
+                    rotateX: 1,
+                    transition: { duration: 0.3 }
+                  }}
                 >
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
-                    <div>
-                      <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">{exp.title}</h3>
-                      <p className="text-red-600 font-medium">{exp.company}</p>
+                  {/* Top Colored Section */}
+                  <div className="h-32 bg-gradient-to-r from-red-600 to-red-700 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-black/10"></div>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="text-white text-6xl opacity-30">
+                        <FaDatabase />
+                      </div>
                     </div>
-                    <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4 mt-4 lg:mt-0">
-                      <span className="text-gray-600 dark:text-gray-300">{exp.period}</span>
-                      <span className="text-green-600 dark:text-green-400 text-sm font-medium">{exp.type}</span>
-                      <div className="flex items-center space-x-1 text-gray-600 dark:text-gray-300">
-                        <FaMapMarkerAlt className="text-red-600" />
-                        <span className="text-sm">{exp.location}</span>
+                    <div className="relative z-10 p-6 text-white">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <h3 className="text-2xl font-bold mb-1">{exp.title}</h3>
+                          <p className="text-red-200 font-medium">{exp.company}</p>
+                        </div>
+                        <div className="text-right">
+                          <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium">
+                            {exp.type}
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                  
-                  <p className="text-gray-600 dark:text-gray-300 mb-6">{exp.description}</p>
-                  
-                  <div className="space-y-4">
-                    <h4 className="font-semibold text-gray-900 dark:text-white">Key Achievements:</h4>
-                    <ul className="space-y-2">
-                      {exp.achievements.map((achievement, idx) => (
-                        <li key={idx} className="flex items-start space-x-2">
-                          <FaCheckCircle className="text-green-600 dark:text-green-400 mt-1 flex-shrink-0" />
-                          <span className="text-gray-600 dark:text-gray-300">{achievement}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  
-                  <div className="mt-6">
-                    <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Technologies:</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {exp.technologies.map((tech, idx) => (
-                        <span key={idx} className="px-3 py-1 bg-gray-100/80 dark:bg-gray-700/50 rounded-full text-sm text-red-600 dark:text-red-400 border border-red-600/30">
-                          {tech}
-                        </span>
-                      ))}
+
+                  {/* Content Section */}
+                  <div className="p-6">
+                    <div className="flex items-center space-x-4 mb-6">
+                      <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
+                        <FaMapMarkerAlt className="text-red-600" />
+                        <span className="text-sm">{exp.location}</span>
+                      </div>
+                      <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
+                        <FaCalendarAlt className="text-red-600" />
+                        <span className="text-sm">{exp.period}</span>
+                      </div>
+                    </div>
+                    
+                    <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">{exp.description}</p>
+                    
+                    <div className="space-y-4">
+                      <h4 className="font-semibold text-gray-900 dark:text-white flex items-center space-x-2">
+                        <FaCheckCircle className="text-green-600" />
+                        <span>Key Achievements</span>
+                      </h4>
+                      <ul className="space-y-3">
+                        {exp.achievements.map((achievement, idx) => (
+                          <motion.li 
+                            key={idx} 
+                            className="flex items-start space-x-3 p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg"
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.5, delay: idx * 0.1 }}
+                            viewport={{ once: true }}
+                          >
+                            <FaCheckCircle className="text-green-600 dark:text-green-400 mt-1 flex-shrink-0" />
+                            <span className="text-gray-700 dark:text-gray-300 text-sm">{achievement}</span>
+                          </motion.li>
+                        ))}
+                      </ul>
+                    </div>
+                    
+                    <div className="mt-8">
+                      <h4 className="font-semibold text-gray-900 dark:text-white mb-4 flex items-center space-x-2">
+                        <FaTools className="text-red-600" />
+                        <span>Technologies Used</span>
+                      </h4>
+                      <div className="flex flex-wrap gap-2">
+                        {exp.technologies.map((tech, idx) => (
+                          <motion.span 
+                            key={idx} 
+                            className="px-3 py-2 bg-gradient-to-r from-red-100 to-red-200 dark:from-red-900/30 dark:to-red-800/30 text-red-700 dark:text-red-300 rounded-full text-sm font-medium border border-red-200 dark:border-red-700 hover:border-red-300 dark:hover:border-red-600 transition-colors"
+                            whileHover={{ scale: 1.05 }}
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.3, delay: idx * 0.1 }}
+                            viewport={{ once: true }}
+                          >
+                            {tech}
+                          </motion.span>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </motion.div>
@@ -1032,54 +1261,103 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: index * 0.2 }}
                   viewport={{ once: true }}
-                  className="card overflow-hidden"
+                  className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group transform hover:scale-105 hover:-translate-y-2 relative"
+                  whileHover={{ 
+                    rotateY: 1,
+                    rotateX: 1,
+                    transition: { duration: 0.3 }
+                  }}
                 >
-                  {/* Content Section */}
-                  <div className="p-6">
-                    <div className="flex items-start space-x-4 mb-6">
-                      <div className={`p-3 rounded-lg ${bootcamp.color}`}>
-                        <bootcamp.icon className="text-white" size={24} />
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-1">{bootcamp.title}</h3>
-                        <p className="text-red-600 font-medium">{bootcamp.organization}</p>
-                        <p className="text-gray-600 dark:text-gray-300 text-sm">{bootcamp.period}</p>
+                  {/* Top Colored Section */}
+                  <div className={`h-32 bg-gradient-to-r ${bootcamp.color} relative overflow-hidden`}>
+                    <div className="absolute inset-0 bg-black/10"></div>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="text-white text-6xl opacity-30">
+                        <bootcamp.icon />
                       </div>
                     </div>
-                    
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">{bootcamp.description}</p>
+                    <div className="relative z-10 p-6 text-white">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <h3 className="text-xl font-bold mb-1">{bootcamp.title}</h3>
+                          <p className="text-white/80 font-medium">{bootcamp.organization}</p>
+                        </div>
+                        <div className="text-right">
+                          <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium">
+                            {bootcamp.period}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Content Section */}
+                  <div className="p-6">
+                    <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">{bootcamp.description}</p>
                     
                     <div className="space-y-6">
                       <div>
-                        <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Skills Gained:</h4>
-                        <ul className="space-y-2">
+                        <h4 className="font-semibold text-gray-900 dark:text-white mb-4 flex items-center space-x-2">
+                          <FaCheckCircle className="text-green-600" />
+                          <span>Skills Gained</span>
+                        </h4>
+                        <ul className="space-y-3">
                           {bootcamp.skills.map((skill, idx) => (
-                            <li key={idx} className="flex items-start space-x-2">
+                            <motion.li 
+                              key={idx} 
+                              className="flex items-start space-x-3 p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg"
+                              initial={{ opacity: 0, x: -20 }}
+                              whileInView={{ opacity: 1, x: 0 }}
+                              transition={{ duration: 0.5, delay: idx * 0.1 }}
+                              viewport={{ once: true }}
+                            >
                               <FaCheckCircle className="text-green-600 dark:text-green-400 mt-1 flex-shrink-0" />
-                              <span className="text-gray-600 dark:text-gray-300 text-sm">{skill}</span>
-                            </li>
+                              <span className="text-gray-700 dark:text-gray-300 text-sm">{skill}</span>
+                            </motion.li>
                           ))}
                         </ul>
                       </div>
 
                       <div>
-                        <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Tools & Technologies:</h4>
+                        <h4 className="font-semibold text-gray-900 dark:text-white mb-4 flex items-center space-x-2">
+                          <FaTools className="text-blue-600" />
+                          <span>Tools & Technologies</span>
+                        </h4>
                         <div className="flex flex-wrap gap-2">
                           {bootcamp.tools.map((tool, idx) => (
-                            <span key={idx} className="px-2 py-1 bg-blue-100/80 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded text-xs border border-blue-200 dark:border-blue-700">
+                            <motion.span 
+                              key={idx} 
+                              className="px-3 py-2 bg-gradient-to-r from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium border border-blue-200 dark:border-blue-700 hover:border-blue-300 dark:hover:border-blue-600 transition-colors"
+                              whileHover={{ scale: 1.05 }}
+                              initial={{ opacity: 0, scale: 0.8 }}
+                              whileInView={{ opacity: 1, scale: 1 }}
+                              transition={{ duration: 0.3, delay: idx * 0.1 }}
+                              viewport={{ once: true }}
+                            >
                               {tool}
-                            </span>
+                            </motion.span>
                           ))}
                         </div>
                       </div>
 
                       <div>
-                        <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Concepts Learned:</h4>
+                        <h4 className="font-semibold text-gray-900 dark:text-white mb-4 flex items-center space-x-2">
+                          <FaLightbulb className="text-green-600" />
+                          <span>Concepts Learned</span>
+                        </h4>
                         <div className="flex flex-wrap gap-2">
                           {bootcamp.concepts.map((concept, idx) => (
-                            <span key={idx} className="px-2 py-1 bg-green-100/80 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded text-xs border border-green-200 dark:border-green-700">
+                            <motion.span 
+                              key={idx} 
+                              className="px-3 py-2 bg-gradient-to-r from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30 text-green-700 dark:text-green-300 rounded-full text-sm font-medium border border-green-200 dark:border-green-700 hover:border-green-300 dark:hover:border-green-600 transition-colors"
+                              whileHover={{ scale: 1.05 }}
+                              initial={{ opacity: 0, scale: 0.8 }}
+                              whileInView={{ opacity: 1, scale: 1 }}
+                              transition={{ duration: 0.3, delay: idx * 0.1 }}
+                              viewport={{ once: true }}
+                            >
                               {concept}
-                            </span>
+                            </motion.span>
                           ))}
                         </div>
                       </div>
@@ -1174,7 +1452,12 @@ export default function Home() {
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.8, delay: index * 0.1 }}
                       viewport={{ once: true }}
-                      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group"
+                      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group transform hover:scale-105 hover:-translate-y-2"
+                      whileHover={{ 
+                        rotateY: 2,
+                        rotateX: 2,
+                        transition: { duration: 0.3 }
+                      }}
                     >
                       {/* Full Width Image Section with Hover Overlay */}
                       <div className={`relative h-48 bg-gradient-to-br ${color} overflow-hidden`}>
@@ -1383,30 +1666,58 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="card"
+                  className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group transform hover:scale-105 hover:-translate-y-2 relative"
+                  whileHover={{ 
+                    rotateY: 1,
+                    rotateX: 1,
+                    transition: { duration: 0.3 }
+                  }}
                 >
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">{category.category}</h3>
-                  <div className="space-y-4">
-                    {category.items.map((skill, idx) => (
-                      <div key={idx}>
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="flex items-center space-x-2">
-                            <skill.icon className="text-red-600" />
-                            <span className="text-gray-900 dark:text-white font-medium">{skill.name}</span>
+                  {/* Top Colored Section */}
+                  <div className="h-24 bg-gradient-to-r from-gray-600 to-gray-700 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-black/10"></div>
+                    <div className="relative z-10 p-4 text-white">
+                      <h3 className="text-xl font-bold">{category.category}</h3>
+                    </div>
+                  </div>
+
+                  {/* Content Section */}
+                  <div className="p-6">
+                    <div className="space-y-4">
+                      {category.items.map((skill, idx) => (
+                        <motion.div 
+                          key={idx}
+                          initial={{ opacity: 0, x: -20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.5, delay: idx * 0.1 }}
+                          viewport={{ once: true }}
+                          className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600/50 transition-colors"
+                        >
+                          <div className="flex items-center justify-between mb-3">
+                            <div className="flex items-center space-x-3">
+                              <div className="p-2 bg-red-100 dark:bg-red-900/30 rounded-lg">
+                                <skill.icon className="text-red-600 dark:text-red-400 text-lg" />
+                              </div>
+                              <span className="text-gray-900 dark:text-white font-medium">{skill.name}</span>
+                            </div>
+                            <span className="text-red-600 dark:text-red-400 font-bold text-lg">{skill.level}%</span>
                           </div>
-                          <span className="text-gray-600 dark:text-gray-300 text-sm">{skill.level}%</span>
-                        </div>
-                        <div className="skill-bar">
-                          <motion.div 
-                            initial={{ width: 0 }}
-                            whileInView={{ width: `${skill.level}%` }}
-                            transition={{ duration: 1, delay: 0.5 }}
-                            viewport={{ once: true }}
-                            className="skill-progress"
-                          />
-                        </div>
-                      </div>
-                    ))}
+                          <div className="relative">
+                            <div className="skill-bar bg-gray-200 dark:bg-gray-600 h-3 rounded-full overflow-hidden">
+                              <motion.div 
+                                initial={{ width: 0 }}
+                                whileInView={{ width: `${skill.level}%` }}
+                                transition={{ duration: 1.5, delay: 0.5 + idx * 0.1, ease: "easeOut" }}
+                                viewport={{ once: true }}
+                                className="skill-progress h-full rounded-full relative"
+                              >
+                                <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-600 opacity-20 animate-pulse"></div>
+                              </motion.div>
+                            </div>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
                   </div>
                 </motion.div>
               ))}
@@ -1437,68 +1748,78 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
-                className="card"
+                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group transform hover:scale-105 hover:-translate-y-2 relative"
+                whileHover={{ 
+                  rotateY: 1,
+                  rotateX: 1,
+                  transition: { duration: 0.3 }
+                }}
               >
-                <div className="flex items-start space-x-6">
-                  <div className="p-4 bg-gradient-to-r from-red-600 to-red-700 rounded-lg">
-                    <FaGraduationCap className="text-white" size={32} />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">
-                      Bachelor's in Computer Science and Mathematics
-                    </h3>
-                    <p className="text-red-600 font-medium mb-2">Menofia University</p>
-                    <div className="flex items-center space-x-4 text-gray-600 dark:text-gray-300 mb-4">
-                      <div className="flex items-center space-x-1">
-                        <FaMapMarkerAlt className="text-red-600" />
-                        <span>Menofia, Egypt</span>
-                      </div>
-                      <span>2021 - 2025</span>
-                      <span className="text-green-600 dark:text-green-400 font-medium">Graduated</span>
+                {/* Top Colored Section */}
+                <div className="h-32 bg-gradient-to-r from-red-600 to-red-700 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-black/10"></div>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-white text-6xl opacity-30">
+                      <FaGraduationCap />
                     </div>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      Completed a comprehensive Bachelor's degree that combines theoretical computer science with mathematical foundations, 
-                      providing a strong base for data engineering and analytics work.
-                    </p>
-                    
-                    {/* Skills Section */}
-                    <div>
-                      <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Key Skills & Concepts:</h4>
-                      <div className="flex flex-wrap gap-2">
-                        <span className="px-3 py-1 bg-blue-100/80 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm border border-blue-200 dark:border-blue-700">
-                          Data Structures
-                        </span>
-                        <span className="px-3 py-1 bg-blue-100/80 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm border border-blue-200 dark:border-blue-700">
-                          Algorithms
-                        </span>
-                        <span className="px-3 py-1 bg-blue-100/80 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm border border-blue-200 dark:border-blue-700">
-                          Object-Oriented Programming
-                        </span>
-                        <span className="px-3 py-1 bg-blue-100/80 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm border border-blue-200 dark:border-blue-700">
-                          C#
-                        </span>
-                        <span className="px-3 py-1 bg-blue-100/80 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm border border-blue-200 dark:border-blue-700">
-                          System Design
-                        </span>
-                        <span className="px-3 py-1 bg-blue-100/80 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm border border-blue-200 dark:border-blue-700">
-                          Database Design
-                        </span>
-                        <span className="px-3 py-1 bg-blue-100/80 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm border border-blue-200 dark:border-blue-700">
-                          Software Engineering
-                        </span>
-                        <span className="px-3 py-1 bg-blue-100/80 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm border border-blue-200 dark:border-blue-700">
-                          Mathematics
-                        </span>
-                        <span className="px-3 py-1 bg-blue-100/80 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm border border-blue-200 dark:border-blue-700">
-                          Problem Solving
-                        </span>
-                        <span className="px-3 py-1 bg-blue-100/80 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm border border-blue-200 dark:border-blue-700">
-                          Computer Architecture
-                        </span>
-                        <span className="px-3 py-1 bg-blue-100/80 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm border border-blue-200 dark:border-blue-700">
-                          Operating Systems
+                  </div>
+                  <div className="relative z-10 p-6 text-white">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="text-2xl font-bold mb-1">Bachelor's in Computer Science and Mathematics</h3>
+                        <p className="text-red-200 font-medium">Menofia University</p>
+                      </div>
+                      <div className="text-right">
+                        <span className="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium">
+                          Graduated
                         </span>
                       </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Content Section */}
+                <div className="p-6">
+                  <div className="flex items-center space-x-4 mb-6">
+                    <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
+                      <FaMapMarkerAlt className="text-red-600" />
+                      <span className="text-sm">Menofia, Egypt</span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
+                      <FaCalendarAlt className="text-red-600" />
+                      <span className="text-sm">2021 - 2025</span>
+                    </div>
+                  </div>
+                  
+                  <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                    Completed a comprehensive Bachelor's degree that combines theoretical computer science with mathematical foundations, 
+                    providing a strong base for data engineering and analytics work.
+                  </p>
+                  
+                  {/* Skills Section */}
+                  <div>
+                    <h4 className="font-semibold text-gray-900 dark:text-white mb-4 flex items-center space-x-2">
+                      <FaTools className="text-red-600" />
+                      <span>Key Skills & Concepts</span>
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {[
+                        'Data Structures', 'Algorithms', 'Object-Oriented Programming', 'C#', 
+                        'System Design', 'Database Design', 'Software Engineering', 'Mathematics', 
+                        'Problem Solving', 'Computer Architecture', 'Operating Systems'
+                      ].map((skill, idx) => (
+                        <motion.span 
+                          key={idx}
+                          className="px-3 py-2 bg-gradient-to-r from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium border border-blue-200 dark:border-blue-700 hover:border-blue-300 dark:hover:border-blue-600 transition-colors"
+                          whileHover={{ scale: 1.05 }}
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: 0.3, delay: idx * 0.1 }}
+                          viewport={{ once: true }}
+                        >
+                          {skill}
+                        </motion.span>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -1755,44 +2076,108 @@ export default function Home() {
               <div>
                 <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-8">Send Message</h3>
                 <form className="space-y-6">
-                  <div>
-                    <label htmlFor="name" className="block text-gray-900 dark:text-white font-medium mb-2">Name</label>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                    viewport={{ once: true }}
+                  >
+                    <label htmlFor="name" className="block text-gray-900 dark:text-white font-medium mb-2 flex items-center space-x-2">
+                      <FaUser className="text-red-600" />
+                      <span>Name</span>
+                    </label>
                     <input
                       type="text"
                       id="name"
-                      className="form-input"
+                      className="w-full px-4 py-3 bg-white/95 dark:bg-gray-800/50 backdrop-blur-sm border-2 border-gray-200/80 dark:border-gray-700/50 rounded-xl text-gray-900 dark:text-white focus:border-red-600 focus:outline-none transition-all duration-300 placeholder-gray-500 dark:placeholder-gray-400 shadow-sm hover:shadow-md focus:shadow-lg focus:shadow-red-600/20 transform hover:-translate-y-1 focus:-translate-y-1"
                       placeholder="Your name"
                     />
-                  </div>
+                  </motion.div>
                   
-                  <div>
-                    <label htmlFor="email" className="block text-gray-900 dark:text-white font-medium mb-2">Email</label>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    viewport={{ once: true }}
+                  >
+                    <label htmlFor="email" className="block text-gray-900 dark:text-white font-medium mb-2 flex items-center space-x-2">
+                      <FaEnvelope className="text-red-600" />
+                      <span>Email</span>
+                    </label>
                     <input
                       type="email"
                       id="email"
-                      className="form-input"
+                      className="w-full px-4 py-3 bg-white/95 dark:bg-gray-800/50 backdrop-blur-sm border-2 border-gray-200/80 dark:border-gray-700/50 rounded-xl text-gray-900 dark:text-white focus:border-red-600 focus:outline-none transition-all duration-300 placeholder-gray-500 dark:placeholder-gray-400 shadow-sm hover:shadow-md focus:shadow-lg focus:shadow-red-600/20 transform hover:-translate-y-1 focus:-translate-y-1"
                       placeholder="your.email@example.com"
                     />
-                  </div>
+                  </motion.div>
                   
-                  <div>
-                    <label htmlFor="message" className="block text-gray-900 dark:text-white font-medium mb-2">Message</label>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                    viewport={{ once: true }}
+                  >
+                    <label htmlFor="subject" className="block text-gray-900 dark:text-white font-medium mb-2 flex items-center space-x-2">
+                      <FaTag className="text-red-600" />
+                      <span>Subject</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="subject"
+                      className="w-full px-4 py-3 bg-white/95 dark:bg-gray-800/50 backdrop-blur-sm border-2 border-gray-200/80 dark:border-gray-700/50 rounded-xl text-gray-900 dark:text-white focus:border-red-600 focus:outline-none transition-all duration-300 placeholder-gray-500 dark:placeholder-gray-400 shadow-sm hover:shadow-md focus:shadow-lg focus:shadow-red-600/20 transform hover:-translate-y-1 focus:-translate-y-1"
+                      placeholder="What's this about?"
+                    />
+                  </motion.div>
+                  
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.4 }}
+                    viewport={{ once: true }}
+                  >
+                    <label htmlFor="message" className="block text-gray-900 dark:text-white font-medium mb-2 flex items-center space-x-2">
+                      <FaComment className="text-red-600" />
+                      <span>Message</span>
+                    </label>
                     <textarea
                       id="message"
                       rows={6}
-                      className="form-input resize-none"
+                      className="w-full px-4 py-3 bg-white/95 dark:bg-gray-800/50 backdrop-blur-sm border-2 border-gray-200/80 dark:border-gray-700/50 rounded-xl text-gray-900 dark:text-white focus:border-red-600 focus:outline-none transition-all duration-300 placeholder-gray-500 dark:placeholder-gray-400 shadow-sm hover:shadow-md focus:shadow-lg focus:shadow-red-600/20 transform hover:-translate-y-1 focus:-translate-y-1 resize-none"
                       placeholder="Your message..."
                     />
-                  </div>
+                  </motion.div>
                   
-                  <motion.button 
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    type="submit"
-                    className="w-full btn-primary"
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.5 }}
+                    viewport={{ once: true }}
+                    className="pt-4"
                   >
-                    Send Message
-                  </motion.button>
+                    <motion.button 
+                      whileHover={{ scale: 1.02, y: -2 }}
+                      whileTap={{ scale: 0.98 }}
+                      type="submit"
+                      className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:shadow-2xl hover:shadow-red-600/25 border-0 relative overflow-hidden group"
+                    >
+                      {/* Shimmer Effect */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                      
+                      {/* Glow Effect */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-red-600/50 to-red-700/50 rounded-xl blur-xl group-hover:blur-2xl transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
+                      
+                      {/* Button Content */}
+                      <div className="relative z-10 flex items-center justify-center space-x-3">
+                        <FaPaperPlane className="text-lg group-hover:rotate-12 transition-transform duration-300" />
+                        <span className="text-lg font-bold">Send Message</span>
+                        <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                      </div>
+                      
+                      {/* Border Glow */}
+                      <div className="absolute inset-0 rounded-xl border-2 border-red-400/50 group-hover:border-red-300 transition-colors duration-300"></div>
+                    </motion.button>
+                  </motion.div>
                 </form>
               </div>
             </div>
