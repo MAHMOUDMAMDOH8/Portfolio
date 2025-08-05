@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Typewriter } from 'react-simple-typewriter'
+import Image from 'next/image'
 import { 
   FaGithub, 
   FaLinkedin, 
@@ -716,6 +717,199 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="text-center"
           >
+            {/* Profile Photo */}
+            <motion.div 
+              className="mb-12 flex justify-center"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <div className="relative">
+                {/* Enhanced Photo Container with Multiple Glow Effects */}
+                <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-red-600/40 shadow-2xl shadow-red-600/30 group">
+                  {/* Multiple Glow Backgrounds for Enhanced Effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-red-600/30 to-red-700/30 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-500"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-full blur-xl group-hover:blur-2xl transition-all duration-500 delay-100"></div>
+                  <div className="absolute inset-0 bg-gradient-to-tl from-green-600/15 to-yellow-600/15 rounded-full blur-lg group-hover:blur-xl transition-all duration-500 delay-200"></div>
+                  
+                  {/* Profile Image Container */}
+                  <div className="relative w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 rounded-full overflow-hidden">
+                    <Image
+                      src="/images/profile-photo.jpg"
+                      alt="Mahmoud Mamdoh Soliman"
+                      fill
+                      className="object-cover rounded-full group-hover:scale-110 transition-transform duration-700 ease-out"
+                      priority
+                    />
+                    
+                    {/* Enhanced Hover Overlay with Gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-red-600/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full"></div>
+                    
+                    {/* Shimmer Effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out rounded-full"></div>
+                  </div>
+                  
+                  {/* Enhanced Animated Border with Multiple Layers */}
+                  <div className="absolute inset-0 rounded-full border-2 border-red-600/60 animate-pulse"></div>
+                  <div className="absolute inset-0 rounded-full border border-red-400/40 animate-ping"></div>
+                  <div className="absolute inset-0 rounded-full border-4 border-transparent bg-gradient-to-r from-red-600/20 to-blue-600/20 rounded-full animate-spin" style={{ animationDuration: '8s' }}></div>
+                  
+                  {/* Outer Glow Ring */}
+                  <div className="absolute -inset-2 bg-gradient-to-r from-red-600/20 to-blue-600/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                </div>
+                
+                {/* Enhanced Floating Elements with Better Positioning */}
+                <motion.div 
+                  className="absolute -top-4 -right-4 w-12 h-12 bg-gradient-to-r from-red-600 to-red-700 rounded-full flex items-center justify-center text-white text-lg font-bold shadow-xl border-2 border-white/20"
+                  animate={{ 
+                    y: [0, -15, 0],
+                    rotate: [0, 360],
+                    scale: [1, 1.1, 1]
+                  }}
+                  transition={{ 
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  <FaCode />
+                </motion.div>
+                
+                <motion.div 
+                  className="absolute -bottom-4 -left-4 w-12 h-12 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full flex items-center justify-center text-white text-lg font-bold shadow-xl border-2 border-white/20"
+                  animate={{ 
+                    y: [0, 15, 0],
+                    rotate: [0, -360],
+                    scale: [1, 1.1, 1]
+                  }}
+                  transition={{ 
+                    duration: 5,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 1
+                  }}
+                >
+                  <FaDatabase />
+                </motion.div>
+                
+                <motion.div 
+                  className="absolute top-1/2 -right-12 w-10 h-10 bg-gradient-to-r from-green-600 to-green-700 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-xl border-2 border-white/20"
+                  animate={{ 
+                    x: [0, 15, 0],
+                    scale: [1, 1.2, 1],
+                    rotate: [0, 180, 360]
+                  }}
+                  transition={{ 
+                    duration: 3.5,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 0.5
+                  }}
+                >
+                  <FaChartLine />
+                </motion.div>
+                
+                <motion.div 
+                  className="absolute top-1/2 -left-12 w-10 h-10 bg-gradient-to-r from-purple-600 to-purple-700 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-xl border-2 border-white/20"
+                  animate={{ 
+                    x: [0, -15, 0],
+                    scale: [1, 1.2, 1],
+                    rotate: [0, -180, -360]
+                  }}
+                  transition={{ 
+                    duration: 4.5,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 1.5
+                  }}
+                >
+                  <FaRocket />
+                </motion.div>
+                
+                {/* Additional Floating Elements */}
+                <motion.div 
+                  className="absolute top-8 -right-16 w-8 h-8 bg-gradient-to-r from-orange-600 to-orange-700 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-lg border border-white/20"
+                  animate={{ 
+                    y: [0, -10, 0],
+                    x: [0, 5, 0],
+                    scale: [1, 1.1, 1]
+                  }}
+                  transition={{ 
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 2
+                  }}
+                >
+                  <FaPython />
+                </motion.div>
+                
+                <motion.div 
+                  className="absolute bottom-8 -left-16 w-8 h-8 bg-gradient-to-r from-indigo-600 to-indigo-700 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-lg border border-white/20"
+                  animate={{ 
+                    y: [0, 10, 0],
+                    x: [0, -5, 0],
+                    scale: [1, 1.1, 1]
+                  }}
+                  transition={{ 
+                    duration: 3.5,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 2.5
+                  }}
+                >
+                  <FaDocker />
+                </motion.div>
+                
+                {/* Connection Lines */}
+                <svg className="absolute inset-0 w-full h-full pointer-events-none">
+                  <motion.path
+                    d="M 50% 50% L 80% 20%"
+                    stroke="url(#gradient1)"
+                    strokeWidth="2"
+                    fill="none"
+                    strokeDasharray="5,5"
+                    animate={{ 
+                      strokeDashoffset: [0, -10],
+                      opacity: [0.3, 0.8, 0.3]
+                    }}
+                    transition={{ 
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "linear"
+                    }}
+                  />
+                  <motion.path
+                    d="M 50% 50% L 20% 80%"
+                    stroke="url(#gradient2)"
+                    strokeWidth="2"
+                    fill="none"
+                    strokeDasharray="5,5"
+                    animate={{ 
+                      strokeDashoffset: [0, -10],
+                      opacity: [0.3, 0.8, 0.3]
+                    }}
+                    transition={{ 
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "linear",
+                      delay: 1
+                    }}
+                  />
+                  <defs>
+                    <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#dc2626" stopOpacity="0.6" />
+                      <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.6" />
+                    </linearGradient>
+                    <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#10b981" stopOpacity="0.6" />
+                      <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.6" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+            </motion.div>
+
             <motion.h1 
               className="text-5xl md:text-7xl font-bold mb-8 gradient-text"
               animate={pulseAnimation}
