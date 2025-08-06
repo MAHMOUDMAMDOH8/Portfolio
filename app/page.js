@@ -52,6 +52,7 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState('home')
   const [isDarkMode, setIsDarkMode] = useState(true)
   const [selectedCategory, setSelectedCategory] = useState('All')
+  const [showBackToTop, setShowBackToTop] = useState(false)
 
   useEffect(() => {
     // Check for saved theme preference or default to dark mode
@@ -94,6 +95,9 @@ export default function Home() {
           }
         }
       }
+
+      // Show back to top button when scrolled down
+      setShowBackToTop(window.scrollY > 500)
     }
 
     window.addEventListener('scroll', handleScroll)
@@ -678,26 +682,85 @@ export default function Home() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border-t border-gray-200/50 dark:border-gray-700/50"
+            className="md:hidden bg-white/95 dark:bg-gray-800/95 backdrop-blur-md border-t border-gray-200/50 dark:border-gray-700/50 shadow-lg"
           >
-            {navItems.map((item) => (
+            <div className="px-4 py-2">
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-sm font-medium text-gray-500 dark:text-gray-400">Navigation</span>
               <button
-                key={item.id}
-                onClick={() => smoothScroll(item.id)}
-                className="block w-full text-left px-6 py-4 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100/50 dark:hover:bg-gray-700/50 transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
               >
-                {item.label}
+                  <FaTimes size={16} />
               </button>
-            ))}
-            <Link
-              href="/case-studies"
-              className="block w-full text-left px-6 py-4 text-gray-600 dark:text-gray-300 hover:text-red-600 transition-colors"
-            >
-              Case Studies
-            </Link>
+              </div>
+              
+              <div className="space-y-1">
+                {navItems.map((item) => (
+                  <motion.button
+                    key={item.id}
+                    onClick={() => {
+                      smoothScroll(item.id)
+                      setIsMenuOpen(false)
+                    }}
+                    className="block w-full text-left px-4 py-3 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100/50 dark:hover:bg-gray-700/50 transition-all duration-200 rounded-lg active:bg-gray-200 dark:active:bg-gray-600"
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="font-medium">{item.label}</span>
+                      {activeSection === item.id && (
+                        <div className="w-2 h-2 bg-red-600 rounded-full"></div>
+                      )}
+                    </div>
+                  </motion.button>
+                ))}
+                <Link
+                  href="/case-studies"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block w-full text-left px-4 py-3 text-gray-600 dark:text-gray-300 hover:text-red-600 transition-all duration-200 rounded-lg hover:bg-gray-100/50 dark:hover:bg-gray-700/50 active:bg-gray-200 dark:active:bg-gray-600"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-medium">Case Studies</span>
+                    <FaExternalLinkAlt size={12} />
+                  </div>
+                </Link>
+              </div>
+              
+              {/* Mobile Contact Info */}
+              <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+                <div className="flex items-center space-x-3 text-sm text-gray-600 dark:text-gray-300 mb-3">
+                  <FaMapMarkerAlt className="text-red-600" />
+                  <span>Cairo, Egypt</span>
+                </div>
+                <div className="flex items-center space-x-3 text-sm text-gray-600 dark:text-gray-300">
+                  <FaEnvelope className="text-red-600" />
+                  <a href="mailto:mahmoud.mamdoh0812@gmail.com" className="hover:text-red-600 transition-colors">
+                    mahmoud.mamdoh0812@gmail.com
+                  </a>
+                </div>
+              </div>
+            </div>
           </motion.div>
         )}
       </nav>
+
+      {/* Back to Top Button - Mobile Optimized */}
+      <motion.button
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ 
+          opacity: showBackToTop ? 1 : 0, 
+          scale: showBackToTop ? 1 : 0 
+        }}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        className="fixed bottom-6 right-6 z-40 p-4 bg-red-600 text-white rounded-full shadow-lg hover:bg-red-700 transition-all duration-300 md:hidden"
+        aria-label="Back to top"
+      >
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+      </motion.button>
 
       {/* Hero Section */}
       <section id="home" className="min-h-screen flex items-center justify-center pt-16 data-pattern relative overflow-hidden">
@@ -732,16 +795,16 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="text-center"
           >
-            {/* Profile Photo */}
+            {/* Profile Photo - Mobile Optimized */}
             <motion.div 
-              className="mb-12 flex justify-center"
+              className="mb-8 md:mb-12 flex justify-center"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               <div className="relative">
                 {/* Enhanced Photo Container with Multiple Glow Effects */}
-                <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-red-600/40 shadow-2xl shadow-red-600/30 group">
+                <div className="relative w-48 h-48 sm:w-56 sm:h-56 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-red-600/40 shadow-2xl shadow-red-600/30 group">
                   {/* Multiple Glow Backgrounds for Enhanced Effect */}
                   <div className="absolute inset-0 bg-gradient-to-r from-red-600/30 to-red-700/30 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-500"></div>
                   <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-full blur-xl group-hover:blur-2xl transition-all duration-500 delay-100"></div>
@@ -773,9 +836,9 @@ export default function Home() {
                   <div className="absolute -inset-2 bg-gradient-to-r from-red-600/20 to-blue-600/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 </div>
                 
-                {/* Enhanced Floating Elements with Better Positioning */}
+                {/* Enhanced Floating Elements with Better Positioning - Mobile Optimized */}
                 <motion.div 
-                  className="absolute -top-4 -right-4 w-12 h-12 bg-gradient-to-r from-red-600 to-red-700 rounded-full flex items-center justify-center text-white text-lg font-bold shadow-xl border-2 border-white/20"
+                  className="absolute -top-2 -right-2 md:-top-4 md:-right-4 w-8 h-8 md:w-12 md:h-12 bg-gradient-to-r from-red-600 to-red-700 rounded-full flex items-center justify-center text-white text-sm md:text-lg font-bold shadow-xl border-2 border-white/20"
                   animate={{ 
                     y: [0, -15, 0],
                     rotate: [0, 360],
@@ -926,14 +989,14 @@ export default function Home() {
             </motion.div>
 
             <motion.h1 
-              className="text-5xl md:text-7xl font-bold mb-8 gradient-text"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-6 md:mb-8 gradient-text leading-tight"
               animate={pulseAnimation}
             >
               Mahmoud Mamdoh Soliman
             </motion.h1>
             
             <motion.div 
-              className="text-2xl md:text-3xl text-gray-600 dark:text-gray-300 mb-8 min-h-[3rem] flex items-center justify-center"
+              className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-600 dark:text-gray-300 mb-6 md:mb-8 min-h-[2.5rem] md:min-h-[3rem] flex items-center justify-center px-4"
               animate={floatingAnimation}
             >
               <span className="text-red-600 mr-2">&gt;</span>
@@ -957,7 +1020,7 @@ export default function Home() {
             </motion.div>
 
             <motion.p 
-              className="text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto mb-12 leading-relaxed"
+              className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto mb-8 md:mb-12 leading-relaxed px-4"
               variants={fadeInUp}
               initial="initial"
               animate="animate"
@@ -967,7 +1030,7 @@ export default function Home() {
             </motion.p>
 
             <motion.div 
-              className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
+              className="flex flex-col sm:flex-row gap-4 justify-center mb-8 md:mb-12 px-4"
               variants={fadeInUp}
               initial="initial"
               animate="animate"
@@ -977,7 +1040,7 @@ export default function Home() {
                 whileHover={{ scale: 1.05, y: -5 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => smoothScroll('projects')} 
-                className="relative overflow-hidden group bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-red-600/25 border-0"
+                className="relative overflow-hidden group bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold py-3 md:py-4 px-6 md:px-8 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-red-600/25 border-0 text-sm md:text-base min-h-[48px] md:min-h-[56px] flex items-center justify-center"
               >
                 {/* Shimmer Effect */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
@@ -986,35 +1049,29 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-r from-red-600/50 to-red-700/50 rounded-xl blur-xl group-hover:blur-2xl transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
                 
                 {/* Button Content */}
-                <div className="relative z-10 flex items-center space-x-3">
-                  <FaExternalLinkAlt className="text-lg group-hover:rotate-12 transition-transform duration-300" />
-                  <span className="text-lg font-bold">View Projects</span>
-                  <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                <div className="relative z-10 flex items-center space-x-2 md:space-x-3">
+                  <FaExternalLinkAlt className="text-base md:text-lg group-hover:rotate-12 transition-transform duration-300" />
+                  <span className="font-bold">View Projects</span>
                 </div>
                 
                 {/* Border Glow */}
                 <div className="absolute inset-0 rounded-xl border-2 border-red-400/50 group-hover:border-red-300 transition-colors duration-300"></div>
               </motion.button>
-              
+
               <motion.button 
                 whileHover={{ scale: 1.05, y: -5 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={downloadResume} 
-                className="btn-secondary relative overflow-hidden group"
+                className="relative overflow-hidden group bg-transparent text-gray-700 dark:text-gray-300 font-semibold py-3 md:py-4 px-6 md:px-8 rounded-xl transition-all duration-300 transform hover:scale-105 border-2 border-gray-300 dark:border-gray-600 hover:border-red-600 dark:hover:border-red-600 hover:text-red-600 dark:hover:text-red-600 text-sm md:text-base min-h-[48px] md:min-h-[56px] flex items-center justify-center"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 to-red-700/10 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                <FaDownload className="mr-2 relative z-10" />
-                <span className="relative z-10">View CV</span>
-              </motion.button>
-              <motion.button 
-                whileHover={{ scale: 1.05, y: -5 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => smoothScroll('contact')} 
-                className="btn-secondary relative overflow-hidden group"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 to-red-700/10 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                <FaEnvelope className="mr-2 relative z-10" />
-                <span className="relative z-10">Contact Me</span>
+                {/* Shimmer Effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-red-100/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                
+                {/* Button Content */}
+                <div className="relative z-10 flex items-center space-x-2 md:space-x-3">
+                  <FaDownload className="text-base md:text-lg group-hover:rotate-12 transition-transform duration-300" />
+                  <span className="font-bold">Download Resume</span>
+                </div>
               </motion.button>
             </motion.div>
 
@@ -1056,8 +1113,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Statistics Section */}
-      <section className="section-padding">
+      {/* Unified Career & Tech Stack Timeline Section */}
+      <section id="career-timeline" className="section-padding">
         <div className="max-w-7xl mx-auto container-padding">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -1066,95 +1123,166 @@ export default function Home() {
             viewport={{ once: true }}
           >
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold mb-8 gradient-text">Achievements & Expertise</h2>
+              <h2 className="text-4xl font-bold mb-8 gradient-text">Career & Tech Stack Timeline</h2>
               <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-                Proven track record in data engineering and analytics with comprehensive project experience
+                My journey in data engineering, analytics, and BI—combining experience, tech adoption, certifications, bootcamps, and major projects in one unified timeline.
               </p>
             </div>
-
-            {/* Achievement Cards */}
-            <div className="grid md:grid-cols-2 gap-8 mb-16">
-              <motion.div 
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.1 }}
-                viewport={{ once: true }}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group transform hover:scale-105 hover:-translate-y-2 relative"
-                whileHover={{ 
-                  rotateY: 1,
-                  rotateX: 1,
-                  transition: { duration: 0.3 }
-                }}
-              >
-                {/* Top Colored Section */}
-                <div className="h-32 bg-gradient-to-r from-red-600 to-red-700 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-black/10"></div>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-white text-6xl opacity-30">
-                      <FaProjectDiagram />
+            {/* Unified Timeline Visualization */}
+            <div className="relative">
+              <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-blue-600 to-red-400 h-full hidden md:block"></div>
+              <div className="space-y-12">
+                {/* 2021-2022: Foundations */}
+                <div className="relative flex items-center md:flex-row flex-col md:space-x-8 space-y-6 md:space-y-0">
+                  <div className="md:w-1/2 md:pr-8">
+                    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                      <div className="flex items-center mb-2">
+                        <FaGraduationCap className="text-blue-500 mr-2" />
+                        <h3 className="text-lg font-bold text-blue-700 dark:text-blue-300">2021-2022: University Foundations</h3>
+                      </div>
+                      <p className="text-gray-700 dark:text-gray-300 mb-2">Started BSc in Computer Science & Mathematics at Menofia University. Built strong foundations in:</p>
+                      <div className="flex flex-wrap gap-2 mb-2">
+                        <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded text-xs">Python</span>
+                        <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded text-xs">SQL</span>
+                        <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded text-xs">C#</span>
+                        <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded text-xs">Linux</span>
+                        <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded text-xs">Git</span>
+                      </div>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">Menofia University, 2021–2025</p>
                     </div>
                   </div>
-                  <div className="relative z-10 p-6 text-white text-center">
-                    <div className="text-4xl font-bold mb-2">+30</div>
-                    <div className="text-xl font-semibold">Projects Completed</div>
+                  <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-blue-600 rounded-full border-4 border-white dark:border-gray-800 shadow-lg z-10">
+                    <div className="w-full h-full bg-blue-600 rounded-full animate-pulse"></div>
                   </div>
                 </div>
-
-                {/* Content Section */}
-                <div className="p-6">
-                  <p className="text-gray-600 dark:text-gray-300 text-center leading-relaxed">
-                    Comprehensive data engineering projects demonstrating expertise across the modern data stack
-                  </p>
-                  <div className="mt-4 flex justify-center">
-                    <div className="flex space-x-2">
-                      <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
-                      <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-                      <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                {/* 2023: Bootcamps & Certifications */}
+                <div className="relative flex items-center md:flex-row-reverse flex-col md:space-x-8 space-y-6 md:space-y-0">
+                  <div className="md:w-1/2 md:pl-8">
+                    <div className="bg-yellow-50 dark:bg-yellow-900/20 rounded-xl shadow-lg p-6 border-l-4 border-yellow-400">
+                      <div className="flex items-center mb-2">
+                        <FaCertificate className="text-yellow-500 mr-2" />
+                        <h3 className="text-lg font-bold text-yellow-700 dark:text-yellow-300">Certifications & Bootcamps</h3>
+                      </div>
+                      <ul className="text-gray-700 dark:text-gray-300 text-sm space-y-1">
+                        <li><span className="font-semibold">Business Intelligence Track, ITI Bootcamp</span> <span className="text-xs">(Jul-Aug 2023)</span></li>
+                        <li><span className="font-semibold">Google Business Intelligence Certificate</span> <span className="text-xs">(May 2023)</span></li>
+                        <li><span className="font-semibold">Data Engineering Foundations, IBM</span> <span className="text-xs">(Nov 2023)</span></li>
+                        <li><span className="font-semibold">Data Engineer, Datacamp</span> <span className="text-xs">(Oct 2023)</span></li>
+                      </ul>
                     </div>
                   </div>
+                  <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-yellow-400 rounded-full border-4 border-white dark:border-gray-800 shadow-lg z-10">
+                    <div className="w-full h-full bg-yellow-400 rounded-full animate-pulse"></div>
+                  </div>
                 </div>
-              </motion.div>
-
-              <motion.div 
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                viewport={{ once: true }}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group transform hover:scale-105 hover:-translate-y-2 relative"
-                whileHover={{ 
-                  rotateY: 1,
-                  rotateX: 1,
-                  transition: { duration: 0.3 }
-                }}
-              >
-                {/* Top Colored Section */}
-                <div className="h-32 bg-gradient-to-r from-purple-500 to-pink-500 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-black/10"></div>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-white text-6xl opacity-30">
-                      <FaTrophy />
+                {/* 2023: BI & Data Warehousing */}
+                <div className="relative flex items-center md:flex-row flex-col md:space-x-8 space-y-6 md:space-y-0">
+                  <div className="md:w-1/2 md:pr-8">
+                    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                      <div className="flex items-center mb-2">
+                        <FaChartBar className="text-green-500 mr-2" />
+                        <h3 className="text-lg font-bold text-green-700 dark:text-green-300">2023: BI & Data Warehousing</h3>
+                      </div>
+                      <p className="text-gray-700 dark:text-gray-300 mb-2">Dove into business intelligence, ETL, and data warehousing through real projects:</p>
+                      <div className="flex flex-wrap gap-2 mb-2">
+                        <span className="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded text-xs">Power BI</span>
+                        <span className="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded text-xs">SSIS</span>
+                        <span className="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded text-xs">SSAS</span>
+                        <span className="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded text-xs">SQL Server</span>
+                        <span className="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded text-xs">Excel</span>
+                      </div>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">Projects: Northwind DWH, BI Dashboards</p>
                     </div>
                   </div>
-                  <div className="relative z-10 p-6 text-white text-center">
-                    <div className="text-4xl font-bold mb-2">+1</div>
-                    <div className="text-xl font-semibold">Year of Experience</div>
+                  <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-green-600 rounded-full border-4 border-white dark:border-gray-800 shadow-lg z-10">
+                    <div className="w-full h-full bg-green-600 rounded-full animate-pulse"></div>
                   </div>
                 </div>
-
-                {/* Content Section */}
-                <div className="p-6">
-                  <p className="text-gray-600 dark:text-gray-300 text-center leading-relaxed">
-                    Professional experience in data engineering, business intelligence, and analytics roles
-                  </p>
-                  <div className="mt-4 flex justify-center">
-                    <div className="flex space-x-2">
-                      <div className="w-3 h-3 bg-purple-500 rounded-full animate-pulse"></div>
-                      <div className="w-3 h-3 bg-purple-500 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-                      <div className="w-3 h-3 bg-purple-500 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                {/* 2024: Experience Milestones */}
+                <div className="relative flex items-center md:flex-row-reverse flex-col md:space-x-8 space-y-6 md:space-y-0">
+                  <div className="md:w-1/2 md:pl-8">
+                    <div className="bg-pink-50 dark:bg-pink-900/20 rounded-xl shadow-lg p-6 border-l-4 border-pink-400">
+                      <div className="flex items-center mb-2">
+                        <FaAward className="text-pink-500 mr-2" />
+                        <h3 className="text-lg font-bold text-pink-700 dark:text-pink-300">Experience Milestones</h3>
+                      </div>
+                      <ul className="text-gray-700 dark:text-gray-300 text-sm space-y-1">
+                        <li><span className="font-semibold">Business Intelligence Analyst Internship</span> <span className="text-xs">(Jul-Oct 2024)</span></li>
+                        <li><span className="font-semibold">Data Analysis Internship, ASDC</span> <span className="text-xs">(Nov 2023-Jan 2024)</span></li>
+                      </ul>
                     </div>
                   </div>
+                  <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-pink-400 rounded-full border-4 border-white dark:border-gray-800 shadow-lg z-10">
+                    <div className="w-full h-full bg-pink-400 rounded-full animate-pulse"></div>
+                  </div>
                 </div>
-              </motion.div>
+                {/* 2024: Big Data & Streaming */}
+                <div className="relative flex items-center md:flex-row flex-col md:space-x-8 space-y-6 md:space-y-0">
+                  <div className="md:w-1/2 md:pr-8">
+                    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                      <div className="flex items-center mb-2">
+                        <FaRocket className="text-purple-500 mr-2" />
+                        <h3 className="text-lg font-bold text-purple-700 dark:text-purple-300">2024: Big Data & Streaming</h3>
+                      </div>
+                      <p className="text-gray-700 dark:text-gray-300 mb-2">Built real-world pipelines and dashboards using modern data stack tools:</p>
+                      <div className="flex flex-wrap gap-2 mb-2">
+                        <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-xs">Apache Airflow</span>
+                        <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-xs">Kafka</span>
+                        <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-xs">Hadoop</span>
+                        <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-xs">Spark</span>
+                        <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-xs">dbt</span>
+                        <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-xs">Docker</span>
+                        <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-xs">PostgreSQL</span>
+                      </div>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">Projects: Telecom Streaming Pipeline, ELT-Engine, OLAP Modeling, E2E-ELT-Data-Pipeline</p>
+                    </div>
+                  </div>
+                  <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-purple-600 rounded-full border-4 border-white dark:border-gray-800 shadow-lg z-10">
+                    <div className="w-full h-full bg-purple-600 rounded-full animate-pulse"></div>
+                  </div>
+                </div>
+                {/* 2025: Cloud & Modern Data Stack */}
+                <div className="relative flex items-center md:flex-row-reverse flex-col md:space-x-8 space-y-6 md:space-y-0">
+                  <div className="md:w-1/2 md:pl-8">
+                    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+                      <div className="flex items-center mb-2">
+                        <FaCloud className="text-red-500 mr-2" />
+                        <h3 className="text-lg font-bold text-red-700 dark:text-red-300">2025: Cloud & Modern Data Stack</h3>
+                      </div>
+                      <p className="text-gray-700 dark:text-gray-300 mb-2">Mastered cloud-native data engineering and analytics through advanced bootcamps and projects:</p>
+                      <div className="flex flex-wrap gap-2 mb-2">
+                        <span className="px-2 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded text-xs">Snowflake</span>
+                        <span className="px-2 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded text-xs">Medallion Architecture</span>
+                        <span className="px-2 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded text-xs">Cloud (GCP)</span>
+                        <span className="px-2 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded text-xs">dbt</span>
+                        <span className="px-2 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded text-xs">Power BI</span>
+                        <span className="px-2 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded text-xs">Docker</span>
+                      </div>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">Data Engineering Zoomcamp, Advanced Projects</p>
+                    </div>
+                  </div>
+                  <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-red-600 rounded-full border-4 border-white dark:border-gray-800 shadow-lg z-10">
+                    <div className="w-full h-full bg-red-600 rounded-full animate-pulse"></div>
+                  </div>
+                </div>
+                {/* 2025: Bootcamps & Certifications */}
+                <div className="relative flex items-center md:flex-row flex-col md:space-x-8 space-y-6 md:space-y-0">
+                  <div className="md:w-1/2 md:pr-8">
+                    <div className="bg-yellow-50 dark:bg-yellow-900/20 rounded-xl shadow-lg p-6 border-l-4 border-yellow-400">
+                      <div className="flex items-center mb-2">
+                        <FaCertificate className="text-yellow-500 mr-2" />
+                        <h3 className="text-lg font-bold text-yellow-700 dark:text-yellow-300">Certifications & Bootcamps</h3>
+                      </div>
+                      <ul className="text-gray-700 dark:text-gray-300 text-sm space-y-1">
+                        <li><span className="font-semibold">Data Engineering Zoomcamp, DataTalks Club</span> <span className="text-xs">(Jan-May 2025)</span></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-yellow-400 rounded-full border-4 border-white dark:border-gray-800 shadow-lg z-10">
+                    <div className="w-full h-full bg-yellow-400 rounded-full animate-pulse"></div>
+                  </div>
+                </div>
+              </div>
             </div>
           </motion.div>
         </div>
@@ -1337,24 +1465,35 @@ export default function Home() {
             viewport={{ once: true }}
           >
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold mb-8 gradient-text">Experience</h2>
+              <h2 className="text-4xl font-bold mb-8 gradient-text">Experience Timeline</h2>
               <p className="text-gray-300 max-w-2xl mx-auto">
-                Professional experience in data engineering and business intelligence roles
+                Professional journey in data engineering and business intelligence with key milestones and achievements
               </p>
             </div>
 
+            {/* Timeline Container */}
+            <div className="relative">
+              {/* Timeline Line - Moved to Left */}
+              <div className="absolute left-8 transform w-1 bg-gradient-to-b from-red-600 to-red-400 h-full hidden lg:block"></div>
+              
+              {/* Timeline Items */}
             <div className="space-y-12">
               {experiences.map((exp, index) => (
                 <motion.div 
                   key={index}
-                  initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: index * 0.2 }}
                   viewport={{ once: true }}
+                    className="relative flex items-center lg:flex-row flex-col lg:space-x-8 space-y-6 lg:space-y-0"
+                  >
+                    {/* Timeline Card - Made Wider */}
+                    <div className="lg:w-5/6 lg:ml-16 lg:pr-8">
+                      <motion.div 
                   className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group transform hover:scale-105 hover:-translate-y-2 relative"
                   whileHover={{ 
-                    rotateY: 1,
-                    rotateX: 1,
+                          rotateY: 2,
+                          rotateX: 2,
                     transition: { duration: 0.3 }
                   }}
                 >
@@ -1366,7 +1505,7 @@ export default function Home() {
                         <FaDatabase />
                       </div>
                     </div>
-                    <div className="relative z-10 p-6 text-white">
+                          <div className="relative z-10 p-6 text-white text-center">
                       <div className="flex items-center justify-between">
                         <div>
                           <h3 className="text-2xl font-bold mb-1">{exp.title}</h3>
@@ -1427,7 +1566,7 @@ export default function Home() {
                         {exp.technologies.map((tech, idx) => (
                           <motion.span 
                             key={idx} 
-                            className="px-3 py-2 bg-gradient-to-r from-red-100 to-red-200 dark:from-red-900/30 dark:to-red-800/30 text-red-700 dark:text-red-300 rounded-full text-sm font-medium border border-red-200 dark:border-red-700 hover:border-red-300 dark:hover:border-red-600 transition-colors"
+                                  className="px-3 py-1 bg-gradient-to-r from-red-100 to-red-200 dark:from-red-900/30 dark:to-red-800/30 text-red-700 dark:text-red-300 rounded-full text-sm font-medium border border-red-200 dark:border-red-700 hover:border-red-300 dark:hover:border-red-600 transition-colors"
                             whileHover={{ scale: 1.05 }}
                             initial={{ opacity: 0, scale: 0.8 }}
                             whileInView={{ opacity: 1, scale: 1 }}
@@ -1439,9 +1578,22 @@ export default function Home() {
                         ))}
                       </div>
                     </div>
+                        </div>
+                      </motion.div>
+                    </div>
+
+                    {/* Timeline Dot - Moved to Left */}
+                    <div className="hidden lg:block absolute left-8 transform -translate-x-1/2 w-6 h-6 bg-red-600 rounded-full border-4 border-white dark:border-gray-800 shadow-lg z-10">
+                      <div className="w-full h-full bg-red-600 rounded-full animate-pulse"></div>
+                    </div>
+
+                    {/* Mobile Timeline Dot */}
+                    <div className="lg:hidden w-4 h-4 bg-red-600 rounded-full border-2 border-white dark:border-gray-800 shadow-lg mx-auto">
+                      <div className="w-full h-full bg-red-600 rounded-full animate-pulse"></div>
                   </div>
                 </motion.div>
               ))}
+              </div>
             </div>
           </motion.div>
         </div>
@@ -1862,10 +2014,67 @@ export default function Home() {
             viewport={{ once: true }}
           >
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold mb-8 gradient-text">Skills</h2>
+              <h2 className="text-4xl font-bold mb-8 gradient-text">Interactive Skills Matrix</h2>
               <p className="text-text-secondary max-w-2xl mx-auto">
-                Technical expertise across modern data engineering tools and technologies
+                Technical expertise across modern data engineering tools and technologies with detailed proficiency levels
               </p>
+            </div>
+
+            {/* Skills Overview */}
+            <div className="mb-12">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                  viewport={{ once: true }}
+                  className="text-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg"
+                >
+                  <div className="text-3xl font-bold text-red-600 dark:text-red-400 mb-2">
+                    {skills.reduce((total, category) => total + category.items.length, 0)}
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-300">Total Skills</div>
+                </motion.div>
+                
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                  viewport={{ once: true }}
+                  className="text-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg"
+                >
+                  <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">
+                    {skills.length}
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-300">Categories</div>
+                </motion.div>
+                
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                  viewport={{ once: true }}
+                  className="text-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg"
+                >
+                  <div className="text-3xl font-bold text-green-600 dark:text-green-400 mb-2">
+                    {Math.round(skills.reduce((total, category) => total + category.items.reduce((sum, skill) => sum + skill.level, 0), 0) / skills.reduce((total, category) => total + category.items.length, 0))}%
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-300">Avg Proficiency</div>
+                </motion.div>
+                
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                  viewport={{ once: true }}
+                  className="text-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg"
+                >
+                  <div className="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2">
+                    8+
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-300">Projects</div>
+                </motion.div>
+              </div>
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -1878,8 +2087,8 @@ export default function Home() {
                   viewport={{ once: true }}
                   className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group transform hover:scale-105 hover:-translate-y-2 relative"
                   whileHover={{ 
-                    rotateY: 1,
-                    rotateX: 1,
+                    rotateY: 2,
+                    rotateX: 2,
                     transition: { duration: 0.3 }
                   }}
                 >
@@ -1888,6 +2097,7 @@ export default function Home() {
                     <div className="absolute inset-0 bg-black/10"></div>
                     <div className="relative z-10 p-4 text-white">
                       <h3 className="text-xl font-bold">{category.category}</h3>
+                      <p className="text-gray-300 text-sm">{category.items.length} skills</p>
                     </div>
                   </div>
 
@@ -1901,18 +2111,24 @@ export default function Home() {
                           whileInView={{ opacity: 1, x: 0 }}
                           transition={{ duration: 0.5, delay: idx * 0.1 }}
                           viewport={{ once: true }}
-                          className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600/50 transition-colors"
+                          className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600/50 transition-all duration-300 cursor-pointer group/skill"
+                          whileHover={{ scale: 1.02 }}
                         >
                           <div className="flex items-center justify-between mb-3">
                             <div className="flex items-center space-x-3">
-                              <div className="p-2 bg-red-100 dark:bg-red-900/30 rounded-lg">
+                              <div className="p-2 bg-red-100 dark:bg-red-900/30 rounded-lg group-hover/skill:bg-red-200 dark:group-hover/skill:bg-red-800/30 transition-colors">
                                 <skill.icon className="text-red-600 dark:text-red-400 text-lg" />
                               </div>
                               <span className="text-gray-900 dark:text-white font-medium">{skill.name}</span>
                             </div>
+                            <div className="flex items-center space-x-2">
                             <span className="text-red-600 dark:text-red-400 font-bold text-lg">{skill.level}%</span>
+                              <div className="w-2 h-2 bg-red-600 rounded-full animate-pulse"></div>
                           </div>
-                          <div className="relative">
+                          </div>
+                          
+                          {/* Skill Level Bar */}
+                          <div className="relative mb-3">
                             <div className="skill-bar bg-gray-200 dark:bg-gray-600 h-3 rounded-full overflow-hidden">
                               <motion.div 
                                 initial={{ width: 0 }}
@@ -1925,6 +2141,53 @@ export default function Home() {
                               </motion.div>
                             </div>
                           </div>
+                          
+                          {/* Skill Details (Expandable) */}
+                          <motion.div 
+                            initial={{ height: 0, opacity: 0 }}
+                            whileHover={{ height: 'auto', opacity: 1 }}
+                            transition={{ duration: 0.3 }}
+                            className="overflow-hidden"
+                          >
+                            <div className="pt-3 border-t border-gray-200 dark:border-gray-600">
+                              <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-2">
+                                <span>Experience Level</span>
+                                <span>{skill.level >= 90 ? '5+ years' : 
+                                       skill.level >= 80 ? '3-5 years' : 
+                                       skill.level >= 70 ? '2-3 years' : 
+                                       skill.level >= 60 ? '1-2 years' : '6-12 months'}</span>
+                              </div>
+                              
+                              {/* Project Examples */}
+                              <div className="text-xs text-gray-500 dark:text-gray-400">
+                                <span className="font-medium">Used in:</span>
+                                <div className="flex flex-wrap gap-1 mt-1">
+                                  {skill.name.toLowerCase().includes('python') && (
+                                    <>
+                                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded">E-commerce Pipeline</span>
+                                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded">Telecom Pipeline</span>
+                                    </>
+                                  )}
+                                  {skill.name.toLowerCase().includes('dbt') && (
+                                    <>
+                                      <span className="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded">DBT-Orchestrator</span>
+                                      <span className="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded">OLAPify</span>
+                                    </>
+                                  )}
+                                  {skill.name.toLowerCase().includes('power bi') && (
+                                    <>
+                                      <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded">All Dashboards</span>
+                                    </>
+                                  )}
+                                  {skill.name.toLowerCase().includes('sql') && (
+                                    <>
+                                      <span className="px-2 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 rounded">All Projects</span>
+                                    </>
+                                  )}
+                                </div>
+                            </div>
+                          </div>
+                          </motion.div>
                         </motion.div>
                       ))}
                     </div>

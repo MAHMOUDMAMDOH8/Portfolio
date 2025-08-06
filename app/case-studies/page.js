@@ -1920,6 +1920,21 @@ CREATE TABLE dim_date (
                 </div>
               </div>
 
+              {/* Problem-Solution Story Section */}
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 mb-8">
+                <div className="flex items-center space-x-3 mb-6">
+                  <div className="p-3 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg">
+                    <FaLightbulb className="text-yellow-600 dark:text-yellow-400 text-xl" />
+                  </div>
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Problem-Solution Story</h2>
+                </div>
+                <div className="text-gray-700 dark:text-gray-300 leading-relaxed space-y-4">
+                  <p><span className="font-semibold text-red-600">The Challenge:</span> {selectedCaseStudy.problem.description}</p>
+                  <p><span className="font-semibold text-blue-600">My Approach:</span> {selectedCaseStudy.solution.description}</p>
+                  <p><span className="font-semibold text-green-600">The Outcome:</span> {selectedCaseStudy.results.description}</p>
+                </div>
+              </div>
+
               {/* Problem Section */}
               <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 mb-8">
                 <div className="flex items-center space-x-3 mb-6">
