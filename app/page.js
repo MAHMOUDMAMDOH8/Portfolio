@@ -1408,7 +1408,7 @@ export default function Home() {
                               <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                               <path d="m9 11 3 3L22 4"></path>
                             </svg>
-                            <span className="text-sm font-medium">Current</span>
+                            <span className="text-sm font-medium">completed</span>
                           </div>
                         </div>
                         <h3 className="text-xl font-bold mb-2">University Education</h3>
