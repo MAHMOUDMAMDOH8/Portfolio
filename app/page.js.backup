@@ -57,109 +57,226 @@ const ProjectCard = ({ project, index, getProjectCategory, getCategoryColor, get
   const { color, borderColor } = getCategoryColor(category);
   const projectImage = getProjectImage(project.title);
 
-  // Helper function to get category icon
-  const getCategoryIcon = (category) => {
-    switch (category) {
-      case 'Data Engineer':
-        return (
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12">
-            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-          </svg>
-        );
-      case 'Analytics Engineer':
-        return (
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12">
-            <path d="M3 3v18h18"></path>
-            <path d="M18 17V9"></path>
-            <path d="M13 17V5"></path>
-            <path d="M8 17v-3"></path>
-          </svg>
-        );
-      case 'BI Engineer':
-        return (
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12">
-            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-            <path d="M3 5V19A9 3 0 0 0 21 19V5"></path>
-            <path d="M3 12A9 3 0 0 0 21 12"></path>
-          </svg>
-        );
-      default:
-        return (
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12">
-            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-          </svg>
-        );
-    }
-  };
-
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, delay: index * 0.1 }}
       viewport={{ once: true }}
-      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden"
+      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group transform hover:scale-105 hover:-translate-y-2"
+      whileHover={{ 
+        rotateY: 2,
+        rotateX: 2,
+        transition: { duration: 0.3 }
+      }}
     >
-      {/* Header with Gradient Background */}
-      <div className={`bg-gradient-to-r ${color} p-6 text-white`}>
-        <div className="flex items-center justify-between mb-4">
-          {getCategoryIcon(category)}
-          <div className="flex items-center space-x-2">
-            {project.featured ? (
-              <>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                </svg>
-                <span className="text-sm font-medium">Featured</span>
-              </>
-            ) : (
-              <>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                  <path d="m9 11 3 3L22 4"></path>
-                </svg>
-                <span className="text-sm font-medium">Active</span>
-              </>
+      {/* Enhanced Image Section with Loading and Error States */}
+      <div className={`relative h-48 ${projectImage && !imageError ? 'bg-gray-100 dark:bg-gray-700' : `bg-gradient-to-br ${color}`} overflow-hidden`}>
+        {projectImage && !imageError ? (
+          /* Project Image with Enhanced Effects */
+          <div className="relative w-full h-full">
+            {/* Loading Skeleton */}
+            {imageLoading && (
+              <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700 animate-pulse flex items-center justify-center">
+                <div className="text-gray-400 dark:text-gray-500">
+                  <svg className="w-8 h-8 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                </div>
+              </div>
+            )}
+            
+            <Image
+              src={projectImage}
+              alt={`${project.title} - Project Screenshot`}
+              fill
+              className={`object-cover group-hover:scale-110 transition-all duration-700 ease-out ${imageLoading ? 'opacity-0' : 'opacity-100'}`}
+              priority={index < 3} // Prioritize first 3 images
+              onLoad={() => setImageLoading(false)}
+              onError={() => {
+                setImageError(true);
+                setImageLoading(false);
+              }}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+            
+            {/* Enhanced Category-based colored overlay */}
+            <div className={`absolute inset-0 bg-gradient-to-br ${color} opacity-15 group-hover:opacity-25 transition-all duration-500`}></div>
+            
+            {/* Gradient overlay for better text readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300"></div>
+            
+            {/* Project Category Badge */}
+            <div className="absolute top-3 left-3">
+              <span className={`px-3 py-1 rounded-full text-xs font-semibold text-white backdrop-blur-sm border border-white/30 bg-gradient-to-r ${color} opacity-90`}>
+                {category}
+              </span>
+            </div>
+            
+            {/* Featured Badge */}
+            {project.featured && (
+              <div className="absolute top-3 right-3">
+                <span className="px-2 py-1 rounded-full text-xs font-bold text-white bg-gradient-to-r from-yellow-500 to-orange-500 backdrop-blur-sm border border-white/30">
+                  ⭐ Featured
+                </span>
+              </div>
             )}
           </div>
+        ) : (
+          /* Enhanced Fallback Icon Background */
+          <>
+            {/* Background Pattern */}
+            <div className="absolute inset-0 opacity-10">
+              <div className="w-full h-full bg-gradient-to-br from-white/20 to-transparent"></div>
+            </div>
+            
+            {/* Category Icon */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-7xl text-white opacity-40 transform group-hover:scale-110 transition-transform duration-500">
+                {category === 'Data Engineer' ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                  </svg>
+                ) : category === 'Analytics Engineer' ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M3 3v18h18"></path>
+                    <path d="M18 17V9"></path>
+                    <path d="M13 17V5"></path>
+                    <path d="M8 17v-3"></path>
+                  </svg>
+                ) : (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                    <polyline points="16 7 22 7 22 13"></polyline>
+                  </svg>
+                )}
+              </div>
+            </div>
+            
+            {/* Category Badge */}
+            <div className="absolute top-3 left-3">
+              <span className="px-3 py-1 rounded-full text-xs font-semibold text-white backdrop-blur-sm border border-white/30 bg-white/20">
+                {category}
+              </span>
+            </div>
+          </>
+        )}
+        
+        {/* Enhanced Hover Overlay with Action Buttons */}
+        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center space-x-4 backdrop-blur-sm">
+          <motion.a 
+            href={project.github} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="p-4 bg-white/90 hover:bg-white rounded-full text-gray-900 hover:text-gray-700 transition-all duration-200 shadow-lg backdrop-blur-sm transform hover:scale-110"
+            whileHover={{ scale: 1.15, rotate: 5 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <FaGithub className="w-6 h-6" />
+          </motion.a>
+          {project.demo && (
+            <motion.a 
+              href={project.demo} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="p-4 bg-blue-600/90 hover:bg-blue-600 rounded-full text-white transition-all duration-200 shadow-lg backdrop-blur-sm transform hover:scale-110"
+              whileHover={{ scale: 1.15, rotate: -5 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <FaExternalLinkAlt className="w-6 h-6" />
+            </motion.a>
+          )}
         </div>
-        <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-        <p className="text-sm opacity-90">{category}</p>
       </div>
 
-      {/* Content Section */}
+      {/* Content Section - keeping the existing structure */}
       <div className="p-6">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-              <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-              <line x1="16" x2="16" y1="2" y2="6"></line>
-              <line x1="8" x2="8" y1="2" y2="6"></line>
-              <line x1="3" x2="21" y1="10" y2="10"></line>
-            </svg>
-            <span className="text-sm">{project.date}</span>
-          </div>
-          <span className="text-xs text-gray-500 dark:text-gray-400">ID: PRJ-{index + 1}-2024</span>
+        {/* Project Title */}
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+            {project.title}
+          </h3>
         </div>
-        
-        <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 leading-relaxed">
+
+        {/* Description */}
+        <p className="text-gray-600 dark:text-gray-300 mb-4 text-sm leading-relaxed">
           {project.description}
         </p>
 
-        {/* Technology Stack */}
-        <div className="mb-6">
-          <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Tech Stack</h4>
-          <div className="flex flex-wrap gap-2">
-            {project.tech.slice(0, 6).map((tech, idx) => (
-              <span key={idx} className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">
-                {tech}
-              </span>
-            ))}
-            {project.tech.length > 6 && (
-              <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">
-                +{project.tech.length - 6} more
-              </span>
-            )}
+        {/* Technology Stack with Icons */}
+        <div className="flex flex-wrap gap-2 mb-4">
+          {project.tech.slice(0, 4).map((tech, idx) => (
+            <div key={idx} className="flex items-center space-x-1 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full text-sm">
+              {/* Technology Icons */}
+              {tech.toLowerCase().includes('python') ? (
+                <FaPython className="w-4 h-4 text-blue-600" />
+              ) : tech.toLowerCase().includes('sql') ? (
+                <FaDatabase className="w-4 h-4 text-green-600" />
+              ) : tech.toLowerCase().includes('docker') ? (
+                <FaDocker className="w-4 h-4 text-blue-500" />
+              ) : tech.toLowerCase().includes('kafka') ? (
+                <FaProjectDiagram className="w-4 h-4 text-orange-500" />
+              ) : tech.toLowerCase().includes('spark') ? (
+                <FaRocket className="w-4 h-4 text-red-500" />
+              ) : tech.toLowerCase().includes('airflow') ? (
+                <FaProjectDiagram className="w-4 h-4 text-blue-600" />
+              ) : tech.toLowerCase().includes('dbt') ? (
+                <FaDatabase className="w-4 h-4 text-orange-600" />
+              ) : tech.toLowerCase().includes('power bi') ? (
+                <FaChartLine className="w-4 h-4 text-yellow-600" />
+              ) : tech.toLowerCase().includes('postgresql') ? (
+                <FaDatabase className="w-4 h-4 text-blue-700" />
+              ) : tech.toLowerCase().includes('snowflake') ? (
+                <FaCloud className="w-4 h-4 text-blue-400" />
+              ) : tech.toLowerCase().includes('hadoop') ? (
+                <FaServer className="w-4 h-4 text-gray-600" />
+              ) : tech.toLowerCase().includes('hive') ? (
+                <FaDatabase className="w-4 h-4 text-purple-600" />
+              ) : tech.toLowerCase().includes('git') ? (
+                <FaGitAlt className="w-4 h-4 text-orange-600" />
+              ) : tech.toLowerCase().includes('linux') ? (
+                <FaLinux className="w-4 h-4 text-yellow-600" />
+              ) : tech.toLowerCase().includes('windows') ? (
+                <FaWindows className="w-4 h-4 text-blue-600" />
+              ) : (
+                <FaCode className="w-4 h-4 text-gray-600" />
+              )}
+              <span className="text-gray-700 dark:text-gray-300">{tech}</span>
+            </div>
+          ))}
+          {project.tech.length > 4 && (
+            <div className="flex items-center space-x-1 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full text-sm">
+              <FaCode className="w-4 h-4 text-gray-600" />
+              <span className="text-gray-700 dark:text-gray-300">+{project.tech.length - 4} more</span>
+            </div>
+          )}
+        </div>
+
+        {/* Statistics Section */}
+        <div className="grid grid-cols-2 gap-2 mb-4">
+          <div className="text-center">
+            <div className="text-sm font-bold text-red-600 dark:text-red-400">
+              {project.featured ? 'Featured' : 'Active'}
+            </div>
+            <div className="text-xs text-gray-500 dark:text-gray-400">Status</div>
+          </div>
+          <div className="text-center">
+            <div className="text-sm font-bold text-red-600 dark:text-red-400">
+              {project.date}
+            </div>
+            <div className="text-xs text-gray-500 dark:text-gray-400">Date</div>
+          </div>
+          <div className="text-center">
+            <div className="text-sm font-bold text-red-600 dark:text-red-400">
+              {category}
+            </div>
+            <div className="text-xs text-gray-500 dark:text-gray-400">Category</div>
+          </div>
+          <div className="text-center">
+            <div className="text-sm font-bold text-red-600 dark:text-red-400">
+              {project.tech.length}
+            </div>
+            <div className="text-xs text-gray-500 dark:text-gray-400">Technologies</div>
           </div>
         </div>
 
@@ -169,25 +286,19 @@ const ProjectCard = ({ project, index, getProjectCategory, getCategoryColor, get
             href={project.github} 
             target="_blank" 
             rel="noopener noreferrer"
-            className="flex-1 bg-gray-900 dark:bg-gray-700 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors duration-200 flex items-center justify-center space-x-2"
+            className="flex-1 bg-gray-900 dark:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors duration-200 flex items-center justify-center space-x-2"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-            </svg>
-            <span>View Code</span>
+            <FaGithub className="w-4 h-4" />
+            <span>Code</span>
           </a>
           {project.demo && (
             <a 
               href={project.demo} 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors duration-200 flex items-center justify-center space-x-2"
+              className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors duration-200 flex items-center justify-center space-x-2"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                <polyline points="15 3 21 3 21 9"></polyline>
-                <line x1="10" x2="21" y1="14" y2="3"></line>
-              </svg>
+              <FaExternalLinkAlt className="w-4 h-4" />
               <span>Live Demo</span>
             </a>
           )}
@@ -319,134 +430,93 @@ export default function Home() {
   const skills = [
     {
       category: 'Programming Languages',
-      icon: 'code',
       items: [
-        { name: 'Python', level: 95, color: 'from-green-400 to-green-600' },
-        { name: 'SQL', level: 90, color: 'from-blue-400 to-blue-600' },
-        { name: 'Linux', level: 80, color: 'from-gray-400 to-gray-600' },
-        { name: 'Bash', level: 60, color: 'from-yellow-400 to-yellow-600' }
+        { name: 'Python', level: 80, icon: FaPython },
+        { name: 'SQL', level: 80, icon: FaDatabase },
+        { name: 'Spark', level: 60, icon: FaRocket },
+        { name: 'C#', level: 60, icon: FaCode }
       ]
     },
     {
-      category: 'Big Data & Processing',
-      icon: 'database',
+      category: 'Orchestration & Workflow',
       items: [
-        { name: 'Apache Spark', level: 60, color: 'from-orange-400 to-orange-600' },
-        { name: 'Hadoop', level: 85, color: 'from-blue-400 to-blue-600' },
-        { name: 'Airflow', level: 80, color: 'from-teal-400 to-teal-600' },
-        { name: 'Hive', level: 75, color: 'from-yellow-400 to-yellow-600' },
-        { name: 'Kafka', level: 50, color: 'from-gray-400 to-gray-600' }
+        { name: 'Apache Airflow', level: 75, icon: FaProjectDiagram },
+        { name: 'Mage', level: 70, icon: FaTools }
       ]
     },
     {
-      category: 'Real-Time Technologies',
-      icon: 'zap',
+      category: 'ETL & ELT Tools',
       items: [
-        { name: 'Spark Streaming', level: 60, color: 'from-orange-400 to-orange-600' },
-        { name: 'Kafka Streams', level: 30, color: 'from-purple-400 to-purple-600' }
+        { name: 'dbt', level: 90, icon: FaDatabase },
+        { name: 'SSIS', level: 80, icon: FaTools }
       ]
     },
     {
-      category: 'Analytics & Visualization',
-      icon: 'chart',
+      category: 'Big Data Technologies',
       items: [
-        { name: 'Jupyter', level: 92, color: 'from-orange-400 to-orange-600' },
-        { name: 'Power BI', level: 90, color: 'from-yellow-400 to-yellow-600' },
-        { name: 'tableau', level: 60, color: 'from-blue-400 to-blue-600' }
+        { name: 'Hadoop', level: 80, icon: FaServer },
+        { name: 'Hive', level: 70, icon: FaDatabase }
       ]
     },
     {
-      category: 'Cloud & Containerization',
-      icon: 'cloud',
+      category: 'Data Streaming',
       items: [
-        { name: 'Docker', level: 88, color: 'from-blue-400 to-blue-600' },
-        { name: 'Azure', level: 60, color: 'from-blue-400 to-blue-600' }
+        { name: 'Kafka', level: 60, icon: FaProjectDiagram }
       ]
     },
     {
-      category: 'Analytics engineering ',
-      icon: 'brain',
+      category: 'Data Warehousing',
       items: [
-        { name: 'dbt ', level: 90, color: 'from-green-400 to-green-600' },
-        { name: 'Snowflake', level: 85, color: 'from-orange-400 to-orange-600' }
+        { name: 'Snowflake', level: 75, icon: FaCloud },
+        { name: 'Dimensional Modeling', level: 75, icon: FaDatabase },
+        { name: 'Medallion Architecture', level: 75, icon: FaProjectDiagram }
       ]
     },
     {
       category: 'Databases',
-      icon: 'server',
       items: [
-        { name: 'PostgreSQL', level: 88, color: 'from-blue-400 to-blue-600' },
-        { name: 'MySQL', level: 85, color: 'from-orange-400 to-orange-600' },
-        { name: 'sql server', level: 70, color: 'from-green-400 to-green-600' },
-        { name: 'MongoDB', level: 40, color: 'from-yellow-400 to-yellow-600' }
-
+        { name: 'PostgreSQL', level: 80, icon: FaDatabase },
+        { name: 'MySQL', level: 70, icon: FaDatabase },
+        { name: 'MS SQL Server', level: 70, icon: FaDatabase }
+      ]
+    },
+    {
+      category: 'Business Intelligence',
+      items: [
+        { name: 'Power BI', level: 85, icon: FaChartLine },
+        { name: 'SSAS', level: 60, icon: FaDatabase },
+        { name: 'SSRS', level: 60, icon: FaChartLine },
+        { name: 'Excel', level: 75, icon: FaChartLine }
+      ]
+    },
+    {
+      category: 'Containerization',
+      items: [
+        { name: 'Docker', level: 75, icon: FaDocker }
+      ]
+    },
+    {
+      category: 'Version Control',
+      items: [
+        { name: 'Git', level: 75, icon: FaGitAlt },
+        { name: 'GitHub', level: 75, icon: FaGithub }
+      ]
+    },
+    {
+      category: 'Operating Systems',
+      items: [
+        { name: 'Linux', level: 90, icon: FaLinux },
+        { name: 'Windows', level: 90, icon: FaWindows }
+      ]
+    },
+    {
+      category: 'Data Quality',
+      items: [
+        { name: 'Data Quality Checks', level: 75, icon: FaCheckCircle },
+        { name: 'Schema Validation', level: 70, icon: FaCheckCircle }
       ]
     }
   ]
-
-  // Helper function to render skill icons
-  const renderSkillIcon = (iconType) => {
-    switch (iconType) {
-      case 'code':
-        return (
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-            <polyline points="16 18 22 12 16 6"></polyline>
-            <polyline points="8 6 2 12 8 18"></polyline>
-          </svg>
-        );
-      case 'database':
-        return (
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-            <path d="M3 5V19A9 3 0 0 0 21 19V5"></path>
-            <path d="M3 12A9 3 0 0 0 21 12"></path>
-          </svg>
-        );
-      case 'zap':
-        return (
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-          </svg>
-        );
-      case 'chart':
-        return (
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-            <path d="M3 3v18h18"></path>
-            <path d="M18 17V9"></path>
-            <path d="M13 17V5"></path>
-            <path d="M8 17v-3"></path>
-          </svg>
-        );
-      case 'cloud':
-        return (
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-            <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path>
-          </svg>
-        );
-      case 'brain':
-        return (
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-            <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"></path>
-            <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"></path>
-          </svg>
-        );
-      case 'server':
-        return (
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-            <rect width="20" height="8" x="2" y="2" rx="2" ry="2"></rect>
-            <rect width="20" height="8" x="2" y="14" rx="2" ry="2"></rect>
-            <line x1="6" x2="6.01" y1="6" y2="6"></line>
-            <line x1="6" x2="6.01" y1="18" y2="18"></line>
-          </svg>
-        );
-      default:
-        return (
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-            <circle cx="12" cy="12" r="10"></circle>
-          </svg>
-        );
-    }
-  }
 
   const projects = [
     {
@@ -839,25 +909,25 @@ export default function Home() {
     const titleLower = title.toLowerCase();
     const issuerLower = issuer.toLowerCase();
     
-    let imagePath = null;
-    
     // Map certifications to image files
     if (titleLower.includes('data engineering zoomcamp') || issuerLower.includes('datatalks')) {
-      imagePath = '/project_image/datatalksclup.jpeg';
-    } else if (titleLower.includes('business intelligence train') || issuerLower.includes('iti')) {
-      imagePath = '/project_image/iti.png';
-    } else if (titleLower.includes('data engineer') && issuerLower.includes('datacamp')) {
-      imagePath = '/project_image/datacamp.png';
-    } else if (titleLower.includes('google') || issuerLower.includes('google')) {
-      imagePath = '/project_image/google.png';
-    } else if (issuerLower.includes('ibm')) {
-      imagePath = '/project_image/ipm.jpeg';
+      return '/project_image/dezoomcamp.png';
+    }
+    if (titleLower.includes('business intelligence train') || issuerLower.includes('iti')) {
+      return '/project_image/iti.png';
+    }
+    if (titleLower.includes('data engineer') && issuerLower.includes('datacamp')) {
+      return '/project_image/datacamp.png';
+    }
+    if (titleLower.includes('google') || issuerLower.includes('google')) {
+      return '/project_image/google.png';
+    }
+    if (issuerLower.includes('ibm')) {
+      return '/project_image/ipm.jpeg'; // Using IPM image for IBM if available, or null for fallback
     }
     
-    // Debug logging
-    console.log(`Certification: ${title} | Issuer: ${issuer} | Image: ${imagePath}`);
-    
-    return imagePath;
+    // Return null if no image found - will use fallback SVG
+    return null;
   };
 
   return (
@@ -1366,7 +1436,7 @@ export default function Home() {
 
       {/* Unified Career & Tech Stack Timeline Section */}
       <section id="career-timeline" className="section-padding">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto container-padding">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -1374,11 +1444,9 @@ export default function Home() {
             viewport={{ once: true }}
           >
             <div className="text-center mb-16">
-              <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-                Career & Tech Stack <span className="gradient-text">Timeline</span>
-              </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                My complete journey in data engineering, analytics, and BI—combining education, experience, and tech adoption
+              <h2 className="text-4xl font-bold mb-8 gradient-text">Career & Tech Stack Timeline</h2>
+              <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+                My complete journey in data engineering, analytics, and BI—combining education, experience, tech adoption, certifications, bootcamps, and major projects in one unified timeline.
               </p>
             </div>
             
@@ -1387,68 +1455,58 @@ export default function Home() {
               <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-blue-600 via-red-500 to-green-400 h-full hidden md:block"></div>
               
               <div className="space-y-16">
-                {/* 2021-2025: Education Foundation */}
+                {/* 2021-2022: Education Foundation */}
                 <div className="relative flex items-center md:flex-row flex-col md:space-x-8 space-y-6 md:space-y-0">
                   <div className="md:w-1/2 md:pr-8">
                     <motion.div 
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.8, delay: 0.1 }}
-                      viewport={{ once: true }}
-                      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden"
+                      className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-700 overflow-hidden group transform hover:scale-[1.02] hover:-translate-y-3 relative border border-gray-100 dark:border-gray-700"
+                      whileHover={{ 
+                        rotateY: 1,
+                        rotateX: 1,
+                        transition: { duration: 0.4 }
+                      }}
                     >
-                      <div className="bg-gradient-to-r from-blue-400 to-blue-600 p-6 text-white">
-                        <div className="flex items-center justify-between mb-4">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12">
-                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                          </svg>
-                          <div className="flex items-center space-x-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                              <path d="m9 11 3 3L22 4"></path>
-                            </svg>
-                            <span className="text-sm font-medium">Current</span>
-                          </div>
-                        </div>
-                        <h3 className="text-xl font-bold mb-2">University Education</h3>
-                        <p className="text-sm opacity-90">Menofia University</p>
+                      {/* Header */}
+                      <div className="h-32 bg-gradient-to-br from-blue-500 via-blue-600 to-blue-700 relative overflow-hidden">
+                        <div className="absolute inset-0 opacity-20">
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
                       </div>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <motion.div 
+                            className="text-white text-6xl opacity-20"
+                            animate={{ rotate: [0, 360] }}
+                            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                          >
+                            <FaGraduationCap />
+                          </motion.div>
+                      </div>
+                        <div className="relative z-10 p-6 text-white">
+                          <div className="flex items-center justify-between">
+                            <div className="flex-1">
+                              <div className="text-sm font-medium text-blue-100 mb-1">2021 - 2025</div>
+                              <h3 className="text-xl font-bold mb-1">University Education</h3>
+                              <p className="text-blue-100 font-medium">Menofia University</p>
+                    </div>
+                            <span className="bg-white/25 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold">
+                              Education
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Content */}
                       <div className="p-6">
-                        <div className="flex items-center justify-between mb-4">
-                          <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                              <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                              <line x1="16" x2="16" y1="2" y2="6"></line>
-                              <line x1="8" x2="8" y1="2" y2="6"></line>
-                              <line x1="3" x2="21" y1="10" y2="10"></line>
-                            </svg>
-                            <span className="text-sm">2021 - 2025</span>
-                          </div>
-                          <span className="text-xs text-gray-500 dark:text-gray-400">ID: CS-MATH-2025</span>
-                        </div>
-                        <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 leading-relaxed">
-                          Bachelor's in Computer Science and Mathematics - Strong foundation for data engineering
+                        <h4 className="font-bold text-gray-900 dark:text-white mb-3">Bachelor's in Computer Science and Mathematics</h4>
+                        <p className="text-gray-600 dark:text-gray-300 mb-4">
+                          Comprehensive degree combining theoretical computer science with mathematical foundations, providing a strong base for data engineering and analytics work.
                         </p>
-                        <div className="mb-6">
-                          <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Key Areas</h4>
-                          <div className="flex flex-wrap gap-2">
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Data Structures</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Algorithms</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">OOP</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Database Design</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Mathematics</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">System Design</span>
-                          </div>
+                        <div className="flex flex-wrap gap-2">
+                          {['Data Structures', 'Algorithms', 'OOP', 'Database Design', 'Mathematics', 'System Design'].map((skill, idx) => (
+                            <span key={idx} className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm">
+                              {skill}
+                            </span>
+                          ))}
                         </div>
-                        <button className="w-full bg-gray-900 dark:bg-gray-700 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors duration-200 flex items-center justify-center space-x-2">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                            <polyline points="15 3 21 3 21 9"></polyline>
-                            <line x1="10" x2="21" y1="14" y2="3"></line>
-                          </svg>
-                          <span>View Details</span>
-                        </button>
                       </div>
                     </motion.div>
                   </div>
@@ -1461,67 +1519,67 @@ export default function Home() {
                 <div className="relative flex items-center md:flex-row-reverse flex-col md:space-x-8 space-y-6 md:space-y-0">
                   <div className="md:w-1/2 md:pl-8">
                     <motion.div 
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.8, delay: 0.2 }}
-                      viewport={{ once: true }}
-                      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden"
+                      className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-700 overflow-hidden group transform hover:scale-[1.02] hover:-translate-y-3 relative border border-gray-100 dark:border-gray-700"
+                      whileHover={{ 
+                        rotateY: -1,
+                        rotateX: 1,
+                        transition: { duration: 0.4 }
+                      }}
                     >
-                      <div className="bg-gradient-to-r from-green-400 to-green-600 p-6 text-white">
-                        <div className="flex items-center justify-between mb-4">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12">
-                            <path d="M3 3v18h18"></path>
-                            <path d="M18 17V9"></path>
-                            <path d="M13 17V5"></path>
-                            <path d="M8 17v-3"></path>
-                          </svg>
-                          <div className="flex items-center space-x-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                              <path d="m9 11 3 3L22 4"></path>
-                            </svg>
-                            <span className="text-sm font-medium">Completed</span>
-                          </div>
-                        </div>
-                        <h3 className="text-xl font-bold mb-2">BI Track Bootcamp</h3>
-                        <p className="text-sm opacity-90">Information Technology Institute (ITI)</p>
+                      {/* Header */}
+                      <div className="h-32 bg-gradient-to-br from-green-500 via-green-600 to-green-700 relative overflow-hidden">
+                        <div className="absolute inset-0 opacity-20">
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
                       </div>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <motion.div 
+                            className="text-white text-6xl opacity-20"
+                            animate={{ rotate: [0, -360] }}
+                            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                          >
+                            <FaChartLine />
+                          </motion.div>
+                    </div>
+                        <div className="relative z-10 p-6 text-white">
+                          <div className="flex items-center justify-between">
+                            <div className="flex-1">
+                              <div className="text-sm font-medium text-green-100 mb-1">Jul 2023 - Aug 2023</div>
+                              <h3 className="text-xl font-bold mb-1">BI Track Bootcamp</h3>
+                              <p className="text-green-100 font-medium">Information Technology Institute (ITI)</p>
+                  </div>
+                            <span className="bg-white/25 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold">
+                              Bootcamp
+                            </span>
+                  </div>
+                </div>
+                      </div>
+                      
+                      {/* Content */}
                       <div className="p-6">
-                        <div className="flex items-center justify-between mb-4">
-                          <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                              <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                              <line x1="16" x2="16" y1="2" y2="6"></line>
-                              <line x1="8" x2="8" y1="2" y2="6"></line>
-                              <line x1="3" x2="21" y1="10" y2="10"></line>
-                            </svg>
-                            <span className="text-sm">Jul 2023 - Aug 2023</span>
-                          </div>
-                          <span className="text-xs text-gray-500 dark:text-gray-400">ID: ITI-BC-2023</span>
-                        </div>
-                        <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 leading-relaxed">
-                          Intensive BI training with hands-on projects and real-world applications
+                        <h4 className="font-bold text-gray-900 dark:text-white mb-3">Business Intelligence Track</h4>
+                        <p className="text-gray-600 dark:text-gray-300 mb-4">
+                          Intensive training program focused on BI tools and data visualization techniques with hands-on projects and real-world applications.
                         </p>
-                        <div className="mb-6">
-                          <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Technologies Learned</h4>
+                        <div className="mb-4">
+                          <h5 className="font-semibold text-sm text-gray-700 dark:text-gray-300 mb-2">Technologies Learned:</h5>
                           <div className="flex flex-wrap gap-2">
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Power BI</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">SSIS</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">SSAS</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">SSRS</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">SQL Server</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Excel</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">DAX</span>
+                            {['Power BI', 'SSIS', 'SSAS', 'SSRS', 'SQL Server', 'Excel', 'DAX'].map((tech, idx) => (
+                              <span key={idx} className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-full text-sm">
+                                {tech}
+                              </span>
+                            ))}
+                      </div>
+                    </div>
+                        <div>
+                          <h5 className="font-semibold text-sm text-gray-700 dark:text-gray-300 mb-2">Key Concepts:</h5>
+                          <div className="flex flex-wrap gap-2">
+                            {['Dimensional Modeling', 'Star Schema', 'ETL Process Design', 'Dashboard Design'].map((concept, idx) => (
+                              <span key={idx} className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full text-sm">
+                                {concept}
+                              </span>
+                            ))}
                           </div>
                         </div>
-                        <button className="w-full bg-gray-900 dark:bg-gray-700 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors duration-200 flex items-center justify-center space-x-2">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                            <polyline points="15 3 21 3 21 9"></polyline>
-                            <line x1="10" x2="21" y1="14" y2="3"></line>
-                          </svg>
-                          <span>View Details</span>
-                        </button>
                       </div>
                     </motion.div>
                   </div>
@@ -1534,65 +1592,67 @@ export default function Home() {
                 <div className="relative flex items-center md:flex-row flex-col md:space-x-8 space-y-6 md:space-y-0">
                   <div className="md:w-1/2 md:pr-8">
                     <motion.div 
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.8, delay: 0.3 }}
-                      viewport={{ once: true }}
-                      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden"
+                      className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-700 overflow-hidden group transform hover:scale-[1.02] hover:-translate-y-3 relative border border-gray-100 dark:border-gray-700"
+                      whileHover={{ 
+                        rotateY: 1,
+                        rotateX: 1,
+                        transition: { duration: 0.4 }
+                      }}
                     >
-                      <div className="bg-gradient-to-r from-purple-400 to-purple-600 p-6 text-white">
-                        <div className="flex items-center justify-between mb-4">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12">
-                            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-                            <path d="M3 5V19A9 3 0 0 0 21 19V5"></path>
-                            <path d="M3 12A9 3 0 0 0 21 12"></path>
-                          </svg>
-                          <div className="flex items-center space-x-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                              <path d="m9 11 3 3L22 4"></path>
-                            </svg>
-                            <span className="text-sm font-medium">Completed</span>
-                          </div>
-                        </div>
-                        <h3 className="text-xl font-bold mb-2">Data Analysis Internship</h3>
-                        <p className="text-sm opacity-90">ASDC</p>
+                      {/* Header */}
+                      <div className="h-32 bg-gradient-to-br from-purple-500 via-purple-600 to-purple-700 relative overflow-hidden">
+                        <div className="absolute inset-0 opacity-20">
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
                       </div>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <motion.div 
+                            className="text-white text-6xl opacity-20"
+                            animate={{ rotate: [0, 360] }}
+                            transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                          >
+                            <FaDatabase />
+                          </motion.div>
+                    </div>
+                        <div className="relative z-10 p-6 text-white">
+                          <div className="flex items-center justify-between">
+                            <div className="flex-1">
+                              <div className="text-sm font-medium text-purple-100 mb-1">Nov 2023 - Jan 2024</div>
+                              <h3 className="text-xl font-bold mb-1">Data Analysis Internship</h3>
+                              <p className="text-purple-100 font-medium">ASDC</p>
+                  </div>
+                            <span className="bg-white/25 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold">
+                              Internship
+                            </span>
+                  </div>
+                </div>
+                      </div>
+                      
+                      {/* Content */}
                       <div className="p-6">
-                        <div className="flex items-center justify-between mb-4">
-                          <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                              <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                              <line x1="16" x2="16" y1="2" y2="6"></line>
-                              <line x1="8" x2="8" y1="2" y2="6"></line>
-                              <line x1="3" x2="21" y1="10" y2="10"></line>
-                            </svg>
-                            <span className="text-sm">Nov 2023 - Jan 2024</span>
-                          </div>
-                          <span className="text-xs text-gray-500 dark:text-gray-400">ID: ASDC-INT-2024</span>
-                        </div>
-                        <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 leading-relaxed">
-                          Data analysis fundamentals and BI solutions for business metrics visualization
+                        <h4 className="font-bold text-gray-900 dark:text-white mb-3">Data Analysis Professional Internship</h4>
+                        <p className="text-gray-600 dark:text-gray-300 mb-4">
+                          Learned data analysis fundamentals and business intelligence solutions using Power BI for visualizing business metrics.
                         </p>
-                        <div className="mb-6">
-                          <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Skills Developed</h4>
+                        <div className="mb-4">
+                          <h5 className="font-semibold text-sm text-gray-700 dark:text-gray-300 mb-2">Skills Developed:</h5>
                           <div className="flex flex-wrap gap-2">
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">ETL Development</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Data Modeling</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Statistical Analysis</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Requirements Gathering</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Power BI</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Python</span>
+                            {['ETL Development', 'Data Modeling', 'Statistical Analysis', 'Requirements Gathering'].map((skill, idx) => (
+                              <span key={idx} className="px-3 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 rounded-full text-sm">
+                                {skill}
+                              </span>
+                            ))}
+                      </div>
+                    </div>
+                        <div>
+                          <h5 className="font-semibold text-sm text-gray-700 dark:text-gray-300 mb-2">Technologies Used:</h5>
+                          <div className="flex flex-wrap gap-2">
+                            {['Power BI', 'SQL Server', 'SSIS', 'Excel', 'Python', 'DAX'].map((tech, idx) => (
+                              <span key={idx} className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-full text-sm">
+                                {tech}
+                              </span>
+                            ))}
                           </div>
                         </div>
-                        <button className="w-full bg-gray-900 dark:bg-gray-700 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors duration-200 flex items-center justify-center space-x-2">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                            <polyline points="15 3 21 3 21 9"></polyline>
-                            <line x1="10" x2="21" y1="14" y2="3"></line>
-                          </svg>
-                          <span>View Details</span>
-                        </button>
                       </div>
                     </motion.div>
                   </div>
@@ -1605,66 +1665,67 @@ export default function Home() {
                 <div className="relative flex items-center md:flex-row-reverse flex-col md:space-x-8 space-y-6 md:space-y-0">
                   <div className="md:w-1/2 md:pl-8">
                     <motion.div 
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.8, delay: 0.4 }}
-                      viewport={{ once: true }}
-                      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden"
+                      className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-700 overflow-hidden group transform hover:scale-[1.02] hover:-translate-y-3 relative border border-gray-100 dark:border-gray-700"
+                      whileHover={{ 
+                        rotateY: -1,
+                        rotateX: 1,
+                        transition: { duration: 0.4 }
+                      }}
                     >
-                      <div className="bg-gradient-to-r from-red-400 to-red-600 p-6 text-white">
-                        <div className="flex items-center justify-between mb-4">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12">
-                            <path d="M3 3v18h18"></path>
-                            <path d="M18 17V9"></path>
-                            <path d="M13 17V5"></path>
-                            <path d="M8 17v-3"></path>
-                          </svg>
-                          <div className="flex items-center space-x-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                              <path d="m9 11 3 3L22 4"></path>
-                            </svg>
-                            <span className="text-sm font-medium">Completed</span>
-                          </div>
-                        </div>
-                        <h3 className="text-xl font-bold mb-2">BI Analyst Internship</h3>
-                        <p className="text-sm opacity-90">Addiction Treatment Center</p>
+                      {/* Header */}
+                      <div className="h-32 bg-gradient-to-br from-red-500 via-red-600 to-red-700 relative overflow-hidden">
+                        <div className="absolute inset-0 opacity-20">
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
                       </div>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <motion.div 
+                            className="text-white text-6xl opacity-20"
+                            animate={{ rotate: [0, -360] }}
+                            transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+                          >
+                            <FaChartBar />
+                          </motion.div>
+                      </div>
+                        <div className="relative z-10 p-6 text-white">
+                          <div className="flex items-center justify-between">
+                            <div className="flex-1">
+                              <div className="text-sm font-medium text-red-100 mb-1">Jul 2024 - Oct 2024</div>
+                              <h3 className="text-xl font-bold mb-1">BI Analyst Internship</h3>
+                              <p className="text-red-100 font-medium">Addiction Treatment Center</p>
+                    </div>
+                            <span className="bg-white/25 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold">
+                              Internship
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Content */}
                       <div className="p-6">
-                        <div className="flex items-center justify-between mb-4">
-                          <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                              <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                              <line x1="16" x2="16" y1="2" y2="6"></line>
-                              <line x1="8" x2="8" y1="2" y2="6"></line>
-                              <line x1="3" x2="21" y1="10" y2="10"></line>
-                            </svg>
-                            <span className="text-sm">Jul 2024 - Oct 2024</span>
-                          </div>
-                          <span className="text-xs text-gray-500 dark:text-gray-400">ID: ATC-INT-2024</span>
-                        </div>
-                        <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 leading-relaxed">
-                          Power BI dashboard development and data visualization for healthcare operations
+                        <h4 className="font-bold text-gray-900 dark:text-white mb-3">Business Intelligence Analyst</h4>
+                        <p className="text-gray-600 dark:text-gray-300 mb-4">
+                          Gained hands-on experience in Power BI dashboard development and data visualization for healthcare operations monitoring.
                         </p>
-                        <div className="mb-6">
-                          <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Skills Applied</h4>
+                        <div className="mb-4">
+                          <h5 className="font-semibold text-sm text-gray-700 dark:text-gray-300 mb-2">Skills Developed:</h5>
                           <div className="flex flex-wrap gap-2">
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Dashboard Design</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Data Visualization</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Business Analysis</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">KPI Development</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Power BI</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">DAX</span>
+                            {['Dashboard Design', 'Data Visualization', 'Business Analysis', 'KPI Development'].map((skill, idx) => (
+                              <span key={idx} className="px-3 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 rounded-full text-sm">
+                                {skill}
+                              </span>
+                            ))}
                           </div>
                         </div>
-                        <button className="w-full bg-gray-900 dark:bg-gray-700 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors duration-200 flex items-center justify-center space-x-2">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                            <polyline points="15 3 21 3 21 9"></polyline>
-                            <line x1="10" x2="21" y1="14" y2="3"></line>
-                          </svg>
-                          <span>View Details</span>
-                        </button>
+                        <div>
+                          <h5 className="font-semibold text-sm text-gray-700 dark:text-gray-300 mb-2">Technologies Used:</h5>
+                          <div className="flex flex-wrap gap-2">
+                            {['Power BI', 'SQL Server', 'DAX', 'M Query', 'Excel'].map((tech, idx) => (
+                              <span key={idx} className="px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded-full text-sm">
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
                       </div>
                     </motion.div>
                   </div>
@@ -1677,64 +1738,67 @@ export default function Home() {
                 <div className="relative flex items-center md:flex-row flex-col md:space-x-8 space-y-6 md:space-y-0">
                   <div className="md:w-1/2 md:pr-8">
                     <motion.div 
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.8, delay: 0.5 }}
-                      viewport={{ once: true }}
-                      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden"
+                      className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-700 overflow-hidden group transform hover:scale-[1.02] hover:-translate-y-3 relative border border-gray-100 dark:border-gray-700"
+                      whileHover={{ 
+                        rotateY: 1,
+                        rotateX: 1,
+                        transition: { duration: 0.4 }
+                      }}
                     >
-                      <div className="bg-gradient-to-r from-indigo-400 to-indigo-600 p-6 text-white">
-                        <div className="flex items-center justify-between mb-4">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12">
-                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                          </svg>
-                          <div className="flex items-center space-x-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                              <path d="m9 11 3 3L22 4"></path>
-                            </svg>
-                            <span className="text-sm font-medium">Completed</span>
-                          </div>
-                        </div>
-                        <h3 className="text-xl font-bold mb-2">Data Engineering Zoomcamp</h3>
-                        <p className="text-sm opacity-90">DataTalks Club</p>
+                      {/* Header */}
+                      <div className="h-32 bg-gradient-to-br from-indigo-500 via-indigo-600 to-indigo-700 relative overflow-hidden">
+                        <div className="absolute inset-0 opacity-20">
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
                       </div>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <motion.div 
+                            className="text-white text-6xl opacity-20"
+                            animate={{ rotate: [0, 360] }}
+                            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                          >
+                            <FaRocket />
+                          </motion.div>
+                    </div>
+                        <div className="relative z-10 p-6 text-white">
+                          <div className="flex items-center justify-between">
+                            <div className="flex-1">
+                              <div className="text-sm font-medium text-indigo-100 mb-1">Jan 2025 - May 2025</div>
+                              <h3 className="text-xl font-bold mb-1">Data Engineering Zoomcamp</h3>
+                              <p className="text-indigo-100 font-medium">DataTalks Club</p>
+                  </div>
+                            <span className="bg-white/25 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold">
+                              Bootcamp
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* Content */}
                       <div className="p-6">
-                        <div className="flex items-center justify-between mb-4">
-                          <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                              <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                              <line x1="16" x2="16" y1="2" y2="6"></line>
-                              <line x1="8" x2="8" y1="2" y2="6"></line>
-                              <line x1="3" x2="21" y1="10" y2="10"></line>
-                            </svg>
-                            <span className="text-sm">Jan 2025 - May 2025</span>
-                          </div>
-                          <span className="text-xs text-gray-500 dark:text-gray-400">ID: DTC-ZC-2025</span>
-                        </div>
-                        <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 leading-relaxed">
-                          Modern data engineering with cloud deployment and containerization
+                        <h4 className="font-bold text-gray-900 dark:text-white mb-3">Data Engineering Zoomcamp</h4>
+                        <p className="text-gray-600 dark:text-gray-300 mb-4">
+                          Comprehensive program covering modern data engineering technologies including data ingestion, orchestration with Airflow, transformation with dbt, Docker containerization, and cloud deployment on GCP.
                         </p>
-                        <div className="mb-6">
-                          <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Technologies Mastered</h4>
+                        <div className="mb-4">
+                          <h5 className="font-semibold text-sm text-gray-700 dark:text-gray-300 mb-2">Technologies Learned:</h5>
                           <div className="flex flex-wrap gap-2">
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Apache Airflow</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">dbt</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Docker</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">GCP</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">PostgreSQL</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Terraform</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Kubernetes</span>
+                            {['Apache Airflow', 'dbt', 'Docker', 'Google Cloud Platform', 'PostgreSQL', 'Terraform', 'Kubernetes'].map((tech, idx) => (
+                              <span key={idx} className="px-3 py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded-full text-sm">
+                                {tech}
+                              </span>
+                            ))}
                           </div>
                         </div>
-                        <button className="w-full bg-gray-900 dark:bg-gray-700 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors duration-200 flex items-center justify-center space-x-2">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                            <polyline points="15 3 21 3 21 9"></polyline>
-                            <line x1="10" x2="21" y1="14" y2="3"></line>
-                          </svg>
-                          <span>View Details</span>
-                        </button>
+                        <div>
+                          <h5 className="font-semibold text-sm text-gray-700 dark:text-gray-300 mb-2">Key Concepts:</h5>
+                          <div className="flex flex-wrap gap-2">
+                            {['Data Pipeline Design', 'ETL vs ELT', 'Data Lake Architecture', 'Medallion Architecture', 'CI/CD for Data'].map((concept, idx) => (
+                              <span key={idx} className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full text-sm">
+                                {concept}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
                       </div>
                     </motion.div>
                   </div>
@@ -2008,7 +2072,7 @@ export default function Home() {
 
       {/* Skills Section */}
       <section id="skills" className="section-padding">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto container-padding">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -2016,15 +2080,70 @@ export default function Home() {
             viewport={{ once: true }}
           >
             <div className="text-center mb-16">
-              <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-                Technical <span className="gradient-text">Skills</span>
-              </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                Expertise across the full data engineering and analytics stack
+              <h2 className="text-4xl font-bold mb-8 gradient-text">Interactive Skills Matrix</h2>
+              <p className="text-text-secondary max-w-2xl mx-auto">
+                Technical expertise across modern data engineering tools and technologies with detailed proficiency levels
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Skills Overview */}
+            <div className="mb-12">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                  viewport={{ once: true }}
+                  className="text-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg"
+                >
+                  <div className="text-3xl font-bold text-red-600 dark:text-red-400 mb-2">
+                    {skills.reduce((total, category) => total + category.items.length, 0)}
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-300">Total Skills</div>
+                </motion.div>
+                
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                  viewport={{ once: true }}
+                  className="text-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg"
+                >
+                  <div className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">
+                    {skills.length}
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-300">Categories</div>
+                </motion.div>
+                
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                  viewport={{ once: true }}
+                  className="text-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg"
+                >
+                  <div className="text-3xl font-bold text-green-600 dark:text-green-400 mb-2">
+                    {Math.round(skills.reduce((total, category) => total + category.items.reduce((sum, skill) => sum + skill.level, 0), 0) / skills.reduce((total, category) => total + category.items.length, 0))}%
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-300">Avg Proficiency</div>
+                </motion.div>
+                
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                  viewport={{ once: true }}
+                  className="text-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg"
+                >
+                  <div className="text-3xl font-bold text-purple-600 dark:text-purple-400 mb-2">
+                    8+
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-300">Projects</div>
+                </motion.div>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {skills.map((category, index) => (
                 <motion.div 
                   key={index}
@@ -2032,87 +2151,115 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="bg-gray-50 dark:bg-gray-900 p-6 rounded-xl border border-gray-200 dark:border-gray-700"
+                  className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group transform hover:scale-105 hover:-translate-y-2 relative"
+                  whileHover={{ 
+                    rotateY: 2,
+                    rotateX: 2,
+                    transition: { duration: 0.3 }
+                  }}
                 >
-                  {/* Category Header */}
-                  <div className="flex items-center space-x-3 mb-6">
-                    <div className="p-2 bg-red-600 text-white rounded-lg">
-                      {renderSkillIcon(category.icon)}
+                  {/* Top Colored Section */}
+                  <div className="h-24 bg-gradient-to-r from-gray-600 to-gray-700 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-black/10"></div>
+                    <div className="relative z-10 p-4 text-white">
+                      <h3 className="text-xl font-bold">{category.category}</h3>
+                      <p className="text-gray-300 text-sm">{category.items.length} skills</p>
                     </div>
-                    <h3 className="text-lg font-bold text-gray-900 dark:text-white">
-                      {category.category}
-                    </h3>
                   </div>
 
-                  {/* Skills List */}
-                  <div className="space-y-4">
-                    {category.items.map((skill, idx) => (
-                      <motion.div 
-                        key={idx}
-                        initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: idx * 0.1 }}
-                        viewport={{ once: true }}
-                      >
-                        {/* Skill Name and Percentage */}
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                            {skill.name}
-                          </span>
-                          <span className="text-sm text-gray-500 dark:text-gray-400">
-                            {skill.level}%
-                          </span>
-                        </div>
-                        
-                        {/* Skill Bar */}
-                        <div className="skill-bar">
+                  {/* Content Section */}
+                  <div className="p-6">
+                    <div className="space-y-4">
+                      {category.items.map((skill, idx) => (
+                        <motion.div 
+                          key={idx}
+                          initial={{ opacity: 0, x: -20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.5, delay: idx * 0.1 }}
+                          viewport={{ once: true }}
+                          className="p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600/50 transition-all duration-300 cursor-pointer group/skill"
+                          whileHover={{ scale: 1.02 }}
+                        >
+                          <div className="flex items-center justify-between mb-3">
+                            <div className="flex items-center space-x-3">
+                              <div className="p-2 bg-red-100 dark:bg-red-900/30 rounded-lg group-hover/skill:bg-red-200 dark:group-hover/skill:bg-red-800/30 transition-colors">
+                                <skill.icon className="text-red-600 dark:text-red-400 text-lg" />
+                              </div>
+                              <span className="text-gray-900 dark:text-white font-medium">{skill.name}</span>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                            <span className="text-red-600 dark:text-red-400 font-bold text-lg">{skill.level}%</span>
+                              <div className="w-2 h-2 bg-red-600 rounded-full animate-pulse"></div>
+                          </div>
+                          </div>
+                          
+                          {/* Skill Level Bar */}
+                          <div className="relative mb-3">
+                            <div className="skill-bar bg-gray-200 dark:bg-gray-600 h-3 rounded-full overflow-hidden">
+                              <motion.div 
+                                initial={{ width: 0 }}
+                                whileInView={{ width: `${skill.level}%` }}
+                                transition={{ duration: 1.5, delay: 0.5 + idx * 0.1, ease: "easeOut" }}
+                                viewport={{ once: true }}
+                                className="skill-progress h-full rounded-full relative"
+                              >
+                                <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-600 opacity-20 animate-pulse"></div>
+                              </motion.div>
+                            </div>
+                          </div>
+                          
+                          {/* Skill Details (Expandable) */}
                           <motion.div 
-                            initial={{ width: 0 }}
-                            whileInView={{ width: `${skill.level}%` }}
-                            transition={{ duration: 1.5, delay: 0.5 + idx * 0.1, ease: "easeOut" }}
-                            viewport={{ once: true }}
-                            className={`skill-progress bg-gradient-to-r ${skill.color}`}
-                            style={{ width: `${skill.level}%` }}
-                          />
-                        </div>
-                      </motion.div>
-                    ))}
+                            initial={{ height: 0, opacity: 0 }}
+                            whileHover={{ height: 'auto', opacity: 1 }}
+                            transition={{ duration: 0.3 }}
+                            className="overflow-hidden"
+                          >
+                            <div className="pt-3 border-t border-gray-200 dark:border-gray-600">
+                              <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-2">
+                                <span>Experience Level</span>
+                                <span>{skill.level >= 90 ? '5+ years' : 
+                                       skill.level >= 80 ? '3-5 years' : 
+                                       skill.level >= 70 ? '2-3 years' : 
+                                       skill.level >= 60 ? '1-2 years' : '6-12 months'}</span>
+                              </div>
+                              
+                              {/* Project Examples */}
+                              <div className="text-xs text-gray-500 dark:text-gray-400">
+                                <span className="font-medium">Used in:</span>
+                                <div className="flex flex-wrap gap-1 mt-1">
+                                  {skill.name.toLowerCase().includes('python') && (
+                                    <>
+                                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded">E-commerce Pipeline</span>
+                                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded">Telecom Pipeline</span>
+                                    </>
+                                  )}
+                                  {skill.name.toLowerCase().includes('dbt') && (
+                                    <>
+                                      <span className="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded">DBT-Orchestrator</span>
+                                      <span className="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded">OLAPify</span>
+                                    </>
+                                  )}
+                                  {skill.name.toLowerCase().includes('power bi') && (
+                                    <>
+                                      <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded">All Dashboards</span>
+                                    </>
+                                  )}
+                                  {skill.name.toLowerCase().includes('sql') && (
+                                    <>
+                                      <span className="px-2 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 rounded">All Projects</span>
+                                    </>
+                                  )}
+                                </div>
+                            </div>
+                          </div>
+                          </motion.div>
+                        </motion.div>
+                      ))}
+                    </div>
                   </div>
                 </motion.div>
               ))}
-            </div>
-
-            {/* Currently Learning Section */}
-            <div className="mt-16 text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-              >
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">
-                  Currently Learning & Willing to Learn
-                </h3>
-                <div className="flex flex-wrap justify-center gap-4">
-                  {[
-                    'GitHub Actions',
-                    'Snowflake',
-                    'Flink',
-                    'kafka'
-                  ].map((tech, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
-                      viewport={{ once: true }}
-                      className="bg-gradient-to-r from-red-100 to-red-200 dark:from-red-900 dark:to-red-800 px-6 py-3 rounded-full text-red-700 dark:text-red-300 font-medium border border-red-300 dark:border-red-700"
-                    >
-                      {tech}
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
             </div>
           </motion.div>
         </div>
@@ -2128,10 +2275,8 @@ export default function Home() {
             viewport={{ once: true }}
           >
             <div className="text-center mb-16">
-              <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-                Interactive <span className="gradient-text">Dashboards</span>
-              </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+              <h2 className="text-4xl font-bold mb-8 gradient-text">Interactive Dashboards</h2>
+              <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
                 Published interactive dashboards on NovyPro showcasing data visualization and business intelligence expertise
               </p>
             </div>
@@ -2193,63 +2338,64 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden"
+                  className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group transform hover:scale-105 hover:-translate-y-2"
+                  whileHover={{ 
+                    rotateY: 2,
+                    rotateX: 2,
+                    transition: { duration: 0.3 }
+                  }}
                 >
-                  <div className={`bg-gradient-to-r ${dashboard.color} p-6 text-white`}>
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="text-4xl">
+                  {/* Full Width Image Section with Hover Overlay */}
+                  <div className={`relative h-48 bg-gradient-to-br ${dashboard.color} overflow-hidden`}>
+                    {/* Background Icon */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="text-6xl text-white opacity-30">
                         {dashboard.icon}
                       </div>
-                      <div className="flex items-center space-x-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                          <polyline points="15 3 21 3 21 9"></polyline>
-                          <line x1="10" x2="21" y1="14" y2="3"></line>
-                        </svg>
-                        <span className="text-sm font-medium">Live</span>
-                      </div>
                     </div>
-                    <h3 className="text-xl font-bold mb-2">{dashboard.title}</h3>
-                    <p className="text-sm opacity-90">{dashboard.category}</p>
+                    
+                    {/* Hover Overlay with Action Buttons */}
+                    <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4">
+                      <a
+                        href={dashboard.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-3 bg-white rounded-full text-gray-900 hover:bg-gray-100 transition-colors duration-200"
+                      >
+                        <FaExternalLinkAlt className="w-6 h-6" />
+                      </a>
+                    </div>
                   </div>
+
+                  {/* Content Section */}
                   <div className="p-6">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                          <path d="M3 3v18h18"></path>
-                          <path d="M18 17V9"></path>
-                          <path d="M13 17V5"></path>
-                          <path d="M8 17v-3"></path>
-                        </svg>
-                        <span className="text-sm">Power BI</span>
-                      </div>
-                      <span className="text-xs text-gray-500 dark:text-gray-400">ID: NP-{index + 1}-2024</span>
+                    {/* Dashboard Title */}
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                        {dashboard.title}
+                      </h3>
                     </div>
-                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 leading-relaxed">
+
+                    {/* Category */}
+                    <p className="text-red-600 font-medium mb-3">{dashboard.category}</p>
+
+                    {/* Description */}
+                    <p className="text-gray-600 dark:text-gray-300 mb-4 text-sm leading-relaxed">
                       {dashboard.description}
                     </p>
-                    <div className="mb-6">
-                      <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Key Features</h4>
-                      <div className="flex flex-wrap gap-2">
-                        <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Interactive Filters</span>
-                        <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Real-time Data</span>
-                        <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Mobile Responsive</span>
-                        <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">KPI Tracking</span>
-                      </div>
+
+                    {/* Action Button */}
+                    <div className="flex space-x-2">
+                      <a
+                        href={dashboard.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 bg-gray-900 dark:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors duration-200 flex items-center justify-center space-x-2"
+                      >
+                        <FaExternalLinkAlt className="w-4 h-4" />
+                        <span>View Dashboard</span>
+                      </a>
                     </div>
-                    <a
-                      href={dashboard.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full bg-gray-900 dark:bg-gray-700 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors duration-200 flex items-center justify-center space-x-2"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                        <polyline points="15 3 21 3 21 9"></polyline>
-                        <line x1="10" x2="21" y1="14" y2="3"></line>
-                      </svg>
-                      <span>View Dashboard</span>
-                    </a>
                   </div>
                 </motion.div>
               ))}
@@ -2262,7 +2408,7 @@ export default function Home() {
 
       {/* Certifications Section */}
       <section className="section-padding">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto container-padding">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -2270,351 +2416,189 @@ export default function Home() {
             viewport={{ once: true }}
           >
             <div className="text-center mb-16">
-              <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-                Certifications & <span className="gradient-text">Achievements</span>
-              </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                Continuously learning and validating expertise in cutting-edge technologies
+              <h2 className="text-4xl font-bold mb-8 gradient-text">Certifications</h2>
+              <p className="text-text-secondary max-w-2xl mx-auto">
+                Professional certifications demonstrating expertise in data engineering and business intelligence
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-              {/* Data Engineering Zoomcamp */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.1 }}
-                viewport={{ once: true }}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden"
-              >
-                <div className="bg-gradient-to-r from-green-400 to-green-600 p-6 text-white">
-                  <div className="flex items-center justify-between mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12">
-                      <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-                      <path d="M3 5V19A9 3 0 0 0 21 19V5"></path>
-                      <path d="M3 12A9 3 0 0 0 21 12"></path>
-                    </svg>
-                    <div className="flex items-center space-x-2">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                        <path d="m9 11 3 3L22 4"></path>
-                      </svg>
-                      <span className="text-sm font-medium">Completed</span>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {certifications.map((cert, index) => {
+                const certificationImage = getCertificationImage(cert.title, cert.issuer);
+                
+                return (
+                <motion.div 
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group"
+                >
+                  {/* Full Width Image Section with Hover Overlay */}
+                  <div className={`relative h-48 bg-gradient-to-br ${cert.color} overflow-hidden`}>
+                    {certificationImage ? (
+                      /* Real Certification Image */
+                      <div className="relative w-full h-full bg-white dark:bg-gray-800 flex items-center justify-center p-6">
+                        <Image
+                          src={certificationImage}
+                          alt={`${cert.title} - ${cert.issuer} Certification`}
+                          fill
+                          className="object-contain group-hover:scale-110 transition-transform duration-700 ease-out p-4"
+                          priority={index < 3}
+                        />
+                        
+                        {/* Subtle overlay for better contrast */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      </div>
+                    ) : (
+                      /* Fallback: Background Icon */
+                      <>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="text-6xl text-white opacity-30">
+                            {/* DataTalks Club Icon */}
+                            {cert.issuer.toLowerCase().includes('datatalks') ? (
+                              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                              </svg>
+                            ) : 
+                            /* ITI Icon */
+                            cert.issuer.toLowerCase().includes('iti') ? (
+                              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                                <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                              </svg>
+                            ) : 
+                            /* IBM Icon */
+                            cert.issuer.toLowerCase().includes('ibm') ? (
+                              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                <polyline points="21,15 16,10 5,21"></polyline>
+                              </svg>
+                            ) : 
+                            /* Datacamp Icon */
+                            cert.issuer.toLowerCase().includes('datacamp') ? (
+                              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                                <path d="M2 17l10 5 10-5"></path>
+                                <path d="M2 12l10 5 10-5"></path>
+                              </svg>
+                            ) : 
+                            /* Google Icon */
+                            cert.issuer.toLowerCase().includes('google') ? (
+                              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                                <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                                <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                              </svg>
+                            ) : 
+                            /* Default Icon */
+                            (
+                              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                                <path d="M2 17l10 5 10-5"></path>
+                                <path d="M2 12l10 5 10-5"></path>
+                              </svg>
+                            )}
+                          </div>
+                        </div>
+                      </>
+                    )}
+                    
+                    {/* Enhanced Badge for Certificate Type */}
+                    <div className="absolute top-3 left-3">
+                      <span className="px-3 py-1 rounded-full text-xs font-semibold text-white backdrop-blur-sm border border-white/30 bg-white/20">
+                        {cert.issuer.toLowerCase().includes('zoomcamp') ? 'Bootcamp' : 'Certification'}
+                      </span>
+                    </div>
+                    
+                    {/* Year Badge */}
+                    <div className="absolute top-3 right-3">
+                      <span className="px-3 py-1 rounded-full text-xs font-bold text-white bg-gradient-to-r from-yellow-500 to-orange-500 backdrop-blur-sm border border-white/30">
+                        {cert.year}
+                      </span>
+                    </div>
+                    
+                    {/* Hover Overlay with Action Buttons */}
+                    <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4">
+                      <div className="p-3 bg-white rounded-full text-gray-900 hover:bg-gray-100 transition-colors duration-200">
+                        <FaCertificate className="w-6 h-6" />
+                      </div>
                     </div>
                   </div>
-                  <h3 className="text-xl font-bold mb-2">Data Engineering Zoomcamp</h3>
-                  <p className="text-sm opacity-90">DataTalks Club</p>
-                </div>
-                <div className="p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                        <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                        <line x1="16" x2="16" y1="2" y2="6"></line>
-                        <line x1="8" x2="8" y1="2" y2="6"></line>
-                        <line x1="3" x2="21" y1="10" y2="10"></line>
-                      </svg>
-                      <span className="text-sm">April 2025</span>
-                    </div>
-                    <span className="text-xs text-gray-500 dark:text-gray-400">ID: DTC-DE-2025</span>
-                  </div>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 leading-relaxed">
-                    Comprehensive data engineering bootcamp covering modern tools and practices
-                  </p>
-                  <div className="mb-6">
-                    <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Key Skills</h4>
-                    <div className="flex flex-wrap gap-2">
-                      <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Apache Airflow</span>
-                      <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">dbt</span>
-                      <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Docker</span>
-                      <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">GCP</span>
-                      <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Medallion Architecture</span>
-                      <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">ELT Pipelines</span>
-                    </div>
-                  </div>
-                  <button className="w-full bg-gray-900 dark:bg-gray-700 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors duration-200 flex items-center justify-center space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                      <polyline points="15 3 21 3 21 9"></polyline>
-                      <line x1="10" x2="21" y1="14" y2="3"></line>
-                    </svg>
-                    <span>View Certificate</span>
-                  </button>
-                </div>
-              </motion.div>
 
-              {/* Business Intelligence Train ITI */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                viewport={{ once: true }}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden"
-              >
-                <div className="bg-gradient-to-r from-blue-400 to-blue-600 p-6 text-white">
-                  <div className="flex items-center justify-between mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12">
-                      <path d="M3 3v18h18"></path>
-                      <path d="M18 17V9"></path>
-                      <path d="M13 17V5"></path>
-                      <path d="M8 17v-3"></path>
-                    </svg>
-                    <div className="flex items-center space-x-2">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                        <path d="m9 11 3 3L22 4"></path>
-                      </svg>
-                      <span className="text-sm font-medium">Completed</span>
+                  {/* Content Section */}
+                  <div className="p-6">
+                    {/* Certification Title */}
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                        {cert.title}
+                      </h3>
                     </div>
-                  </div>
-                  <h3 className="text-xl font-bold mb-2">Business Intelligence Train</h3>
-                  <p className="text-sm opacity-90">Information Technology Institute (ITI)</p>
-                </div>
-                <div className="p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                        <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                        <line x1="16" x2="16" y1="2" y2="6"></line>
-                        <line x1="8" x2="8" y1="2" y2="6"></line>
-                        <line x1="3" x2="21" y1="10" y2="10"></line>
-                      </svg>
-                      <span className="text-sm">July 2023</span>
-                    </div>
-                    <span className="text-xs text-gray-500 dark:text-gray-400">ID: ITI-BI-2023</span>
-                  </div>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 leading-relaxed">
-                    Intensive training program focused on BI tools and data visualization techniques
-                  </p>
-                  <div className="mb-6">
-                    <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Key Skills</h4>
-                    <div className="flex flex-wrap gap-2">
-                      <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Power BI</span>
-                      <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Data Modeling</span>
-                      <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">ETL Pipelines</span>
-                      <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Data Visualization</span>
-                      <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Business Analytics</span>
-                    </div>
-                  </div>
-                  <button className="w-full bg-gray-900 dark:bg-gray-700 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors duration-200 flex items-center justify-center space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                      <polyline points="15 3 21 3 21 9"></polyline>
-                      <line x1="10" x2="21" y1="14" y2="3"></line>
-                    </svg>
-                    <span>View Certificate</span>
-                  </button>
-                </div>
-              </motion.div>
 
-              {/* IBM Data Engineering Foundations */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-                viewport={{ once: true }}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden"
-              >
-                <div className="bg-gradient-to-r from-purple-400 to-purple-600 p-6 text-white">
-                  <div className="flex items-center justify-between mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12">
-                      <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"></path>
-                    </svg>
-                    <div className="flex items-center space-x-2">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                        <path d="m9 11 3 3L22 4"></path>
-                      </svg>
-                      <span className="text-sm font-medium">Completed</span>
-                    </div>
-                  </div>
-                  <h3 className="text-xl font-bold mb-2">Data Engineering Foundations</h3>
-                  <p className="text-sm opacity-90">IBM</p>
-                </div>
-                <div className="p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                        <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                        <line x1="16" x2="16" y1="2" y2="6"></line>
-                        <line x1="8" x2="8" y1="2" y2="6"></line>
-                        <line x1="3" x2="21" y1="10" y2="10"></line>
-                      </svg>
-                      <span className="text-sm">November 2023</span>
-                    </div>
-                    <span className="text-xs text-gray-500 dark:text-gray-400">ID: IBM-DE-2023</span>
-                  </div>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 leading-relaxed">
-                    Foundational course covering core data engineering concepts and big data technologies
-                  </p>
-                  <div className="mb-6">
-                    <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Key Skills</h4>
-                    <div className="flex flex-wrap gap-2">
-                      <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Big Data</span>
-                      <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Hadoop</span>
-                      <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Spark</span>
-                      <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Data Pipelines</span>
-                      <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Data Architecture</span>
-                    </div>
-                  </div>
-                  <button className="w-full bg-gray-900 dark:bg-gray-700 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors duration-200 flex items-center justify-center space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                      <polyline points="15 3 21 3 21 9"></polyline>
-                      <line x1="10" x2="21" y1="14" y2="3"></line>
-                    </svg>
-                    <span>View Certificate</span>
-                  </button>
-                </div>
-              </motion.div>
+                    {/* Issuer */}
+                    <p className="text-red-600 font-medium mb-3">{cert.issuer}</p>
 
-              {/* DataCamp Data Engineer */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                viewport={{ once: true }}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden"
-              >
-                <div className="bg-gradient-to-r from-orange-400 to-orange-600 p-6 text-white">
-                  <div className="flex items-center justify-between mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12">
-                      <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-                      <path d="M2 17l10 5 10-5"></path>
-                      <path d="M2 12l10 5 10-5"></path>
-                    </svg>
-                    <div className="flex items-center space-x-2">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                        <path d="m9 11 3 3L22 4"></path>
-                      </svg>
-                      <span className="text-sm font-medium">Completed</span>
-                    </div>
-                  </div>
-                  <h3 className="text-xl font-bold mb-2">Data Engineer Track</h3>
-                  <p className="text-sm opacity-90">DataCamp</p>
-                </div>
-                <div className="p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                        <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                        <line x1="16" x2="16" y1="2" y2="6"></line>
-                        <line x1="8" x2="8" y1="2" y2="6"></line>
-                        <line x1="3" x2="21" y1="10" y2="10"></line>
-                      </svg>
-                      <span className="text-sm">October 2023</span>
-                    </div>
-                    <span className="text-xs text-gray-500 dark:text-gray-400">ID: DC-DE-2023</span>
-                  </div>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 leading-relaxed">
-                    Comprehensive data engineering certification covering Python, SQL, and data processing
-                  </p>
-                  <div className="mb-6">
-                    <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Key Skills</h4>
-                    <div className="flex flex-wrap gap-2">
-                      <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Python</span>
-                      <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">SQL</span>
-                      <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Data Processing</span>
-                      <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">ETL</span>
-                      <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Data Analysis</span>
-                    </div>
-                  </div>
-                  <button className="w-full bg-gray-900 dark:bg-gray-700 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors duration-200 flex items-center justify-center space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                      <polyline points="15 3 21 3 21 9"></polyline>
-                      <line x1="10" x2="21" y1="14" y2="3"></line>
-                    </svg>
-                    <span>View Certificate</span>
-                  </button>
-                </div>
-              </motion.div>
+                    {/* Summary */}
+                    <p className="text-gray-600 dark:text-gray-300 mb-4 text-sm leading-relaxed">
+                      {cert.summary}
+                    </p>
 
-              {/* Google Business Intelligence */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.5 }}
-                viewport={{ once: true }}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden"
-              >
-                <div className="bg-gradient-to-r from-red-400 to-red-600 p-6 text-white">
-                  <div className="flex items-center justify-between mb-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12">
-                      <circle cx="12" cy="12" r="10"></circle>
-                      <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
-                      <line x1="9" y1="9" x2="9.01" y2="9"></line>
-                      <line x1="15" y1="9" x2="15.01" y2="9"></line>
-                    </svg>
-                    <div className="flex items-center space-x-2">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                        <path d="m9 11 3 3L22 4"></path>
-                      </svg>
-                      <span className="text-sm font-medium">Completed</span>
+                    {/* Skills */}
+                    <div className="mb-6">
+                      <h4 className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-3 uppercase tracking-wide">Skills Covered</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {cert.skills.map((skill, idx) => (
+                          <span 
+                            key={idx} 
+                            className="px-2 py-1 bg-gray-100/80 dark:bg-gray-800/60 text-gray-700 dark:text-gray-300 rounded text-xs border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-colors"
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                  <h3 className="text-xl font-bold mb-2">Google Business Intelligence</h3>
-                  <p className="text-sm opacity-90">Google</p>
-                </div>
-                <div className="p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                        <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                        <line x1="16" x2="16" y1="2" y2="6"></line>
-                        <line x1="8" x2="8" y1="2" y2="6"></line>
-                        <line x1="3" x2="21" y1="10" y2="10"></line>
-                      </svg>
-                      <span className="text-sm">May 2023</span>
-                    </div>
-                    <span className="text-xs text-gray-500 dark:text-gray-400">ID: GOOGLE-BI-2023</span>
-                  </div>
-                  <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 leading-relaxed">
-                    Google-certified program focusing on business intelligence tools and data analysis
-                  </p>
-                  <div className="mb-6">
-                    <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Key Skills</h4>
-                    <div className="flex flex-wrap gap-2">
-                      <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Google Analytics</span>
-                      <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Data Analysis</span>
-                      <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Business Intelligence</span>
-                      <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Reporting</span>
-                      <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Data Visualization</span>
-                    </div>
-                  </div>
-                  <button className="w-full bg-gray-900 dark:bg-gray-700 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors duration-200 flex items-center justify-center space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                      <polyline points="15 3 21 3 21 9"></polyline>
-                      <line x1="10" x2="21" y1="14" y2="3"></line>
-                    </svg>
-                    <span>View Certificate</span>
-                  </button>
-                </div>
-              </motion.div>
-            </div>
 
-            {/* Continuous Learning Section */}
-            <div className="mt-16 text-center">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-                className="bg-gradient-to-r from-red-600 to-red-700 text-white p-8 rounded-xl"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-16 h-16 mx-auto mb-4">
-                  <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"></path>
-                  <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"></path>
-                </svg>
-                <h3 className="text-2xl font-bold mb-4">Continuous Learning</h3>
-                <p className="text-lg text-red-100 max-w-3xl mx-auto">
-                  Staying current with emerging technologies and best practices in data engineering, 
-                  machine learning, and cloud computing through continuous professional development.
-                </p>
-              </motion.div>
+                    {/* Statistics Section */}
+                    <div className="grid grid-cols-2 gap-2 mb-4">
+                      <div className="text-center">
+                        <div className="text-sm font-bold text-red-600 dark:text-red-400">
+                          {cert.year}
+                        </div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">Year</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-sm font-bold text-red-600 dark:text-red-400">
+                          {cert.skills.length}
+                        </div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">Skills</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-sm font-bold text-red-600 dark:text-red-400">
+                          {cert.issuer.split(' ')[0]}
+                        </div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">Issuer</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-sm font-bold text-red-600 dark:text-red-400">
+                          Certified
+                        </div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">Status</div>
+                      </div>
+                    </div>
+
+                    {/* Action Button */}
+                    <div className="flex space-x-2">
+                      <button className="flex-1 bg-gray-900 dark:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors duration-200 flex items-center justify-center space-x-2">
+                        <FaCertificate className="w-4 h-4" />
+                        <span>View Certificate</span>
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </motion.div>
         </div>

@@ -259,11 +259,17 @@
     position: relative;
     overflow: hidden;
     border-radius: 10px;
+    height: 8px;
+    background-color: #e5e7eb;
+  }
+
+  .dark .skill-bar {
+    background-color: #374151;
   }
 
   .skill-progress {
     position: relative;
-    background: linear-gradient(90deg, #dc2626, #ef4444);
+    height: 100%;
     border-radius: 10px;
     transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -280,8 +286,47 @@
   }
 
   @keyframes shimmer {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  @keyframes certification-float {
+    0%, 100% { 
+      transform: translateY(0px) rotate(0deg);
+      filter: brightness(1);
+    }
+    33% { 
+      transform: translateY(-8px) rotate(1deg);
+      filter: brightness(1.1);
+    }
+    66% { 
+      transform: translateY(-5px) rotate(-1deg);
+      filter: brightness(1.05);
+    }
+  }
+
+  @keyframes particle-float {
+    0%, 100% { 
+      transform: translateY(0px) translateX(0px);
+      opacity: 0.3;
+    }
+    50% { 
+      transform: translateY(-20px) translateX(10px);
+      opacity: 0.8;
+    }
+  }
+
+  @keyframes glow-pulse {
+    0%, 100% {
+      box-shadow: 
+        0 0 20px rgba(59, 130, 246, 0.15),
+        0 0 40px rgba(147, 51, 234, 0.1);
+    }
+    50% {
+      box-shadow: 
+        0 0 30px rgba(59, 130, 246, 0.25),
+        0 0 60px rgba(147, 51, 234, 0.2);
+    }
   }
 
   /* Certification Card */
@@ -352,6 +397,44 @@
 
   .dark .footer-light {
     background: linear-gradient(135deg, rgba(17, 24, 39, 0.8) 0%, rgba(15, 23, 42, 0.9) 100%);
+  }
+
+  /* Mobile Navigation Fix */
+  .mobile-nav-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+  }
+
+  /* Ensure content visibility */
+  .content-container {
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Mobile responsive fixes */
+  @media (max-width: 768px) {
+    .section-padding {
+      padding: 4rem 0;
+    }
+    
+    .container-padding {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    
+    /* Prevent horizontal scroll */
+    body {
+      overflow-x: hidden;
+    }
+    
+    /* Fix mobile navigation */
+    .nav-glass {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
   }
 }
 

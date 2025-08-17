@@ -229,31 +229,23 @@ const Portfolio = () => {
       title: 'Business Intelligence Analyst',
       company: 'Addiction Treatment Center',
       period: 'Jul 2024 - Oct 2024',
+      duration: '4 months',
       type: 'Internship',
       location: 'Cairo, Egypt',
-      description: 'Designed and developed Power BI dashboards to monitor customer satisfaction.',
-      achievements: [
-        'Designed and developed Power BI dashboards to monitor customer satisfaction',
-        'Created interactive visualizations for key business metrics',
-        'Collaborated with stakeholders to understand data requirements',
-        'Implemented data quality monitoring and reporting systems'
-      ],
-      technologies: ['Power BI', 'SQL', 'Data Visualization', 'Customer Analytics']
+      description: 'Gained hands-on experience in Power BI dashboard development and data visualization for healthcare operations monitoring.',
+      skills: ['Dashboard Design', 'Data Visualization', 'Business Analysis', 'KPI Development'],
+      technologies: ['Power BI', 'SQL Server', 'DAX', 'M Query', 'Excel']
     },
     {
       title: 'Data Analysis Professional Internship',
-      company: 'ASDC',
+      company: 'ASDC (Arab Society for Data & Computing)',
       period: 'Nov 2023 - Jan 2024',
+      duration: '3 months',
       type: 'Internship',
       location: 'October, Cairo',
-      description: 'Created an interactive dashboard using Power BI to visualize key business metrics.',
-      achievements: [
-        'Created an interactive dashboard using Power BI to visualize key business metrics',
-        'Developed ETL pipelines for data processing',
-        'Performed data analysis and generated insights',
-        'Collaborated with cross-functional teams on data requirements'
-      ],
-      technologies: ['Power BI', 'SQL', 'Data Analysis', 'Business Intelligence']
+      description: 'Learned data analysis fundamentals and business intelligence solutions using Power BI for visualizing business metrics.',
+      skills: ['ETL Development', 'Data Modeling', 'Statistical Analysis', 'Requirements Gathering'],
+      technologies: ['Power BI', 'SQL Server', 'SSIS', 'Excel', 'Python', 'DAX']
     }
   ];
 
@@ -614,30 +606,39 @@ const Portfolio = () => {
                     </div>
                     <p className="text-gradient font-semibold">{exp.company}</p>
                   </div>
-                  <div className="text-mono text-sm text-gray-400 bg-gray-800 px-3 py-1 rounded mt-4 lg:mt-0">
-                    {exp.period}
+                  <div className="flex flex-col gap-2 mt-4 lg:mt-0">
+                    <div className="text-mono text-sm text-gray-400 bg-gray-800 px-3 py-1 rounded">
+                      {exp.period}
+                    </div>
+                    <div className="text-mono text-sm text-blue-400 bg-blue-900/20 px-3 py-1 rounded text-center">
+                      {exp.duration}
+                    </div>
                   </div>
                 </div>
                 
-                <p className="text-body mb-6">{exp.description}</p>
-                
-                <div className="space-y-3 mb-6">
-                  <h4 className="text-sm font-semibold text-green-400">Key Achievements:</h4>
-                  {exp.achievements.map((achievement, idx) => (
-                    <div key={idx} className="flex items-start">
-                      <div className="w-2 h-2 bg-green-400 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                      <span className="text-body">{achievement}</span>
-                    </div>
-                  ))}
+                <p className="text-body mb-8 text-lg leading-relaxed">{exp.description}</p>
+
+                {/* Skills Section */}
+                <div className="mb-8">
+                  <h4 className="text-sm font-semibold text-yellow-400 mb-4">Key Skills Developed:</h4>
+                  <div className="flex flex-wrap gap-3">
+                    {exp.skills.map((skill, idx) => (
+                      <span key={idx} className="tag bg-yellow-500/20 text-yellow-400 border-yellow-500/30 px-4 py-2 shadow-sm">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
                 </div>
 
                 <div className="flex flex-wrap gap-2">
                   <span className="text-sm font-semibold text-green-400 mr-2">Technologies:</span>
-                  {exp.technologies.map((tech, idx) => (
-                    <span key={idx} className="tag">
-                      {tech}
-                    </span>
-                  ))}
+                  <div className="flex flex-wrap gap-3">
+                    {exp.technologies.map((tech, idx) => (
+                      <span key={idx} className="tag px-4 py-2 shadow-sm">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             ))}

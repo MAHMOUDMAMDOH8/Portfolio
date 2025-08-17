@@ -1,35 +1,864 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CDR Data Pipeline Architecture</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #64748b;
+            --accent-color: #0ea5e9;
+            --background-color: #f8fafc;
+            --card-background: #ffffff;
+            --text-color: #1e293b;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .header-content {
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .nav {
+            background-color: var(--card-background);
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .nav li {
+            margin: 0 1rem;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav a:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .main {
+            padding: 3rem 0;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 5rem;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 2px;
+        }
+
+        .card {
+            background-color: var(--card-background);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background-color: var(--card-background);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .feature-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-card ul {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .feature-card li {
+            margin-bottom: 0.3rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .feature-card li::before {
+            content: '✅';
+            position: absolute;
+            left: 0;
+        }
+
+        .diagram-container {
+            background-color: var(--card-background);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-container {
+            margin-top: 2rem;
+        }
+
+        .tabs {
+            display: flex;
+            background-color: var(--background-color);
+            border-radius: 0.5rem;
+            padding: 0.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            text-align: center;
+            background: none;
+            border: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comparison-table th {
+            background-color: var(--background-color);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .status-basic {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-advanced {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+
+        .footer {
+            background-color: var(--text-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border: 1px solid var(--accent-color);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box h4 {
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav li {
+                margin: 0.25rem 0;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs {
+                flex-direction: column;
+            }
+        }
+
+        .mermaid {
+            text-align: center;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1><i class="fas fa-phone-alt"></i> CDR Data Pipeline Architecture</h1>
+                <p>Comprehensive Call Detail Records Processing & Analytics Platform</p>
+            </div>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <div class="container">
+            <ul>
+                <li><a href="#overview"><i class="fas fa-home"></i> Overview</a></li>
+                <li><a href="#current-architecture"><i class="fas fa-project-diagram"></i> Current Architecture</a></li>
+                <li><a href="#best-case"><i class="fas fa-star"></i> Best Case</a></li>
+                <li><a href="#features"><i class="fas fa-cogs"></i> Features</a></li>
+                <li><a href="#comparison"><i class="fas fa-balance-scale"></i> Comparison</a></li>
+                <li><a href="#implementation"><i class="fas fa-code"></i> Implementation</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main">
+        <div class="container">
+            <!-- Overview Section -->
+            <section id="overview" class="section">
+                <h2 class="section-title">Pipeline Overview</h2>
+                <div class="card">
+                    <h3><i class="fas fa-info-circle"></i> About This Pipeline</h3>
+                    <p>This CDR (Call Detail Records) data pipeline is designed for telecommunications companies to process, analyze, and monitor call data in real-time and batch modes. The architecture supports both streaming and batch processing workflows to ensure comprehensive data coverage and analytics capabilities.</p>
+                    
+                    <div class="highlight-box">
+                        <h4><i class="fas fa-lightbulb"></i> Key Business Value</h4>
+                        <p>Transform raw telecommunication data into actionable business insights, enabling fraud detection, network optimization, customer behavior analysis, and revenue assurance.</p>
+                    </div>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h4><i class="fas fa-clock"></i> Real-time Processing</h4>
+                        <ul>
+                            <li>10-minute CDR generation intervals</li>
+                            <li>Spark Streaming for real-time analytics</li>
+                            <li>Live monitoring dashboards</li>
+                            <li>Immediate fraud detection</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4><i class="fas fa-database"></i> Data Storage</h4>
+                        <ul>
+                            <li>HDFS for raw data storage</li>
+                            <li>PostgreSQL for structured data</li>
+                            <li>Dimensional modeling with dbt</li>
+                            <li>Optimized for analytics queries</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4><i class="fas fa-chart-line"></i> Analytics & Reporting</h4>
+                        <ul>
+                            <li>Streamlit operational dashboards</li>
+                            <li>Power BI business reports</li>
+                            <li>Self-service analytics</li>
+                            <li>Mobile-responsive interfaces</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4><i class="fas fa-shield-alt"></i> Data Quality</h4>
+                        <ul>
+                            <li>dbt data quality tests</li>
+                            <li>Schema validation</li>
+                            <li>Business rule enforcement</li>
+                            <li>Automated anomaly detection</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Current Architecture -->
+            <section id="current-architecture" class="section">
+                <h2 class="section-title">Current Architecture</h2>
+                <div class="card">
+                    <h3><i class="fas fa-sitemap"></i> Simplified Pipeline Flow</h3>
+                    <p>The current architecture provides a streamlined approach to CDR processing with essential components for data generation, streaming, storage, and reporting.</p>
+                </div>
+                <div class="diagram-container">
+                    <div class="mermaid">
+flowchart LR
+    %% CDR Generation
+    A["📞 CDR Generator<br/>Python script<br/>Creates random call logs<br/>every 10 minutes"]
     
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Mahmoud Mamdoh - Senior Data Engineer & Analytics Expert specializing in scalable data pipelines, big data processing, and modern BI solutions. 5+ years experience with Apache Spark, Kafka, AWS, and more." />
-    <meta name="keywords" content="Data Engineer, Big Data, Apache Spark, Kafka, AWS, Python, SQL, Data Analytics, BI Solutions, ETL Pipelines" />
-    <meta name="author" content="Mahmoud Mamdoh" />
-    <meta name="robots" content="index, follow" />
+    %% Real-time Streaming
+    B["⚡ Spark Streaming<br/>Processes CDRs in real-time<br/>Stores in HDFS"]
     
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Mahmoud Mamdoh - Data Engineer & Analytics Expert" />
-    <meta property="og:description" content="Senior Data Engineer specializing in scalable data pipelines and analytics solutions. Building enterprise-scale data infrastructure with 5+ years experience." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://mahmoudmamdoh.dev" />
-    <meta property="og:image" content="https://mahmoudmamdoh.dev/og-image.jpg" />
+    %% Storage
+    C["🗄️ HDFS<br/>Raw CDR data<br/>Parquet format"]
     
-    <!-- Twitter Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Mahmoud Mamdoh - Data Engineer & Analytics Expert" />
-    <meta name="twitter:description" content="Senior Data Engineer specializing in scalable data pipelines and analytics solutions." />
-    <meta name="twitter:image" content="https://mahmoudmamdoh.dev/og-image.jpg" />
-    <meta name="twitter:creator" content="@M7M0UD_D" />
+    %% Batch Processing
+    D["🔄 Airflow Batch Job<br/>Moves data to PostgreSQL<br/>Daily/hourly batches"]
     
-    <title>Mahmoud Mamdoh - Data Engineer & Analytics Expert | Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+    %% Database
+    E["🐘 PostgreSQL<br/>Structured CDR data<br/>Indexed for queries"]
+    
+    %% Data Modeling
+    F["🔧 dbt Models<br/>Dimensional modeling<br/>Fact & Dimension tables"]
+    
+    %% Data Quality
+    G["✅ dbt Tests<br/>Data quality checks<br/>Business rules validation"]
+    
+    %% Monitoring
+    H["📊 Streamlit Monitoring<br/>Real-time pipeline health<br/>CDR metrics dashboard"]
+    
+    %% Business Reporting
+    I["📈 Power BI<br/>Business reports<br/>Call analytics"]
+    
+    %% Team Access
+    J["👥 Business Team<br/>Uses Power BI"]
+    K["👨‍💻 Data Team<br/>Uses Streamlit"]
+    
+    %% Orchestration
+    L["⚙️ Airflow<br/>Schedules CDR generation<br/>& batch processing"]
+    
+    %% Connections
+    L --> A
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+    F --> I
+    H --> K
+    I --> J
+    
+    %% Real-time monitoring connections
+    A -.-> H
+    B -.-> H
+    C -.-> H
+    D -.-> H
+    E -.-> H
+    F -.-> H
+    
+    %% Styling
+    classDef generation fill:#e3f2fd
+    classDef streaming fill:#fff3e0
+    classDef storage fill:#f3e5f5
+    classDef processing fill:#e8f5e8
+    classDef database fill:#fce4ec
+    classDef reporting fill:#fff8e1
+    classDef team fill:#f1f8e9
+    
+    class A generation
+    class B streaming
+    class C storage
+    class D,F,G processing
+    class E database
+    class H,I reporting
+    class J,K team
+    class L generation
+                    </div>
+                </div>
+            </section>
+
+            <!-- Best Case Architecture -->
+            <section id="best-case" class="section">
+                <h2 class="section-title">Best Case Architecture</h2>
+                <div class="card">
+                    <h3><i class="fas fa-rocket"></i> Enterprise-Grade Pipeline</h3>
+                    <p>The best case architecture introduces advanced features including ML integration, multi-storage strategies, comprehensive monitoring, and enterprise governance capabilities.</p>
+                </div>
+                <div class="diagram-container">
+                    <div class="mermaid">
+flowchart LR
+    %% CDR Generation with Quality
+    subgraph "📞 CDR Generation Layer"
+        A1["Python CDR Generator<br/>✅ Realistic call patterns<br/>✅ Data validation<br/>✅ Schema compliance"]
+        A2["Data Quality Gateway<br/>✅ Schema validation<br/>✅ Business rule checks<br/>✅ Anomaly detection"]
+    end
+    
+    %% Real-time Streaming with Processing
+    subgraph "⚡ Real-time Processing"
+        B1["Kafka Topics<br/>✅ CDR events<br/>✅ Call quality metrics<br/>✅ Network events"]
+        B2["Spark Structured Streaming<br/>✅ Real-time aggregation<br/>✅ Window functions<br/>✅ State management"]
+        B3["Real-time Analytics<br/>✅ Call volume monitoring<br/>✅ Network performance<br/>✅ Fraud detection"]
+    end
+    
+    %% Multi-Storage Strategy
+    subgraph "🗄️ Storage Layer"
+        C1["HDFS Raw Zone<br/>✅ Parquet format<br/>✅ Partitioning by date<br/>✅ Compression"]
+        C2["HBase Hot Data<br/>✅ Recent CDRs<br/>✅ Fast queries<br/>✅ TTL management"]
+        C3["S3 Cold Storage<br/>✅ Historical data<br/>✅ Cost optimization<br/>✅ Compliance"]
+    end
+    
+    %% Batch Processing
+    subgraph "🔄 Batch Processing"
+        D1["Airflow DAGs<br/>✅ CDR generation<br/>✅ ETL to PostgreSQL<br/>✅ Data quality checks"]
+        D2["Incremental Processing<br/>✅ Delta Lake integration<br/>✅ ACID transactions<br/>✅ Schema evolution"]
+    end
+    
+    %% Data Warehouse
+    subgraph "🐘 PostgreSQL Data Warehouse"
+        E1["Staging Layer<br/>✅ Raw CDR data<br/>✅ Type casting<br/>✅ Deduplication"]
+        E2["dbt Models<br/>✅ Staging models<br/>✅ Mart models<br/>✅ Aggregations"]
+        E3["Dimensional Model<br/>✅ Fact tables<br/>✅ Dimension tables<br/>✅ Slowly changing dimensions"]
+    end
+    
+    %% ML & Analytics
+    subgraph "🤖 ML & Analytics"
+        G1["Feature Store<br/>✅ Call patterns<br/>✅ Customer behavior<br/>✅ Network metrics"]
+        G2["ML Models<br/>✅ Fraud detection<br/>✅ Churn prediction<br/>✅ Network optimization"]
+        G3["Real-time Scoring<br/>✅ Live predictions<br/>✅ Model monitoring<br/>✅ A/B testing"]
+    end
+    
+    %% Business Intelligence
+    subgraph "📈 Business Intelligence"
+        I1["Power BI<br/>✅ Executive dashboards<br/>✅ Self-service analytics<br/>✅ Scheduled reports"]
+        I2["Streamlit Monitoring<br/>✅ Real-time dashboard<br/>✅ Pipeline health<br/>✅ Alert management"]
+    end
+    
+    %% Connections
+    A1 --> A2
+    A2 --> B1
+    B1 --> B2
+    B2 --> B3
+    B2 --> C1
+    B2 --> C2
+    
+    C1 --> D1
+    C2 --> D1
+    D1 --> D2
+    D2 --> E1
+    
+    E1 --> E2
+    E2 --> E3
+    E3 --> G1
+    G1 --> G2
+    G2 --> G3
+    
+    E3 --> I1
+    E3 --> I2
+    
+    %% Styling
+    classDef generation fill:#e3f2fd
+    classDef streaming fill:#fff3e0
+    classDef storage fill:#f3e5f5
+    classDef processing fill:#e8f5e8
+    classDef database fill:#fce4ec
+    classDef ml fill:#f1f8e9
+    classDef bi fill:#fff8e1
+    
+    class A1,A2 generation
+    class B1,B2,B3 streaming
+    class C1,C2,C3 storage
+    class D1,D2 processing
+    class E1,E2,E3 database
+    class G1,G2,G3 ml
+    class I1,I2 bi
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section id="features" class="section">
+                <h2 class="section-title">Advanced Features</h2>
+                
+                <div class="tab-container">
+                    <div class="tabs">
+                        <button class="tab active" onclick="showTab('streaming')">Real-time Streaming</button>
+                        <button class="tab" onclick="showTab('ml')">ML Integration</button>
+                        <button class="tab" onclick="showTab('monitoring')">Monitoring</button>
+                        <button class="tab" onclick="showTab('governance')">Governance</button>
+                    </div>
+
+                    <div id="streaming" class="tab-content active">
+                        <div class="card">
+                            <h3><i class="fas fa-bolt"></i> Real-time Streaming Capabilities</h3>
+                            <div class="features-grid">
+                                <div class="feature-card">
+                                    <h4><i class="fas fa-stream"></i> Kafka Integration</h4>
+                                    <ul>
+                                        <li>Multi-topic architecture for different event types</li>
+                                        <li>Configurable retention policies</li>
+                                        <li>High-throughput message processing</li>
+                                        <li>Built-in fault tolerance</li>
+                                    </ul>
+                                </div>
+                                <div class="feature-card">
+                                    <h4><i class="fas fa-fire"></i> Spark Structured Streaming</h4>
+                                    <ul>
+                                        <li>Window-based aggregations</li>
+                                        <li>Stateful stream processing</li>
+                                        <li>Exactly-once processing guarantees</li>
+                                        <li>Dynamic scaling capabilities</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="ml" class="tab-content">
+                        <div class="card">
+                            <h3><i class="fas fa-brain"></i> Machine Learning Integration</h3>
+                            <div class="features-grid">
+                                <div class="feature-card">
+                                    <h4><i class="fas fa-database"></i> Feature Store</h4>
+                                    <ul>
+                                        <li>Centralized feature management</li>
+                                        <li>Feature versioning and lineage</li>
+                                        <li>Real-time and batch feature serving</li>
+                                        <li>Feature discovery and reuse</li>
+                                    </ul>
+                                </div>
+                                <div class="feature-card">
+                                    <h4><i class="fas fa-robot"></i> ML Models</h4>
+                                    <ul>
+                                        <li>Fraud detection algorithms</li>
+                                        <li>Customer churn prediction</li>
+                                        <li>Network optimization models</li>
+                                        <li>Automated model retraining</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="monitoring" class="tab-content">
+                        <div class="card">
+                            <h3><i class="fas fa-chart-bar"></i> Comprehensive Monitoring</h3>
+                            <div class="features-grid">
+                                <div class="feature-card">
+                                    <h4><i class="fas fa-tachometer-alt"></i> Real-time Dashboards</h4>
+                                    <ul>
+                                        <li>Pipeline health monitoring</li>
+                                        <li>Data quality metrics</li>
+                                        <li>Performance KPIs</li>
+                                        <li>Alert management system</li>
+                                    </ul>
+                                </div>
+                                <div class="feature-card">
+                                    <h4><i class="fas fa-bell"></i> Alerting System</h4>
+                                    <ul>
+                                        <li>Multi-channel notifications</li>
+                                        <li>Configurable alert thresholds</li>
+                                        <li>Escalation procedures</li>
+                                        <li>Alert correlation and suppression</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="governance" class="tab-content">
+                        <div class="card">
+                            <h3><i class="fas fa-shield-alt"></i> Data Governance</h3>
+                            <div class="features-grid">
+                                <div class="feature-card">
+                                    <h4><i class="fas fa-users"></i> Access Control</h4>
+                                    <ul>
+                                        <li>Role-based permissions</li>
+                                        <li>Data privacy compliance</li>
+                                        <li>Audit logging</li>
+                                        <li>Multi-tenant support</li>
+                                    </ul>
+                                </div>
+                                <div class="feature-card">
+                                    <h4><i class="fas fa-search"></i> Data Lineage</h4>
+                                    <ul>
+                                        <li>End-to-end data tracking</li>
+                                        <li>Impact analysis</li>
+                                        <li>Data catalog integration</li>
+                                        <li>Compliance reporting</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Comparison Section -->
+            <section id="comparison" class="section">
+                <h2 class="section-title">Architecture Comparison</h2>
+                <div class="card">
+                    <h3><i class="fas fa-balance-scale"></i> Current vs Best Case</h3>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Current Architecture</th>
+                                <th>Best Case Architecture</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Data Generation</strong></td>
+                                <td><span class="status-badge status-basic">Basic Python script</span></td>
+                                <td><span class="status-badge status-advanced">Advanced with validation</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Real-time Processing</strong></td>
+                                <td><span class="status-badge status-basic">Spark Streaming</span></td>
+                                <td><span class="status-badge status-advanced">Kafka + Spark Structured</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Storage Strategy</strong></td>
+                                <td><span class="status-badge status-basic">HDFS + PostgreSQL</span></td>
+                                <td><span class="status-badge status-advanced">Multi-tier (HDFS/HBase/S3)</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Data Quality</strong></td>
+                                <td><span class="status-badge status-basic">dbt tests</span></td>
+                                <td><span class="status-badge status-advanced">dbt + Great Expectations</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>ML Integration</strong></td>
+                                <td><span class="status-badge status-basic">None</span></td>
+                                <td><span class="status-badge status-advanced">Feature Store + Models</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Monitoring</strong></td>
+                                <td><span class="status-badge status-basic">Streamlit dashboard</span></td>
+                                <td><span class="status-badge status-advanced">Multi-tool monitoring</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Reporting</strong></td>
+                                <td><span class="status-badge status-basic">Power BI + Streamlit</span></td>
+                                <td><span class="status-badge status-advanced">Multi-platform + APIs</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Implementation Section -->
+            <section id="implementation" class="section">
+                <h2 class="section-title">Implementation Roadmap</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h4><i class="fas fa-play"></i> Phase 1: Foundation</h4>
+                        <ul>
+                            <li>Set up CDR generator</li>
+                            <li>Configure Spark Streaming</li>
+                            <li>Implement HDFS storage</li>
+                            <li>Basic Airflow orchestration</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4><i class="fas fa-cogs"></i> Phase 2: Data Processing</h4>
+                        <ul>
+                            <li>PostgreSQL integration</li>
+                            <li>dbt model development</li>
+                            <li>Data quality testing</li>
+                            <li>Basic monitoring setup</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4><i class="fas fa-chart-line"></i> Phase 3: Analytics</h4>
+                        <ul>
+                            <li>Streamlit dashboard</li>
+                            <li>Power BI integration</li>
+                            <li>Business reporting setup</li>
+                            <li>Performance optimization</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4><i class="fas fa-rocket"></i> Phase 4: Advanced Features</h4>
+                        <ul>
+                            <li>Kafka implementation</li>
+                            <li>ML model integration</li>
+                            <li>Advanced monitoring</li>
+                            <li>Enterprise governance</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 CDR Data Pipeline Architecture. Built for enterprise-scale telecommunications data processing.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Mermaid
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true
+            }
+        });
+
+        // Tab functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add loading animation for diagrams
+        document.addEventListener('DOMContentLoaded', function() {
+            const diagrams = document.querySelectorAll('.mermaid');
+            diagrams.forEach(diagram => {
+                diagram.style.opacity = '0';
+                diagram.style.transition = 'opacity 0.5s ease-in-out';
+                
+                setTimeout(() => {
+                    diagram.style.opacity = '1';
+                }, 500);
+            });
+        });
+    </script>
+</body>
 </html>
