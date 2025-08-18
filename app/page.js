@@ -1384,362 +1384,561 @@ export default function Home() {
             
             {/* Enhanced Timeline Visualization */}
             <div className="relative">
-              <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-blue-600 via-red-500 to-green-400 h-full hidden md:block"></div>
+              {/* Enhanced Timeline Line with Gradient */}
+              <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-blue-600 via-green-500 via-orange-500 via-red-500 to-indigo-600 h-full hidden md:block rounded-full shadow-lg"></div>
               
               <div className="space-y-16">
-                {/* 2021-2025: Education Foundation */}
-                <div className="relative flex items-center md:flex-row flex-col md:space-x-8 space-y-6 md:space-y-0">
-                  <div className="md:w-1/2 md:pr-8">
+                {/* 2021-2025: Education Foundation - LEFT SIDE */}
+                <div className="relative flex items-center justify-between">
+                  {/* Content on LEFT */}
+                  <div className="md:w-5/12 w-full">
                     <motion.div 
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
+                      initial={{ opacity: 0, x: -50 }}
+                      whileInView={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.8, delay: 0.1 }}
                       viewport={{ once: true }}
-                      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden"
+                      className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
                     >
-                      <div className="bg-gradient-to-r from-blue-400 to-blue-600 p-6 text-white">
-                        <div className="flex items-center justify-between mb-4">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12">
-                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-                            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                          </svg>
-                          <div className="flex items-center space-x-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                              <path d="m9 11 3 3L22 4"></path>
-                            </svg>
-                            <span className="text-sm font-medium">completed</span>
+                      <div className="bg-gradient-to-br from-blue-500 to-blue-700 p-8 text-white relative overflow-hidden">
+                        {/* Background Pattern */}
+                        <div className="absolute inset-0 opacity-10">
+                          <div className="absolute top-4 right-4 w-20 h-20 border-2 border-white rounded-full"></div>
+                          <div className="absolute bottom-4 left-4 w-16 h-16 border-2 border-white rounded-full"></div>
+                        </div>
+                        
+                        <div className="relative z-10">
+                          <div className="flex items-center justify-between mb-6">
+                            <div className="p-4 bg-white/20 rounded-xl backdrop-blur-sm">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8">
+                                <path d="M22 10v6M2 10l10-5 10 5z"></path>
+                                <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                              </svg>
+                            </div>
+                            <div className="flex items-center space-x-3 bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <path d="m9 11 3 3L22 4"></path>
+                              </svg>
+                              <span className="text-sm font-semibold">Completed</span>
+                            </div>
+                          </div>
+                          
+                          <div className="mb-4">
+                            <h3 className="text-2xl font-bold mb-3 leading-tight">University Education</h3>
+                            <p className="text-blue-100 font-medium text-lg">Menofia University</p>
+                            <p className="text-blue-200 text-sm mt-1">Computer Science & Mathematics</p>
                           </div>
                         </div>
-                        <h3 className="text-xl font-bold mb-2">University Education</h3>
-                        <p className="text-sm opacity-90">Menofia University</p>
                       </div>
-                      <div className="p-6">
-                        <div className="flex items-center justify-between mb-4">
-                          <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                              <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                              <line x1="16" x2="16" y1="2" y2="6"></line>
-                              <line x1="8" x2="8" y1="2" y2="6"></line>
-                              <line x1="3" x2="21" y1="10" y2="10"></line>
-                            </svg>
-                            <span className="text-sm">2021 - 2025</span>
+                      
+                      <div className="p-8">
+                        <div className="flex items-center justify-between mb-6">
+                          <div className="flex items-center space-x-3 text-gray-600 dark:text-gray-300">
+                            <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+                                <line x1="16" x2="16" y1="2" y2="6"></line>
+                                <line x1="8" x2="8" y1="2" y2="6"></line>
+                                <line x1="3" x2="21" y1="10" y2="10"></line>
+                              </svg>
+                            </div>
+                            <span className="font-semibold">2021 - 2025</span>
                           </div>
-                          <span className="text-xs text-gray-500 dark:text-gray-400">ID: CS-MATH-2025</span>
+                          <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">ID: CS-MATH-2025</span>
                         </div>
-                        <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 leading-relaxed">
-                          Bachelor's in Computer Science and Mathematics - Strong foundation for data engineering
+                        
+                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 text-base">
+                          Bachelor's degree providing a strong foundation in computer science principles, 
+                          mathematical concepts, and analytical thinking essential for data engineering.
                         </p>
+                        
                         <div className="mb-6">
-                          <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Key Areas</h4>
-                          <div className="flex flex-wrap gap-2">
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Data Structures</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Algorithms</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">OOP</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Database Design</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Mathematics</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">System Design</span>
+                          <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+                            <div className="w-2 h-2 bg-blue-600 rounded-full mr-3"></div>
+                            Key Areas of Study
+                          </h4>
+                          <div className="flex flex-wrap gap-3">
+                            <span className="px-4 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 text-sm rounded-lg font-medium border border-blue-200 dark:border-blue-700">Data Structures</span>
+                            <span className="px-4 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 text-sm rounded-lg font-medium border border-blue-200 dark:border-blue-700">Algorithms</span>
+                            <span className="px-4 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 text-sm rounded-lg font-medium border border-blue-200 dark:border-blue-700">Database Design</span>
+                            <span className="px-4 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 text-sm rounded-lg font-medium border border-blue-200 dark:border-blue-700">Mathematics</span>
                           </div>
                         </div>
-                        <button className="w-full bg-gray-900 dark:bg-gray-700 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors duration-200 flex items-center justify-center space-x-2">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                            <polyline points="15 3 21 3 21 9"></polyline>
-                            <line x1="10" x2="21" y1="14" y2="3"></line>
-                          </svg>
-                          <span>View Details</span>
-                        </button>
                       </div>
                     </motion.div>
                   </div>
-                  <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-blue-600 rounded-full border-4 border-white dark:border-gray-800 shadow-lg z-10">
-                    <div className="w-full h-full bg-blue-600 rounded-full animate-pulse"></div>
+                  
+                  {/* Enhanced Timeline Dot */}
+                  <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full border-4 border-white dark:border-gray-900 shadow-xl z-10">
+                    <div className="w-full h-full bg-gradient-to-r from-blue-600 to-blue-700 rounded-full animate-pulse flex items-center justify-center">
+                      <div className="w-3 h-3 bg-white rounded-full"></div>
+                    </div>
                   </div>
+                  
+                  {/* Empty space on RIGHT */}
+                  <div className="hidden md:block md:w-5/12"></div>
                 </div>
 
-                {/* 2023: ITI Bootcamp */}
-                <div className="relative flex items-center md:flex-row-reverse flex-col md:space-x-8 space-y-6 md:space-y-0">
-                  <div className="md:w-1/2 md:pl-8">
+                {/* 2023: ITI Bootcamp - RIGHT SIDE */}
+                <div className="relative flex items-center justify-between">
+                  {/* Empty space on LEFT */}
+                  <div className="hidden md:block md:w-5/12"></div>
+                  
+                  {/* Enhanced Timeline Dot */}
+                  <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-r from-green-600 to-green-700 rounded-full border-4 border-white dark:border-gray-900 shadow-xl z-10">
+                    <div className="w-full h-full bg-gradient-to-r from-green-600 to-green-700 rounded-full animate-pulse flex items-center justify-center">
+                      <div className="w-3 h-3 bg-white rounded-full"></div>
+                    </div>
+                  </div>
+                  
+                  {/* Content on RIGHT */}
+                  <div className="md:w-5/12 w-full">
                     <motion.div 
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
+                      initial={{ opacity: 0, x: 50 }}
+                      whileInView={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.8, delay: 0.2 }}
                       viewport={{ once: true }}
-                      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden"
+                      className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
                     >
-                      <div className="bg-gradient-to-r from-green-400 to-green-600 p-6 text-white">
-                        <div className="flex items-center justify-between mb-4">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12">
-                            <path d="M3 3v18h18"></path>
-                            <path d="M18 17V9"></path>
-                            <path d="M13 17V5"></path>
-                            <path d="M8 17v-3"></path>
-                          </svg>
-                          <div className="flex items-center space-x-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                              <path d="m9 11 3 3L22 4"></path>
-                            </svg>
-                            <span className="text-sm font-medium">Completed</span>
+                      <div className="bg-gradient-to-br from-green-500 to-green-700 p-8 text-white relative overflow-hidden">
+                        {/* Background Pattern */}
+                        <div className="absolute inset-0 opacity-10">
+                          <div className="absolute top-4 right-4 w-20 h-20 border-2 border-white rounded-full"></div>
+                          <div className="absolute bottom-4 left-4 w-16 h-16 border-2 border-white rounded-full"></div>
+                        </div>
+                        
+                        <div className="relative z-10">
+                          <div className="flex items-center justify-between mb-6">
+                            <div className="p-4 bg-white/20 rounded-xl backdrop-blur-sm">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8">
+                                <path d="M3 3v18h18"></path>
+                                <path d="M18 17V9"></path>
+                                <path d="M13 17V5"></path>
+                                <path d="M8 17v-3"></path>
+                              </svg>
+                            </div>
+                            <div className="flex items-center space-x-3 bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <path d="m9 11 3 3L22 4"></path>
+                              </svg>
+                              <span className="text-sm font-semibold">Completed</span>
+                            </div>
+                          </div>
+                          
+                          <div className="mb-4">
+                            <h3 className="text-2xl font-bold mb-3 leading-tight">BI Track Bootcamp</h3>
+                            <p className="text-green-100 font-medium text-lg">Information Technology Institute (ITI)</p>
+                            <p className="text-green-200 text-sm mt-1">Business Intelligence Intensive Training</p>
                           </div>
                         </div>
-                        <h3 className="text-xl font-bold mb-2">BI Track Bootcamp</h3>
-                        <p className="text-sm opacity-90">Information Technology Institute (ITI)</p>
                       </div>
-                      <div className="p-6">
-                        <div className="flex items-center justify-between mb-4">
-                          <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                              <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                              <line x1="16" x2="16" y1="2" y2="6"></line>
-                              <line x1="8" x2="8" y1="2" y2="6"></line>
-                              <line x1="3" x2="21" y1="10" y2="10"></line>
-                            </svg>
-                            <span className="text-sm">Jul 2023 - Aug 2023</span>
+                      
+                      <div className="p-8">
+                        <div className="flex items-center justify-between mb-6">
+                          <div className="flex items-center space-x-3 text-gray-600 dark:text-gray-300">
+                            <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+                                <line x1="16" x2="16" y1="2" y2="6"></line>
+                                <line x1="8" x2="8" y1="2" y2="6"></line>
+                                <line x1="3" x2="21" y1="10" y2="10"></line>
+                              </svg>
+                            </div>
+                            <span className="font-semibold">Jul 2023 - Aug 2023</span>
                           </div>
-                          <span className="text-xs text-gray-500 dark:text-gray-400">ID: ITI-BC-2023</span>
+                          <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">ID: ITI-BC-2023</span>
                         </div>
-                        <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 leading-relaxed">
-                          Intensive BI training with hands-on projects and real-world applications
+                        
+                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 text-base">
+                          Intensive business intelligence bootcamp with hands-on projects, real-world applications, 
+                          and comprehensive training in modern BI tools and methodologies.
                         </p>
+                        
                         <div className="mb-6">
-                          <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Technologies Learned</h4>
-                          <div className="flex flex-wrap gap-2">
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Power BI</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">SSIS</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">SSAS</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">SSRS</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">SQL Server</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Excel</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">DAX</span>
+                          <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+                            <div className="w-2 h-2 bg-green-600 rounded-full mr-3"></div>
+                            Technologies Learned
+                          </h4>
+                          <div className="flex flex-wrap gap-3">
+                            <span className="px-4 py-2 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 text-sm rounded-lg font-medium border border-green-200 dark:border-green-700">Power BI</span>
+                            <span className="px-4 py-2 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 text-sm rounded-lg font-medium border border-green-200 dark:border-green-700">SQL Server</span>
+                            <span className="px-4 py-2 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 text-sm rounded-lg font-medium border border-green-200 dark:border-green-700">SSIS</span>
+                            <span className="px-4 py-2 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 text-sm rounded-lg font-medium border border-green-200 dark:border-green-700">Data Modeling</span>
                           </div>
                         </div>
-                        <button className="w-full bg-gray-900 dark:bg-gray-700 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors duration-200 flex items-center justify-center space-x-2">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                            <polyline points="15 3 21 3 21 9"></polyline>
-                            <line x1="10" x2="21" y1="14" y2="3"></line>
-                          </svg>
-                          <span>View Details</span>
-                        </button>
                       </div>
                     </motion.div>
                   </div>
-                  <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-green-600 rounded-full border-4 border-white dark:border-gray-800 shadow-lg z-10">
-                    <div className="w-full h-full bg-green-600 rounded-full animate-pulse"></div>
-                  </div>
                 </div>
 
-                {/* 2023-2024: ASDC Internship */}
-                <div className="relative flex items-center md:flex-row flex-col md:space-x-8 space-y-6 md:space-y-0">
-                  <div className="md:w-1/2 md:pr-8">
+                {/* 2023-2024: ASDC Internship - LEFT SIDE */}
+                <div className="relative flex items-center justify-between">
+                  {/* Content on LEFT */}
+                  <div className="md:w-5/12 w-full">
                     <motion.div 
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
+                      initial={{ opacity: 0, x: -50 }}
+                      whileInView={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.8, delay: 0.3 }}
                       viewport={{ once: true }}
-                      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden"
+                      className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
                     >
-                      <div className="bg-gradient-to-r from-purple-400 to-purple-600 p-6 text-white">
-                        <div className="flex items-center justify-between mb-4">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12">
-                            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-                            <path d="M3 5V19A9 3 0 0 0 21 19V5"></path>
-                            <path d="M3 12A9 3 0 0 0 21 12"></path>
-                          </svg>
-                          <div className="flex items-center space-x-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                              <path d="m9 11 3 3L22 4"></path>
-                            </svg>
-                            <span className="text-sm font-medium">Completed</span>
+                      <div className="bg-gradient-to-br from-purple-500 to-purple-700 p-8 text-white relative overflow-hidden">
+                        {/* Background Pattern */}
+                        <div className="absolute inset-0 opacity-10">
+                          <div className="absolute top-4 right-4 w-20 h-20 border-2 border-white rounded-full"></div>
+                          <div className="absolute bottom-4 left-4 w-16 h-16 border-2 border-white rounded-full"></div>
+                        </div>
+                        
+                        <div className="relative z-10">
+                          <div className="flex items-center justify-between mb-6">
+                            <div className="p-4 bg-white/20 rounded-xl backdrop-blur-sm">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8">
+                                <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                                <path d="M3 5V19A9 3 0 0 0 21 19V5"></path>
+                                <path d="M3 12A9 3 0 0 0 21 12"></path>
+                              </svg>
+                            </div>
+                            <div className="flex items-center space-x-3 bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <path d="m9 11 3 3L22 4"></path>
+                              </svg>
+                              <span className="text-sm font-semibold">Completed</span>
+                            </div>
+                          </div>
+                          
+                          <div className="mb-4">
+                            <h3 className="text-2xl font-bold mb-3 leading-tight">Data Analysis Internship</h3>
+                            <p className="text-purple-100 font-medium text-lg">ASDC</p>
+                            <p className="text-purple-200 text-sm mt-1">Arab Society for Data & Computing</p>
                           </div>
                         </div>
-                        <h3 className="text-xl font-bold mb-2">Data Analysis Internship</h3>
-                        <p className="text-sm opacity-90">ASDC</p>
                       </div>
-                      <div className="p-6">
-                        <div className="flex items-center justify-between mb-4">
-                          <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                              <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                              <line x1="16" x2="16" y1="2" y2="6"></line>
-                              <line x1="8" x2="8" y1="2" y2="6"></line>
-                              <line x1="3" x2="21" y1="10" y2="10"></line>
-                            </svg>
-                            <span className="text-sm">Nov 2023 - Jan 2024</span>
+                      
+                      <div className="p-8">
+                        <div className="flex items-center justify-between mb-6">
+                          <div className="flex items-center space-x-3 text-gray-600 dark:text-gray-300">
+                            <div className="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+                                <line x1="16" x2="16" y1="2" y2="6"></line>
+                                <line x1="8" x2="8" y1="2" y2="6"></line>
+                                <line x1="3" x2="21" y1="10" y2="10"></line>
+                              </svg>
+                            </div>
+                            <span className="font-semibold">Nov 2023 - Jan 2024</span>
                           </div>
-                          <span className="text-xs text-gray-500 dark:text-gray-400">ID: ASDC-INT-2024</span>
+                          <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">ID: ASDC-INT-2024</span>
                         </div>
-                        <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 leading-relaxed">
-                          Data analysis fundamentals and BI solutions for business metrics visualization
+                        
+                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 text-base">
+                          Professional internship focused on data analysis fundamentals and business intelligence 
+                          solutions for effective business metrics visualization and decision-making.
                         </p>
+                        
                         <div className="mb-6">
-                          <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Skills Developed</h4>
-                          <div className="flex flex-wrap gap-2">
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">ETL Development</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Data Modeling</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Statistical Analysis</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Requirements Gathering</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Power BI</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Python</span>
+                          <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+                            <div className="w-2 h-2 bg-purple-600 rounded-full mr-3"></div>
+                            Skills Developed
+                          </h4>
+                          <div className="flex flex-wrap gap-3">
+                            <span className="px-4 py-2 bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 text-sm rounded-lg font-medium border border-purple-200 dark:border-purple-700">Power BI</span>
+                            <span className="px-4 py-2 bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 text-sm rounded-lg font-medium border border-purple-200 dark:border-purple-700">Python</span>
+                            <span className="px-4 py-2 bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 text-sm rounded-lg font-medium border border-purple-200 dark:border-purple-700">Data Modeling</span>
+                            <span className="px-4 py-2 bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 text-sm rounded-lg font-medium border border-purple-200 dark:border-purple-700">ETL Development</span>
                           </div>
                         </div>
-                        <button className="w-full bg-gray-900 dark:bg-gray-700 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors duration-200 flex items-center justify-center space-x-2">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                            <polyline points="15 3 21 3 21 9"></polyline>
-                            <line x1="10" x2="21" y1="14" y2="3"></line>
-                          </svg>
-                          <span>View Details</span>
-                        </button>
                       </div>
                     </motion.div>
                   </div>
-                  <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-purple-600 rounded-full border-4 border-white dark:border-gray-800 shadow-lg z-10">
-                    <div className="w-full h-full bg-purple-600 rounded-full animate-pulse"></div>
+                  
+                  {/* Enhanced Timeline Dot */}
+                  <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-r from-purple-600 to-purple-700 rounded-full border-4 border-white dark:border-gray-900 shadow-xl z-10">
+                    <div className="w-full h-full bg-gradient-to-r from-purple-600 to-purple-700 rounded-full animate-pulse flex items-center justify-center">
+                      <div className="w-3 h-3 bg-white rounded-full"></div>
+                    </div>
+                  </div>
+                  
+                  {/* Empty space on RIGHT */}
+                  <div className="hidden md:block md:w-5/12"></div>
+                </div>
+
+                {/* 2023-2024: GDSC Vice Head - RIGHT SIDE */}
+                <div className="relative flex items-center justify-between">
+                  {/* Empty space on LEFT */}
+                  <div className="hidden md:block md:w-5/12"></div>
+                  
+                  {/* Enhanced Timeline Dot */}
+                  <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-r from-orange-600 to-orange-700 rounded-full border-4 border-white dark:border-gray-900 shadow-xl z-10">
+                    <div className="w-full h-full bg-gradient-to-r from-orange-600 to-orange-700 rounded-full animate-pulse flex items-center justify-center">
+                      <div className="w-3 h-3 bg-white rounded-full"></div>
+                    </div>
+                  </div>
+                  
+                  {/* Content on RIGHT */}
+                  <div className="md:w-5/12 w-full">
+                    <motion.div 
+                      initial={{ opacity: 0, x: 50 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.8, delay: 0.35 }}
+                      viewport={{ once: true }}
+                      className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
+                    >
+                      <div className="bg-gradient-to-br from-orange-500 to-orange-700 p-8 text-white relative overflow-hidden">
+                        {/* Background Pattern */}
+                        <div className="absolute inset-0 opacity-10">
+                          <div className="absolute top-4 right-4 w-20 h-20 border-2 border-white rounded-full"></div>
+                          <div className="absolute bottom-4 left-4 w-16 h-16 border-2 border-white rounded-full"></div>
+                        </div>
+                        
+                        <div className="relative z-10">
+                          <div className="flex items-center justify-between mb-6">
+                            <div className="p-4 bg-white/20 rounded-xl backdrop-blur-sm">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8">
+                                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                                <rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect>
+                                <path d="M12 11h4"></path>
+                                <path d="M12 16h4"></path>
+                                <path d="M8 11h.01"></path>
+                                <path d="M8 16h.01"></path>
+                              </svg>
+                            </div>
+                            <div className="flex items-center space-x-3 bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <path d="m9 11 3 3L22 4"></path>
+                              </svg>
+                              <span className="text-sm font-semibold">Completed</span>
+                            </div>
+                          </div>
+                          
+                          <div className="mb-4">
+                            <h3 className="text-2xl font-bold mb-3 leading-tight">Vice Head Data Analysis</h3>
+                            <p className="text-orange-100 font-medium text-lg">GDSC</p>
+                            <p className="text-orange-200 text-sm mt-1">Google Developer Student Clubs</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="p-8">
+                        <div className="flex items-center justify-between mb-6">
+                          <div className="flex items-center space-x-3 text-gray-600 dark:text-gray-300">
+                            <div className="p-2 bg-orange-100 dark:bg-orange-900/30 rounded-lg">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+                                <line x1="16" x2="16" y1="2" y2="6"></line>
+                                <line x1="8" x2="8" y1="2" y2="6"></line>
+                                <line x1="3" x2="21" y1="10" y2="10"></line>
+                              </svg>
+                            </div>
+                            <span className="font-semibold">Sep 2023 - Mar 2024</span>
+                          </div>
+                          <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">ID: GDSC-VH-2024</span>
+                        </div>
+                        
+                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 text-base">
+                          Leadership role as mentor and instructor, teaching data analysis skills focused on 
+                          BI, SQL, Power BI, databases, and data warehousing to fellow students.
+                        </p>
+                        
+                        <div className="mb-6">
+                          <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+                            <div className="w-2 h-2 bg-orange-600 rounded-full mr-3"></div>
+                            Leadership & Teaching
+                          </h4>
+                          <div className="flex flex-wrap gap-3">
+                            <span className="px-4 py-2 bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300 text-sm rounded-lg font-medium border border-orange-200 dark:border-orange-700">Mentoring</span>
+                            <span className="px-4 py-2 bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300 text-sm rounded-lg font-medium border border-orange-200 dark:border-orange-700">SQL</span>
+                            <span className="px-4 py-2 bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300 text-sm rounded-lg font-medium border border-orange-200 dark:border-orange-700">Power BI</span>
+                            <span className="px-4 py-2 bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300 text-sm rounded-lg font-medium border border-orange-200 dark:border-orange-700">Teaching</span>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
                   </div>
                 </div>
 
-                {/* 2024: ATC Internship */}
-                <div className="relative flex items-center md:flex-row-reverse flex-col md:space-x-8 space-y-6 md:space-y-0">
-                  <div className="md:w-1/2 md:pl-8">
+                {/* 2024: ATC Internship - LEFT SIDE */}
+                <div className="relative flex items-center justify-between">
+                  {/* Content on LEFT */}
+                  <div className="md:w-5/12 w-full">
                     <motion.div 
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
+                      initial={{ opacity: 0, x: -50 }}
+                      whileInView={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.8, delay: 0.4 }}
                       viewport={{ once: true }}
-                      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden"
+                      className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
                     >
-                      <div className="bg-gradient-to-r from-red-400 to-red-600 p-6 text-white">
-                        <div className="flex items-center justify-between mb-4">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12">
-                            <path d="M3 3v18h18"></path>
-                            <path d="M18 17V9"></path>
-                            <path d="M13 17V5"></path>
-                            <path d="M8 17v-3"></path>
-                          </svg>
-                          <div className="flex items-center space-x-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                              <path d="m9 11 3 3L22 4"></path>
-                            </svg>
-                            <span className="text-sm font-medium">Completed</span>
+                      <div className="bg-gradient-to-br from-red-500 to-red-700 p-8 text-white relative overflow-hidden">
+                        {/* Background Pattern */}
+                        <div className="absolute inset-0 opacity-10">
+                          <div className="absolute top-4 right-4 w-20 h-20 border-2 border-white rounded-full"></div>
+                          <div className="absolute bottom-4 left-4 w-16 h-16 border-2 border-white rounded-full"></div>
+                        </div>
+                        
+                        <div className="relative z-10">
+                          <div className="flex items-center justify-between mb-6">
+                            <div className="p-4 bg-white/20 rounded-xl backdrop-blur-sm">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8">
+                                <path d="M3 3v18h18"></path>
+                                <path d="M18 17V9"></path>
+                                <path d="M13 17V5"></path>
+                                <path d="M8 17v-3"></path>
+                              </svg>
+                            </div>
+                            <div className="flex items-center space-x-3 bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <path d="m9 11 3 3L22 4"></path>
+                              </svg>
+                              <span className="text-sm font-semibold">Completed</span>
+                            </div>
+                          </div>
+                          
+                          <div className="mb-4">
+                            <h3 className="text-2xl font-bold mb-3 leading-tight">BI Analyst Internship</h3>
+                            <p className="text-red-100 font-medium text-lg">Addiction Treatment Center</p>
+                            <p className="text-red-200 text-sm mt-1">Healthcare Analytics & Dashboards</p>
                           </div>
                         </div>
-                        <h3 className="text-xl font-bold mb-2">BI Analyst Internship</h3>
-                        <p className="text-sm opacity-90">Addiction Treatment Center</p>
                       </div>
-                      <div className="p-6">
-                        <div className="flex items-center justify-between mb-4">
-                          <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                              <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                              <line x1="16" x2="16" y1="2" y2="6"></line>
-                              <line x1="8" x2="8" y1="2" y2="6"></line>
-                              <line x1="3" x2="21" y1="10" y2="10"></line>
-                            </svg>
-                            <span className="text-sm">Jul 2024 - Oct 2024</span>
+                      
+                      <div className="p-8">
+                        <div className="flex items-center justify-between mb-6">
+                          <div className="flex items-center space-x-3 text-gray-600 dark:text-gray-300">
+                            <div className="p-2 bg-red-100 dark:bg-red-900/30 rounded-lg">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+                                <line x1="16" x2="16" y1="2" y2="6"></line>
+                                <line x1="8" x2="8" y1="2" y2="6"></line>
+                                <line x1="3" x2="21" y1="10" y2="10"></line>
+                              </svg>
+                            </div>
+                            <span className="font-semibold">Jul 2024 - Oct 2024</span>
                           </div>
-                          <span className="text-xs text-gray-500 dark:text-gray-400">ID: ATC-INT-2024</span>
+                          <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">ID: ATC-INT-2024</span>
                         </div>
-                        <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 leading-relaxed">
-                          Power BI dashboard development and data visualization for healthcare operations
+                        
+                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 text-base">
+                          Hands-on experience in Power BI dashboard development and data visualization 
+                          for healthcare operations monitoring and performance analytics.
                         </p>
+                        
                         <div className="mb-6">
-                          <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Skills Applied</h4>
-                          <div className="flex flex-wrap gap-2">
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Dashboard Design</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Data Visualization</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Business Analysis</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">KPI Development</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Power BI</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">DAX</span>
+                          <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+                            <div className="w-2 h-2 bg-red-600 rounded-full mr-3"></div>
+                            Skills Applied
+                          </h4>
+                          <div className="flex flex-wrap gap-3">
+                            <span className="px-4 py-2 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 text-sm rounded-lg font-medium border border-red-200 dark:border-red-700">Dashboard Design</span>
+                            <span className="px-4 py-2 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 text-sm rounded-lg font-medium border border-red-200 dark:border-red-700">Power BI</span>
+                            <span className="px-4 py-2 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 text-sm rounded-lg font-medium border border-red-200 dark:border-red-700">DAX</span>
+                            <span className="px-4 py-2 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 text-sm rounded-lg font-medium border border-red-200 dark:border-red-700">KPI Development</span>
                           </div>
                         </div>
-                        <button className="w-full bg-gray-900 dark:bg-gray-700 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors duration-200 flex items-center justify-center space-x-2">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                            <polyline points="15 3 21 3 21 9"></polyline>
-                            <line x1="10" x2="21" y1="14" y2="3"></line>
-                          </svg>
-                          <span>View Details</span>
-                        </button>
                       </div>
                     </motion.div>
                   </div>
-                  <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-red-600 rounded-full border-4 border-white dark:border-gray-800 shadow-lg z-10">
-                    <div className="w-full h-full bg-red-600 rounded-full animate-pulse"></div>
+                  
+                  {/* Enhanced Timeline Dot */}
+                  <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-r from-red-600 to-red-700 rounded-full border-4 border-white dark:border-gray-900 shadow-xl z-10">
+                    <div className="w-full h-full bg-gradient-to-r from-red-600 to-red-700 rounded-full animate-pulse flex items-center justify-center">
+                      <div className="w-3 h-3 bg-white rounded-full"></div>
+                    </div>
                   </div>
+                  
+                  {/* Empty space on RIGHT */}
+                  <div className="hidden md:block md:w-5/12"></div>
                 </div>
 
-                {/* 2025: Data Engineering Zoomcamp */}
-                <div className="relative flex items-center md:flex-row flex-col md:space-x-8 space-y-6 md:space-y-0">
-                  <div className="md:w-1/2 md:pr-8">
+                {/* 2025: Data Engineering Zoomcamp - RIGHT SIDE */}
+                <div className="relative flex items-center justify-between">
+                  {/* Empty space on LEFT */}
+                  <div className="hidden md:block md:w-5/12"></div>
+                  
+                  {/* Enhanced Timeline Dot */}
+                  <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-r from-indigo-600 to-indigo-700 rounded-full border-4 border-white dark:border-gray-900 shadow-xl z-10">
+                    <div className="w-full h-full bg-gradient-to-r from-indigo-600 to-indigo-700 rounded-full animate-pulse flex items-center justify-center">
+                      <div className="w-3 h-3 bg-white rounded-full"></div>
+                    </div>
+                  </div>
+                  
+                  {/* Content on RIGHT */}
+                  <div className="md:w-5/12 w-full">
                     <motion.div 
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
+                      initial={{ opacity: 0, x: 50 }}
+                      whileInView={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.8, delay: 0.5 }}
                       viewport={{ once: true }}
-                      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden"
+                      className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
                     >
-                      <div className="bg-gradient-to-r from-indigo-400 to-indigo-600 p-6 text-white">
-                        <div className="flex items-center justify-between mb-4">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12">
-                            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                          </svg>
-                          <div className="flex items-center space-x-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                              <path d="m9 11 3 3L22 4"></path>
-                            </svg>
-                            <span className="text-sm font-medium">Completed</span>
+                      <div className="bg-gradient-to-br from-indigo-500 to-indigo-700 p-8 text-white relative overflow-hidden">
+                        {/* Background Pattern */}
+                        <div className="absolute inset-0 opacity-10">
+                          <div className="absolute top-4 right-4 w-20 h-20 border-2 border-white rounded-full"></div>
+                          <div className="absolute bottom-4 left-4 w-16 h-16 border-2 border-white rounded-full"></div>
+                        </div>
+                        
+                        <div className="relative z-10">
+                          <div className="flex items-center justify-between mb-6">
+                            <div className="p-4 bg-white/20 rounded-xl backdrop-blur-sm">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                              </svg>
+                            </div>
+                            <div className="flex items-center space-x-3 bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <path d="m9 11 3 3L22 4"></path>
+                              </svg>
+                              <span className="text-sm font-semibold">Completed</span>
+                            </div>
+                          </div>
+                          
+                          <div className="mb-4">
+                            <h3 className="text-2xl font-bold mb-3 leading-tight">Data Engineering Zoomcamp</h3>
+                            <p className="text-indigo-100 font-medium text-lg">DataTalks Club</p>
+                            <p className="text-indigo-200 text-sm mt-1">Modern Data Engineering Bootcamp</p>
                           </div>
                         </div>
-                        <h3 className="text-xl font-bold mb-2">Data Engineering Zoomcamp</h3>
-                        <p className="text-sm opacity-90">DataTalks Club</p>
                       </div>
-                      <div className="p-6">
-                        <div className="flex items-center justify-between mb-4">
-                          <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                              <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                              <line x1="16" x2="16" y1="2" y2="6"></line>
-                              <line x1="8" x2="8" y1="2" y2="6"></line>
-                              <line x1="3" x2="21" y1="10" y2="10"></line>
-                            </svg>
-                            <span className="text-sm">Jan 2025 - May 2025</span>
+                      
+                      <div className="p-8">
+                        <div className="flex items-center justify-between mb-6">
+                          <div className="flex items-center space-x-3 text-gray-600 dark:text-gray-300">
+                            <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+                                <line x1="16" x2="16" y1="2" y2="6"></line>
+                                <line x1="8" x2="8" y1="2" y2="6"></line>
+                                <line x1="3" x2="21" y1="10" y2="10"></line>
+                              </svg>
+                            </div>
+                            <span className="font-semibold">Jan 2025 - May 2025</span>
                           </div>
-                          <span className="text-xs text-gray-500 dark:text-gray-400">ID: DTC-ZC-2025</span>
+                          <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">ID: DTC-ZC-2025</span>
                         </div>
-                        <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 leading-relaxed">
-                          Modern data engineering with cloud deployment and containerization
+                        
+                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 text-base">
+                          Comprehensive modern data engineering bootcamp with cloud deployment, 
+                          containerization, and advanced data pipeline orchestration techniques.
                         </p>
+                        
                         <div className="mb-6">
-                          <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-2">Technologies Mastered</h4>
-                          <div className="flex flex-wrap gap-2">
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Apache Airflow</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">dbt</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Docker</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">GCP</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">PostgreSQL</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Terraform</span>
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded">Kubernetes</span>
+                          <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+                            <div className="w-2 h-2 bg-indigo-600 rounded-full mr-3"></div>
+                            Technologies Mastered
+                          </h4>
+                          <div className="flex flex-wrap gap-3">
+                            <span className="px-4 py-2 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 text-sm rounded-lg font-medium border border-indigo-200 dark:border-indigo-700">Apache Airflow</span>
+                            <span className="px-4 py-2 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 text-sm rounded-lg font-medium border border-indigo-200 dark:border-indigo-700">dbt</span>
+                            <span className="px-4 py-2 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 text-sm rounded-lg font-medium border border-indigo-200 dark:border-indigo-700">Docker</span>
+                            <span className="px-4 py-2 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 text-sm rounded-lg font-medium border border-indigo-200 dark:border-indigo-700">GCP</span>
                           </div>
                         </div>
-                        <button className="w-full bg-gray-900 dark:bg-gray-700 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors duration-200 flex items-center justify-center space-x-2">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                            <polyline points="15 3 21 3 21 9"></polyline>
-                            <line x1="10" x2="21" y1="14" y2="3"></line>
-                          </svg>
-                          <span>View Details</span>
-                        </button>
                       </div>
                     </motion.div>
-                  </div>
-                  <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-indigo-600 rounded-full border-4 border-white dark:border-gray-800 shadow-lg z-10">
-                    <div className="w-full h-full bg-indigo-600 rounded-full animate-pulse"></div>
                   </div>
                 </div>
               </div>
@@ -1756,168 +1955,170 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="grid lg:grid-cols-2 gap-16 items-center"
           >
-            <div>
-              <h2 className="text-4xl font-bold mb-8 gradient-text">About Me</h2>
-              
-              <div className="space-y-6 text-gray-600 dark:text-gray-300 leading-relaxed">
-                <p>
-                  Data Engineer focused on transforming data into actionable insights that drive strategic decisions and accelerate business growth. 
-                  Skilled in designing and optimizing complex data pipelines and workflows using modern data stacks to improve operational efficiency and scalability. 
-                  Collaborative and impact-driven.
-                </p>
+            {/* Section Header */}
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                About <span className="gradient-text">Me</span>
+              </h2>
+              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                Data Engineer focused on transforming data into actionable insights
+              </p>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              {/* Left Side - Content */}
+              <div>
+                {/* Main Description */}
+                <div className="mb-8">
+                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-lg mb-6">
+                    Data Engineer focused on transforming data into actionable insights that drive strategic decisions and accelerate business growth. 
+                    Skilled in designing and optimizing complex data pipelines and workflows using modern data stacks.
+                  </p>
+                  
+                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                    Collaborative and impact-driven professional with experience in building scalable data solutions 
+                    that enable organizations to make informed decisions.
+                  </p>
+                </div>
                 
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-3">
-                    <FaGraduationCap className="text-red-600" />
-                    <span>Computer Science and Mathematics graduate from Menofia University (2021-2025)</span>
+                {/* Key Information */}
+                <div className="grid md:grid-cols-2 gap-6 mb-8">
+                  {/* Education */}
+                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
+                    <div className="flex items-center mb-3">
+                      <FaGraduationCap className="text-red-600 text-xl mr-3" />
+                      <h4 className="font-semibold text-gray-900 dark:text-white">Education</h4>
+                    </div>
+                    <p className="text-gray-600 dark:text-gray-300 text-sm">
+                      Computer Science & Mathematics<br />
+                      Menofia University (2021-2025)
+                    </p>
                   </div>
-                  <div className="flex items-center space-x-3">
-                    <FaMapMarkerAlt className="text-red-600" />
-                    <span>Cairo, Egypt (open to relocate)</span>
+
+                  {/* Location */}
+                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
+                    <div className="flex items-center mb-3">
+                      <FaMapMarkerAlt className="text-red-600 text-xl mr-3" />
+                      <h4 className="font-semibold text-gray-900 dark:text-white">Location</h4>
+                    </div>
+                    <p className="text-gray-600 dark:text-gray-300 text-sm">
+                      Cairo, Egypt<br />
+                      Open to relocate
+                    </p>
+                  </div>
+                </div>
+
+                {/* Quick Stats */}
+                <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
+                  <h4 className="font-semibold text-gray-900 dark:text-white mb-4">Quick Stats</h4>
+                  <div className="grid grid-cols-3 gap-4 text-center">
+                    <div>
+                      <div className="text-2xl font-bold text-red-600">30+</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-400">Projects</div>
+                    </div>
+                    <div>
+                      <div className="text-2xl font-bold text-blue-600">5+</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-400">Certifications</div>
+                    </div>
+                    <div>
+                      <div className="text-2xl font-bold text-green-600">2+</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-400">Years Learning</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Right Side - Role Cards */}
+              <div className="space-y-6">
+                {/* Data Engineer */}
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+                  <div className="flex items-start space-x-4">
+                    <div className="p-3 bg-red-600 rounded-lg flex-shrink-0">
+                      <FaDatabase className="text-white text-xl" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Data Engineer</h3>
+                      <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                        Building scalable ETL pipelines, data warehouses, and real-time streaming solutions
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        <span className="px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded text-sm">Spark</span>
+                        <span className="px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded text-sm">Hadoop</span>
+                        <span className="px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded text-sm">Kafka</span>
+                        <span className="px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded text-sm">Airflow</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Analytics Engineer */}
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+                  <div className="flex items-start space-x-4">
+                    <div className="p-3 bg-green-600 rounded-lg flex-shrink-0">
+                      <FaChartLine className="text-white text-xl" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Analytics Engineer</h3>
+                      <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                        Designing data models for advanced analytics and business intelligence
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded text-sm">dbt</span>
+                        <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded text-sm">Snowflake</span>
+                        <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded text-sm">SQL</span>
+                        <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded text-sm">Python</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* BI Developer */}
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+                  <div className="flex items-start space-x-4">
+                    <div className="p-3 bg-purple-600 rounded-lg flex-shrink-0">
+                      <FaLightbulb className="text-white text-xl" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">BI Developer</h3>
+                      <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                        Creating interactive dashboards and reports for data-driven decisions
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-sm">Power BI</span>
+                        <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-sm">Tableau</span>
+                        <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-sm">DAX</span>
+                        <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-sm">SSAS</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Data Analyst */}
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+                  <div className="flex items-start space-x-4">
+                    <div className="p-3 bg-orange-600 rounded-lg flex-shrink-0">
+                      <FaUsers className="text-white text-xl" />
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Data Analyst</h3>
+                      <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                        Transforming raw data into actionable insights for business strategy
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        <span className="px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 rounded text-sm">Python</span>
+                        <span className="px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 rounded text-sm">Pandas</span>
+                        <span className="px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 rounded text-sm">SQL</span>
+                        <span className="px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 rounded text-sm">Jupyter</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            
-            <div className="space-y-6">
-              {/* Data Engineer Card */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.1 }}
-                viewport={{ once: true }}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-2 relative overflow-hidden group"
-                whileHover={{ 
-                  rotateY: 1,
-                  rotateX: 1,
-                  transition: { duration: 0.3 }
-                }}
-              >
-                <div className="flex items-start space-x-4 p-6">
-                  <div className="p-3 bg-gradient-to-r from-red-600 to-red-700 rounded-full w-14 h-14 flex items-center justify-center flex-shrink-0">
-                    <FaDatabase className="text-white text-xl" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Data Engineer</h3>
-                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
-                      Building scalable ETL pipelines, data warehouses, and real-time streaming solutions
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded text-xs">Spark</span>
-                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded text-xs">Hadoop</span>
-                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded text-xs">Kafka</span>
-                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded text-xs">Airflow</span>
-                      <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded text-xs">SQL</span>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Analytics Engineer Card */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                viewport={{ once: true }}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-2 relative overflow-hidden group"
-                whileHover={{ 
-                  rotateY: 1,
-                  rotateX: 1,
-                  transition: { duration: 0.3 }
-                }}
-              >
-                <div className="flex items-start space-x-4 p-6">
-                  <div className="p-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full w-14 h-14 flex items-center justify-center flex-shrink-0">
-                    <FaChartLine className="text-white text-xl" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Analytics Engineer</h3>
-                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
-                      Designing and implementing data models for advanced analytics and business intelligence
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      <span className="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded text-xs">dbt</span>
-                      <span className="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded text-xs">Snowflake</span>
-                      <span className="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded text-xs">Python</span>
-                      <span className="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded text-xs">SQL</span>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* BI Developer Card */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-                viewport={{ once: true }}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-2 relative overflow-hidden group"
-                whileHover={{ 
-                  rotateY: 1,
-                  rotateX: 1,
-                  transition: { duration: 0.3 }
-                }}
-              >
-                <div className="flex items-start space-x-4 p-6">
-                  <div className="p-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full w-14 h-14 flex items-center justify-center flex-shrink-0">
-                    <FaLightbulb className="text-white text-xl" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">BI Developer</h3>
-                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
-                      Creating interactive dashboards and reports for data-driven decision making
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-xs">Power BI</span>
-                      <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-xs">SSAS</span>
-                      <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-xs">SSRS</span>
-                      <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-xs">Excel</span>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Data Analyst Card */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                viewport={{ once: true }}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-2 relative overflow-hidden group"
-                whileHover={{ 
-                  rotateY: 1,
-                  rotateX: 1,
-                  transition: { duration: 0.3 }
-                }}
-              >
-                <div className="flex items-start space-x-4 p-6">
-                  <div className="p-3 bg-gradient-to-r from-orange-500 to-red-500 rounded-full w-14 h-14 flex items-center justify-center flex-shrink-0">
-                    <FaUsers className="text-white text-xl" />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">Data Analyst</h3>
-                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
-                      Transforming raw data into actionable insights for business strategy and optimization
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      <span className="px-2 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 rounded text-xs">Python</span>
-                      <span className="px-2 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 rounded text-xs">Pandas</span>
-                      <span className="px-2 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 rounded text-xs">SQL</span>
-                      <span className="px-2 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 rounded text-xs">Excel</span>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
           </motion.div>
         </div>
       </section>
-
-        {/* Experience Section - REMOVED */}
-
-        {/* Bootcamps Section - REMOVED */}
 
       {/* Projects Section */}
       <section id="projects" className="section-padding section-alt">
@@ -2257,8 +2458,6 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
-
-        {/* Education Section - REMOVED */}
 
       {/* Certifications Section */}
       <section className="section-padding">
