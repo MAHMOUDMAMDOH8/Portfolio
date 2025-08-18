@@ -333,16 +333,27 @@ export default function Home() {
       items: [
         { name: 'Apache Spark', level: 60, color: 'from-orange-400 to-orange-600' },
         { name: 'Hadoop', level: 85, color: 'from-blue-400 to-blue-600' },
-        { name: 'Airflow', level: 80, color: 'from-teal-400 to-teal-600' },
+        { name: 'Airflow', level: 90, color: 'from-teal-400 to-teal-600' },
         { name: 'Hive', level: 75, color: 'from-yellow-400 to-yellow-600' },
         { name: 'Kafka', level: 50, color: 'from-gray-400 to-gray-600' }
+      ]
+    },
+    {
+    category: 'ETL Tools',
+      icon: 'code',
+      items: [
+        { name: 'dbt', level: 90, color: 'from-green-400 to-green-600' },
+        { name: 'Airflow', level: 90, color: 'from-blue-400 to-blue-600' },
+        { name: 'MAGE', level: 70, color: 'from-red-400 to-red-600' },
+        { name: 'SSIS', level: 80, color: 'from-gray-400 to-gray-600' },
+        { name: 'SSAS', level: 60, color: 'from-yellow-400 to-yellow-600' }
       ]
     },
     {
       category: 'Real-Time Technologies',
       icon: 'zap',
       items: [
-        { name: 'Spark Streaming', level: 60, color: 'from-orange-400 to-orange-600' },
+        { name: 'Spark Streaming', level: 40, color: 'from-orange-400 to-orange-600' },
         { name: 'Kafka Streams', level: 30, color: 'from-purple-400 to-purple-600' }
       ]
     },
@@ -360,7 +371,7 @@ export default function Home() {
       icon: 'cloud',
       items: [
         { name: 'Docker', level: 88, color: 'from-blue-400 to-blue-600' },
-        { name: 'Azure', level: 60, color: 'from-blue-400 to-blue-600' }
+        { name: 'Azure', level: 40, color: 'from-blue-400 to-blue-600' }
       ]
     },
     {
@@ -669,7 +680,7 @@ export default function Home() {
     },
     {
       title: 'Data Analysis Professional Internship',
-      company: 'ASDC (Arab Society for Data & Computing)',
+      company: 'ASDC (All SERVICE DATA CONTROL)',
       period: 'Nov 2023 - Jan 2024',
       duration: '3 months',
       type: 'Internship',
@@ -1254,8 +1265,8 @@ export default function Home() {
               <Typewriter
                 words={[
                   'Data Engineer',
-                  'big data engineer',
-                  'BI engineer', 
+                  'Big Data Engineer',
+                  'BI Engineer', 
                   'ETL Developer',
                   'Pipeline Architect',
                   'Data Analyst',
@@ -1307,6 +1318,59 @@ export default function Home() {
                 
                 {/* Border Glow */}
                 <div className="absolute inset-0 rounded-xl border-2 border-red-400/50 group-hover:border-red-300 transition-colors duration-300"></div>
+              </motion.button>
+
+              <motion.button 
+                whileHover={{ scale: 1.05, y: -5 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => smoothScroll('contact')} 
+                className="relative overflow-hidden group bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold py-3 md:py-4 px-6 md:px-8 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-red-500/30 border-0 text-sm md:text-base min-h-[48px] md:min-h-[56px] flex items-center justify-center ring-2 ring-red-400/20 hover:ring-red-300/40"
+              >
+                {/* Animated Background Gradient */}
+                <div className="absolute inset-0 bg-gradient-to-r from-red-400 via-red-500 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                
+                {/* Shimmer Effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                
+                {/* Pulsing Glow Effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-red-500/60 to-red-600/60 rounded-xl blur-xl group-hover:blur-2xl transition-all duration-300 opacity-0 group-hover:opacity-100 animate-pulse"></div>
+                
+                {/* Button Content */}
+                <div className="relative z-10 flex items-center space-x-2 md:space-x-3">
+                  <motion.div
+                    animate={{ 
+                      rotate: [0, 10, -10, 0],
+                      scale: [1, 1.1, 1]
+                    }}
+                    transition={{ 
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  >
+                    <FaUser className="text-base md:text-lg" />
+                  </motion.div>
+                  <span className="font-bold tracking-wide">Hire Me</span>
+                  <motion.div
+                    animate={{ 
+                      scale: [1, 1.2, 1],
+                      opacity: [0.7, 1, 0.7]
+                    }}
+                    transition={{ 
+                      duration: 1.5,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                    className="w-2 h-2 bg-white rounded-full"
+                  />
+                </div>
+                
+                {/* Enhanced Border Glow */}
+                <div className="absolute inset-0 rounded-xl border-2 border-red-300/50 group-hover:border-red-200/80 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-red-400/25"></div>
+                
+                {/* Corner Highlights */}
+                <div className="absolute top-1 left-1 w-3 h-3 bg-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute bottom-1 right-1 w-3 h-3 bg-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </motion.button>
 
               <motion.button 
@@ -1611,7 +1675,7 @@ export default function Home() {
                           <div className="mb-4">
                             <h3 className="text-2xl font-bold mb-3 leading-tight">Data Analysis Internship</h3>
                             <p className="text-purple-100 font-medium text-lg">ASDC</p>
-                            <p className="text-purple-200 text-sm mt-1">Arab Society for Data & Computing</p>
+                            <p className="text-purple-200 text-sm mt-1">All SERVICE DATA CONTROL</p>
                           </div>
                         </div>
                       </div>
@@ -2299,7 +2363,10 @@ export default function Home() {
                     'GitHub Actions',
                     'Snowflake',
                     'Flink',
-                    'kafka'
+                    'kafka',
+                    'Spark',
+                    'AWS',
+                    'Kubernetes'
                   ].map((tech, index) => (
                     <motion.div
                       key={index}
