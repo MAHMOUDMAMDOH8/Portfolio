@@ -1025,407 +1025,369 @@ export default function Home() {
       </motion.button>
 
       {/* Hero Section */}
-      <section id="home" className="min-h-screen flex items-center justify-center pt-16 data-pattern relative overflow-hidden">
+      <section id="home" className="min-h-screen flex items-center justify-center pt-16 relative overflow-hidden">
+        {/* Enhanced Background with Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"></div>
+        
         {/* Animated Background Particles */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(20)].map((_, i) => (
+          {[...Array(30)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute w-2 h-2 bg-red-500/20 rounded-full"
+              className="absolute w-1 h-1 bg-red-500/30 rounded-full"
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
               }}
               animate={{
                 y: [0, -100, 0],
-                opacity: [0.2, 0.8, 0.2],
-                scale: [1, 1.5, 1],
+                opacity: [0.1, 0.6, 0.1],
+                scale: [1, 2, 1],
               }}
               transition={{
-                duration: 3 + Math.random() * 2,
+                duration: 4 + Math.random() * 3,
                 repeat: Infinity,
-                delay: Math.random() * 2,
+                delay: Math.random() * 3,
+                ease: "easeInOut"
               }}
             />
           ))}
         </div>
 
+        {/* Geometric Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-10 dark:opacity-5">
+          <div className="absolute top-20 left-10 w-32 h-32 border border-red-300 rounded-full animate-spin-slow"></div>
+          <div className="absolute top-40 right-20 w-24 h-24 border border-blue-300 rounded-full animate-pulse"></div>
+          <div className="absolute bottom-40 left-20 w-20 h-20 border border-green-300 rounded-full animate-bounce"></div>
+          <div className="absolute bottom-20 right-40 w-28 h-28 border border-purple-300 rounded-full animate-spin-slow"></div>
+        </div>
+
         <div className="max-w-7xl mx-auto container-padding relative z-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Left Side - Content */}
+            <motion.div 
+              initial={{ opacity: 0, x: -60 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, ease: "easeOut" }}
+              className="order-2 lg:order-1 space-y-8"
+            >
+              {/* Professional Badge */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center"
-          >
-            {/* Profile Photo - Mobile Optimized */}
+                transition={{ duration: 0.8, delay: 0.1 }}
+                className="inline-flex items-center space-x-2 bg-gradient-to-r from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-800/20 px-4 py-2 rounded-full border border-red-200/50 dark:border-red-700/50 backdrop-blur-sm"
+              >
+                <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+                <span className="text-sm font-medium text-red-700 dark:text-red-300">Available for hire</span>
+              </motion.div>
+
+              {/* Main Heading with Enhanced Typography */}
             <motion.div 
-              className="mb-8 md:mb-12 flex justify-center"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              <div className="relative">
-                {/* Enhanced Photo Container with Multiple Glow Effects */}
-                <div className="relative w-48 h-48 sm:w-56 sm:h-56 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-red-600/40 shadow-2xl shadow-red-600/30 group">
-                  {/* Multiple Glow Backgrounds for Enhanced Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-red-600/30 to-red-700/30 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-500"></div>
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-purple-600/20 rounded-full blur-xl group-hover:blur-2xl transition-all duration-500 delay-100"></div>
-                  <div className="absolute inset-0 bg-gradient-to-tl from-green-600/15 to-yellow-600/15 rounded-full blur-lg group-hover:blur-xl transition-all duration-500 delay-200"></div>
-                  
-                  {/* Profile Image Container */}
-                  <div className="relative w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 rounded-full overflow-hidden">
-                    <Image
-                      src="/images/profile-photo.jpg"
-                      alt="Mahmoud Mamdoh Soliman"
-                      fill
-                      className="object-cover rounded-full group-hover:scale-110 transition-transform duration-700 ease-out"
-                      priority
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+                className="space-y-4"
+              >
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-white leading-tight tracking-tight">
+                  Hi, I'm{" "}
+                  <span className="relative inline-block">
+                    <span className="gradient-text bg-clip-text text-transparent bg-gradient-to-r from-red-600 via-red-500 to-red-700">
+                      Mahmoud
+                    </span>
+                    {/* Underline Animation */}
+                    <motion.div
+                      className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-red-600 to-red-500 rounded-full"
+                      initial={{ width: 0 }}
+                      animate={{ width: "100%" }}
+                      transition={{ duration: 1, delay: 1.5, ease: "easeOut" }}
                     />
-                    
-                    {/* Enhanced Hover Overlay with Gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-red-600/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full"></div>
-                    
-                    {/* Shimmer Effect */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out rounded-full"></div>
+                  </span>
+                </h1>
+              </motion.div>
+              
+              {/* Enhanced Typewriter Section */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
+                className="space-y-2"
+              >
+                <div className="flex items-center space-x-3 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-gray-700 dark:text-gray-200">
+                  <span>I'm a</span>
+                  <div className="relative">
+                    <span className="gradient-text bg-clip-text text-transparent bg-gradient-to-r from-red-600 via-red-500 to-red-700 font-bold">
+                      <Typewriter
+                        words={[
+                          'Data Engineer',
+                          'Big Data Engineer',
+                          'BI Engineer', 
+                          'ETL Developer',
+                          'Pipeline Architect',
+                          'Data Analyst',
+                          'Analytics Engineer'   
+                        ]}
+                        loop={0}
+                        cursor
+                        cursorStyle='|'
+                        typeSpeed={80}
+                        deleteSpeed={60}
+                        delaySpeed={1500}
+                      />
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Enhanced Description with Better Typography */}
+              <motion.p 
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
+                className="text-lg sm:text-xl md:text-2xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl font-light"
+              >
+                Transforming <span className="font-semibold text-red-600 dark:text-red-400">complex data</span> into 
+                <span className="font-semibold text-red-600 dark:text-red-400"> actionable insights</span> that drive 
+                strategic decisions and accelerate business growth through modern data engineering solutions.
+              </motion.p>
+
+              {/* Professional Stats */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
+                className="flex items-center space-x-8 py-4"
+              >
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-red-600 dark:text-red-400">30+</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Projects</div>
+                </div>
+                <div className="w-px h-12 bg-gray-300 dark:bg-gray-600"></div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold tefxt-red-600 dark:text-red-400">5+</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Certifications</div>
+                </div>
+                <div className="w-px h-12 bg-gray-300 dark:bg-gray-600"></div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-red-600 dark:text-red-400">1</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Years Experience</div>
+                </div>
+              </motion.div>
+
+              {/* Enhanced Social Icons */}
+                <motion.div 
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 1.0, ease: "easeOut" }}
+                className="flex items-center space-x-4"
+              >
+                <span className="text-sm font-medium text-gray-600 dark:text-gray-400">Connect with me:</span>
+                <div className="flex space-x-3">
+                  <motion.a 
+                    whileHover={{ scale: 1.1, y: -3 }}
+                    whileTap={{ scale: 0.95 }}
+                    href="https://github.com/MAHMOUDMAMDOH8" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="group relative w-12 h-12 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center text-gray-600 dark:text-gray-300 shadow-lg border border-gray-200 dark:border-gray-700 hover:border-red-300 dark:hover:border-red-600 transition-all duration-300"
+                  >
+                    <FaGithub size={20} className="group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors duration-300" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 to-red-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  </motion.a>
+                  <motion.a 
+                    whileHover={{ scale: 1.1, y: -3 }}
+                    whileTap={{ scale: 0.95 }}
+                    href="https://www.linkedin.com/in/mahmoud-mamdoh-47a68a203/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="group relative w-12 h-12 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center text-gray-600 dark:text-gray-300 shadow-lg border border-gray-200 dark:border-gray-700 hover:border-red-300 dark:hover:border-red-600 transition-all duration-300"
+                  >
+                    <FaLinkedin size={20} className="group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors duration-300" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 to-red-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  </motion.a>
+                  <motion.a 
+                    whileHover={{ scale: 1.1, y: -3 }}
+                    whileTap={{ scale: 0.95 }}
+                    href="mailto:mahmoud.mamdoh0812@gmail.com"
+                    className="group relative w-12 h-12 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center text-gray-600 dark:text-gray-300 shadow-lg border border-gray-200 dark:border-gray-700 hover:border-red-300 dark:hover:border-red-600 transition-all duration-300"
+                  >
+                    <FaEnvelope size={20} className="group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors duration-300" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 to-red-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  </motion.a>
+                </div>
+                </motion.div>
+                
+              {/* Enhanced Button Group */}
+                <motion.div 
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 1.2, ease: "easeOut" }}
+                className="flex flex-col sm:flex-row gap-4 pt-4"
+              >
+                <motion.button 
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => smoothScroll('contact')} 
+                  className="group relative overflow-hidden bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-500 transform hover:shadow-2xl hover:shadow-red-600/30 border-0 text-lg min-h-[56px] flex items-center justify-center"
+                >
+                  {/* Multiple Background Layers */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                  
+                  {/* Button Content */}
+                  <div className="relative z-10 flex items-center space-x-3">
+                <motion.div 
+                      animate={{ rotate: [0, 5, -5, 0] }}
+                      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                    >
+                      <FaUser className="text-xl" />
+                </motion.div>
+                    <span className="font-bold tracking-wide">Hire Me Now</span>
+                <motion.div 
+                      animate={{ scale: [1, 1.2, 1], opacity: [0.7, 1, 0.7] }}
+                      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                      className="w-2 h-2 bg-white rounded-full"
+                    />
                   </div>
                   
-                  {/* Enhanced Animated Border with Multiple Layers */}
-                  <div className="absolute inset-0 rounded-full border-2 border-red-600/60 animate-pulse"></div>
-                  <div className="absolute inset-0 rounded-full border border-red-400/40 animate-ping"></div>
-                  <div className="absolute inset-0 rounded-full border-4 border-transparent bg-gradient-to-r from-red-600/20 to-blue-600/20 rounded-full animate-spin" style={{ animationDuration: '8s' }}></div>
+                  {/* Enhanced Glow Effect */}
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-red-600/50 to-red-700/50 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"></div>
+                </motion.button>
+
+                <motion.button 
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => smoothScroll('projects')} 
+                  className="group relative overflow-hidden bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-semibold py-4 px-8 rounded-2xl transition-all duration-300 transform border-2 border-gray-200 dark:border-gray-700 hover:border-red-600 dark:hover:border-red-600 hover:text-red-600 dark:hover:text-red-400 text-lg min-h-[56px] flex items-center justify-center shadow-lg hover:shadow-xl"
+                >
+                  {/* Button Content */}
+                  <div className="relative z-10 flex items-center space-x-3">
+                    <FaExternalLinkAlt className="text-xl group-hover:rotate-12 transition-transform duration-300" />
+                    <span className="font-bold">View Projects</span>
+                  </div>
                   
-                  {/* Outer Glow Ring */}
-                  <div className="absolute -inset-2 bg-gradient-to-r from-red-600/20 to-blue-600/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                </div>
-                
-                {/* Enhanced Floating Elements with Better Positioning - Mobile Optimized */}
-                <motion.div 
-                  className="absolute -top-2 -right-2 md:-top-4 md:-right-4 w-8 h-8 md:w-12 md:h-12 bg-gradient-to-r from-red-600 to-red-700 rounded-full flex items-center justify-center text-white text-sm md:text-lg font-bold shadow-xl border-2 border-white/20"
-                  animate={{ 
-                    y: [0, -15, 0],
-                    rotate: [0, 360],
-                    scale: [1, 1.1, 1]
-                  }}
-                  transition={{ 
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
+                  {/* Hover Background */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-800/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
+                </motion.button>
+
+                {/* Download Resume Button */}
+                <motion.button 
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={downloadResume} 
+                  className="group relative overflow-hidden bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 text-gray-700 dark:text-gray-300 font-semibold py-4 px-8 rounded-2xl transition-all duration-300 transform hover:shadow-xl border border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 text-lg min-h-[56px] flex items-center justify-center"
                 >
-                  <FaCode />
+                  <div className="relative z-10 flex items-center space-x-3">
+                    <FaDownload className="text-xl group-hover:translate-y-1 transition-transform duration-300" />
+                    <span className="font-bold">Download CV</span>
+                  </div>
+                </motion.button>
+              </motion.div>
                 </motion.div>
                 
+            {/* Right Side - Enhanced Profile Image */}
                 <motion.div 
-                  className="absolute -bottom-4 -left-4 w-12 h-12 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full flex items-center justify-center text-white text-lg font-bold shadow-xl border-2 border-white/20"
-                  animate={{ 
-                    y: [0, 15, 0],
-                    rotate: [0, -360],
-                    scale: [1, 1.1, 1]
-                  }}
-                  transition={{ 
-                    duration: 5,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 1
-                  }}
-                >
-                  <FaDatabase />
-                </motion.div>
+              initial={{ opacity: 0, x: 60 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
+              className="order-1 lg:order-2 flex justify-center lg:justify-end"
+            >
+              <div className="relative">
+                {/* Professional Frame */}
+                <div className="absolute -inset-4 bg-gradient-to-r from-red-600/20 via-blue-600/20 to-purple-600/20 rounded-full blur-2xl animate-pulse"></div>
                 
-                <motion.div 
-                  className="absolute top-1/2 -right-12 w-10 h-10 bg-gradient-to-r from-green-600 to-green-700 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-xl border-2 border-white/20"
-                  animate={{ 
-                    x: [0, 15, 0],
-                    scale: [1, 1.2, 1],
-                    rotate: [0, 180, 360]
-                  }}
-                  transition={{ 
-                    duration: 3.5,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 0.5
-                  }}
-                >
-                  <FaChartLine />
-                </motion.div>
-                
-                <motion.div 
-                  className="absolute top-1/2 -left-12 w-10 h-10 bg-gradient-to-r from-purple-600 to-purple-700 rounded-full flex items-center justify-center text-white text-sm font-bold shadow-xl border-2 border-white/20"
-                  animate={{ 
-                    x: [0, -15, 0],
-                    scale: [1, 1.2, 1],
-                    rotate: [0, -180, -360]
-                  }}
-                  transition={{ 
-                    duration: 4.5,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 1.5
-                  }}
-                >
-                  <FaRocket />
-                </motion.div>
-                
-                {/* Additional Floating Elements */}
-                <motion.div 
-                  className="absolute top-8 -right-16 w-8 h-8 bg-gradient-to-r from-orange-600 to-orange-700 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-lg border border-white/20"
+                {/* Main Image Container */}
+                <div className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[32rem] lg:h-[32rem]">
+                  {/* Professional Border */}
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-red-600 via-red-500 to-red-700 p-1">
+                    <div className="w-full h-full rounded-full bg-white dark:bg-gray-900 p-2">
+                      <div className="relative w-full h-full rounded-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 group">
+                        <Image
+                          src="/images/profile-photo.jpg"
+                          alt="Mahmoud Mamdoh Soliman - Data Engineer"
+                          fill
+                          className="object-cover rounded-full group-hover:scale-105 transition-transform duration-700 ease-out filter group-hover:brightness-110"
+                          priority
+                        />
+                        
+                        {/* Professional Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-red-600/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full"></div>
+                        
+                        {/* Shimmer Effect */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1500 ease-out rounded-full"></div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Floating Professional Icons */}
+                  <motion.div 
+                    className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-r from-red-600 to-red-700 rounded-2xl flex items-center justify-center text-white shadow-xl border-4 border-white dark:border-gray-900"
                   animate={{ 
                     y: [0, -10, 0],
-                    x: [0, 5, 0],
-                    scale: [1, 1.1, 1]
+                      rotate: [0, 5, -5, 0],
                   }}
                   transition={{ 
-                    duration: 3,
+                      duration: 4,
                     repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: 2
+                      ease: "easeInOut"
                   }}
                 >
-                  <FaPython />
+                    <FaDatabase size={24} />
                 </motion.div>
                 
                 <motion.div 
-                  className="absolute bottom-8 -left-16 w-8 h-8 bg-gradient-to-r from-indigo-600 to-indigo-700 rounded-full flex items-center justify-center text-white text-xs font-bold shadow-lg border border-white/20"
+                    className="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl flex items-center justify-center text-white shadow-xl border-4 border-white dark:border-gray-900"
                   animate={{ 
                     y: [0, 10, 0],
-                    x: [0, -5, 0],
-                    scale: [1, 1.1, 1]
+                      rotate: [0, -5, 5, 0],
                   }}
                   transition={{ 
-                    duration: 3.5,
+                      duration: 5,
                     repeat: Infinity,
                     ease: "easeInOut",
-                    delay: 2.5
+                      delay: 1
                   }}
                 >
-                  <FaDocker />
+                    <FaChartLine size={24} />
                 </motion.div>
                 
-                {/* Connection Lines */}
-                <svg className="absolute inset-0 w-full h-full pointer-events-none">
-                  <motion.path
-                    d="M 50% 50% L 80% 20%"
-                    stroke="url(#gradient1)"
-                    strokeWidth="2"
-                    fill="none"
-                    strokeDasharray="5,5"
+                  <motion.div 
+                    className="absolute top-1/2 -right-8 w-12 h-12 bg-gradient-to-r from-green-600 to-green-700 rounded-xl flex items-center justify-center text-white shadow-lg border-2 border-white dark:border-gray-900"
                     animate={{ 
-                      strokeDashoffset: [0, -10],
-                      opacity: [0.3, 0.8, 0.3]
+                      x: [0, 10, 0],
+                      scale: [1, 1.1, 1],
                     }}
                     transition={{ 
                       duration: 3,
                       repeat: Infinity,
-                      ease: "linear"
-                    }}
-                  />
-                  <motion.path
-                    d="M 50% 50% L 20% 80%"
-                    stroke="url(#gradient2)"
-                    strokeWidth="2"
-                    fill="none"
-                    strokeDasharray="5,5"
-                    animate={{ 
-                      strokeDashoffset: [0, -10],
-                      opacity: [0.3, 0.8, 0.3]
-                    }}
-                    transition={{ 
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "linear",
-                      delay: 1
-                    }}
-                  />
-                  <defs>
-                    <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#dc2626" stopOpacity="0.6" />
-                      <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.6" />
-                    </linearGradient>
-                    <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#10b981" stopOpacity="0.6" />
-                      <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.6" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </div>
-            </motion.div>
-
-            <motion.h1 
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-6 md:mb-8 gradient-text leading-tight"
-              animate={pulseAnimation}
-            >
-              Mahmoud Mamdoh Soliman
-            </motion.h1>
-            
-            <motion.div 
-              className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-600 dark:text-gray-300 mb-6 md:mb-8 min-h-[2.5rem] md:min-h-[3rem] flex items-center justify-center px-4"
-              animate={floatingAnimation}
-            >
-              <span className="text-red-600 mr-2">&gt;</span>
-              <Typewriter
-                words={[
-                  'Data Engineer',
-                  'Big Data Engineer',
-                  'BI Engineer', 
-                  'ETL Developer',
-                  'Pipeline Architect',
-                  'Data Analyst',
-                  'Analytics Engineer'   
-                ]}
-                loop={0}
-                cursor
-                cursorStyle='_'
-                typeSpeed={70}
-                deleteSpeed={50}
-                delaySpeed={1000}
-              />
-            </motion.div>
-
-            <motion.p 
-              className="text-base sm:text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto mb-8 md:mb-12 leading-relaxed px-4"
-              variants={fadeInUp}
-              initial="initial"
-              animate="animate"
-            >
-              Transforming data into actionable insights that drive strategic decisions and accelerate business growth. 
-              Skilled in designing and optimizing complex data pipelines and workflows using modern data stacks.
-            </motion.p>
-
-            <motion.div 
-              className="flex flex-col sm:flex-row gap-4 justify-center mb-8 md:mb-12 px-4"
-              variants={fadeInUp}
-              initial="initial"
-              animate="animate"
-              transition={{ delay: 0.2 }}
-            >
-              <motion.button 
-                whileHover={{ scale: 1.05, y: -5 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => smoothScroll('projects')} 
-                className="relative overflow-hidden group bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold py-3 md:py-4 px-6 md:px-8 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-red-600/25 border-0 text-sm md:text-base min-h-[48px] md:min-h-[56px] flex items-center justify-center"
-              >
-                {/* Shimmer Effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                
-                {/* Glow Effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-red-600/50 to-red-700/50 rounded-xl blur-xl group-hover:blur-2xl transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
-                
-                {/* Button Content */}
-                <div className="relative z-10 flex items-center space-x-2 md:space-x-3">
-                  <FaExternalLinkAlt className="text-base md:text-lg group-hover:rotate-12 transition-transform duration-300" />
-                  <span className="font-bold">View Projects</span>
-                </div>
-                
-                {/* Border Glow */}
-                <div className="absolute inset-0 rounded-xl border-2 border-red-400/50 group-hover:border-red-300 transition-colors duration-300"></div>
-              </motion.button>
-
-              <motion.button 
-                whileHover={{ scale: 1.05, y: -5 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => smoothScroll('contact')} 
-                className="relative overflow-hidden group bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold py-3 md:py-4 px-6 md:px-8 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-red-500/30 border-0 text-sm md:text-base min-h-[48px] md:min-h-[56px] flex items-center justify-center ring-2 ring-red-400/20 hover:ring-red-300/40"
-              >
-                {/* Animated Background Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-r from-red-400 via-red-500 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
-                {/* Shimmer Effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                
-                {/* Pulsing Glow Effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-red-500/60 to-red-600/60 rounded-xl blur-xl group-hover:blur-2xl transition-all duration-300 opacity-0 group-hover:opacity-100 animate-pulse"></div>
-                
-                {/* Button Content */}
-                <div className="relative z-10 flex items-center space-x-2 md:space-x-3">
-                  <motion.div
-                    animate={{ 
-                      rotate: [0, 10, -10, 0],
-                      scale: [1, 1.1, 1]
-                    }}
-                    transition={{ 
-                      duration: 2,
-                      repeat: Infinity,
-                      ease: "easeInOut"
+                      ease: "easeInOut",
+                      delay: 2
                     }}
                   >
-                    <FaUser className="text-base md:text-lg" />
-                  </motion.div>
-                  <span className="font-bold tracking-wide">Hire Me</span>
-                  <motion.div
-                    animate={{ 
-                      scale: [1, 1.2, 1],
-                      opacity: [0.7, 1, 0.7]
-                    }}
-                    transition={{ 
-                      duration: 1.5,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                    className="w-2 h-2 bg-white rounded-full"
-                  />
-                </div>
-                
-                {/* Enhanced Border Glow */}
-                <div className="absolute inset-0 rounded-xl border-2 border-red-300/50 group-hover:border-red-200/80 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-red-400/25"></div>
-                
-                {/* Corner Highlights */}
-                <div className="absolute top-1 left-1 w-3 h-3 bg-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div className="absolute bottom-1 right-1 w-3 h-3 bg-white/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </motion.button>
-
-              <motion.button 
-                whileHover={{ scale: 1.05, y: -5 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={downloadResume} 
-                className="relative overflow-hidden group bg-transparent text-gray-700 dark:text-gray-300 font-semibold py-3 md:py-4 px-6 md:px-8 rounded-xl transition-all duration-300 transform hover:scale-105 border-2 border-gray-300 dark:border-gray-600 hover:border-red-600 dark:hover:border-red-600 hover:text-red-600 dark:hover:text-red-600 text-sm md:text-base min-h-[48px] md:min-h-[56px] flex items-center justify-center"
-              >
-                {/* Shimmer Effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-red-100/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                
-                {/* Button Content */}
-                <div className="relative z-10 flex items-center space-x-2 md:space-x-3">
-                  <FaDownload className="text-base md:text-lg group-hover:rotate-12 transition-transform duration-300" />
-                  <span className="font-bold">Download Resume</span>
-                </div>
-              </motion.button>
+                    <FaCode size={18} />
             </motion.div>
+                </div>
+                </div>
+            </motion.div>
+          </div>
+        </div>
 
-            {/* Social Links with Enhanced Animations */}
+        {/* Scroll Indicator */}
             <motion.div 
-              className="flex gap-6 justify-center"
-              variants={fadeInUp}
-              initial="initial"
-              animate="animate"
-              transition={{ delay: 0.4 }}
-            >
-              <motion.a 
-                whileHover={{ scale: 1.3, y: -8, rotate: 360 }}
-                href="https://github.com/MAHMOUDMAMDOH8" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-gray-600 dark:text-gray-300 hover:text-red-600 transition-colors p-3 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20"
-              >
-                <FaGithub size={24} />
-              </motion.a>
-              <motion.a 
-                whileHover={{ scale: 1.3, y: -8, rotate: 360 }}
-                href="https://www.linkedin.com/in/mahmoud-mamdoh-47a68a203/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-gray-600 dark:text-gray-300 hover:text-red-600 transition-colors p-3 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20"
-              >
-                <FaLinkedin size={24} />
-              </motion.a>
-              <motion.a 
-                whileHover={{ scale: 1.3, y: -8, rotate: 360 }}
-                href="mailto:mahmoud.mamdoh0812@gmail.com"
-                className="text-gray-600 dark:text-gray-300 hover:text-red-600 transition-colors p-3 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20"
-              >
-                <FaEnvelope size={24} />
-              </motion.a>
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 2 }}
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center space-y-2 text-gray-400 dark:text-gray-600"
+        >
+          <span className="text-sm font-medium">Scroll to explore</span>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            className="w-6 h-10 border-2 border-gray-400 dark:border-gray-600 rounded-full flex justify-center"
+          >
+            <div className="w-1 h-3 bg-red-600 rounded-full mt-2"></div>
             </motion.div>
           </motion.div>
-        </div>
       </section>
 
       {/* Unified Career & Tech Stack Timeline Section */}
@@ -1972,7 +1934,7 @@ export default function Home() {
                         <div className="flex items-center justify-between mb-6">
                           <div className="flex items-center space-x-3 text-gray-600 dark:text-gray-300">
                             <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
                                 <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
                                 <line x1="16" x2="16" y1="2" y2="6"></line>
                                 <line x1="8" x2="8" y1="2" y2="6"></line>
