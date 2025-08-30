@@ -1844,7 +1844,7 @@ CREATE TABLE dim_date (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
         {/* Navigation */}
         <nav className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto px-11 sm:px-14 lg:px-18">
             <div className="flex justify-between items-center h-16">
               <div className="flex items-center space-x-4">
                 <button
@@ -1889,7 +1889,7 @@ CREATE TABLE dim_date (
         </nav>
 
         {/* Case Study Detail */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 py-8">
           <AnimatePresence>
             <motion.div
               key="case-study-detail"
@@ -2169,7 +2169,7 @@ CREATE TABLE dim_date (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Navigation */}
       <nav className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="content-width-1750">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-4">
               <a 
@@ -2188,7 +2188,7 @@ CREATE TABLE dim_date (
 
       {/* Hero Section */}
       <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="content-width-1750">
           <AnimatePresence>
             {isLoaded && (
               <motion.div

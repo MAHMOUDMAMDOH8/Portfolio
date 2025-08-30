@@ -1,3 +1,4 @@
+
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -48,6 +49,167 @@ import {
   FaClock,
   FaExclamationTriangle
 } from 'react-icons/fa'
+
+// Floating Numbers Background Component
+const FloatingNumbers = () => {
+  const [isMounted, setIsMounted] = useState(false);
+  
+  const techNumbers = [
+    // Data Engineering Numbers
+    '01', '10', '11', '100', '101', '110', '111', '1000',
+    // Tech Stack Numbers
+    '3.9', '4.0', '5.0', '8.0', '11', '14', '16', '18', '20',
+    // Analytics Numbers
+    '99.9%', '24/7', '1M+', '500K', '10TB', '50GB', '∞',
+    // Programming Numbers
+    'SQL', 'ETL', 'API', 'AWS', 'GCP', 'ML', 'AI', 'BI',
+    // Binary aesthetic
+    '0101', '1010', '1100', '0011', '1111', '0000',
+    // Tech symbols
+    '{', '}', '[', ']', '<', '>', '/', '\\', '*', '#',
+    // Mathematical symbols
+    'Σ', 'π', 'λ', 'Δ', '∑', '∏', '∫', '√', '∝', '≈',
+    // Currency and metrics
+    '$', '€', '¥', '₿', '%', '±', '×', '÷', '=', '≠'
+  ];
+
+  const generateRandomNumber = () => {
+    return techNumbers[Math.floor(Math.random() * techNumbers.length)];
+  };
+
+  // Only render after component is mounted to avoid hydration mismatch
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  const FloatingNumber = ({ index }) => {
+    const [number, setNumber] = useState(() => generateRandomNumber());
+    
+    // Change number periodically
+    useEffect(() => {
+      if (!isMounted) return;
+      
+      const interval = setInterval(() => {
+        setNumber(generateRandomNumber());
+      }, Math.random() * 8000 + 5000); // Random interval between 5-13 seconds
+      
+      return () => clearInterval(interval);
+    }, [isMounted]);
+
+    return (
+      <motion.div
+        key={`${number}-${index}`}
+        className="absolute text-gray-300/10 dark:text-gray-500/10 font-mono font-bold pointer-events-none select-none"
+        style={{
+          left: `${Math.random() * 100}%`,
+          top: `${Math.random() * 100}%`,
+          fontSize: `${Math.random() * 2 + 0.8}rem`,
+        }}
+        initial={{ 
+          opacity: 0, 
+          scale: 0.5,
+          y: 50 
+        }}
+        animate={{ 
+          opacity: [0, 0.7, 0.3, 0.8, 0],
+          scale: [0.5, 1.2, 0.9, 1.1, 0.4],
+          y: [50, -20, -100, -200, -300],
+          x: [0, Math.random() * 40 - 20, Math.random() * 60 - 30],
+          rotate: [0, Math.random() * 20 - 10, Math.random() * 30 - 15]
+        }}
+        transition={{
+          duration: Math.random() * 15 + 10, // 10-25 seconds
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: Math.random() * 5
+        }}
+        whileHover={{
+          scale: 1.5,
+          opacity: 0.9,
+          color: "#3b82f6",
+          transition: { duration: 0.3 }
+        }}
+      >
+        {number}
+      </motion.div>
+    );
+  };
+
+  // Don't render anything until component is mounted to avoid hydration mismatch
+  if (!isMounted) {
+    return null;
+  }
+
+  return (
+    <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+      {/* Generate floating numbers */}
+      {Array.from({ length: 25 }, (_, i) => (
+        <FloatingNumber key={i} index={i} />
+      ))}
+      
+      {/* Gradient overlay to blend with background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-white/10 dark:from-gray-900/30 dark:via-transparent dark:to-gray-900/20" />
+      
+      {/* Additional animated particles */}
+      {Array.from({ length: 20 }, (_, i) => (
+        <motion.div
+          key={`particle-${i}`}
+          className="absolute rounded-full"
+          style={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            width: `${Math.random() * 6 + 2}px`,
+            height: `${Math.random() * 6 + 2}px`,
+            background: i % 3 === 0 ? '#3b82f6' : i % 3 === 1 ? '#10b981' : '#f59e0b',
+            opacity: 0.1 + Math.random() * 0.2
+          }}
+          animate={{
+            y: [0, -150, -300, -500],
+            x: [0, Math.random() * 100 - 50],
+            opacity: [0, 0.6, 0.9, 0],
+            scale: [0.3, 1.8, 1.2, 0],
+            rotate: [0, 180, 360]
+          }}
+          transition={{
+            duration: Math.random() * 25 + 20,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: Math.random() * 15
+          }}
+        />
+      ))}
+      
+      {/* Matrix rain effect */}
+      {Array.from({ length: 8 }, (_, i) => (
+        <motion.div
+          key={`matrix-${i}`}
+          className="absolute font-mono text-green-500/20 font-bold pointer-events-none select-none"
+          style={{
+            left: `${10 + i * 12}%`,
+            top: '-10%',
+            fontSize: '0.75rem'
+          }}
+          animate={{
+            y: ['-10vh', '110vh'],
+            opacity: [0, 0.8, 0.8, 0]
+          }}
+          transition={{
+            duration: Math.random() * 8 + 6,
+            repeat: Infinity,
+            ease: "linear",
+            delay: Math.random() * 5
+          }}
+        >
+          {Array.from({ length: 20 }, (_, j) => (
+            <div key={j} className="mb-1">
+              {j % 2 === 0 ? '1' : '0'}
+            </div>
+          ))}
+        </motion.div>
+      ))}
+    </div>
+  );
+};
 
 // Professional Loading Component
 const LoadingScreen = ({ isLoading }) => {
@@ -381,6 +543,55 @@ const CertificateModal = ({ isOpen, onClose, certificate }) => {
   );
 };
 
+// Enhanced card wrapper with floating elements
+const EnhancedCard = ({ children, className = "", delay = 0, floatingElements = true }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6, delay, ease: "easeOut" }}
+    className={`relative group enhanced-card ${className}`}
+  >
+    {/* Floating background elements */}
+    {floatingElements && (
+      <>
+        <motion.div
+          className="absolute -top-2 -right-2 w-4 h-4 bg-gradient-to-r from-red-500/20 to-red-600/20 rounded-full floating-element"
+          animate={{ 
+            y: [0, -8, 0],
+            opacity: [0.3, 0.8, 0.3],
+            scale: [1, 1.2, 1]
+          }}
+          transition={{ 
+            duration: 3, 
+            repeat: Infinity, 
+            ease: "easeInOut",
+            delay: delay * 0.5
+          }}
+        />
+        <motion.div
+          className="absolute -bottom-2 -left-2 w-3 h-3 bg-gradient-to-r from-blue-500/20 to-blue-600/20 rounded-full floating-element"
+          animate={{ 
+            y: [0, 8, 0],
+            opacity: [0.3, 0.8, 0.3],
+            scale: [1, 1.2, 1]
+          }}
+          transition={{ 
+            duration: 4, 
+            repeat: Infinity, 
+            ease: "easeInOut",
+            delay: delay * 0.7
+          }}
+        />
+      </>
+    )}
+    
+    {/* Enhanced glow effect on hover */}
+    <div className="absolute inset-0 bg-gradient-to-r from-red-600/0 via-red-500/0 to-blue-600/0 rounded-xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-xl -z-10" />
+    
+    {children}
+  </motion.div>
+ );
+
 // ProjectCard component to handle individual project display with proper state management
 const ProjectCard = ({ project, index, getProjectCategory, getCategoryColor, getProjectImage }) => {
   const [imageError, setImageError] = useState(false);
@@ -426,12 +637,9 @@ const ProjectCard = ({ project, index, getProjectCategory, getCategoryColor, get
   };
 
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: index * 0.1 }}
-      viewport={{ once: true }}
-      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden"
+    <EnhancedCard 
+      delay={index * 0.1}
+      className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
     >
       {/* Header with Gradient Background */}
       <div className={`bg-gradient-to-r ${color} p-6 text-white`}>
@@ -526,7 +734,7 @@ const ProjectCard = ({ project, index, getProjectCategory, getCategoryColor, get
           )}
         </div>
       </div>
-    </motion.div>
+    </EnhancedCard>
   );
 };
 
@@ -1221,6 +1429,81 @@ export default function Home() {
     transition: { duration: 0.6, ease: "easeOut" }
   };
 
+  // Enhanced card animations
+  const cardHoverAnimation = {
+    whileHover: { 
+      y: -8, 
+      scale: 1.02,
+      transition: { duration: 0.3, ease: "easeOut" }
+    },
+    whileTap: { scale: 0.98 }
+  };
+
+  const cardStaggerAnimation = {
+    initial: { opacity: 0, y: 30 },
+    whileInView: { opacity: 1, y: 0 },
+    transition: { duration: 0.6, ease: "easeOut" },
+    viewport: { once: true }
+  };
+
+  // Enhanced background patterns
+  const BackgroundPattern = ({ className = "", children }) => (
+    <div className={`relative overflow-hidden ${className}`}>
+      {/* Animated background particles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(15)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-gradient-to-r from-red-500/20 to-blue-500/20 rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -50, 0],
+              opacity: [0.1, 0.4, 0.1],
+              scale: [1, 1.5, 1],
+            }}
+            transition={{
+              duration: 4 + Math.random() * 3,
+              repeat: Infinity,
+              delay: Math.random() * 3,
+              ease: "easeInOut"
+            }}
+          />
+        ))}
+      </div>
+      
+      {/* Geometric background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-5 dark:opacity-10">
+        <motion.div 
+          className="absolute top-10 left-10 w-24 h-24 border border-red-300/30 rounded-full"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        />
+        <motion.div 
+          className="absolute top-20 right-20 w-16 h-16 border border-blue-300/30 rounded-full"
+          animate={{ rotate: -360 }}
+          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+        />
+        <motion.div 
+          className="absolute bottom-20 left-20 w-20 h-20 border border-green-300/30 rounded-full"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+        />
+        <motion.div 
+          className="absolute bottom-10 right-10 w-12 h-12 border border-purple-300/30 rounded-full"
+          animate={{ rotate: -360 }}
+          transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+        />
+      </div>
+      
+      {children}
+    </div>
+  );
+
+
+
   // Helper function to get project image
   const getProjectImage = (title) => {
     const titleLower = title.toLowerCase();
@@ -1294,6 +1577,9 @@ export default function Home() {
 
   return (
     <div className="min-h-screen transition-colors duration-300 relative">
+      {/* Floating Numbers Background */}
+      <FloatingNumbers />
+      
       {/* Loading Screen */}
       <LoadingScreen isLoading={isLoading} />
 
@@ -1437,976 +1723,1096 @@ export default function Home() {
 
       {/* Main Content Container */}
       <main className="content-container relative z-10">
-      {/* Back to Top Button - Mobile Optimized */}
-      <motion.button
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ 
-          opacity: showBackToTop ? 1 : 0, 
-          scale: showBackToTop ? 1 : 0 
-        }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        {/* Back to Top Button - Mobile Optimized */}
+        <motion.button
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ 
+            opacity: showBackToTop ? 1 : 0, 
+            scale: showBackToTop ? 1 : 0 
+          }}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           className="fixed bottom-6 right-6 z-30 p-4 bg-red-600 text-white rounded-full shadow-lg hover:bg-red-700 transition-all duration-300 md:hidden"
-        aria-label="Back to top"
-      >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-        </svg>
-      </motion.button>
-
-      {/* Hero Section */}
-      <section id="home" className="min-h-screen flex items-center justify-center pt-16 relative overflow-hidden">
-        {/* Enhanced Background with Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900"></div>
-        
-        {/* Animated Background Particles */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(30)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-1 h-1 bg-red-500/30 rounded-full"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
-              animate={{
-                y: [0, -100, 0],
-                opacity: [0.1, 0.6, 0.1],
-                scale: [1, 2, 1],
-              }}
-              transition={{
-                duration: 4 + Math.random() * 3,
-                repeat: Infinity,
-                delay: Math.random() * 3,
-                ease: "easeInOut"
-              }}
-            />
-          ))}
-        </div>
-
-        {/* Geometric Background Elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-10 dark:opacity-5">
-          <div className="absolute top-20 left-10 w-32 h-32 border border-red-300 rounded-full animate-spin-slow"></div>
-          <div className="absolute top-40 right-20 w-24 h-24 border border-blue-300 rounded-full animate-pulse"></div>
-          <div className="absolute bottom-40 left-20 w-20 h-20 border border-green-300 rounded-full animate-bounce"></div>
-          <div className="absolute bottom-20 right-40 w-28 h-28 border border-purple-300 rounded-full animate-spin-slow"></div>
-        </div>
-
-        <div className="max-w-7xl mx-auto container-padding relative z-10">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Left Side - Content */}
-            <motion.div 
-              initial={{ opacity: 0, x: -60 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, ease: "easeOut" }}
-              className="order-2 lg:order-1 space-y-8"
-            >
-              {/* Professional Badge */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.1 }}
-                className="inline-flex items-center space-x-2 bg-gradient-to-r from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-800/20 px-4 py-2 rounded-full border border-red-200/50 dark:border-red-700/50 backdrop-blur-sm"
-              >
-                <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-                <span className="text-sm font-medium text-red-700 dark:text-red-300">Available for hire</span>
-              </motion.div>
-
-              {/* Main Heading with Enhanced Typography */}
-            <motion.div 
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-                className="space-y-4"
-              >
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-white leading-tight tracking-tight">
-                  Hi, I'm{" "}
-                  <span className="relative inline-block">
-                    <span className="gradient-text bg-clip-text text-transparent bg-gradient-to-r from-red-600 via-red-500 to-red-700">
-                      Mahmoud
-                    </span>
-                    {/* Underline Animation */}
-                    <motion.div
-                      className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-red-600 to-red-500 rounded-full"
-                      initial={{ width: 0 }}
-                      animate={{ width: "100%" }}
-                      transition={{ duration: 1, delay: 1.5, ease: "easeOut" }}
-                    />
-                  </span>
-                </h1>
-              </motion.div>
-              
-              {/* Enhanced Typewriter Section */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
-                className="space-y-2"
-              >
-                <div className="flex items-center space-x-3 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-gray-700 dark:text-gray-200">
-                  <span>I'm a</span>
-                  <div className="relative">
-                    <span className="gradient-text bg-clip-text text-transparent bg-gradient-to-r from-red-600 via-red-500 to-red-700 font-bold">
-                      <Typewriter
-                        words={[
-                          'Data Engineer',
-                          'Big Data Engineer',
-                          'BI Engineer', 
-                          'ETL Developer',
-                          'Pipeline Architect',
-                          'Data Analyst',
-                          'Analytics Engineer'   
-                        ]}
-                        loop={0}
-                        cursor
-                        cursorStyle='|'
-                        typeSpeed={80}
-                        deleteSpeed={60}
-                        delaySpeed={1500}
-                      />
-                    </span>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Enhanced Description with Better Typography */}
-              <motion.p 
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
-                className="text-lg sm:text-xl md:text-2xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl font-light"
-              >
-                Transforming <span className="font-semibold text-red-600 dark:text-red-400">complex data</span> into 
-                <span className="font-semibold text-red-600 dark:text-red-400"> actionable insights</span> that drive 
-                strategic decisions and accelerate business growth through modern data engineering solutions.
-              </motion.p>
-
-              {/* Professional Stats */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
-                className="flex items-center space-x-8 py-4"
-              >
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-red-600 dark:text-red-400">30+</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Projects</div>
-                </div>
-                <div className="w-px h-12 bg-gray-300 dark:bg-gray-600"></div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-red-600 dark:text-red-400">5+</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Certifications</div>
-                </div>
-                <div className="w-px h-12 bg-gray-300 dark:bg-gray-600"></div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-red-600 dark:text-red-400">1</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Years Experience</div>
-                </div>
-              </motion.div>
-
-              {/* Enhanced Social Icons */}
-                <motion.div 
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 1.0, ease: "easeOut" }}
-                className="flex items-center space-x-4"
-              >
-                <span className="text-sm font-medium text-gray-600 dark:text-gray-400">Connect with me:</span>
-                <div className="flex space-x-3">
-                  <motion.a 
-                    whileHover={{ scale: 1.1, y: -3 }}
-                    whileTap={{ scale: 0.95 }}
-                    href="https://github.com/MAHMOUDMAMDOH8" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="group relative w-12 h-12 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center text-gray-600 dark:text-gray-300 shadow-lg border border-gray-200 dark:border-gray-700 hover:border-red-300 dark:hover:border-red-600 transition-all duration-300"
-                  >
-                    <FaGithub size={20} className="group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors duration-300" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 to-red-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  </motion.a>
-                  <motion.a 
-                    whileHover={{ scale: 1.1, y: -3 }}
-                    whileTap={{ scale: 0.95 }}
-                    href="https://www.linkedin.com/in/mahmoud-mamdoh-47a68a203/" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="group relative w-12 h-12 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center text-gray-600 dark:text-gray-300 shadow-lg border border-gray-200 dark:border-gray-700 hover:border-red-300 dark:hover:border-red-600 transition-all duration-300"
-                  >
-                    <FaLinkedin size={20} className="group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors duration-300" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 to-red-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  </motion.a>
-                  <motion.a 
-                    whileHover={{ scale: 1.1, y: -3 }}
-                    whileTap={{ scale: 0.95 }}
-                    href="mailto:mahmoud.mamdoh0812@gmail.com"
-                    className="group relative w-12 h-12 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center text-gray-600 dark:text-gray-300 shadow-lg border border-gray-200 dark:border-gray-700 hover:border-red-300 dark:hover:border-red-600 transition-all duration-300"
-                  >
-                    <FaEnvelope size={20} className="group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors duration-300" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 to-red-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  </motion.a>
-                </div>
-                </motion.div>
-                
-              {/* Enhanced Button Group */}
-                <motion.div 
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 1.2, ease: "easeOut" }}
-                className="flex flex-col sm:flex-row gap-4 pt-4"
-              >
-                <motion.button 
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => smoothScroll('contact')} 
-                  className="group relative overflow-hidden bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold py-4 px-8 rounded-2xl transition-all duration-500 transform hover:shadow-2xl hover:shadow-red-600/30 border-0 text-lg min-h-[56px] flex items-center justify-center"
-                >
-                  {/* Multiple Background Layers */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                  
-                  {/* Button Content */}
-                  <div className="relative z-10 flex items-center space-x-3">
-                <motion.div 
-                      animate={{ rotate: [0, 5, -5, 0] }}
-                      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                    >
-                      <FaUser className="text-xl" />
-                </motion.div>
-                    <span className="font-bold tracking-wide">Hire Me Now</span>
-                <motion.div 
-                      animate={{ scale: [1, 1.2, 1], opacity: [0.7, 1, 0.7] }}
-                      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                      className="w-2 h-2 bg-white rounded-full"
-                    />
-                  </div>
-                  
-                  {/* Enhanced Glow Effect */}
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-red-600/50 to-red-700/50 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"></div>
-                </motion.button>
-
-                <motion.button 
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => smoothScroll('projects')} 
-                  className="group relative overflow-hidden bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-semibold py-4 px-8 rounded-2xl transition-all duration-300 transform border-2 border-gray-200 dark:border-gray-700 hover:border-red-600 dark:hover:border-red-600 hover:text-red-600 dark:hover:text-red-400 text-lg min-h-[56px] flex items-center justify-center shadow-lg hover:shadow-xl"
-                >
-                  {/* Button Content */}
-                  <div className="relative z-10 flex items-center space-x-3">
-                    <FaExternalLinkAlt className="text-xl group-hover:rotate-12 transition-transform duration-300" />
-                    <span className="font-bold">View Projects</span>
-                  </div>
-                  
-                  {/* Hover Background */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-800/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
-                </motion.button>
-
-                {/* Download Resume Button */}
-                <motion.button 
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={downloadResume} 
-                  className="group relative overflow-hidden bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 text-gray-700 dark:text-gray-300 font-semibold py-4 px-8 rounded-2xl transition-all duration-300 transform hover:shadow-xl border border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 text-lg min-h-[56px] flex items-center justify-center"
-                >
-                  <div className="relative z-10 flex items-center space-x-3">
-                    <FaDownload className="text-xl group-hover:translate-y-1 transition-transform duration-300" />
-                    <span className="font-bold">Download CV</span>
-                  </div>
-                </motion.button>
-              </motion.div>
-                </motion.div>
-                
-            {/* Right Side - Enhanced Profile Image */}
-                <motion.div 
-              initial={{ opacity: 0, x: 60 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
-              className="order-1 lg:order-2 flex justify-center lg:justify-end"
-            >
-              <div className="relative">
-                {/* Professional Frame */}
-                <div className="absolute -inset-4 bg-gradient-to-r from-red-600/20 via-blue-600/20 to-purple-600/20 rounded-full blur-2xl animate-pulse"></div>
-                
-                {/* Main Image Container */}
-                <div className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[32rem] lg:h-[32rem]">
-                  {/* Professional Border */}
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-red-600 via-red-500 to-red-700 p-1">
-                    <div className="w-full h-full rounded-full bg-white dark:bg-gray-900 p-2">
-                      <div className="relative w-full h-full rounded-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 group">
-                        <Image
-                          src="/images/profile-photo.jpg"
-                          alt="Mahmoud Mamdoh Soliman - Data Engineer"
-                          fill
-                          className="object-cover rounded-full group-hover:scale-105 transition-transform duration-700 ease-out filter group-hover:brightness-110"
-                          priority
-                        />
-                        
-                        {/* Professional Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-red-600/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full"></div>
-                        
-                        {/* Shimmer Effect */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1500 ease-out rounded-full"></div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Floating Professional Icons */}
-                  <motion.div 
-                    className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-r from-red-600 to-red-700 rounded-2xl flex items-center justify-center text-white shadow-xl border-4 border-white dark:border-gray-900"
-                  animate={{ 
-                    y: [0, -10, 0],
-                      rotate: [0, 5, -5, 0],
-                  }}
-                  transition={{ 
-                      duration: 4,
-                    repeat: Infinity,
-                      ease: "easeInOut"
-                  }}
-                >
-                    <FaDatabase size={24} />
-                </motion.div>
-                
-                <motion.div 
-                    className="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl flex items-center justify-center text-white shadow-xl border-4 border-white dark:border-gray-900"
-                  animate={{ 
-                    y: [0, 10, 0],
-                      rotate: [0, -5, 5, 0],
-                  }}
-                  transition={{ 
-                      duration: 5,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                      delay: 1
-                  }}
-                >
-                    <FaChartLine size={24} />
-                </motion.div>
-                
-                  <motion.div 
-                    className="absolute top-1/2 -right-8 w-12 h-12 bg-gradient-to-r from-green-600 to-green-700 rounded-xl flex items-center justify-center text-white shadow-lg border-2 border-white dark:border-gray-900"
-                    animate={{ 
-                      x: [0, 10, 0],
-                      scale: [1, 1.1, 1],
-                    }}
-                    transition={{ 
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: 2
-                    }}
-                  >
-                    <FaCode size={18} />
-            </motion.div>
-                </div>
-                </div>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Scroll Indicator */}
-            <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 2 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center space-y-2 text-gray-400 dark:text-gray-600"
+          aria-label="Back to top"
         >
-          <span className="text-sm font-medium">Scroll to explore</span>
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            className="w-6 h-10 border-2 border-gray-400 dark:border-gray-600 rounded-full flex justify-center"
-          >
-            <div className="w-1 h-3 bg-red-600 rounded-full mt-2"></div>
-            </motion.div>
-          </motion.div>
-      </section>
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+          </svg>
+        </motion.button>
 
-      {/* Unified Career & Tech Stack Timeline Section */}
-      <section id="career-timeline" className="section-padding">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            <div className="text-center mb-16">
-              <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-                Career & Tech Stack <span className="gradient-text">Timeline</span>
-              </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                My complete journey in data engineering, analytics, and BI—combining education, experience, and tech adoption
-              </p>
+        {/* Hero Section */}
+        <BackgroundPattern>
+          <section id="home" className="min-h-screen flex items-center justify-center pt-16 relative overflow-hidden">
+            {/* Enhanced Background with Multi-layer Gradients - Improved Light Mode */}
+            <div className="absolute inset-0">
+              <div className="absolute inset-0 bg-gradient-to-br from-gray-50/90 via-white/95 to-blue-50/80 dark:from-slate-900/95 dark:via-gray-900/98 dark:to-slate-800/95"></div>
+              <div className="absolute inset-0 bg-gradient-to-tr from-indigo-50/70 via-transparent to-purple-50/60 dark:from-transparent dark:to-transparent"></div>
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(59,130,246,0.12)_0%,transparent_60%)] dark:bg-[radial-gradient(circle_at_20%_30%,rgba(59,130,246,0.15)_0%,transparent_50%)]"></div>
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_70%,rgba(239,68,68,0.10)_0%,transparent_60%)] dark:bg-[radial-gradient(circle_at_80%_70%,rgba(239,68,68,0.12)_0%,transparent_50%)]"></div>
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(139,92,246,0.08)_0%,transparent_70%)] dark:bg-[radial-gradient(circle_at_50%_50%,rgba(139,92,246,0.08)_0%,transparent_60%)]"></div>
             </div>
-            
-            {/* Enhanced Timeline Visualization */}
-            <div className="relative">
-              {/* Enhanced Timeline Line with Gradient */}
-              <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-blue-600 via-green-500 via-orange-500 via-red-500 to-indigo-600 h-full hidden md:block rounded-full shadow-lg"></div>
               
-              <div className="space-y-16">
-                {/* 2021-2025: Education Foundation - LEFT SIDE */}
-                <div className="relative flex items-center justify-between">
-                  {/* Content on LEFT */}
-                  <div className="md:w-5/12 w-full">
-                    <motion.div 
-                      initial={{ opacity: 0, x: -50 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.8, delay: 0.1 }}
-                      viewport={{ once: true }}
-                      className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
-                    >
-                      <div className="bg-gradient-to-br from-blue-500 to-blue-700 p-8 text-white relative overflow-hidden">
-                        {/* Background Pattern */}
-                        <div className="absolute inset-0 opacity-10">
-                          <div className="absolute top-4 right-4 w-20 h-20 border-2 border-white rounded-full"></div>
-                          <div className="absolute bottom-4 left-4 w-16 h-16 border-2 border-white rounded-full"></div>
-                        </div>
-                        
-                        <div className="relative z-10">
-                          <div className="flex items-center justify-between mb-6">
-                            <div className="p-4 bg-white/20 rounded-xl backdrop-blur-sm">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8">
-                                <path d="M22 10v6M2 10l10-5 10 5z"></path>
-                                <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                              </svg>
-                            </div>
-                            <div className="flex items-center space-x-3 bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                <path d="m9 11 3 3L22 4"></path>
-                              </svg>
-                              <span className="text-sm font-semibold">Completed</span>
-                            </div>
-                          </div>
-                          
-                          <div className="mb-4">
-                            <h3 className="text-2xl font-bold mb-3 leading-tight">University Education</h3>
-                            <p className="text-blue-100 font-medium text-lg">Menofia University</p>
-                            <p className="text-blue-200 text-sm mt-1">Computer Science & Mathematics</p>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="p-8">
-                        <div className="flex items-center justify-between mb-6">
-                          <div className="flex items-center space-x-3 text-gray-600 dark:text-gray-300">
-                            <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                                <line x1="16" x2="16" y1="2" y2="6"></line>
-                                <line x1="8" x2="8" y1="2" y2="6"></line>
-                                <line x1="3" x2="21" y1="10" y2="10"></line>
-                              </svg>
-                            </div>
-                            <span className="font-semibold">2021 - 2025</span>
-                          </div>
-                          <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">ID: CS-MATH-2025</span>
-                        </div>
-                        
-                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 text-base">
-                          Bachelor's degree providing a strong foundation in computer science principles, 
-                          mathematical concepts, and analytical thinking essential for data engineering.
-                        </p>
-                        
-                        <div className="mb-6">
-                          <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
-                            <div className="w-2 h-2 bg-blue-600 rounded-full mr-3"></div>
-                            Key Areas of Study
-                          </h4>
-                          <div className="flex flex-wrap gap-3">
-                            <span className="px-4 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 text-sm rounded-lg font-medium border border-blue-200 dark:border-blue-700">Data Structures</span>
-                            <span className="px-4 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 text-sm rounded-lg font-medium border border-blue-200 dark:border-blue-700">Algorithms</span>
-                            <span className="px-4 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 text-sm rounded-lg font-medium border border-blue-200 dark:border-blue-700">Database Design</span>
-                            <span className="px-4 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 text-sm rounded-lg font-medium border border-blue-200 dark:border-blue-700">Mathematics</span>
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  </div>
-                  
-                  {/* Enhanced Timeline Dot */}
-                  <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full border-4 border-white dark:border-gray-900 shadow-xl z-10">
-                    <div className="w-full h-full bg-gradient-to-r from-blue-600 to-blue-700 rounded-full animate-pulse flex items-center justify-center">
-                      <div className="w-3 h-3 bg-white rounded-full"></div>
-                    </div>
-                  </div>
-                  
-                  {/* Empty space on RIGHT */}
-                  <div className="hidden md:block md:w-5/12"></div>
-                </div>
+              {/* Floating Background Elements */}
+              <div className="absolute top-20 left-20 w-32 h-32 bg-gradient-to-r from-red-400/20 to-red-600/20 rounded-full blur-3xl floating-element"></div>
+              <div className="absolute bottom-20 right-20 w-40 h-40 bg-gradient-to-r from-blue-400/20 to-blue-600/20 rounded-full blur-3xl floating-element"></div>
+              <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-gradient-to-r from-green-400/20 to-green-600/20 rounded-full blur-2xl floating-element"></div>
+            
+            {/* Animated Background Particles */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              {[...Array(30)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute w-1 h-1 bg-red-500/30 rounded-full"
+                  style={{
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`,
+                  }}
+                  animate={{
+                    y: [0, -100, 0],
+                    opacity: [0.1, 0.6, 0.1],
+                    scale: [1, 2, 1],
+                  }}
+                  transition={{
+                    duration: 4 + Math.random() * 3,
+                    repeat: Infinity,
+                    delay: Math.random() * 3,
+                    ease: "easeInOut"
+                  }}
+                />
+              ))}
+            </div>
 
-                {/* 2023: ITI Bootcamp - RIGHT SIDE */}
-                <div className="relative flex items-center justify-between">
-                  {/* Empty space on LEFT */}
-                  <div className="hidden md:block md:w-5/12"></div>
-                  
-                  {/* Enhanced Timeline Dot */}
-                  <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-r from-green-600 to-green-700 rounded-full border-4 border-white dark:border-gray-900 shadow-xl z-10">
-                    <div className="w-full h-full bg-gradient-to-r from-green-600 to-green-700 rounded-full animate-pulse flex items-center justify-center">
-                      <div className="w-3 h-3 bg-white rounded-full"></div>
-                    </div>
-                  </div>
-                  
-                  {/* Content on RIGHT */}
-                  <div className="md:w-5/12 w-full">
-                    <motion.div 
-                      initial={{ opacity: 0, x: 50 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.8, delay: 0.2 }}
-                      viewport={{ once: true }}
-                      className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
-                    >
-                      <div className="bg-gradient-to-br from-green-500 to-green-700 p-8 text-white relative overflow-hidden">
-                        {/* Background Pattern */}
-                        <div className="absolute inset-0 opacity-10">
-                          <div className="absolute top-4 right-4 w-20 h-20 border-2 border-white rounded-full"></div>
-                          <div className="absolute bottom-4 left-4 w-16 h-16 border-2 border-white rounded-full"></div>
-                        </div>
-                        
-                        <div className="relative z-10">
-                          <div className="flex items-center justify-between mb-6">
-                            <div className="p-4 bg-white/20 rounded-xl backdrop-blur-sm">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8">
-                                <path d="M3 3v18h18"></path>
-                                <path d="M18 17V9"></path>
-                                <path d="M13 17V5"></path>
-                                <path d="M8 17v-3"></path>
-                              </svg>
-                            </div>
-                            <div className="flex items-center space-x-3 bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                <path d="m9 11 3 3L22 4"></path>
-                              </svg>
-                              <span className="text-sm font-semibold">Completed</span>
-                            </div>
-                          </div>
-                          
-                          <div className="mb-4">
-                            <h3 className="text-2xl font-bold mb-3 leading-tight">BI Track Bootcamp</h3>
-                            <p className="text-green-100 font-medium text-lg">Information Technology Institute (ITI)</p>
-                            <p className="text-green-200 text-sm mt-1">Business Intelligence Intensive Training</p>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="p-8">
-                        <div className="flex items-center justify-between mb-6">
-                          <div className="flex items-center space-x-3 text-gray-600 dark:text-gray-300">
-                            <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                                <line x1="16" x2="16" y1="2" y2="6"></line>
-                                <line x1="8" x2="8" y1="2" y2="6"></line>
-                                <line x1="3" x2="21" y1="10" y2="10"></line>
-                              </svg>
-                            </div>
-                            <span className="font-semibold">Jul 2023 - Aug 2023</span>
-                          </div>
-                          <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">ID: ITI-BC-2023</span>
-                        </div>
-                        
-                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 text-base">
-                          Intensive business intelligence bootcamp with hands-on projects, real-world applications, 
-                          and comprehensive training in modern BI tools and methodologies.
-                        </p>
-                        
-                        <div className="mb-6">
-                          <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
-                            <div className="w-2 h-2 bg-green-600 rounded-full mr-3"></div>
-                            Technologies Learned
-                          </h4>
-                          <div className="flex flex-wrap gap-3">
-                            <span className="px-4 py-2 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 text-sm rounded-lg font-medium border border-green-200 dark:border-green-700">Power BI</span>
-                            <span className="px-4 py-2 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 text-sm rounded-lg font-medium border border-green-200 dark:border-green-700">SQL Server</span>
-                            <span className="px-4 py-2 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 text-sm rounded-lg font-medium border border-green-200 dark:border-green-700">SSIS</span>
-                            <span className="px-4 py-2 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 text-sm rounded-lg font-medium border border-green-200 dark:border-green-700">Data Modeling</span>
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  </div>
-                </div>
+            {/* Geometric Background Elements */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-10 dark:opacity-5">
+              <div className="absolute top-20 left-10 w-32 h-32 border border-red-300 rounded-full animate-spin-slow"></div>
+              <div className="absolute top-40 right-20 w-24 h-24 border border-blue-300 rounded-full animate-pulse"></div>
+              <div className="absolute bottom-40 left-20 w-20 h-20 border border-green-300 rounded-full animate-bounce"></div>
+              <div className="absolute bottom-20 right-40 w-28 h-28 border border-purple-300 rounded-full animate-spin-slow"></div>
+            </div>
 
-                {/* 2023-2024: ASDC Internship - LEFT SIDE */}
-                <div className="relative flex items-center justify-between">
-                  {/* Content on LEFT */}
-                  <div className="md:w-5/12 w-full">
-                    <motion.div 
-                      initial={{ opacity: 0, x: -50 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.8, delay: 0.3 }}
-                      viewport={{ once: true }}
-                      className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
-                    >
-                      <div className="bg-gradient-to-br from-purple-500 to-purple-700 p-8 text-white relative overflow-hidden">
-                        {/* Background Pattern */}
-                        <div className="absolute inset-0 opacity-10">
-                          <div className="absolute top-4 right-4 w-20 h-20 border-2 border-white rounded-full"></div>
-                          <div className="absolute bottom-4 left-4 w-16 h-16 border-2 border-white rounded-full"></div>
-                        </div>
-                        
-                        <div className="relative z-10">
-                          <div className="flex items-center justify-between mb-6">
-                            <div className="p-4 bg-white/20 rounded-xl backdrop-blur-sm">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8">
-                                <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-                                <path d="M3 5V19A9 3 0 0 0 21 19V5"></path>
-                                <path d="M3 12A9 3 0 0 0 21 12"></path>
-                              </svg>
-                            </div>
-                            <div className="flex items-center space-x-3 bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                <path d="m9 11 3 3L22 4"></path>
-                              </svg>
-                              <span className="text-sm font-semibold">Completed</span>
-                            </div>
-                          </div>
-                          
-                          <div className="mb-4">
-                            <h3 className="text-2xl font-bold mb-3 leading-tight">Data Analysis Internship</h3>
-                            <p className="text-purple-100 font-medium text-lg">ASDC</p>
-                            <p className="text-purple-200 text-sm mt-1">All SERVICE DATA CONTROL</p>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="p-8">
-                        <div className="flex items-center justify-between mb-6">
-                          <div className="flex items-center space-x-3 text-gray-600 dark:text-gray-300">
-                            <div className="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                                <line x1="16" x2="16" y1="2" y2="6"></line>
-                                <line x1="8" x2="8" y1="2" y2="6"></line>
-                                <line x1="3" x2="21" y1="10" y2="10"></line>
-                              </svg>
-                            </div>
-                            <span className="font-semibold">Nov 2023 - Jan 2024</span>
-                          </div>
-                          <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">ID: ASDC-INT-2024</span>
-                        </div>
-                        
-                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 text-base">
-                          Professional internship focused on data analysis fundamentals and business intelligence 
-                          solutions for effective business metrics visualization and decision-making.
-                        </p>
-                        
-                        <div className="mb-6">
-                          <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
-                            <div className="w-2 h-2 bg-purple-600 rounded-full mr-3"></div>
-                            Skills Developed
-                          </h4>
-                          <div className="flex flex-wrap gap-3">
-                            <span className="px-4 py-2 bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 text-sm rounded-lg font-medium border border-purple-200 dark:border-purple-700">Power BI</span>
-                            <span className="px-4 py-2 bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 text-sm rounded-lg font-medium border border-purple-200 dark:border-purple-700">Python</span>
-                            <span className="px-4 py-2 bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 text-sm rounded-lg font-medium border border-purple-200 dark:border-purple-700">Data Modeling</span>
-                            <span className="px-4 py-2 bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 text-sm rounded-lg font-medium border border-purple-200 dark:border-purple-700">ETL Development</span>
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  </div>
-                  
-                  {/* Enhanced Timeline Dot */}
-                  <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-r from-purple-600 to-purple-700 rounded-full border-4 border-white dark:border-gray-900 shadow-xl z-10">
-                    <div className="w-full h-full bg-gradient-to-r from-purple-600 to-purple-700 rounded-full animate-pulse flex items-center justify-center">
-                      <div className="w-3 h-3 bg-white rounded-full"></div>
-                    </div>
-                  </div>
-                  
-                  {/* Empty space on RIGHT */}
-                  <div className="hidden md:block md:w-5/12"></div>
-                </div>
+            <div className="content-width-1750 relative z-10">
+              <div className="grid lg:grid-cols-2 gap-16 items-center">
+                {/* Left Side - Content */}
+                <motion.div 
+                  initial={{ opacity: 0, x: -60 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 1, ease: "easeOut" }}
+                  className="order-2 lg:order-1 space-y-8"
+                >
+                  {/* Professional Badge */}
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.1 }}
+                    className="inline-flex items-center space-x-2 bg-gradient-to-r from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-800/20 px-4 py-2 rounded-full border border-red-200/50 dark:border-red-700/50 backdrop-blur-sm"
+                  >
+                    <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+                    <span className="text-sm font-medium text-red-700 dark:text-red-300">Available for hire</span>
+                  </motion.div>
 
-                {/* 2023-2024: GDSC Vice Head - RIGHT SIDE */}
-                <div className="relative flex items-center justify-between">
-                  {/* Empty space on LEFT */}
-                  <div className="hidden md:block md:w-5/12"></div>
+                  {/* Main Heading with Enhanced Typography */}
+                  <motion.div 
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+                    className="space-y-4"
+                  >
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-white leading-tight tracking-tight">
+                      Hi, I'm{" "}
+                      <span className="relative inline-block">
+                        <span className="bg-gradient-to-r from-red-600 via-red-500 to-red-700 bg-clip-text text-transparent">
+                          Mahmoud
+                        </span>
+                        {/* Underline Animation */}
+                        <motion.div
+                          className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-red-600 to-red-500 rounded-full"
+                          initial={{ width: 0 }}
+                          animate={{ width: "100%" }}
+                          transition={{ duration: 1, delay: 1.5, ease: "easeOut" }}
+                        />
+                      </span>
+                    </h1>
+                  </motion.div>
                   
-                  {/* Enhanced Timeline Dot */}
-                  <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-r from-orange-600 to-orange-700 rounded-full border-4 border-white dark:border-gray-900 shadow-xl z-10">
-                    <div className="w-full h-full bg-gradient-to-r from-orange-600 to-orange-700 rounded-full animate-pulse flex items-center justify-center">
-                      <div className="w-3 h-3 bg-white rounded-full"></div>
+                  {/* Enhanced Typewriter Section */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
+                    className="space-y-2"
+                  >
+                    <div className="flex items-center space-x-3 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-gray-700 dark:text-gray-200">
+                      <span>I'm a</span>
+                      <div className="relative">
+                        <span className="bg-gradient-to-r from-red-600 via-red-500 to-red-700 bg-clip-text text-transparent font-bold">
+                          <Typewriter
+                            words={[
+                              'Data Engineer',
+                              'Big Data Engineer',
+                              'BI Engineer', 
+                              'ETL Developer',
+                              'Pipeline Architect',
+                              'Data Analyst',
+                              'Analytics Engineer'   
+                            ]}
+                            loop={0}
+                            cursor
+                            cursorStyle='|'
+                            typeSpeed={80}
+                            deleteSpeed={60}
+                            delaySpeed={1500}
+                          />
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                  
-                  {/* Content on RIGHT */}
-                  <div className="md:w-5/12 w-full">
-                    <motion.div 
-                      initial={{ opacity: 0, x: 50 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.8, delay: 0.35 }}
-                      viewport={{ once: true }}
-                      className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
-                    >
-                      <div className="bg-gradient-to-br from-orange-500 to-orange-700 p-8 text-white relative overflow-hidden">
-                        {/* Background Pattern */}
-                        <div className="absolute inset-0 opacity-10">
-                          <div className="absolute top-4 right-4 w-20 h-20 border-2 border-white rounded-full"></div>
-                          <div className="absolute bottom-4 left-4 w-16 h-16 border-2 border-white rounded-full"></div>
-                        </div>
-                        
-                        <div className="relative z-10">
-                          <div className="flex items-center justify-between mb-6">
-                            <div className="p-4 bg-white/20 rounded-xl backdrop-blur-sm">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8">
-                                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-                                <rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect>
-                                <path d="M12 11h4"></path>
-                                <path d="M12 16h4"></path>
-                                <path d="M8 11h.01"></path>
-                                <path d="M8 16h.01"></path>
-                              </svg>
-                            </div>
-                            <div className="flex items-center space-x-3 bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                <path d="m9 11 3 3L22 4"></path>
-                              </svg>
-                              <span className="text-sm font-semibold">Completed</span>
-                            </div>
-                          </div>
-                          
-                          <div className="mb-4">
-                            <h3 className="text-2xl font-bold mb-3 leading-tight">Vice Head Data Analysis</h3>
-                            <p className="text-orange-100 font-medium text-lg">GDSC</p>
-                            <p className="text-orange-200 text-sm mt-1">Google Developer Student Clubs</p>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="p-8">
-                        <div className="flex items-center justify-between mb-6">
-                          <div className="flex items-center space-x-3 text-gray-600 dark:text-gray-300">
-                            <div className="p-2 bg-orange-100 dark:bg-orange-900/30 rounded-lg">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                                <line x1="16" x2="16" y1="2" y2="6"></line>
-                                <line x1="8" x2="8" y1="2" y2="6"></line>
-                                <line x1="3" x2="21" y1="10" y2="10"></line>
-                              </svg>
-                            </div>
-                            <span className="font-semibold">Sep 2023 - Mar 2024</span>
-                          </div>
-                          <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">ID: GDSC-VH-2024</span>
-                        </div>
-                        
-                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 text-base">
-                          Leadership role as mentor and instructor, teaching data analysis skills focused on 
-                          BI, SQL, Power BI, databases, and data warehousing to fellow students.
-                        </p>
-                        
-                        <div className="mb-6">
-                          <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
-                            <div className="w-2 h-2 bg-orange-600 rounded-full mr-3"></div>
-                            Leadership & Teaching
-                          </h4>
-                          <div className="flex flex-wrap gap-3">
-                            <span className="px-4 py-2 bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300 text-sm rounded-lg font-medium border border-orange-200 dark:border-orange-700">Mentoring</span>
-                            <span className="px-4 py-2 bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300 text-sm rounded-lg font-medium border border-orange-200 dark:border-orange-700">SQL</span>
-                            <span className="px-4 py-2 bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300 text-sm rounded-lg font-medium border border-orange-200 dark:border-orange-700">Power BI</span>
-                            <span className="px-4 py-2 bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300 text-sm rounded-lg font-medium border border-orange-200 dark:border-orange-700">Teaching</span>
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  </div>
-                </div>
+                  </motion.div>
 
-                {/* 2024: ATC Internship - LEFT SIDE */}
-                <div className="relative flex items-center justify-between">
-                  {/* Content on LEFT */}
-                  <div className="md:w-5/12 w-full">
-                    <motion.div 
-                      initial={{ opacity: 0, x: -50 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.8, delay: 0.4 }}
-                      viewport={{ once: true }}
-                      className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
-                    >
-                      <div className="bg-gradient-to-br from-red-500 to-red-700 p-8 text-white relative overflow-hidden">
-                        {/* Background Pattern */}
-                        <div className="absolute inset-0 opacity-10">
-                          <div className="absolute top-4 right-4 w-20 h-20 border-2 border-white rounded-full"></div>
-                          <div className="absolute bottom-4 left-4 w-16 h-16 border-2 border-white rounded-full"></div>
-                        </div>
-                        
-                        <div className="relative z-10">
-                          <div className="flex items-center justify-between mb-6">
-                            <div className="p-4 bg-white/20 rounded-xl backdrop-blur-sm">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8">
-                                <path d="M3 3v18h18"></path>
-                                <path d="M18 17V9"></path>
-                                <path d="M13 17V5"></path>
-                                <path d="M8 17v-3"></path>
-                              </svg>
-                            </div>
-                            <div className="flex items-center space-x-3 bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                <path d="m9 11 3 3L22 4"></path>
-                              </svg>
-                              <span className="text-sm font-semibold">Completed</span>
-                            </div>
-                          </div>
-                          
-                          <div className="mb-4">
-                            <h3 className="text-2xl font-bold mb-3 leading-tight">BI Analyst Internship</h3>
-                            <p className="text-red-100 font-medium text-lg">Addiction Treatment Center</p>
-                            <p className="text-red-200 text-sm mt-1">Healthcare Analytics & Dashboards</p>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="p-8">
-                        <div className="flex items-center justify-between mb-6">
-                          <div className="flex items-center space-x-3 text-gray-600 dark:text-gray-300">
-                            <div className="p-2 bg-red-100 dark:bg-red-900/30 rounded-lg">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                                <line x1="16" x2="16" y1="2" y2="6"></line>
-                                <line x1="8" x2="8" y1="2" y2="6"></line>
-                                <line x1="3" x2="21" y1="10" y2="10"></line>
-                              </svg>
-                            </div>
-                            <span className="font-semibold">Jul 2024 - Oct 2024</span>
-                          </div>
-                          <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">ID: ATC-INT-2024</span>
-                        </div>
-                        
-                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 text-base">
-                          Hands-on experience in Power BI dashboard development and data visualization 
-                          for healthcare operations monitoring and performance analytics.
-                        </p>
-                        
-                        <div className="mb-6">
-                          <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
-                            <div className="w-2 h-2 bg-red-600 rounded-full mr-3"></div>
-                            Skills Applied
-                          </h4>
-                          <div className="flex flex-wrap gap-3">
-                            <span className="px-4 py-2 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 text-sm rounded-lg font-medium border border-red-200 dark:border-red-700">Dashboard Design</span>
-                            <span className="px-4 py-2 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 text-sm rounded-lg font-medium border border-red-200 dark:border-red-700">Power BI</span>
-                            <span className="px-4 py-2 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 text-sm rounded-lg font-medium border border-red-200 dark:border-red-700">DAX</span>
-                            <span className="px-4 py-2 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 text-sm rounded-lg font-medium border border-red-200 dark:border-red-700">KPI Development</span>
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  </div>
-                  
-                  {/* Enhanced Timeline Dot */}
-                  <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-r from-red-600 to-red-700 rounded-full border-4 border-white dark:border-gray-900 shadow-xl z-10">
-                    <div className="w-full h-full bg-gradient-to-r from-red-600 to-red-700 rounded-full animate-pulse flex items-center justify-center">
-                      <div className="w-3 h-3 bg-white rounded-full"></div>
-                    </div>
-                  </div>
-                  
-                  {/* Empty space on RIGHT */}
-                  <div className="hidden md:block md:w-5/12"></div>
-                </div>
+                  {/* Enhanced Description with Better Typography */}
+                  <motion.p 
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
+                    className="text-lg sm:text-xl md:text-2xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl font-light"
+                  >
+                    Transforming <span className="font-semibold text-red-600 dark:text-red-400">complex data</span> into 
+                    <span className="font-semibold text-red-600 dark:text-red-400"> actionable insights</span> that drive 
+                    strategic decisions and accelerate business growth through modern data engineering solutions.
+                  </motion.p>
 
-                {/* 2025: Data Engineering Zoomcamp - RIGHT SIDE */}
-                <div className="relative flex items-center justify-between">
-                  {/* Empty space on LEFT */}
-                  <div className="hidden md:block md:w-5/12"></div>
-                  
-                  {/* Enhanced Timeline Dot */}
-                  <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-r from-indigo-600 to-indigo-700 rounded-full border-4 border-white dark:border-gray-900 shadow-xl z-10">
-                    <div className="w-full h-full bg-gradient-to-r from-indigo-600 to-indigo-700 rounded-full animate-pulse flex items-center justify-center">
-                      <div className="w-3 h-3 bg-white rounded-full"></div>
+                  {/* Professional Stats */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
+                    className="flex items-center space-x-8 py-4"
+                  >
+                    <div className="text-center hover-lift">
+                      <div className="text-3xl font-bold text-red-600 dark:text-red-400 bounce-gentle">30+</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Projects</div>
                     </div>
-                  </div>
+                    <div className="w-px h-12 bg-gray-300 dark:bg-gray-600"></div>
+                    <div className="text-center hover-lift">
+                      <div className="text-3xl font-bold text-red-600 dark:text-red-400 bounce-gentle">5+</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Certifications</div>
+                    </div>
+                    <div className="w-px h-12 bg-gray-300 dark:bg-gray-600"></div>
+                    <div className="text-center hover-lift">
+                      <div className="text-3xl font-bold text-red-600 dark:text-red-400 bounce-gentle">1</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Years Experience</div>
+                    </div>
+                  </motion.div>
+
+                  {/* Enhanced Social Icons */}
+                  <motion.div 
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 1.0, ease: "easeOut" }}
+                    className="flex items-center space-x-4"
+                  >
+                    <span className="text-sm font-medium text-gray-600 dark:text-gray-400">Connect with me:</span>
+                    <div className="flex space-x-3">
+                      <motion.a 
+                        whileHover={{ scale: 1.1, y: -3 }}
+                        whileTap={{ scale: 0.95 }}
+                        href="https://github.com/MAHMOUDMAMDOH8" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="group relative w-12 h-12 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center text-gray-600 dark:text-gray-300 shadow-lg border border-gray-200 dark:border-gray-700 hover:border-red-300 dark:hover:border-red-600 transition-all duration-300"
+                      >
+                        <FaGithub size={20} className="group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors duration-300" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 to-red-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      </motion.a>
+                      <motion.a 
+                        whileHover={{ scale: 1.1, y: -3 }}
+                        whileTap={{ scale: 0.95 }}
+                        href="https://www.linkedin.com/in/mahmoud-mamdoh-47a68a203/" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="group relative w-12 h-12 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center text-gray-600 dark:text-gray-300 shadow-lg border border-gray-200 dark:border-gray-700 hover:border-red-300 dark:hover:border-red-600 transition-all duration-300"
+                      >
+                        <FaLinkedin size={20} className="group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors duration-300" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 to-red-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      </motion.a>
+                      <motion.a 
+                        whileHover={{ scale: 1.1, y: -3 }}
+                        whileTap={{ scale: 0.95 }}
+                        href="mailto:mahmoud.mamdoh0812@gmail.com"
+                        className="group relative w-12 h-12 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center text-gray-600 dark:text-gray-300 shadow-lg border border-gray-200 dark:border-gray-700 hover:border-red-300 dark:hover:border-red-600 transition-all duration-300"
+                      >
+                        <FaEnvelope size={20} className="group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors duration-300" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 to-red-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      </motion.a>
+                    </div>
+                  </motion.div>
                   
-                  {/* Content on RIGHT */}
-                  <div className="md:w-5/12 w-full">
-                    <motion.div 
-                      initial={{ opacity: 0, x: 50 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.8, delay: 0.5 }}
-                      viewport={{ once: true }}
-                      className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
+                  {/* Enhanced Button Group */}
+                  <motion.div 
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 1.2, ease: "easeOut" }}
+                    className="flex flex-col sm:flex-row gap-6 pt-6"
+                  >
+                    <motion.button 
+                      whileHover={{ scale: 1.05, y: -3 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => smoothScroll('contact')} 
+                      className="group relative overflow-hidden bg-gradient-to-r from-blue-600 via-red-600 to-purple-600 text-white font-bold py-5 px-10 rounded-2xl transition-all duration-500 transform hover:shadow-2xl hover:shadow-red-600/40 border-0 text-lg min-h-[64px] flex items-center justify-center backdrop-blur-sm"
                     >
-                      <div className="bg-gradient-to-br from-indigo-500 to-indigo-700 p-8 text-white relative overflow-hidden">
-                        {/* Background Pattern */}
-                        <div className="absolute inset-0 opacity-10">
-                          <div className="absolute top-4 right-4 w-20 h-20 border-2 border-white rounded-full"></div>
-                          <div className="absolute bottom-4 left-4 w-16 h-16 border-2 border-white rounded-full"></div>
-                        </div>
-                        
-                        <div className="relative z-10">
-                          <div className="flex items-center justify-between mb-6">
-                            <div className="p-4 bg-white/20 rounded-xl backdrop-blur-sm">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8">
-                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                              </svg>
-                            </div>
-                            <div className="flex items-center space-x-3 bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                <path d="m9 11 3 3L22 4"></path>
-                              </svg>
-                              <span className="text-sm font-semibold">Completed</span>
-                            </div>
-                          </div>
-                          
-                          <div className="mb-4">
-                            <h3 className="text-2xl font-bold mb-3 leading-tight">Data Engineering Zoomcamp</h3>
-                            <p className="text-indigo-100 font-medium text-lg">DataTalks Club</p>
-                            <p className="text-indigo-200 text-sm mt-1">Modern Data Engineering Bootcamp</p>
+                      {/* Animated Background */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-red-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                      
+                      {/* Button Content */}
+                      <div className="relative z-10 flex items-center space-x-3">
+                        <motion.div 
+                          animate={{ rotate: [0, 10, -10, 0] }}
+                          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                        >
+                          <FaRocket className="text-xl" />
+                        </motion.div>
+                        <span className="font-bold tracking-wide">Hire Me Now</span>
+                        <motion.div 
+                          animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
+                          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                          className="w-2 h-2 bg-white rounded-full"
+                        />
+                      </div>
+                      
+                      {/* Enhanced Glow Effect */}
+                      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-600/50 via-red-600/50 to-purple-600/50 blur-xl opacity-0 group-hover:opacity-70 transition-opacity duration-500 -z-10"></div>
+                    </motion.button>
+
+                    <motion.button 
+                      whileHover={{ scale: 1.05, y: -3 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => smoothScroll('projects')} 
+                      className="group relative overflow-hidden bg-white/90 dark:bg-gray-800/90 text-gray-700 dark:text-gray-300 font-bold py-5 px-10 rounded-2xl transition-all duration-300 transform border-2 border-gray-200/50 dark:border-gray-700/50 hover:border-blue-500/50 dark:hover:border-blue-400/50 hover:text-blue-600 dark:hover:text-blue-400 text-lg min-h-[64px] flex items-center justify-center shadow-lg hover:shadow-xl backdrop-blur-sm"
+                    >
+                      {/* Hover Background */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-blue-50/50 to-purple-50/50 dark:from-blue-900/20 dark:to-purple-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      
+                      {/* Button Content */}
+                      <div className="relative z-10 flex items-center space-x-3">
+                        <motion.div
+                          whileHover={{ rotate: 15, scale: 1.1 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <FaExternalLinkAlt className="text-xl group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300" />
+                        </motion.div>
+                        <span className="font-bold tracking-wide">View Projects</span>
+                      </div>
+                      
+                      {/* Hover Background */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-800/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
+                    </motion.button>
+
+                    {/* Download Resume Button */}
+                    <motion.button 
+                      whileHover={{ scale: 1.02, y: -2 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={downloadResume} 
+                      className="group relative overflow-hidden bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 text-gray-700 dark:text-gray-300 font-semibold py-4 px-8 rounded-2xl transition-all duration-300 transform hover:shadow-xl border border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 text-lg min-h-[56px] flex items-center justify-center"
+                    >
+                      <div className="relative z-10 flex items-center space-x-3">
+                        <FaDownload className="text-xl group-hover:translate-y-1 transition-transform duration-300" />
+                        <span className="font-bold">Download CV</span>
+                      </div>
+                    </motion.button>
+                  </motion.div>
+                </motion.div>
+                
+                {/* Right Side - Enhanced Profile Image */}
+                <motion.div 
+                  initial={{ opacity: 0, x: 60 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
+                  className="order-1 lg:order-2 flex justify-center lg:justify-end"
+                >
+                  <div className="relative">
+                    {/* Professional Frame */}
+                    <div className="absolute -inset-4 bg-gradient-to-r from-red-600/20 via-blue-600/20 to-purple-600/20 rounded-full blur-2xl animate-pulse"></div>
+                    
+                    {/* Main Image Container */}
+                    <div className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[32rem] lg:h-[32rem]">
+                      {/* Professional Border */}
+                      <div className="absolute inset-0 rounded-full bg-gradient-to-r from-red-600 via-red-500 to-red-700 p-1">
+                        <div className="w-full h-full rounded-full bg-white dark:bg-gray-900 p-2">
+                          <div className="relative w-full h-full rounded-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 group">
+                            <Image
+                              src="/images/profile-photo.jpg"
+                              alt="Mahmoud Mamdoh Soliman - Data Engineer"
+                              fill
+                              className="object-cover rounded-full group-hover:scale-105 transition-transform duration-700 ease-out filter group-hover:brightness-110"
+                              priority
+                            />
+                            
+                            {/* Professional Overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-red-600/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full"></div>
+                            
+                            {/* Shimmer Effect */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1500 ease-out rounded-full"></div>
                           </div>
                         </div>
                       </div>
                       
-                      <div className="p-8">
-                        <div className="flex items-center justify-between mb-6">
-                          <div className="flex items-center space-x-3 text-gray-600 dark:text-gray-300">
-                            <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                                <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                                <line x1="16" x2="16" y1="2" y2="6"></line>
-                                <line x1="8" x2="8" y1="2" y2="6"></line>
-                                <line x1="3" x2="21" y1="10" y2="10"></line>
-                              </svg>
-                            </div>
-                            <span className="font-semibold">Jan 2025 - May 2025</span>
-                          </div>
-                          <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">ID: DTC-ZC-2025</span>
-                        </div>
-                        
-                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 text-base">
-                          Comprehensive modern data engineering bootcamp with cloud deployment, 
-                          containerization, and advanced data pipeline orchestration techniques.
-                        </p>
-                        
-                        <div className="mb-6">
-                          <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
-                            <div className="w-2 h-2 bg-indigo-600 rounded-full mr-3"></div>
-                            Technologies Mastered
-                          </h4>
-                          <div className="flex flex-wrap gap-3">
-                            <span className="px-4 py-2 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 text-sm rounded-lg font-medium border border-indigo-200 dark:border-indigo-700">Apache Airflow</span>
-                            <span className="px-4 py-2 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 text-sm rounded-lg font-medium border border-indigo-200 dark:border-indigo-700">dbt</span>
-                            <span className="px-4 py-2 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 text-sm rounded-lg font-medium border border-indigo-200 dark:border-indigo-700">Docker</span>
-                            <span className="px-4 py-2 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 text-sm rounded-lg font-medium border border-indigo-200 dark:border-indigo-700">GCP</span>
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
+                      {/* Floating Professional Icons */}
+                      <motion.div 
+                        className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-r from-red-600 to-red-700 rounded-2xl flex items-center justify-center text-white shadow-xl border-4 border-white dark:border-gray-900"
+                        animate={{ 
+                          y: [0, -10, 0],
+                          rotate: [0, 5, -5, 0],
+                        }}
+                        transition={{ 
+                          duration: 4,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                      >
+                        <FaDatabase size={24} />
+                      </motion.div>
+                      
+                      <motion.div 
+                        className="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl flex items-center justify-center text-white shadow-xl border-4 border-white dark:border-gray-900"
+                        animate={{ 
+                          y: [0, 10, 0],
+                          rotate: [0, -5, 5, 0],
+                        }}
+                        transition={{ 
+                          duration: 5,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                          delay: 1
+                        }}
+                      >
+                        <FaChartLine size={24} />
+                      </motion.div>
+                      
+                      <motion.div 
+                        className="absolute top-1/2 -right-8 w-12 h-12 bg-gradient-to-r from-green-600 to-green-700 rounded-xl flex items-center justify-center text-white shadow-lg border-2 border-white dark:border-gray-900"
+                        animate={{ 
+                          x: [0, 10, 0],
+                          scale: [1, 1.1, 1],
+                        }}
+                        transition={{ 
+                          duration: 3,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                          delay: 2
+                        }}
+                      >
+                        <FaCode size={18} />
+                      </motion.div>
+                    </div>
                   </div>
-                </div>
+                </motion.div>
               </div>
             </div>
-          </motion.div>
-        </div>
-      </section>
+
+            {/* Scroll Indicator */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 2 }}
+              className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center space-y-2 text-gray-400 dark:text-gray-600"
+            >
+              <span className="text-sm font-medium">Scroll to explore</span>
+              <motion.div
+                animate={{ y: [0, 8, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                className="w-6 h-10 border-2 border-gray-400 dark:border-gray-600 rounded-full flex justify-center"
+              >
+                <div className="w-1 h-3 bg-red-600 rounded-full mt-2"></div>
+              </motion.div>
+            </motion.div>
+          </section>
+        </BackgroundPattern>
+
+        {/* Unified Career & Tech Stack Timeline Section */}
+        <section id="career-timeline" className="section-padding section-bg-pattern">
+          <div className="content-width-1750">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <div className="text-center mb-16">
+                <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+                  Career & Tech Stack <span className="gradient-text">Timeline</span>
+                </h2>
+                <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+                  My complete journey in data engineering, analytics, and BI—combining education, experience, and tech adoption
+                </p>
+              </div>
+              
+              {/* Enhanced Timeline Visualization */}
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+              >
+                <div className="relative timeline-enhanced">
+                  {/* Enhanced Timeline Line with Gradient */}
+                  <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-blue-600 via-green-500 via-orange-500 via-red-500 to-indigo-600 h-full hidden md:block rounded-full shadow-lg"></div>
+                  
+                  <div className="space-y-16">
+                    <motion.div 
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5 }}
+                      viewport={{ once: true }}
+                    >
+                      {/* 2021-2025: Education Foundation - LEFT SIDE */}
+                      <div className="relative flex items-center justify-between">
+                    {/* Content on LEFT */}
+                    <div className="md:w-5/12 w-full">
+                      <EnhancedCard 
+                        delay={0.1}
+                        className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
+                      >
+                        <div className="bg-gradient-to-br from-blue-500 to-blue-700 p-8 text-white relative overflow-hidden">
+                          {/* Background Pattern */}
+                          <div className="absolute inset-0 opacity-10">
+                            <div className="absolute top-4 right-4 w-20 h-20 border-2 border-white rounded-full"></div>
+                            <div className="absolute bottom-4 left-4 w-16 h-16 border-2 border-white rounded-full"></div>
+                          </div>
+                          
+                          <div className="relative z-10">
+                            <div className="flex items-center justify-between mb-6">
+                              <div className="p-4 bg-white/20 rounded-xl backdrop-blur-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8">
+                                  <path d="M22 10v6M2 10l10-5 10 5z"></path>
+                                  <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                                </svg>
+                              </div>
+                              <div className="flex items-center space-x-3 bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                  <path d="m9 11 3 3L22 4"></path>
+                                </svg>
+                                <span className="text-sm font-semibold">Completed</span>
+                              </div>
+                            </div>
+                            
+                            <div className="mb-4">
+                              <h3 className="text-2xl font-bold mb-3 leading-tight">University Education</h3>
+                              <p className="text-blue-100 font-medium text-lg">Menofia University</p>
+                              <p className="text-blue-200 text-sm mt-1">Computer Science & Mathematics</p>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="p-8">
+                          <div className="flex items-center justify-between mb-6">
+                            <div className="flex items-center space-x-3 text-gray-600 dark:text-gray-300">
+                              <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                  <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+                                  <line x1="16" x2="16" y1="2" y2="6"></line>
+                                  <line x1="8" x2="8" y1="2" y2="6"></line>
+                                  <line x1="3" x2="21" y1="10" y2="10"></line>
+                                </svg>
+                              </div>
+                              <span className="font-semibold">2021 - 2025</span>
+                            </div>
+                            <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">ID: CS-MATH-2025</span>
+                          </div>
+                          
+                          <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 text-base">
+                            Bachelor's degree providing a strong foundation in computer science principles, 
+                            mathematical concepts, and analytical thinking essential for data engineering.
+                          </p>
+                          
+                          <div className="mb-6">
+                            <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+                              <div className="w-2 h-2 bg-blue-600 rounded-full mr-3"></div>
+                              Key Areas of Study
+                            </h4>
+                            <div className="flex flex-wrap gap-3">
+                              <span className="px-4 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 text-sm rounded-lg font-medium border border-blue-200 dark:border-blue-700">Data Structures</span>
+                              <span className="px-4 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 text-sm rounded-lg font-medium border border-blue-200 dark:border-blue-700">Algorithms</span>
+                              <span className="px-4 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 text-sm rounded-lg font-medium border border-blue-200 dark:border-blue-700">Database Design</span>
+                              <span className="px-4 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 text-sm rounded-lg font-medium border border-blue-200 dark:border-blue-700">Mathematics</span>
+                            </div>
+                          </div>
+                        </div>
+                      </EnhancedCard>
+                    </div>
+                    
+                    {/* Enhanced Timeline Dot */}
+                    <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full border-4 border-white dark:border-gray-900 shadow-xl z-10">
+                      <div className="w-full h-full bg-gradient-to-r from-blue-600 to-blue-700 rounded-full animate-pulse flex items-center justify-center">
+                        <div className="w-3 h-3 bg-white rounded-full"></div>
+                      </div>
+                    </div>
+                    
+                    {/* Empty space on RIGHT */}
+                    <div className="hidden md:block md:w-5/12"></div>
+                  </div>
+
+                  {/* 2023: ITI Bootcamp - RIGHT SIDE */}
+                  <div className="relative flex items-center justify-between">
+                    {/* Empty space on LEFT */}
+                    <div className="hidden md:block md:w-5/12"></div>
+                    
+                    {/* Enhanced Timeline Dot */}
+                    <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-r from-green-600 to-green-700 rounded-full border-4 border-white dark:border-gray-900 shadow-xl z-10">
+                      <div className="w-full h-full bg-gradient-to-r from-green-600 to-green-700 rounded-full animate-pulse flex items-center justify-center">
+                        <div className="w-3 h-3 bg-white rounded-full"></div>
+                      </div>
+                    </div>
+                    
+                    {/* Content on RIGHT */}
+                    <div className="md:w-5/12 w-full">
+                      <EnhancedCard 
+                        delay={0.2}
+                        className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
+                      >
+                        <div className="bg-gradient-to-br from-green-500 to-green-700 p-8 text-white relative overflow-hidden">
+                          {/* Background Pattern */}
+                          <div className="absolute inset-0 opacity-10">
+                            <div className="absolute top-4 right-4 w-20 h-20 border-2 border-white rounded-full"></div>
+                            <div className="absolute bottom-4 left-4 w-16 h-16 border-2 border-white rounded-full"></div>
+                          </div>
+                          
+                          <div className="relative z-10">
+                            <div className="flex items-center justify-between mb-6">
+                              <div className="p-4 bg-white/20 rounded-xl backdrop-blur-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8">
+                                  <path d="M3 3v18h18"></path>
+                                  <path d="M18 17V9"></path>
+                                  <path d="M13 17V5"></path>
+                                  <path d="M8 17v-3"></path>
+                                </svg>
+                              </div>
+                              <div className="flex items-center space-x-3 bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                  <path d="m9 11 3 3L22 4"></path>
+                                </svg>
+                                <span className="text-sm font-semibold">Completed</span>
+                              </div>
+                            </div>
+                            
+                            <div className="mb-4">
+                              <h3 className="text-2xl font-bold mb-3 leading-tight">BI Track Bootcamp</h3>
+                              <p className="text-green-100 font-medium text-lg">Information Technology Institute (ITI)</p>
+                              <p className="text-green-200 text-sm mt-1">Business Intelligence Intensive Training</p>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="p-8">
+                          <div className="flex items-center justify-between mb-6">
+                            <div className="flex items-center space-x-3 text-gray-600 dark:text-gray-300">
+                              <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                  <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+                                  <line x1="16" x2="16" y1="2" y2="6"></line>
+                                  <line x1="8" x2="8" y1="2" y2="6"></line>
+                                  <line x1="3" x2="21" y1="10" y2="10"></line>
+                                </svg>
+                              </div>
+                              <span className="font-semibold">Jul 2023 - Aug 2023</span>
+                            </div>
+                            <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">ID: ITI-BC-2023</span>
+                          </div>
+                          
+                          <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 text-base">
+                            Intensive business intelligence bootcamp with hands-on projects, real-world applications, 
+                            and comprehensive training in modern BI tools and methodologies.
+                          </p>
+                          
+                          <div className="mb-6">
+                            <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+                              <div className="w-2 h-2 bg-green-600 rounded-full mr-3"></div>
+                              Technologies Learned
+                            </h4>
+                            <div className="flex flex-wrap gap-3">
+                              <span className="px-4 py-2 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 text-sm rounded-lg font-medium border border-green-200 dark:border-green-700">Power BI</span>
+                              <span className="px-4 py-2 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 text-sm rounded-lg font-medium border border-green-200 dark:border-green-700">SQL Server</span>
+                              <span className="px-4 py-2 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 text-sm rounded-lg font-medium border border-green-200 dark:border-green-700">SSIS</span>
+                              <span className="px-4 py-2 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 text-sm rounded-lg font-medium border border-green-200 dark:border-green-700">Data Modeling</span>
+                            </div>
+                          </div>
+                        </div>
+                      </EnhancedCard>
+                    </div>
+                  </div>
+
+                  {/* 2023-2024: ASDC Internship - LEFT SIDE */}
+                  <div className="relative flex items-center justify-between">
+                    {/* Content on LEFT */}
+                    <div className="md:w-5/12 w-full">
+                      <EnhancedCard 
+                        delay={0.3}
+                        className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
+                      >
+                        <div className="bg-gradient-to-br from-purple-500 to-purple-700 p-8 text-white relative overflow-hidden">
+                          {/* Background Pattern */}
+                          <div className="absolute inset-0 opacity-10">
+                            <div className="absolute top-4 right-4 w-20 h-20 border-2 border-white rounded-full"></div>
+                            <div className="absolute bottom-4 left-4 w-16 h-16 border-2 border-white rounded-full"></div>
+                          </div>
+                          
+                          <div className="relative z-10">
+                            <div className="flex items-center justify-between mb-6">
+                              <div className="p-4 bg-white/20 rounded-xl backdrop-blur-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8">
+                                  <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                                  <path d="M3 5V19A9 3 0 0 0 21 19V5"></path>
+                                  <path d="M3 12A9 3 0 0 0 21 12"></path>
+                                </svg>
+                              </div>
+                              <div className="flex items-center space-x-3 bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                  <path d="m9 11 3 3L22 4"></path>
+                                </svg>
+                                <span className="text-sm font-semibold">Completed</span>
+                              </div>
+                            </div>
+                            
+                            <div className="mb-4">
+                              <h3 className="text-2xl font-bold mb-3 leading-tight">Data Analysis Internship</h3>
+                              <p className="text-purple-100 font-medium text-lg">ASDC</p>
+                              <p className="text-purple-200 text-sm mt-1">All SERVICE DATA CONTROL</p>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="p-8">
+                          <div className="flex items-center justify-between mb-6">
+                            <div className="flex items-center space-x-3 text-gray-600 dark:text-gray-300">
+                              <div className="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                  <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+                                  <line x1="16" x2="16" y1="2" y2="6"></line>
+                                  <line x1="8" x2="8" y1="2" y2="6"></line>
+                                  <line x1="3" x2="21" y1="10" y2="10"></line>
+                                </svg>
+                              </div>
+                              <span className="font-semibold">Nov 2023 - Jan 2024</span>
+                            </div>
+                            <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">ID: ASDC-INT-2024</span>
+                          </div>
+                          
+                          <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 text-base">
+                            Professional internship focused on data analysis fundamentals and business intelligence 
+                            solutions for effective business metrics visualization and decision-making.
+                          </p>
+                          
+                          <div className="mb-6">
+                            <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+                              <div className="w-2 h-2 bg-purple-600 rounded-full mr-3"></div>
+                              Skills Developed
+                            </h4>
+                            <div className="flex flex-wrap gap-3">
+                              <span className="px-4 py-2 bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 text-sm rounded-lg font-medium border border-purple-200 dark:border-purple-700">Power BI</span>
+                              <span className="px-4 py-2 bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 text-sm rounded-lg font-medium border border-purple-200 dark:border-purple-700">Python</span>
+                              <span className="px-4 py-2 bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 text-sm rounded-lg font-medium border border-purple-200 dark:border-purple-700">Data Modeling</span>
+                              <span className="px-4 py-2 bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 text-sm rounded-lg font-medium border border-purple-200 dark:border-purple-700">ETL Development</span>
+                            </div>
+                          </div>
+                        </div>
+                      </EnhancedCard>
+                    </div>
+                    
+                    {/* Enhanced Timeline Dot */}
+                    <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-r from-purple-600 to-purple-700 rounded-full border-4 border-white dark:border-gray-900 shadow-xl z-10">
+                      <div className="w-full h-full bg-gradient-to-r from-purple-600 to-purple-700 rounded-full animate-pulse flex items-center justify-center">
+                        <div className="w-3 h-3 bg-white rounded-full"></div>
+                      </div>
+                    </div>
+                    
+                    {/* Empty space on RIGHT */}
+                    <div className="hidden md:block md:w-5/12"></div>
+                  </div>
+
+                  {/* 2023-2024: GDSC Vice Head - RIGHT SIDE */}
+                  <div className="relative flex items-center justify-between">
+                    {/* Empty space on LEFT */}
+                    <div className="hidden md:block md:w-5/12"></div>
+                    
+                    {/* Enhanced Timeline Dot */}
+                    <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-r from-orange-600 to-orange-700 rounded-full border-4 border-white dark:border-gray-900 shadow-xl z-10">
+                      <div className="w-full h-full bg-gradient-to-r from-orange-600 to-orange-700 rounded-full animate-pulse flex items-center justify-center">
+                        <div className="w-3 h-3 bg-white rounded-full"></div>
+                      </div>
+                    </div>
+                    
+                    {/* Content on RIGHT */}
+                    <div className="md:w-5/12 w-full">
+                      <EnhancedCard 
+                        delay={0.35}
+                        className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
+                      >
+                        <div className="bg-gradient-to-br from-orange-500 to-orange-700 p-8 text-white relative overflow-hidden">
+                          {/* Background Pattern */}
+                          <div className="absolute inset-0 opacity-10">
+                            <div className="absolute top-4 right-4 w-20 h-20 border-2 border-white rounded-full"></div>
+                            <div className="absolute bottom-4 left-4 w-16 h-16 border-2 border-white rounded-full"></div>
+                          </div>
+                          
+                          <div className="relative z-10">
+                            <div className="flex items-center justify-between mb-6">
+                              <div className="p-4 bg-white/20 rounded-xl backdrop-blur-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8">
+                                  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                                  <rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect>
+                                  <path d="M12 11h4"></path>
+                                  <path d="M12 16h4"></path>
+                                  <path d="M8 11h.01"></path>
+                                  <path d="M8 16h.01"></path>
+                                </svg>
+                              </div>
+                              <div className="flex items-center space-x-3 bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                  <path d="m9 11 3 3L22 4"></path>
+                                </svg>
+                                <span className="text-sm font-semibold">Completed</span>
+                              </div>
+                            </div>
+                            
+                            <div className="mb-4">
+                              <h3 className="text-2xl font-bold mb-3 leading-tight">Vice Head Data Analysis</h3>
+                              <p className="text-orange-100 font-medium text-lg">GDSC</p>
+                              <p className="text-orange-200 text-sm mt-1">Google Developer Student Clubs</p>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="p-8">
+                          <div className="flex items-center justify-between mb-6">
+                            <div className="flex items-center space-x-3 text-gray-600 dark:text-gray-300">
+                              <div className="p-2 bg-orange-100 dark:bg-orange-900/30 rounded-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                  <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+                                  <line x1="16" x2="16" y1="2" y2="6"></line>
+                                  <line x1="8" x2="8" y1="2" y2="6"></line>
+                                  <line x1="3" x2="21" y1="10" y2="10"></line>
+                                </svg>
+                              </div>
+                              <span className="font-semibold">Sep 2023 - Mar 2024</span>
+                            </div>
+                            <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">ID: GDSC-VH-2024</span>
+                          </div>
+                          
+                          <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 text-base">
+                            Leadership role as mentor and instructor, teaching data analysis skills focused on 
+                            BI, SQL, Power BI, databases, and data warehousing to fellow students.
+                          </p>
+                          
+                          <div className="mb-6">
+                            <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+                              <div className="w-2 h-2 bg-orange-600 rounded-full mr-3"></div>
+                              Leadership & Teaching
+                            </h4>
+                            <div className="flex flex-wrap gap-3">
+                              <span className="px-4 py-2 bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300 text-sm rounded-lg font-medium border border-orange-200 dark:border-orange-700">Mentoring</span>
+                              <span className="px-4 py-2 bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300 text-sm rounded-lg font-medium border border-orange-200 dark:border-orange-700">SQL</span>
+                              <span className="px-4 py-2 bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300 text-sm rounded-lg font-medium border border-orange-200 dark:border-orange-700">Power BI</span>
+                              <span className="px-4 py-2 bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300 text-sm rounded-lg font-medium border border-orange-200 dark:border-orange-700">Teaching</span>
+                            </div>
+                          </div>
+                        </div>
+                      </EnhancedCard>
+                    </div>
+                  </div>
+
+                  {/* 2024: ATC Internship - LEFT SIDE */}
+                  <div className="relative flex items-center justify-between">
+                    {/* Content on LEFT */}
+                    <div className="md:w-5/12 w-full">
+                      <EnhancedCard 
+                        delay={0.4}
+                        className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
+                      >
+                        <div className="bg-gradient-to-br from-red-500 to-red-700 p-8 text-white relative overflow-hidden">
+                          {/* Background Pattern */}
+                          <div className="absolute inset-0 opacity-10">
+                            <div className="absolute top-4 right-4 w-20 h-20 border-2 border-white rounded-full"></div>
+                            <div className="absolute bottom-4 left-4 w-16 h-16 border-2 border-white rounded-full"></div>
+                          </div>
+                          
+                          <div className="relative z-10">
+                            <div className="flex items-center justify-between mb-6">
+                              <div className="p-4 bg-white/20 rounded-xl backdrop-blur-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8">
+                                  <path d="M3 3v18h18"></path>
+                                  <path d="M18 17V9"></path>
+                                  <path d="M13 17V5"></path>
+                                  <path d="M8 17v-3"></path>
+                                </svg>
+                              </div>
+                              <div className="flex items-center space-x-3 bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                  <path d="m9 11 3 3L22 4"></path>
+                                </svg>
+                                <span className="text-sm font-semibold">Completed</span>
+                              </div>
+                            </div>
+                            
+                            <div className="mb-4">
+                              <h3 className="text-2xl font-bold mb-3 leading-tight">BI Analyst Internship</h3>
+                              <p className="text-red-100 font-medium text-lg">Addiction Treatment Center</p>
+                              <p className="text-red-200 text-sm mt-1">Healthcare Analytics & Dashboards</p>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="p-8">
+                          <div className="flex items-center justify-between mb-6">
+                            <div className="flex items-center space-x-3 text-gray-600 dark:text-gray-300">
+                              <div className="p-2 bg-red-100 dark:bg-red-900/30 rounded-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                  <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+                                  <line x1="16" x2="16" y1="2" y2="6"></line>
+                                  <line x1="8" x2="8" y1="2" y2="6"></line>
+                                  <line x1="3" x2="21" y1="10" y2="10"></line>
+                                </svg>
+                              </div>
+                              <span className="font-semibold">Jul 2024 - Oct 2024</span>
+                            </div>
+                            <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">ID: ATC-INT-2024</span>
+                          </div>
+                          
+                          <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 text-base">
+                            Hands-on experience in Power BI dashboard development and data visualization 
+                            for healthcare operations monitoring and performance analytics.
+                          </p>
+                          
+                          <div className="mb-6">
+                            <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+                              <div className="w-2 h-2 bg-red-600 rounded-full mr-3"></div>
+                              Skills Applied
+                            </h4>
+                            <div className="flex flex-wrap gap-3">
+                              <span className="px-4 py-2 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 text-sm rounded-lg font-medium border border-red-200 dark:border-red-700">Dashboard Design</span>
+                              <span className="px-4 py-2 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 text-sm rounded-lg font-medium border border-red-200 dark:border-red-700">Power BI</span>
+                              <span className="px-4 py-2 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 text-sm rounded-lg font-medium border border-red-200 dark:border-red-700">DAX</span>
+                              <span className="px-4 py-2 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 text-sm rounded-lg font-medium border border-red-200 dark:border-red-700">KPI Development</span>
+                            </div>
+                          </div>
+                        </div>
+                      </EnhancedCard>
+                    </div>
+                    
+                    {/* Enhanced Timeline Dot */}
+                    <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-r from-red-600 to-red-700 rounded-full border-4 border-white dark:border-gray-900 shadow-xl z-10 pulse-glow">
+                      <div className="w-full h-full bg-gradient-to-r from-red-600 to-red-700 rounded-full animate-pulse flex items-center justify-center">
+                        <div className="w-3 h-3 bg-white rounded-full"></div>
+                      </div>
+                    </div>
+                    
+                    {/* Empty space on RIGHT */}
+                    <div className="hidden md:block md:w-5/12"></div>
+                  </div>
+
+                  {/* 2025: Data Engineering Zoomcamp - RIGHT SIDE */}
+                  <div className="relative flex items-center justify-between">
+                    {/* Empty space on LEFT */}
+                    <div className="hidden md:block md:w-5/12"></div>
+                    
+                    {/* Enhanced Timeline Dot */}
+                    <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-r from-indigo-600 to-indigo-700 rounded-full border-4 border-white dark:border-gray-900 shadow-xl z-10">
+                      <div className="w-full h-full bg-gradient-to-r from-indigo-600 to-indigo-700 rounded-full animate-pulse flex items-center justify-center">
+                        <div className="w-3 h-3 bg-white rounded-full"></div>
+                      </div>
+                    </div>
+                    
+                    {/* Content on RIGHT */}
+                    <div className="md:w-5/12 w-full">
+                      <EnhancedCard 
+                        delay={0.5}
+                        className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
+                      >
+                        <div className="bg-gradient-to-br from-indigo-500 to-indigo-700 p-8 text-white relative overflow-hidden">
+                          {/* Background Pattern */}
+                          <div className="absolute inset-0 opacity-10">
+                            <div className="absolute top-4 right-4 w-20 h-20 border-2 border-white rounded-full"></div>
+                            <div className="absolute bottom-4 left-4 w-16 h-16 border-2 border-white rounded-full"></div>
+                          </div>
+                          
+                          <div className="relative z-10">
+                            <div className="flex items-center justify-between mb-6">
+                              <div className="p-4 bg-white/20 rounded-xl backdrop-blur-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8">
+                                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                                </svg>
+                              </div>
+                              <div className="flex items-center space-x-3 bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                  <path d="m9 11 3 3L22 4"></path>
+                                </svg>
+                                <span className="text-sm font-semibold">Completed</span>
+                              </div>
+                            </div>
+                            
+                            <div className="mb-4">
+                              <h3 className="text-2xl font-bold mb-3 leading-tight">Data Engineering Zoomcamp</h3>
+                              <p className="text-indigo-100 font-medium text-lg">DataTalks Club</p>
+                              <p className="text-indigo-200 text-sm mt-1">Modern Data Engineering Bootcamp</p>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="p-8">
+                          <div className="flex items-center justify-between mb-6">
+                            <div className="flex items-center space-x-3 text-gray-600 dark:text-gray-300">
+                              <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                                  <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+                                  <line x1="16" x2="16" y1="2" y2="6"></line>
+                                  <line x1="8" x2="8" y1="2" y2="6"></line>
+                                  <line x1="3" x2="21" y1="10" y2="10"></line>
+                                </svg>
+                              </div>
+                              <span className="font-semibold">Jan 2025 - May 2025</span>
+                            </div>
+                            <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">ID: DTC-ZC-2025</span>
+                          </div>
+                          
+                          <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 text-base">
+                            Comprehensive modern data engineering bootcamp with cloud deployment, 
+                            containerization, and advanced data pipeline orchestration techniques.
+                          </p>
+                          
+                          <div className="mb-6">
+                            <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+                              <div className="w-2 h-2 bg-indigo-600 rounded-full mr-3"></div>
+                              Technologies Mastered
+                            </h4>
+                            <div className="flex flex-wrap gap-3">
+                              <span className="px-4 py-2 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 text-sm rounded-lg font-medium border border-indigo-200 dark:border-indigo-700">Apache Airflow</span>
+                              <span className="px-4 py-2 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 text-sm rounded-lg font-medium border border-indigo-200 dark:border-indigo-700">dbt</span>
+                              <span className="px-4 py-2 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 text-sm rounded-lg font-medium border border-indigo-200 dark:border-indigo-700">Docker</span>
+                              <span className="px-4 py-2 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 text-sm rounded-lg font-medium border border-indigo-200 dark:border-indigo-700">GCP</span>
+                            </div>
+                          </div>
+                        </div>
+                      </EnhancedCard>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+              </div>
+              </motion.div>
+            </motion.div>
+          </div>
+        </section>
 
       {/* About Section */}
-      <section id="about" className="section-padding">
-        <div className="max-w-7xl mx-auto container-padding">
+      <section id="about" className="section-padding relative overflow-hidden">
+        {/* Enhanced Background Pattern - Improved Light Mode */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-50/80 via-white/90 to-indigo-50/70 dark:from-slate-900/90 dark:via-gray-900/95 dark:to-slate-800/90"></div>
+          <div className="absolute inset-0 bg-gradient-to-tl from-purple-50/60 via-transparent to-pink-50/50 dark:from-transparent dark:to-transparent"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.12)_0%,transparent_60%)] dark:bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.1)_0%,transparent_50%)]"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(239,68,68,0.10)_0%,transparent_60%)] dark:bg-[radial-gradient(circle_at_70%_80%,rgba(239,68,68,0.08)_0%,transparent_50%)]"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(139,92,246,0.08)_0%,transparent_65%)] dark:bg-[radial-gradient(circle_at_50%_40%,rgba(139,92,246,0.06)_0%,transparent_55%)]"></div>
+        </div>
+
+        {/* Floating Visual Elements */}
+        <div className="absolute inset-0 pointer-events-none">
+          {/* Floating Icons */}
+          <motion.div
+            animate={{ 
+              y: [0, -20, 0],
+              rotate: [0, 5, 0]
+            }}
+            transition={{ 
+              duration: 6,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className="absolute top-20 left-10 w-12 h-12 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-blue-200/30 dark:border-blue-700/30"
+          >
+            <FaDatabase className="text-blue-600 dark:text-blue-400" />
+          </motion.div>
+          
+          <motion.div
+            animate={{ 
+              y: [0, 15, 0],
+              rotate: [0, -3, 0]
+            }}
+            transition={{ 
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 1
+            }}
+            className="absolute top-32 right-16 w-10 h-10 bg-gradient-to-br from-red-500/20 to-orange-500/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-red-200/30 dark:border-red-700/30"
+          >
+            <FaChartLine className="text-red-600 dark:text-red-400 text-sm" />
+          </motion.div>
+
+          <motion.div
+            animate={{ 
+              y: [0, -25, 0],
+              rotate: [0, 8, 0]
+            }}
+            transition={{ 
+              duration: 7,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 2
+            }}
+            className="absolute bottom-32 left-20 w-8 h-8 bg-gradient-to-br from-purple-500/20 to-violet-500/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-purple-200/30 dark:border-purple-700/30"
+          >
+            <FaCode className="text-purple-600 dark:text-purple-400 text-xs" />
+          </motion.div>
+
+          <motion.div
+            animate={{ 
+              y: [0, 10, 0],
+              rotate: [0, -5, 0]
+            }}
+            transition={{ 
+              duration: 5,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 3
+            }}
+            className="absolute bottom-20 right-10 w-14 h-14 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-green-200/30 dark:border-green-700/30"
+          >
+            <FaLightbulb className="text-green-600 dark:text-green-400" />
+          </motion.div>
+
+          {/* Geometric Shapes */}
+          <motion.div
+            animate={{ 
+              rotate: [0, 360],
+              scale: [1, 1.1, 1]
+            }}
+            transition={{ 
+              duration: 20,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+            className="absolute top-1/4 left-1/4 w-32 h-32 border border-blue-200/20 dark:border-blue-700/20 rounded-full"
+          />
+
+          <motion.div
+            animate={{ 
+              rotate: [0, -360],
+              scale: [1, 0.9, 1]
+            }}
+            transition={{ 
+              duration: 25,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+            className="absolute bottom-1/4 right-1/4 w-24 h-24 border border-red-200/20 dark:border-red-700/20 rounded-full"
+          />
+        </div>
+        
+        <div className="content-width-1750 relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -2414,205 +2820,535 @@ export default function Home() {
             viewport={{ once: true }}
           >
             {/* Section Header */}
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-                About <span className="gradient-text">Me</span>
+            <div className="text-center mb-20">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                viewport={{ once: true }}
+                className="inline-block mb-6"
+              >
+                <span className="px-6 py-3 bg-gradient-to-r from-blue-500/10 to-red-500/10 dark:from-blue-500/20 dark:to-red-500/20 rounded-full text-sm font-semibold text-blue-600 dark:text-blue-400 border border-blue-200/20 dark:border-blue-500/20 backdrop-blur-sm">
+                  <FaUser className="inline mr-2" />
+                  About Me
+                </span>
+              </motion.div>
+
+              {/* Profile Photo */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.5 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                viewport={{ once: true }}
+                className="mb-8"
+              >
+                <div className="relative w-32 h-32 mx-auto mb-6">
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-red-500 to-purple-500 rounded-full p-1">
+                    <div className="w-full h-full bg-white dark:bg-gray-800 rounded-full flex items-center justify-center overflow-hidden">
+                      <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-red-500 rounded-full flex items-center justify-center text-white text-3xl font-bold">
+                        MM
+                      </div>
+                    </div>
+                  </div>
+                  {/* Floating Elements */}
+                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white text-sm animate-pulse">
+                    <FaCheckCircle />
+                  </div>
+                </div>
+              </motion.div>
+
+              <h2 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+                <span className="block mb-2">Mahmoud Mamdoh</span>
+                <span className="text-3xl md:text-4xl bg-gradient-to-r from-blue-600 via-red-500 to-purple-600 bg-clip-text text-transparent">
+                  Data Engineer
+                </span>
               </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                Data Engineer focused on transforming data into actionable insights
+              <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto font-light leading-relaxed mb-8">
+                Passionate Data Engineer dedicated to building scalable solutions that drive strategic decisions and accelerate business growth
               </p>
+
+              {/* Achievement Badges */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                viewport={{ once: true }}
+                className="flex flex-wrap justify-center gap-4 mb-8"
+              >
+                <div className="flex items-center px-4 py-2 bg-gradient-to-r from-blue-100 to-blue-50 dark:from-blue-900/30 dark:to-blue-800/20 rounded-full text-blue-700 dark:text-blue-300 text-sm font-medium border border-blue-200/50 dark:border-blue-700/50">
+                  <FaAward className="mr-2" />
+                  5+ Certifications
+            </div>
+                <div className="flex items-center px-4 py-2 bg-gradient-to-r from-green-100 to-green-50 dark:from-green-900/30 dark:to-green-800/20 rounded-full text-green-700 dark:text-green-300 text-sm font-medium border border-green-200/50 dark:border-green-700/50">
+                  <FaProjectDiagram className="mr-2" />
+                  30+ Projects
+                </div>
+                <div className="flex items-center px-4 py-2 bg-gradient-to-r from-purple-100 to-purple-50 dark:from-purple-900/30 dark:to-purple-800/20 rounded-full text-purple-700 dark:text-purple-300 text-sm font-medium border border-purple-200/50 dark:border-purple-700/50">
+                  <FaRocket className="mr-2" />
+                  Available for Hire
+                </div>
+              </motion.div>
+
+              {/* Call to Action Buttons */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+                viewport={{ once: true }}
+                className="flex flex-wrap justify-center gap-4"
+              >
+                <motion.button
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={downloadResume}
+                  className="group flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-red-600 hover:from-blue-700 hover:to-red-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-transparent"
+                >
+                  <FaDownload className="mr-2 group-hover:animate-bounce" />
+                  Download Resume
+                </motion.button>
+                <motion.a
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  href="#contact"
+                  className="group flex items-center px-8 py-4 bg-white/80 dark:bg-gray-800/80 hover:bg-white dark:hover:bg-gray-700 text-gray-900 dark:text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-700 backdrop-blur-sm"
+                >
+                  <FaEnvelope className="mr-2 group-hover:animate-pulse" />
+                  Get In Touch
+                </motion.a>
+              </motion.div>
             </div>
 
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="grid lg:grid-cols-2 gap-20 items-start">
               {/* Left Side - Content */}
-              <div>
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                viewport={{ once: true }}
+                className="space-y-8"
+              >
                 {/* Main Description */}
-                <div className="mb-8">
-                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-lg mb-6">
+                <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl rounded-2xl p-8 border border-gray-200/20 dark:border-gray-700/30 shadow-xl">
+                  <div className="flex items-start space-x-4 mb-6">
+                    <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-blue-500 to-red-500 rounded-xl flex items-center justify-center">
+                      <FaUser className="text-white text-lg" />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Professional Summary</h3>
+                      <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-red-500 rounded-full"></div>
+                    </div>
+                  </div>
+                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-lg mb-6 font-medium">
                     Data Engineer focused on transforming data into actionable insights that drive strategic decisions and accelerate business growth. 
                     Skilled in designing and optimizing complex data pipelines and workflows using modern data stacks.
                   </p>
                   
-                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                  <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-base">
                     Collaborative and impact-driven professional with experience in building scalable data solutions 
                     that enable organizations to make informed decisions.
                   </p>
                 </div>
                 
                 {/* Key Information */}
-                <div className="grid md:grid-cols-2 gap-6 mb-8">
+                <div className="grid md:grid-cols-2 gap-6">
                   {/* Education */}
-                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
-                    <div className="flex items-center mb-3">
-                      <FaGraduationCap className="text-red-600 text-xl mr-3" />
-                      <h4 className="font-semibold text-gray-900 dark:text-white">Education</h4>
+                  <motion.div
+                    whileHover={{ y: -5, scale: 1.02 }}
+                    transition={{ duration: 0.3 }}
+                    className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl p-6 border border-gray-200/30 dark:border-gray-700/40 shadow-lg hover:shadow-xl transition-all duration-300"
+                  >
+                    <div className="flex items-center mb-4">
+                      <div className="p-2 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg mr-4">
+                        <FaGraduationCap className="text-white text-lg" />
                     </div>
-                    <p className="text-gray-600 dark:text-gray-300 text-sm">
-                      Computer Science & Mathematics<br />
+                      <h4 className="font-bold text-gray-900 dark:text-white text-lg">Education</h4>
+                    </div>
+                    <p className="text-gray-700 dark:text-gray-300 font-medium">
+                      Computer Science & Mathematics
+                    </p>
+                    <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
                       Menofia University (2021-2025)
                     </p>
-                  </div>
+                  </motion.div>
 
                   {/* Location */}
-                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
-                    <div className="flex items-center mb-3">
-                      <FaMapMarkerAlt className="text-red-600 text-xl mr-3" />
-                      <h4 className="font-semibold text-gray-900 dark:text-white">Location</h4>
+                  <motion.div
+                    whileHover={{ y: -5, scale: 1.02 }}
+                    transition={{ duration: 0.3 }}
+                    className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl p-6 border border-gray-200/30 dark:border-gray-700/40 shadow-lg hover:shadow-xl transition-all duration-300"
+                  >
+                    <div className="flex items-center mb-4">
+                      <div className="p-2 bg-gradient-to-br from-green-500 to-teal-500 rounded-lg mr-4">
+                        <FaMapMarkerAlt className="text-white text-lg" />
                     </div>
-                    <p className="text-gray-600 dark:text-gray-300 text-sm">
-                      Cairo, Egypt<br />
+                      <h4 className="font-bold text-gray-900 dark:text-white text-lg">Location</h4>
+                    </div>
+                    <p className="text-gray-700 dark:text-gray-300 font-medium">
+                      Cairo, Egypt
+                    </p>
+                    <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
                       Open to relocate
                     </p>
-                  </div>
+                  </motion.div>
                 </div>
 
                 {/* Quick Stats */}
-                <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
-                  <h4 className="font-semibold text-gray-900 dark:text-white mb-4">Quick Stats</h4>
-                  <div className="grid grid-cols-3 gap-4 text-center">
-                    <div>
-                      <div className="text-2xl font-bold text-red-600">30+</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-400">Projects</div>
+                <motion.div
+                  whileHover={{ y: -5 }}
+                  transition={{ duration: 0.3 }}
+                  className="bg-gradient-to-br from-white/90 via-blue-50/50 to-purple-50/30 dark:from-gray-800/90 dark:via-gray-800/70 dark:to-gray-700/50 backdrop-blur-xl rounded-2xl p-8 border border-gray-200/30 dark:border-gray-700/40 shadow-xl relative overflow-hidden"
+                >
+                  {/* Background Pattern */}
+                  <div className="absolute inset-0 opacity-5">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-orange-500 to-red-500 rounded-full -translate-y-16 translate-x-16"></div>
+                    <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full translate-y-12 -translate-x-12"></div>
+                  </div>
+                  
+                  <div className="relative z-10">
+                    <div className="flex items-center mb-6">
+                      <div className="p-3 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl mr-4 shadow-lg">
+                        <FaTrophy className="text-white text-xl" />
                     </div>
                     <div>
-                      <div className="text-2xl font-bold text-blue-600">5+</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-400">Certifications</div>
+                        <h4 className="font-bold text-gray-900 dark:text-white text-xl">Career Highlights</h4>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">Key achievements & milestones</p>
+                      </div>
                     </div>
-                    <div>
-                      <div className="text-2xl font-bold text-green-600">2+</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-400">Years Learning</div>
+                    <div className="grid grid-cols-3 gap-6 text-center">
+                      <motion.div 
+                        className="group"
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <div className="relative">
+                          <div className="text-4xl font-bold bg-gradient-to-r from-red-500 to-pink-500 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-300">30+</div>
+                          <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 to-pink-500/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
+                        </div>
+                        <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Projects</div>
+                        <div className="w-full h-1 bg-gradient-to-r from-red-500 to-pink-500 rounded-full mt-2 opacity-60"></div>
+                      </motion.div>
+                      <motion.div 
+                        className="group"
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <div className="relative">
+                          <div className="text-4xl font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-300">5+</div>
+                          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
+                        </div>
+                        <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Certifications</div>
+                        <div className="w-full h-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full mt-2 opacity-60"></div>
+                      </motion.div>
+                      <motion.div 
+                        className="group"
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <div className="relative">
+                          <div className="text-4xl font-bold bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-300">2+</div>
+                          <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
+                        </div>
+                        <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Years Learning</div>
+                        <div className="w-full h-1 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full mt-2 opacity-60"></div>
+                      </motion.div>
                     </div>
                   </div>
+                </motion.div>
+
+                {/* Core Skills Preview */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                  viewport={{ once: true }}
+                  className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl rounded-2xl p-8 border border-gray-200/20 dark:border-gray-700/30 shadow-xl"
+                >
+                  <div className="flex items-start space-x-4 mb-6">
+                    <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl flex items-center justify-center">
+                      <FaTools className="text-white text-lg" />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Core Technologies</h3>
+                      <div className="w-16 h-1 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full"></div>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {[
+                      { name: 'Python', icon: FaPython, color: 'from-yellow-400 to-blue-500' },
+                      { name: 'SQL', icon: FaDatabase, color: 'from-blue-500 to-cyan-500' },
+                      { name: 'Docker', icon: FaDocker, color: 'from-blue-400 to-blue-600' },
+                      { name: 'Git', icon: FaGitAlt, color: 'from-orange-500 to-red-500' }
+                    ].map((tech, index) => (
+                      <motion.div
+                        key={tech.name}
+                        whileHover={{ scale: 1.05, y: -2 }}
+                        transition={{ duration: 0.2 }}
+                        className="flex flex-col items-center p-4 bg-gray-50/80 dark:bg-gray-700/50 rounded-xl hover:bg-gray-100/80 dark:hover:bg-gray-600/60 transition-all duration-300 group"
+                      >
+                        <div className={`p-3 bg-gradient-to-r ${tech.color} rounded-lg mb-2 group-hover:scale-110 transition-transform duration-300`}>
+                          <tech.icon className="text-white text-lg" />
                 </div>
+                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{tech.name}</span>
+                      </motion.div>
+                    ))}
               </div>
+                </motion.div>
+              </motion.div>
               
               {/* Right Side - Role Cards */}
-              <div className="space-y-6">
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.5 }}
+                viewport={{ once: true }}
+                className="space-y-8"
+              >
                 {/* Data Engineer */}
-                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-6">
-                  <div className="flex items-start space-x-4">
-                    <div className="p-3 bg-red-600 rounded-lg flex-shrink-0">
-                      <FaDatabase className="text-white text-xl" />
+                <motion.div
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  className="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl p-8 border border-gray-200/30 dark:border-gray-700/40 shadow-xl hover:shadow-2xl transition-all duration-500 relative overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 via-transparent to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="relative z-10">
+                    <div className="flex items-start space-x-6">
+                      <div className="p-4 bg-gradient-to-br from-red-500 to-orange-500 rounded-2xl flex-shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <FaDatabase className="text-white text-2xl" />
                     </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Data Engineer</h3>
-                      <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                      <div className="flex-1">
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors duration-300">Data Engineer</h3>
+                        <p className="text-gray-600 dark:text-gray-300 text-base mb-6 leading-relaxed">
                         Building scalable ETL pipelines, data warehouses, and real-time streaming solutions
                       </p>
-                      <div className="flex flex-wrap gap-2">
-                        <span className="px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded text-sm">Spark</span>
-                        <span className="px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded text-sm">Hadoop</span>
-                        <span className="px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded text-sm">Kafka</span>
-                        <span className="px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded text-sm">Airflow</span>
+                        <div className="flex flex-wrap gap-3">
+                          <span className="px-4 py-2 bg-gradient-to-r from-red-100 to-orange-100 dark:from-red-900/40 dark:to-orange-900/40 text-red-700 dark:text-red-300 rounded-full text-sm font-medium border border-red-200/50 dark:border-red-700/50">Spark</span>
+                          <span className="px-4 py-2 bg-gradient-to-r from-red-100 to-orange-100 dark:from-red-900/40 dark:to-orange-900/40 text-red-700 dark:text-red-300 rounded-full text-sm font-medium border border-red-200/50 dark:border-red-700/50">Hadoop</span>
+                          <span className="px-4 py-2 bg-gradient-to-r from-red-100 to-orange-100 dark:from-red-900/40 dark:to-orange-900/40 text-red-700 dark:text-red-300 rounded-full text-sm font-medium border border-red-200/50 dark:border-red-700/50">Kafka</span>
+                          <span className="px-4 py-2 bg-gradient-to-r from-red-100 to-orange-100 dark:from-red-900/40 dark:to-orange-900/40 text-red-700 dark:text-red-300 rounded-full text-sm font-medium border border-red-200/50 dark:border-red-700/50">Airflow</span>
                       </div>
                     </div>
                   </div>
                 </div>
+                </motion.div>
 
                 {/* Analytics Engineer */}
-                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-6">
-                  <div className="flex items-start space-x-4">
-                    <div className="p-3 bg-green-600 rounded-lg flex-shrink-0">
-                      <FaChartLine className="text-white text-xl" />
+                <motion.div
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  className="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl p-8 border border-gray-200/30 dark:border-gray-700/40 shadow-xl hover:shadow-2xl transition-all duration-500 relative overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 via-transparent to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="relative z-10">
+                    <div className="flex items-start space-x-6">
+                      <div className="p-4 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl flex-shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <FaChartLine className="text-white text-2xl" />
                     </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Analytics Engineer</h3>
-                      <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                      <div className="flex-1">
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors duration-300">Analytics Engineer</h3>
+                        <p className="text-gray-600 dark:text-gray-300 text-base mb-6 leading-relaxed">
                         Designing data models for advanced analytics and business intelligence
                       </p>
-                      <div className="flex flex-wrap gap-2">
-                        <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded text-sm">dbt</span>
-                        <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded text-sm">Snowflake</span>
-                        <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded text-sm">SQL</span>
-                        <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded text-sm">Python</span>
+                        <div className="flex flex-wrap gap-3">
+                          <span className="px-4 py-2 bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900/40 dark:to-emerald-900/40 text-green-700 dark:text-green-300 rounded-full text-sm font-medium border border-green-200/50 dark:border-green-700/50">dbt</span>
+                          <span className="px-4 py-2 bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900/40 dark:to-emerald-900/40 text-green-700 dark:text-green-300 rounded-full text-sm font-medium border border-green-200/50 dark:border-green-700/50">Snowflake</span>
+                          <span className="px-4 py-2 bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900/40 dark:to-emerald-900/40 text-green-700 dark:text-green-300 rounded-full text-sm font-medium border border-green-200/50 dark:border-green-700/50">SQL</span>
+                          <span className="px-4 py-2 bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900/40 dark:to-emerald-900/40 text-green-700 dark:text-green-300 rounded-full text-sm font-medium border border-green-200/50 dark:border-green-700/50">Python</span>
                       </div>
                     </div>
                   </div>
                 </div>
+                </motion.div>
 
                 {/* BI Developer */}
-                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-6">
-                  <div className="flex items-start space-x-4">
-                    <div className="p-3 bg-purple-600 rounded-lg flex-shrink-0">
-                      <FaLightbulb className="text-white text-xl" />
+                <motion.div
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  className="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl p-8 border border-gray-200/30 dark:border-gray-700/40 shadow-xl hover:shadow-2xl transition-all duration-500 relative overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-violet-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="relative z-10">
+                    <div className="flex items-start space-x-6">
+                      <div className="p-4 bg-gradient-to-br from-purple-500 to-violet-500 rounded-2xl flex-shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <FaLightbulb className="text-white text-2xl" />
                     </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">BI Developer</h3>
-                      <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                      <div className="flex-1">
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300">BI Developer</h3>
+                        <p className="text-gray-600 dark:text-gray-300 text-base mb-6 leading-relaxed">
                         Creating interactive dashboards and reports for data-driven decisions
                       </p>
-                      <div className="flex flex-wrap gap-2">
-                        <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-sm">Power BI</span>
-                        <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-sm">Tableau</span>
-                        <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-sm">DAX</span>
-                        <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-sm">SSAS</span>
+                        <div className="flex flex-wrap gap-3">
+                          <span className="px-4 py-2 bg-gradient-to-r from-purple-100 to-violet-100 dark:from-purple-900/40 dark:to-violet-900/40 text-purple-700 dark:text-purple-300 rounded-full text-sm font-medium border border-purple-200/50 dark:border-purple-700/50">Power BI</span>
+                          <span className="px-4 py-2 bg-gradient-to-r from-purple-100 to-violet-100 dark:from-purple-900/40 dark:to-violet-900/40 text-purple-700 dark:text-purple-300 rounded-full text-sm font-medium border border-purple-200/50 dark:border-purple-700/50">Tableau</span>
+                          <span className="px-4 py-2 bg-gradient-to-r from-purple-100 to-violet-100 dark:from-purple-900/40 dark:to-violet-900/40 text-purple-700 dark:text-purple-300 rounded-full text-sm font-medium border border-purple-200/50 dark:border-purple-700/50">DAX</span>
+                          <span className="px-4 py-2 bg-gradient-to-r from-purple-100 to-violet-100 dark:from-purple-900/40 dark:to-violet-900/40 text-purple-700 dark:text-purple-300 rounded-full text-sm font-medium border border-purple-200/50 dark:border-purple-700/50">SSAS</span>
                       </div>
                     </div>
                   </div>
                 </div>
+                </motion.div>
 
                 {/* Data Analyst */}
-                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-6">
-                  <div className="flex items-start space-x-4">
-                    <div className="p-3 bg-orange-600 rounded-lg flex-shrink-0">
-                      <FaUsers className="text-white text-xl" />
+                <motion.div
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  className="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl p-8 border border-gray-200/30 dark:border-gray-700/40 shadow-xl hover:shadow-2xl transition-all duration-500 relative overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-orange-500/5 via-transparent to-amber-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="relative z-10">
+                    <div className="flex items-start space-x-6">
+                      <div className="p-4 bg-gradient-to-br from-orange-500 to-amber-500 rounded-2xl flex-shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+                        <FaUsers className="text-white text-2xl" />
                     </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Data Analyst</h3>
-                      <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                      <div className="flex-1">
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors duration-300">Data Analyst</h3>
+                        <p className="text-gray-600 dark:text-gray-300 text-base mb-6 leading-relaxed">
                         Transforming raw data into actionable insights for business strategy
                       </p>
-                      <div className="flex flex-wrap gap-2">
-                        <span className="px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 rounded text-sm">Python</span>
-                        <span className="px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 rounded text-sm">Pandas</span>
-                        <span className="px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 rounded text-sm">SQL</span>
-                        <span className="px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 rounded text-sm">Jupyter</span>
+                        <div className="flex flex-wrap gap-3">
+                          <span className="px-4 py-2 bg-gradient-to-r from-orange-100 to-amber-100 dark:from-orange-900/40 dark:to-amber-900/40 text-orange-700 dark:text-orange-300 rounded-full text-sm font-medium border border-orange-200/50 dark:border-orange-700/50">Python</span>
+                          <span className="px-4 py-2 bg-gradient-to-r from-orange-100 to-amber-100 dark:from-orange-900/40 dark:to-amber-900/40 text-orange-700 dark:text-orange-300 rounded-full text-sm font-medium border border-orange-200/50 dark:border-orange-700/50">Pandas</span>
+                          <span className="px-4 py-2 bg-gradient-to-r from-orange-100 to-amber-100 dark:from-orange-900/40 dark:to-amber-900/40 text-orange-700 dark:text-orange-300 rounded-full text-sm font-medium border border-orange-200/50 dark:border-orange-700/50">SQL</span>
+                          <span className="px-4 py-2 bg-gradient-to-r from-orange-100 to-amber-100 dark:from-orange-900/40 dark:to-amber-900/40 text-orange-700 dark:text-orange-300 rounded-full text-sm font-medium border border-orange-200/50 dark:border-orange-700/50">Jupyter</span>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
+                </motion.div>
+              </motion.div>
             </div>
           </motion.div>
         </div>
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="section-padding section-alt">
-        <div className="max-w-7xl mx-auto container-padding">
+      <section id="projects" className="section-padding relative overflow-hidden">
+        {/* Enhanced Background - Improved Light Mode */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/80 via-white/95 to-purple-50/70 dark:from-gray-900/95 dark:via-slate-900/98 dark:to-indigo-900/80"></div>
+          <div className="absolute inset-0 bg-gradient-to-tl from-emerald-50/60 via-transparent to-cyan-50/50 dark:from-transparent dark:to-transparent"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_25%,rgba(79,70,229,0.12)_0%,transparent_60%)] dark:bg-[radial-gradient(circle_at_25%_25%,rgba(79,70,229,0.15)_0%,transparent_50%)]"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_75%,rgba(16,185,129,0.10)_0%,transparent_60%)] dark:bg-[radial-gradient(circle_at_75%_75%,rgba(16,185,129,0.12)_0%,transparent_50%)]"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_10%,rgba(139,92,246,0.08)_0%,transparent_65%)] dark:bg-[radial-gradient(circle_at_50%_10%,rgba(139,92,246,0.06)_0%,transparent_55%)]"></div>
+        </div>
+
+        {/* Floating Elements for Projects */}
+        <div className="absolute inset-0 pointer-events-none">
+          <motion.div
+            animate={{ 
+              y: [0, -15, 0],
+              rotate: [0, 3, 0]
+            }}
+            transition={{ 
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className="absolute top-32 left-12 w-16 h-16 bg-gradient-to-br from-indigo-500/20 to-purple-500/20 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-indigo-200/30 dark:border-indigo-700/30"
+          >
+            <FaProjectDiagram className="text-indigo-600 dark:text-indigo-400 text-xl" />
+          </motion.div>
+          
+          <motion.div
+            animate={{ 
+              y: [0, 20, 0],
+              rotate: [0, -5, 0]
+            }}
+            transition={{ 
+              duration: 10,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 2
+            }}
+            className="absolute top-20 right-20 w-12 h-12 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-green-200/30 dark:border-green-700/30"
+          >
+            <FaRocket className="text-green-600 dark:text-green-400" />
+          </motion.div>
+
+          <motion.div
+            animate={{ 
+              y: [0, -10, 0],
+              scale: [1, 1.1, 1]
+            }}
+            transition={{ 
+              duration: 6,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 4
+            }}
+            className="absolute bottom-32 left-16 w-14 h-14 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-xl flex items-center justify-center backdrop-blur-sm border border-orange-200/30 dark:border-orange-700/30"
+          >
+            <FaTools className="text-orange-600 dark:text-orange-400" />
+          </motion.div>
+        </div>
+
+        <div className="content-width-1750 relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold mb-8 gradient-text">Projects</h2>
-              <p className="text-gray-300 max-w-2xl mx-auto">
-                Showcase of data engineering projects demonstrating modern data stack expertise
+            {/* Enhanced Header */}
+            <div className="text-center mb-20">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                viewport={{ once: true }}
+                className="inline-block mb-6"
+              >
+                <span className="px-6 py-3 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 dark:from-indigo-500/20 dark:to-purple-500/20 rounded-full text-sm font-semibold text-indigo-600 dark:text-indigo-400 border border-indigo-200/20 dark:border-indigo-500/20 backdrop-blur-sm">
+                  <FaProjectDiagram className="inline mr-2" />
+                  Portfolio Showcase
+                </span>
+              </motion.div>
+              <h2 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+                Featured <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-green-600 bg-clip-text text-transparent">Projects</span>
+              </h2>
+              <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto font-light leading-relaxed">
+                Showcase of data engineering projects demonstrating modern data stack expertise and scalable solutions
               </p>
             </div>
 
-            {/* Category Filter */}
-            <div className="flex justify-center mb-12">
-              <div className="flex flex-wrap gap-4 bg-white/10 dark:bg-gray-800/50 backdrop-blur-sm rounded-xl p-2 border border-gray-200/20 dark:border-gray-700/50">
-                {['All', 'Data Engineer', 'Analytics Engineer', 'BI Engineer'].map((category) => (
+            {/* Enhanced Category Filter */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              viewport={{ once: true }}
+              className="flex justify-center mb-16"
+            >
+              <div className="flex flex-wrap gap-3 bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl rounded-2xl p-3 border border-gray-200/30 dark:border-gray-700/40 shadow-lg">
+                {[
+                  { name: 'All', icon: FaProjectDiagram, color: 'from-gray-500 to-gray-600' },
+                  { name: 'Data Engineer', icon: FaDatabase, color: 'from-blue-500 to-cyan-500' },
+                  { name: 'Analytics Engineer', icon: FaChartLine, color: 'from-green-500 to-emerald-500' },
+                  { name: 'BI Engineer', icon: FaLightbulb, color: 'from-purple-500 to-violet-500' }
+                ].map((category) => (
                   <motion.button
-                    key={category}
-                    whileHover={{ scale: 1.05 }}
+                    key={category.name}
+                    whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    onClick={() => setSelectedCategory(category)}
-                    className={`px-6 py-3 rounded-lg text-sm font-medium transition-all duration-300 ${
-                      selectedCategory === category
-                        ? 'bg-red-600 text-white shadow-lg shadow-red-600/25'
-                        : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100/50 dark:hover:bg-gray-700/50'
+                    onClick={() => setSelectedCategory(category.name)}
+                    className={`relative flex items-center space-x-2 px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-300 ${
+                      selectedCategory === category.name
+                        ? `bg-gradient-to-r ${category.color} text-white shadow-lg shadow-black/20`
+                        : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100/80 dark:hover:bg-gray-700/60'
                     }`}
                   >
-                    {category}
+                    {selectedCategory === category.name && (
+                      <motion.div
+                        layoutId="activeCategory"
+                        className={`absolute inset-0 bg-gradient-to-r ${category.color} rounded-xl`}
+                        transition={{ type: "spring", duration: 0.5 }}
+                      />
+                    )}
+                    <category.icon className={`relative z-10 ${selectedCategory === category.name ? 'text-white' : ''}`} />
+                    <span className="relative z-10">{category.name}</span>
                   </motion.button>
                 ))}
               </div>
-            </div>
+            </motion.div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {(() => {
@@ -2664,21 +3400,109 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Skills Section */}
-      <section id="skills" className="section-padding">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              {/* Skills Section */}
+        <section id="skills" className="section-padding relative overflow-hidden">
+          {/* Enhanced Background - Improved Light Mode */}
+          <div className="absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-br from-emerald-50/80 via-white/95 to-cyan-50/80 dark:from-emerald-900/80 dark:via-gray-900/95 dark:to-cyan-900/85"></div>
+            <div className="absolute inset-0 bg-gradient-to-tl from-teal-50/70 via-transparent to-green-50/60 dark:from-transparent dark:to-transparent"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(16,185,129,0.12)_0%,transparent_60%)] dark:bg-[radial-gradient(circle_at_30%_40%,rgba(16,185,129,0.15)_0%,transparent_50%)]"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_60%,rgba(6,182,212,0.10)_0%,transparent_60%)] dark:bg-[radial-gradient(circle_at_70%_60%,rgba(6,182,212,0.12)_0%,transparent_50%)]"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_80%,rgba(34,197,94,0.08)_0%,transparent_65%)] dark:bg-[radial-gradient(circle_at_50%_80%,rgba(34,197,94,0.06)_0%,transparent_55%)]"></div>
+          </div>
+
+          {/* Floating Tech Icons */}
+          <div className="absolute inset-0 pointer-events-none">
+            <motion.div
+              animate={{ 
+                y: [0, -20, 0],
+                rotate: [0, 5, 0]
+              }}
+              transition={{ 
+                duration: 7,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="absolute top-24 left-8 w-16 h-16 bg-gradient-to-br from-emerald-500/20 to-green-500/20 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-emerald-200/30 dark:border-emerald-700/30"
+            >
+              <FaPython className="text-emerald-600 dark:text-emerald-400 text-xl" />
+            </motion.div>
+            
+            <motion.div
+              animate={{ 
+                y: [0, 15, 0],
+                rotate: [0, -3, 0]
+              }}
+              transition={{ 
+                duration: 9,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 2
+              }}
+              className="absolute top-40 right-12 w-12 h-12 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-cyan-200/30 dark:border-cyan-700/30"
+            >
+              <FaDatabase className="text-cyan-600 dark:text-cyan-400" />
+            </motion.div>
+
+            <motion.div
+              animate={{ 
+                y: [0, -12, 0],
+                scale: [1, 1.1, 1]
+              }}
+              transition={{ 
+                duration: 8,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 4
+              }}
+              className="absolute bottom-32 left-20 w-14 h-14 bg-gradient-to-br from-orange-500/20 to-yellow-500/20 rounded-xl flex items-center justify-center backdrop-blur-sm border border-orange-200/30 dark:border-orange-700/30"
+            >
+              <FaDocker className="text-orange-600 dark:text-orange-400" />
+            </motion.div>
+
+            <motion.div
+              animate={{ 
+                y: [0, 18, 0],
+                rotate: [0, -8, 0]
+              }}
+              transition={{ 
+                duration: 6,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1
+              }}
+              className="absolute bottom-20 right-16 w-10 h-10 bg-gradient-to-br from-purple-500/20 to-violet-500/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-purple-200/30 dark:border-purple-700/30"
+            >
+              <FaGitAlt className="text-purple-600 dark:text-purple-400 text-sm" />
+            </motion.div>
+          </div>
+
+        <div className="content-width-1750 relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <div className="text-center mb-16">
-              <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-                Technical <span className="gradient-text">Skills</span>
+            {/* Enhanced Header */}
+            <div className="text-center mb-20">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                viewport={{ once: true }}
+                className="inline-block mb-6"
+              >
+                <span className="px-6 py-3 bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 dark:from-emerald-500/20 dark:to-cyan-500/20 rounded-full text-sm font-semibold text-emerald-600 dark:text-emerald-400 border border-emerald-200/20 dark:border-emerald-500/20 backdrop-blur-sm">
+                  <FaTools className="inline mr-2" />
+                  Technical Expertise
+                </span>
+              </motion.div>
+              <h2 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+                Professional <span className="bg-gradient-to-r from-emerald-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent">Skills</span>
               </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                Expertise across the full data engineering and analytics stack
+              <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto font-light leading-relaxed">
+                Expertise across the full data engineering and analytics stack with hands-on experience in modern technologies
               </p>
             </div>
 
@@ -2690,11 +3514,11 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="bg-gray-50 dark:bg-gray-900 p-6 rounded-xl border border-gray-200 dark:border-gray-700"
+                  className="enhanced-card p-6 rounded-xl"
                 >
                   {/* Category Header */}
                   <div className="flex items-center space-x-3 mb-6">
-                    <div className="p-2 bg-red-600 text-white rounded-lg">
+                    <div className="p-2 bg-red-600 text-white rounded-lg rotate-slow">
                       {renderSkillIcon(category.icon)}
                     </div>
                     <h3 className="text-lg font-bold text-gray-900 dark:text-white">
@@ -2723,13 +3547,13 @@ export default function Home() {
                         </div>
                         
                         {/* Skill Bar */}
-                        <div className="skill-bar">
+                        <div className="skill-bar-enhanced">
                           <motion.div 
                             initial={{ width: 0 }}
                             whileInView={{ width: `${skill.level}%` }}
                             transition={{ duration: 1.5, delay: 0.5 + idx * 0.1, ease: "easeOut" }}
                             viewport={{ once: true }}
-                            className={`skill-progress bg-gradient-to-r ${skill.color}`}
+                            className={`skill-progress-enhanced bg-gradient-to-r ${skill.color}`}
                             style={{ width: `${skill.level}%` }}
                           />
                         </div>
@@ -2767,7 +3591,7 @@ export default function Home() {
                       whileInView={{ opacity: 1, scale: 1 }}
                       transition={{ duration: 0.5, delay: index * 0.1 }}
                       viewport={{ once: true }}
-                      className="bg-gradient-to-r from-red-100 to-red-200 dark:from-red-900 dark:to-red-800 px-6 py-3 rounded-full text-red-700 dark:text-red-300 font-medium border border-red-300 dark:border-red-700"
+                      className="bg-gradient-to-r from-red-100 to-red-200 dark:from-red-900 dark:to-red-800 px-6 py-3 rounded-full text-red-700 dark:text-red-300 font-medium border border-red-300 dark:border-red-700 hover-lift pulse-glow"
                     >
                       {tech}
                     </motion.div>
@@ -2781,7 +3605,7 @@ export default function Home() {
 
       {/* Interactive Dashboards Section */}
       <section id="dashboards" className="section-padding">
-        <div className="max-w-7xl mx-auto container-padding">
+        <div className="content-width-1750">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -2854,11 +3678,11 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden"
+                  className="enhanced-card rounded-xl overflow-hidden hover-lift"
                 >
                   <div className={`bg-gradient-to-r ${dashboard.color} p-6 text-white`}>
                     <div className="flex items-center justify-between mb-4">
-                      <div className="text-4xl">
+                      <div className="text-4xl bounce-gentle">
                         {dashboard.icon}
                       </div>
                       <div className="flex items-center space-x-2">
@@ -2921,7 +3745,7 @@ export default function Home() {
 
       {/* Certifications Section */}
       <section className="section-padding">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -3037,18 +3861,92 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="section-padding section-alt">
-        <div className="max-w-7xl mx-auto container-padding">
+      <section id="contact" className="section-padding relative overflow-hidden">
+        {/* Enhanced Background - Improved Light Mode */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-rose-50/80 via-white/95 to-pink-50/70 dark:from-slate-900/95 dark:via-gray-900/98 dark:to-rose-900/80"></div>
+          <div className="absolute inset-0 bg-gradient-to-tl from-red-50/60 via-transparent to-orange-50/50 dark:from-transparent dark:to-transparent"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(239,68,68,0.12)_0%,transparent_60%)] dark:bg-[radial-gradient(circle_at_20%_30%,rgba(239,68,68,0.15)_0%,transparent_50%)]"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_70%,rgba(99,102,241,0.10)_0%,transparent_60%)] dark:bg-[radial-gradient(circle_at_80%_70%,rgba(99,102,241,0.12)_0%,transparent_50%)]"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(236,72,153,0.08)_0%,transparent_65%)] dark:bg-[radial-gradient(circle_at_50%_50%,rgba(236,72,153,0.06)_0%,transparent_55%)]"></div>
+        </div>
+
+        {/* Floating Contact Elements */}
+        <div className="absolute inset-0 pointer-events-none">
+          <motion.div
+            animate={{ 
+              y: [0, -15, 0],
+              rotate: [0, 5, 0]
+            }}
+            transition={{ 
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className="absolute top-32 left-12 w-16 h-16 bg-gradient-to-br from-red-500/20 to-pink-500/20 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-red-200/30 dark:border-red-700/30"
+          >
+            <FaEnvelope className="text-red-600 dark:text-red-400 text-xl" />
+          </motion.div>
+          
+          <motion.div
+            animate={{ 
+              y: [0, 20, 0],
+              rotate: [0, -3, 0]
+            }}
+            transition={{ 
+              duration: 10,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 2
+            }}
+            className="absolute top-24 right-16 w-12 h-12 bg-gradient-to-br from-blue-500/20 to-indigo-500/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-blue-200/30 dark:border-blue-700/30"
+          >
+            <FaLinkedin className="text-blue-600 dark:text-blue-400" />
+          </motion.div>
+
+          <motion.div
+            animate={{ 
+              y: [0, -12, 0],
+              scale: [1, 1.1, 1]
+            }}
+            transition={{ 
+              duration: 7,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 4
+            }}
+            className="absolute bottom-32 left-20 w-14 h-14 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-xl flex items-center justify-center backdrop-blur-sm border border-green-200/30 dark:border-green-700/30"
+          >
+            <FaPhone className="text-green-600 dark:text-green-400" />
+          </motion.div>
+        </div>
+
+        <div className="content-width-1750 relative z-10">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold mb-8 gradient-text">Contact</h2>
-              <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-                Open to relocate for the right opportunity. Let's discuss how I can contribute to your data engineering initiatives.
+            {/* Enhanced Header */}
+            <div className="text-center mb-20">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                viewport={{ once: true }}
+                className="inline-block mb-6"
+              >
+                <span className="px-6 py-3 bg-gradient-to-r from-red-500/10 to-pink-500/10 dark:from-red-500/20 dark:to-pink-500/20 rounded-full text-sm font-semibold text-red-600 dark:text-red-400 border border-red-200/20 dark:border-red-500/20 backdrop-blur-sm">
+                  <FaPaperPlane className="inline mr-2" />
+                  Let's Connect
+                </span>
+              </motion.div>
+              <h2 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+                Get in <span className="bg-gradient-to-r from-red-600 via-pink-600 to-purple-600 bg-clip-text text-transparent">Touch</span>
+              </h2>
+              <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto font-light leading-relaxed">
+                Open to relocate for the right opportunity. Let's discuss how I can contribute to your data engineering initiatives
               </p>
             </div>
 
@@ -3133,7 +4031,7 @@ export default function Home() {
                     <input
                       type="text"
                       id="name"
-                      className="w-full px-4 py-3 bg-white/95 dark:bg-gray-800/50 backdrop-blur-sm border-2 border-gray-200/80 dark:border-gray-700/50 rounded-xl text-gray-900 dark:text-white focus:border-red-600 focus:outline-none transition-all duration-300 placeholder-gray-500 dark:placeholder-gray-400 shadow-sm hover:shadow-md focus:shadow-lg focus:shadow-red-600/20 transform hover:-translate-y-1 focus:-translate-y-1"
+                      className="w-full px-4 py-3 enhanced-card border-2 border-gray-200/80 dark:border-gray-700/50 rounded-xl text-gray-900 dark:text-white focus:border-red-600 focus:outline-none transition-all duration-300 placeholder-gray-500 dark:placeholder-gray-400 shadow-sm hover:shadow-md focus:shadow-lg focus:shadow-red-600/20 transform hover:-translate-y-1 focus:-translate-y-1"
                       placeholder="Your name"
                     />
                   </motion.div>
@@ -3151,7 +4049,7 @@ export default function Home() {
                     <input
                       type="email"
                       id="email"
-                      className="w-full px-4 py-3 bg-white/95 dark:bg-gray-800/50 backdrop-blur-sm border-2 border-gray-200/80 dark:border-gray-700/50 rounded-xl text-gray-900 dark:text-white focus:border-red-600 focus:outline-none transition-all duration-300 placeholder-gray-500 dark:placeholder-gray-400 shadow-sm hover:shadow-md focus:shadow-lg focus:shadow-red-600/20 transform hover:-translate-y-1 focus:-translate-y-1"
+                      className="w-full px-4 py-3 enhanced-card border-2 border-gray-200/80 dark:border-gray-700/50 rounded-xl text-gray-900 dark:text-white focus:border-red-600 focus:outline-none transition-all duration-300 placeholder-gray-500 dark:placeholder-gray-400 shadow-sm hover:shadow-md focus:shadow-lg focus:shadow-red-600/20 transform hover:-translate-y-1 focus:-translate-y-1"
                       placeholder="your.email@example.com"
                     />
                   </motion.div>
@@ -3169,7 +4067,7 @@ export default function Home() {
                     <input
                       type="text"
                       id="subject"
-                      className="w-full px-4 py-3 bg-white/95 dark:bg-gray-800/50 backdrop-blur-sm border-2 border-gray-200/80 dark:border-gray-700/50 rounded-xl text-gray-900 dark:text-white focus:border-red-600 focus:outline-none transition-all duration-300 placeholder-gray-500 dark:placeholder-gray-400 shadow-sm hover:shadow-md focus:shadow-lg focus:shadow-red-600/20 transform hover:-translate-y-1 focus:-translate-y-1"
+                      className="w-full px-4 py-3 enhanced-card border-2 border-gray-200/80 dark:border-gray-700/50 rounded-xl text-gray-900 dark:text-white focus:border-red-600 focus:outline-none transition-all duration-300 placeholder-gray-500 dark:placeholder-gray-400 shadow-sm hover:shadow-md focus:shadow-lg focus:shadow-red-600/20 transform hover:-translate-y-1 focus:-translate-y-1"
                       placeholder="What's this about?"
                     />
                   </motion.div>
@@ -3187,7 +4085,7 @@ export default function Home() {
                     <textarea
                       id="message"
                       rows={6}
-                      className="w-full px-4 py-3 bg-white/95 dark:bg-gray-800/50 backdrop-blur-sm border-2 border-gray-200/80 dark:border-gray-700/50 rounded-xl text-gray-900 dark:text-white focus:border-red-600 focus:outline-none transition-all duration-300 placeholder-gray-500 dark:placeholder-gray-400 shadow-sm hover:shadow-md focus:shadow-lg focus:shadow-red-600/20 transform hover:-translate-y-1 focus:-translate-y-1 resize-none"
+                      className="w-full px-4 py-3 enhanced-card border-2 border-gray-200/80 dark:border-gray-700/50 rounded-xl text-gray-900 dark:text-white focus:border-red-600 focus:outline-none transition-all duration-300 placeholder-gray-500 dark:placeholder-gray-400 shadow-sm hover:shadow-md focus:shadow-lg focus:shadow-red-600/20 transform hover:-translate-y-1 focus:-translate-y-1 resize-none"
                       placeholder="Your message..."
                     />
                   </motion.div>
@@ -3203,7 +4101,7 @@ export default function Home() {
                       whileHover={{ scale: 1.02, y: -2 }}
                       whileTap={{ scale: 0.98 }}
                       type="submit"
-                      className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:shadow-2xl hover:shadow-red-600/25 border-0 relative overflow-hidden group"
+                      className="w-full btn-enhanced font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform border-0 relative overflow-hidden group"
                     >
                       {/* Shimmer Effect */}
                       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
@@ -3231,10 +4129,16 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="footer-light dark:from-gray-900/80 dark:via-gray-900/90 dark:to-gray-900/80 backdrop-blur-md border-t border-gray-200/80 dark:border-gray-700/50 py-8 shadow-sm">
-        <div className="max-w-7xl mx-auto container-padding text-center">
-          <p className="text-gray-600 dark:text-gray-300">
-            © 2024 Mahmoud Mamdoh Soliman. All rights reserved.
-          </p>
+        <div className="content-width-1750 text-center">
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="text-gray-600 dark:text-gray-300 hover-lift"
+          >
+            © 2024 <span className="gradient-text-enhanced">Mahmoud Mamdoh Soliman</span>. All rights reserved.
+          </motion.p>
         </div>
       </footer>
       </main>
