@@ -15,22 +15,18 @@
     background-attachment: fixed;
   }
 
-  /* Enhanced Light mode background */
+  /* Clean Light mode background - Inspired by Zyad's portfolio */
   body {
-    @apply bg-gradient-to-br from-gray-50 via-white to-blue-50;
+    @apply bg-white;
     background-image: 
-      radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 60%),
-      radial-gradient(circle at 80% 20%, rgba(220, 38, 38, 0.06) 0%, transparent 60%),
-      radial-gradient(circle at 40% 40%, rgba(139, 92, 246, 0.04) 0%, transparent 60%),
-      radial-gradient(circle at 60% 60%, rgba(16, 185, 129, 0.05) 0%, transparent 60%),
-      linear-gradient(90deg, rgba(59, 130, 246, 0.02) 1px, transparent 1px),
-      linear-gradient(rgba(59, 130, 246, 0.02) 1px, transparent 1px);
-    background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 80px 80px, 80px 80px;
+      linear-gradient(180deg, rgba(250, 250, 250, 0.8) 0%, rgba(255, 255, 255, 1) 100%);
   }
 
-  /* Dark mode background */
+  /* Clean Dark mode background - Professional and minimal */
   .dark body {
-    @apply bg-gradient-to-br from-gray-900 via-slate-900 to-gray-800;
+    @apply bg-gray-900;
+    background-image: 
+      linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(17, 24, 39, 1) 100%);
   }
 }
 
@@ -1397,5 +1393,254 @@
       rgba(239, 246, 255, 0.6) 0%,
       rgba(219, 234, 254, 0.5) 50%,
       rgba(191, 219, 254, 0.4) 100%);
+  }
+
+  /* Clean design styles inspired by Zyad's portfolio */
+  .clean-section {
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    box-shadow: none;
+  }
+
+  .clean-card {
+    background: #ffffff;
+    border: 1px solid #f0f0f0;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+  }
+
+  .clean-card:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    transform: translateY(-4px);
+    border-color: #e0e0e0;
+  }
+
+  .clean-section-header {
+    background: transparent;
+    border: none;
+    padding: 3rem 0 2rem 0;
+  }
+
+  .clean-section-title {
+    color: #2d3748;
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .clean-section-subtitle {
+    color: #718096;
+    font-size: 1.125rem;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .clean-primary-color {
+    color: #dc2626;
+  }
+
+  .clean-primary-bg {
+    background-color: #dc2626;
+  }
+
+  .clean-primary-bg:hover {
+    background-color: #b91c1c;
+  }
+
+  .clean-gradient-text {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Clean button styling */
+  .clean-btn {
+    background: #dc2626;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(220, 38, 38, 0.2);
+  }
+
+  .clean-btn:hover {
+    background: #b91c1c;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .clean-btn-outline {
+    background: transparent;
+    color: #dc2626;
+    border: 2px solid #dc2626;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .clean-btn-outline:hover {
+    background: #dc2626;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+  }
+
+  /* Clean section spacing */
+  .clean-section-padding {
+    padding: 5rem 0;
+  }
+
+  .clean-section-padding-lg {
+    padding: 6rem 0;
+  }
+
+  /* Clean floating elements - more subtle */
+  .clean-floating-element {
+    opacity: 0.6;
+    animation: cleanFloat 8s ease-in-out infinite;
+  }
+
+  @keyframes cleanFloat {
+    0%, 100% { 
+      transform: translateY(0px) rotate(0deg);
+      opacity: 0.6;
+    }
+    50% { 
+      transform: translateY(-15px) rotate(5deg);
+      opacity: 0.8;
+    }
+  }
+
+  /* Remove heavy backgrounds for clean look */
+  .clean-mode .section-bg-pattern::before,
+  .clean-mode .geometric-bg::before,
+  .clean-mode .grid-bg::before,
+  .clean-mode .particle-bg::before {
+    display: none;
+  }
+
+  .clean-mode .radial-overlay-blue,
+  .clean-mode .radial-overlay-red {
+    background: transparent;
+  }
+
+  /* Clean Dark Mode Styles */
+  .dark .clean-section {
+    background: rgba(17, 24, 39, 0.95);
+    border: none;
+    box-shadow: none;
+  }
+
+  .dark .clean-card {
+    background: rgba(31, 41, 55, 0.9);
+    border: 1px solid rgba(75, 85, 99, 0.3);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+  }
+
+  .dark .clean-card:hover {
+    background: rgba(37, 47, 63, 0.95);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    transform: translateY(-4px);
+    border-color: rgba(107, 114, 128, 0.4);
+  }
+
+  .dark .clean-section-title {
+    color: #f9fafb;
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .dark .clean-section-subtitle {
+    color: #d1d5db;
+    font-size: 1.125rem;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .dark .clean-primary-color {
+    color: #ef4444;
+  }
+
+  .dark .clean-primary-bg {
+    background-color: #dc2626;
+  }
+
+  .dark .clean-primary-bg:hover {
+    background-color: #b91c1c;
+  }
+
+  .dark .clean-gradient-text {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Clean Dark Mode Button Styling */
+  .dark .clean-btn {
+    background: #dc2626;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(220, 38, 38, 0.3);
+  }
+
+  .dark .clean-btn:hover {
+    background: #b91c1c;
+    box-shadow: 0 6px 16px rgba(220, 38, 38, 0.4);
+    transform: translateY(-2px);
+  }
+
+  .dark .clean-btn-outline {
+    background: transparent;
+    color: #ef4444;
+    border: 2px solid #dc2626;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .dark .clean-btn-outline:hover {
+    background: #dc2626;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+  }
+
+  /* Clean Dark Mode Floating Elements */
+  .dark .clean-floating-element {
+    opacity: 0.4;
+    animation: cleanFloat 8s ease-in-out infinite;
+  }
+
+  /* Dark mode section backgrounds */
+  .dark .clean-section-bg-primary {
+    background: rgba(17, 24, 39, 0.98);
+  }
+
+  .dark .clean-section-bg-secondary {
+    background: rgba(31, 41, 55, 0.95);
+  }
+
+  .dark .clean-section-bg-tertiary {
+    background: rgba(55, 65, 81, 0.9);
   }
 } 

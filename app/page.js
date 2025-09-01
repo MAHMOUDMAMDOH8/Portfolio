@@ -1,4 +1,3 @@
-
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -1592,7 +1591,53 @@ export default function Home() {
 
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 nav-glass">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {/* Floating Particles */}
+          <motion.div
+            animate={{ 
+              y: [0, -20, 0],
+              opacity: [0.3, 0.8, 0.3]
+            }}
+            transition={{ 
+              duration: 6,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className="absolute top-4 left-1/4 w-2 h-2 bg-red-400/30 rounded-full"
+          />
+          <motion.div
+            animate={{ 
+              y: [0, 15, 0],
+              opacity: [0.4, 0.7, 0.4]
+            }}
+            transition={{ 
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 2
+            }}
+            className="absolute top-8 right-1/3 w-1.5 h-1.5 bg-blue-400/30 rounded-full"
+          />
+          <motion.div
+            animate={{ 
+              y: [0, -10, 0],
+              opacity: [0.2, 0.6, 0.2]
+            }}
+            transition={{ 
+              duration: 7,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 4
+            }}
+            className="absolute top-6 left-2/3 w-1 h-1 bg-green-400/30 rounded-full"
+          />
+          
+          {/* Subtle Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-red-500/5 via-transparent to-blue-500/5 opacity-0 hover:opacity-100 transition-opacity duration-1000" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-8">
               <motion.div 
@@ -1741,1545 +1786,486 @@ export default function Home() {
           </svg>
         </motion.button>
 
-        {/* Hero Section */}
-        <BackgroundPattern>
-          <section id="home" className="min-h-screen flex items-center justify-center pt-16 relative overflow-hidden">
-            {/* Enhanced Background with Multi-layer Gradients - Improved Light Mode */}
-            <div className="absolute inset-0">
-              <div className="absolute inset-0 bg-gradient-to-br from-gray-50/90 via-white/95 to-blue-50/80 dark:from-slate-900/95 dark:via-gray-900/98 dark:to-slate-800/95"></div>
-              <div className="absolute inset-0 bg-gradient-to-tr from-indigo-50/70 via-transparent to-purple-50/60 dark:from-transparent dark:to-transparent"></div>
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(59,130,246,0.12)_0%,transparent_60%)] dark:bg-[radial-gradient(circle_at_20%_30%,rgba(59,130,246,0.15)_0%,transparent_50%)]"></div>
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_70%,rgba(239,68,68,0.10)_0%,transparent_60%)] dark:bg-[radial-gradient(circle_at_80%_70%,rgba(239,68,68,0.12)_0%,transparent_50%)]"></div>
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(139,92,246,0.08)_0%,transparent_70%)] dark:bg-[radial-gradient(circle_at_50%_50%,rgba(139,92,246,0.08)_0%,transparent_60%)]"></div>
-            </div>
-              
-              {/* Floating Background Elements */}
-              <div className="absolute top-20 left-20 w-32 h-32 bg-gradient-to-r from-red-400/20 to-red-600/20 rounded-full blur-3xl floating-element"></div>
-              <div className="absolute bottom-20 right-20 w-40 h-40 bg-gradient-to-r from-blue-400/20 to-blue-600/20 rounded-full blur-3xl floating-element"></div>
-              <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-gradient-to-r from-green-400/20 to-green-600/20 rounded-full blur-2xl floating-element"></div>
+        {/* Hero Section - Big Text Left, Photo Right, Timeline Bottom */}
+        <section id="home" className="min-h-screen flex flex-col justify-center pt-16 relative">
+          {/* Clean Background */}
+          <div className="absolute inset-0 bg-white dark:bg-gray-900"></div>
+
+          <div className="max-w-7xl mx-auto px-4 relative z-10 flex-1 flex flex-col justify-center">
             
-            {/* Animated Background Particles */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              {[...Array(30)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="absolute w-1 h-1 bg-red-500/30 rounded-full"
-                  style={{
-                    left: `${Math.random() * 100}%`,
-                    top: `${Math.random() * 100}%`,
-                  }}
-                  animate={{
-                    y: [0, -100, 0],
-                    opacity: [0.1, 0.6, 0.1],
-                    scale: [1, 2, 1],
-                  }}
-                  transition={{
-                    duration: 4 + Math.random() * 3,
-                    repeat: Infinity,
-                    delay: Math.random() * 3,
-                    ease: "easeInOut"
-                  }}
-                />
-              ))}
-            </div>
-
-            {/* Geometric Background Elements */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-10 dark:opacity-5">
-              <div className="absolute top-20 left-10 w-32 h-32 border border-red-300 rounded-full animate-spin-slow"></div>
-              <div className="absolute top-40 right-20 w-24 h-24 border border-blue-300 rounded-full animate-pulse"></div>
-              <div className="absolute bottom-40 left-20 w-20 h-20 border border-green-300 rounded-full animate-bounce"></div>
-              <div className="absolute bottom-20 right-40 w-28 h-28 border border-purple-300 rounded-full animate-spin-slow"></div>
-            </div>
-
-            <div className="content-width-1750 relative z-10">
-              <div className="grid lg:grid-cols-2 gap-16 items-center">
-                {/* Left Side - Content */}
+            {/* Top Section - Text Left, Photo Right */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+              
+              {/* Left Column - Big Text */}
+              <div className="text-left">
                 <motion.div 
-                  initial={{ opacity: 0, x: -60 }}
+                  initial={{ opacity: 0, x: -50 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 1, ease: "easeOut" }}
-                  className="order-2 lg:order-1 space-y-8"
+                  transition={{ duration: 0.8 }}
                 >
-                  {/* Professional Badge */}
-                  <motion.div 
+                  {/* Greeting */}
+                  <motion.h3
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.3, duration: 0.8 }}
+                    className="text-3xl md:text-4xl mb-8 text-gray-600 dark:text-gray-400 font-medium"
+                  >
+                    <Typewriter
+                      words={['Hallo!']}
+                      loop={false}
+                      cursor
+                      cursorStyle='|'
+                      typeSpeed={70}
+                      deleteSpeed={50}
+                      delaySpeed={1000}
+                    />
+                  </motion.h3>
+
+                  {/* Main Title */}
+                  <motion.h1
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8, delay: 0.1 }}
-                    className="inline-flex items-center space-x-2 bg-gradient-to-r from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-800/20 px-4 py-2 rounded-full border border-red-200/50 dark:border-red-700/50 backdrop-blur-sm"
+                    transition={{ delay: 0.5, duration: 0.8 }}
+                    className="text-6xl md:text-8xl lg:text-9xl font-bold mb-12 text-gray-900 dark:text-white leading-tight"
                   >
-                    <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-                    <span className="text-sm font-medium text-red-700 dark:text-red-300">Available for hire</span>
-                  </motion.div>
-
-                  {/* Main Heading with Enhanced Typography */}
-                  <motion.div 
-                    initial={{ opacity: 0, y: 30 }}
+                    I'm <span className="text-red-600 dark:text-red-500">Mahmoud.</span>
+                  </motion.h1>
+                      
+                                    {/* Subtitle */}
+                  <motion.h2
+                    initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-                    className="space-y-4"
+                    transition={{ delay: 0.7, duration: 0.8 }}
+                    className="text-3xl md:text-4xl lg:text-5xl font-medium text-gray-700 dark:text-gray-300"
                   >
-                    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-white leading-tight tracking-tight">
-                      Hi, I'm{" "}
-                      <span className="relative inline-block">
-                        <span className="bg-gradient-to-r from-red-600 via-red-500 to-red-700 bg-clip-text text-transparent">
-                          Mahmoud
-                        </span>
-                        {/* Underline Animation */}
-                        <motion.div
-                          className="absolute -bottom-2 left-0 h-1 bg-gradient-to-r from-red-600 to-red-500 rounded-full"
-                          initial={{ width: 0 }}
-                          animate={{ width: "100%" }}
-                          transition={{ duration: 1, delay: 1.5, ease: "easeOut" }}
-                        />
-                      </span>
-                    </h1>
-                  </motion.div>
-                  
-                  {/* Enhanced Typewriter Section */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
-                    className="space-y-2"
-                  >
-                    <div className="flex items-center space-x-3 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-gray-700 dark:text-gray-200">
-                      <span>I'm a</span>
-                      <div className="relative">
-                        <span className="bg-gradient-to-r from-red-600 via-red-500 to-red-700 bg-clip-text text-transparent font-bold">
+                    <span className="text-red-600 dark:text-red-500">
                           <Typewriter
-                            words={[
-                              'Data Engineer',
-                              'Big Data Engineer',
-                              'BI Engineer', 
-                              'ETL Developer',
-                              'Pipeline Architect',
-                              'Data Analyst',
-                              'Analytics Engineer'   
-                            ]}
-                            loop={0}
+                        words={['I\'m a Data Engineer', 'I\'m a Big Data Engineer', 'I\'m a BI Engineer', 'I\'m a Pipeline Architect', 'I\'m a ETL Developer']}
+                        loop={true}
                             cursor
                             cursorStyle='|'
-                            typeSpeed={80}
-                            deleteSpeed={60}
-                            delaySpeed={1500}
+                        typeSpeed={70}
+                        deleteSpeed={50}
+                        delaySpeed={2000}
                           />
                         </span>
-                      </div>
-                    </div>
+                  </motion.h2>
                   </motion.div>
+              </div>
 
-                  {/* Enhanced Description with Better Typography */}
-                  <motion.p 
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
-                    className="text-lg sm:text-xl md:text-2xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl font-light"
-                  >
-                    Transforming <span className="font-semibold text-red-600 dark:text-red-400">complex data</span> into 
-                    <span className="font-semibold text-red-600 dark:text-red-400"> actionable insights</span> that drive 
-                    strategic decisions and accelerate business growth through modern data engineering solutions.
-                  </motion.p>
-
-                  {/* Professional Stats */}
+              {/* Right Column - Profile Photo in Frame */}
+              <div className="flex justify-center lg:justify-end">
                   <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
-                    className="flex items-center space-x-8 py-4"
-                  >
-                    <div className="text-center hover-lift">
-                      <div className="text-3xl font-bold text-red-600 dark:text-red-400 bounce-gentle">30+</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Projects</div>
-                    </div>
-                    <div className="w-px h-12 bg-gray-300 dark:bg-gray-600"></div>
-                    <div className="text-center hover-lift">
-                      <div className="text-3xl font-bold text-red-600 dark:text-red-400 bounce-gentle">5+</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Certifications</div>
-                    </div>
-                    <div className="w-px h-12 bg-gray-300 dark:bg-gray-600"></div>
-                    <div className="text-center hover-lift">
-                      <div className="text-3xl font-bold text-red-600 dark:text-red-400 bounce-gentle">1</div>
-                      <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Years Experience</div>
-                    </div>
-                  </motion.div>
-
-                  {/* Enhanced Social Icons */}
-                  <motion.div 
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1, delay: 1.0, ease: "easeOut" }}
-                    className="flex items-center space-x-4"
-                  >
-                    <span className="text-sm font-medium text-gray-600 dark:text-gray-400">Connect with me:</span>
-                    <div className="flex space-x-3">
-                      <motion.a 
-                        whileHover={{ scale: 1.1, y: -3 }}
-                        whileTap={{ scale: 0.95 }}
-                        href="https://github.com/MAHMOUDMAMDOH8" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="group relative w-12 h-12 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center text-gray-600 dark:text-gray-300 shadow-lg border border-gray-200 dark:border-gray-700 hover:border-red-300 dark:hover:border-red-600 transition-all duration-300"
-                      >
-                        <FaGithub size={20} className="group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors duration-300" />
-                        <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 to-red-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      </motion.a>
-                      <motion.a 
-                        whileHover={{ scale: 1.1, y: -3 }}
-                        whileTap={{ scale: 0.95 }}
-                        href="https://www.linkedin.com/in/mahmoud-mamdoh-47a68a203/" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="group relative w-12 h-12 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center text-gray-600 dark:text-gray-300 shadow-lg border border-gray-200 dark:border-gray-700 hover:border-red-300 dark:hover:border-red-600 transition-all duration-300"
-                      >
-                        <FaLinkedin size={20} className="group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors duration-300" />
-                        <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 to-red-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      </motion.a>
-                      <motion.a 
-                        whileHover={{ scale: 1.1, y: -3 }}
-                        whileTap={{ scale: 0.95 }}
-                        href="mailto:mahmoud.mamdoh0812@gmail.com"
-                        className="group relative w-12 h-12 bg-white dark:bg-gray-800 rounded-xl flex items-center justify-center text-gray-600 dark:text-gray-300 shadow-lg border border-gray-200 dark:border-gray-700 hover:border-red-300 dark:hover:border-red-600 transition-all duration-300"
-                      >
-                        <FaEnvelope size={20} className="group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors duration-300" />
-                        <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 to-red-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      </motion.a>
-                    </div>
-                  </motion.div>
-                  
-                  {/* Enhanced Button Group */}
-                  <motion.div 
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1, delay: 1.2, ease: "easeOut" }}
-                    className="flex flex-col sm:flex-row gap-6 pt-6"
-                  >
-                    <motion.button 
-                      whileHover={{ scale: 1.05, y: -3 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => smoothScroll('contact')} 
-                      className="group relative overflow-hidden bg-gradient-to-r from-blue-600 via-red-600 to-purple-600 text-white font-bold py-5 px-10 rounded-2xl transition-all duration-500 transform hover:shadow-2xl hover:shadow-red-600/40 border-0 text-lg min-h-[64px] flex items-center justify-center backdrop-blur-sm"
-                    >
-                      {/* Animated Background */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-red-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                      
-                      {/* Button Content */}
-                      <div className="relative z-10 flex items-center space-x-3">
-                        <motion.div 
-                          animate={{ rotate: [0, 10, -10, 0] }}
-                          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                        >
-                          <FaRocket className="text-xl" />
-                        </motion.div>
-                        <span className="font-bold tracking-wide">Hire Me Now</span>
-                        <motion.div 
-                          animate={{ scale: [1, 1.3, 1], opacity: [0.7, 1, 0.7] }}
-                          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                          className="w-2 h-2 bg-white rounded-full"
-                        />
-                      </div>
-                      
-                      {/* Enhanced Glow Effect */}
-                      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-600/50 via-red-600/50 to-purple-600/50 blur-xl opacity-0 group-hover:opacity-70 transition-opacity duration-500 -z-10"></div>
-                    </motion.button>
-
-                    <motion.button 
-                      whileHover={{ scale: 1.05, y: -3 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => smoothScroll('projects')} 
-                      className="group relative overflow-hidden bg-white/90 dark:bg-gray-800/90 text-gray-700 dark:text-gray-300 font-bold py-5 px-10 rounded-2xl transition-all duration-300 transform border-2 border-gray-200/50 dark:border-gray-700/50 hover:border-blue-500/50 dark:hover:border-blue-400/50 hover:text-blue-600 dark:hover:text-blue-400 text-lg min-h-[64px] flex items-center justify-center shadow-lg hover:shadow-xl backdrop-blur-sm"
-                    >
-                      {/* Hover Background */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-blue-50/50 to-purple-50/50 dark:from-blue-900/20 dark:to-purple-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                      
-                      {/* Button Content */}
-                      <div className="relative z-10 flex items-center space-x-3">
-                        <motion.div
-                          whileHover={{ rotate: 15, scale: 1.1 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          <FaExternalLinkAlt className="text-xl group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300" />
-                        </motion.div>
-                        <span className="font-bold tracking-wide">View Projects</span>
-                      </div>
-                      
-                      {/* Hover Background */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-800/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
-                    </motion.button>
-
-                    {/* Download Resume Button */}
-                    <motion.button 
-                      whileHover={{ scale: 1.02, y: -2 }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={downloadResume} 
-                      className="group relative overflow-hidden bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 text-gray-700 dark:text-gray-300 font-semibold py-4 px-8 rounded-2xl transition-all duration-300 transform hover:shadow-xl border border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 text-lg min-h-[56px] flex items-center justify-center"
-                    >
-                      <div className="relative z-10 flex items-center space-x-3">
-                        <FaDownload className="text-xl group-hover:translate-y-1 transition-transform duration-300" />
-                        <span className="font-bold">Download CV</span>
-                      </div>
-                    </motion.button>
-                  </motion.div>
-                </motion.div>
-                
-                {/* Right Side - Enhanced Profile Image */}
-                <motion.div 
-                  initial={{ opacity: 0, x: 60 }}
+                  initial={{ opacity: 0, x: 50 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
-                  className="order-1 lg:order-2 flex justify-center lg:justify-end"
+                  transition={{ delay: 1.0, duration: 0.8 }}
+                  className="relative group"
                 >
-                  <div className="relative">
-                    {/* Professional Frame */}
-                    <div className="absolute -inset-4 bg-gradient-to-r from-red-600/20 via-blue-600/20 to-purple-600/20 rounded-full blur-2xl animate-pulse"></div>
-                    
-                    {/* Main Image Container */}
-                    <div className="relative w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[32rem] lg:h-[32rem]">
-                      {/* Professional Border */}
-                      <div className="absolute inset-0 rounded-full bg-gradient-to-r from-red-600 via-red-500 to-red-700 p-1">
-                        <div className="w-full h-full rounded-full bg-white dark:bg-gray-900 p-2">
-                          <div className="relative w-full h-full rounded-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 group">
-                            <Image
-                              src="/images/profile-photo.jpg"
-                              alt="Mahmoud Mamdoh Soliman - Data Engineer"
-                              fill
-                              className="object-cover rounded-full group-hover:scale-105 transition-transform duration-700 ease-out filter group-hover:brightness-110"
-                              priority
-                            />
-                            
-                            {/* Professional Overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-red-600/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full"></div>
-                            
-                            {/* Shimmer Effect */}
-                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1500 ease-out rounded-full"></div>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      {/* Floating Professional Icons */}
-                      <motion.div 
-                        className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-r from-red-600 to-red-700 rounded-2xl flex items-center justify-center text-white shadow-xl border-4 border-white dark:border-gray-900"
-                        animate={{ 
-                          y: [0, -10, 0],
-                          rotate: [0, 5, -5, 0],
-                        }}
-                        transition={{ 
-                          duration: 4,
-                          repeat: Infinity,
-                          ease: "easeInOut"
-                        }}
-                      >
-                        <FaDatabase size={24} />
-                      </motion.div>
-                      
-                      <motion.div 
-                        className="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl flex items-center justify-center text-white shadow-xl border-4 border-white dark:border-gray-900"
-                        animate={{ 
-                          y: [0, 10, 0],
-                          rotate: [0, -5, 5, 0],
-                        }}
-                        transition={{ 
-                          duration: 5,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                          delay: 1
-                        }}
-                      >
-                        <FaChartLine size={24} />
-                      </motion.div>
-                      
-                      <motion.div 
-                        className="absolute top-1/2 -right-8 w-12 h-12 bg-gradient-to-r from-green-600 to-green-700 rounded-xl flex items-center justify-center text-white shadow-lg border-2 border-white dark:border-gray-900"
-                        animate={{ 
-                          x: [0, 10, 0],
-                          scale: [1, 1.1, 1],
-                        }}
-                        transition={{ 
-                          duration: 3,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                          delay: 2
-                        }}
-                      >
-                        <FaCode size={18} />
-                      </motion.div>
+                  <div className="w-96 h-96 relative">
+                    {/* Frame with gradient effect */}
+                    <div className="w-full h-full rounded-full overflow-hidden shadow-2xl border-8 border-red-500 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
+                      <Image
+                        src="/images/profile-photo.jpg"
+                        alt="Mahmoud Mamdoh - Data Engineer"
+                        width={384}
+                        height={384}
+                        className="w-full h-full object-cover"
+                        priority
+                        placeholder="blur"
+                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                      />
                     </div>
-                  </div>
-                </motion.div>
+                    {/* Hover gradient effect */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-red-600/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full"></div>
+                    </div>
+                  </motion.div>
               </div>
             </div>
 
-            {/* Scroll Indicator */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 2 }}
-              className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center space-y-2 text-gray-400 dark:text-gray-600"
-            >
-              <span className="text-sm font-medium">Scroll to explore</span>
-              <motion.div
-                animate={{ y: [0, 8, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                className="w-6 h-10 border-2 border-gray-400 dark:border-gray-600 rounded-full flex justify-center"
+            {/* Bottom Section - Timeline and Social Icons */}
+            <div className="text-center">
+              
+              {/* Social Links - Bigger */}
+                  <motion.div 
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.2, duration: 0.8 }}
+                className="flex justify-center space-x-8 mb-12"
+                  >
+                      <motion.a 
+                  href="https://www.linkedin.com/in/mahmoud-mamdoh-47a68a203/"
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  className="w-16 h-16 bg-gray-100 dark:bg-gray-800 hover:bg-blue-100 dark:hover:bg-blue-900/30 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 shadow-lg"
+                      >
+                  <FaLinkedin size={28} />
+                      </motion.a>
+          
+                      <motion.a 
+                  href="https://github.com/MAHMOUDMAMDOH8"
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  className="w-16 h-16 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-all duration-300 shadow-lg"
+                      >
+                  <FaGithub size={28} />
+                      </motion.a>
+          
+                      <motion.a 
+                        href="mailto:mahmoud.mamdoh0812@gmail.com"
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  className="w-16 h-16 bg-gray-100 dark:bg-gray-800 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-all duration-300 shadow-lg"
+                      >
+                  <FaEnvelope size={24} />
+                      </motion.a>
+                  </motion.div>
+                  
+              {/* Experience Timeline - Bigger Font */}
+                  <motion.div 
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.4, duration: 0.8 }}
+                className="max-w-6xl mx-auto"
               >
-                <div className="w-1 h-3 bg-red-600 rounded-full mt-2"></div>
-              </motion.div>
-            </motion.div>
-          </section>
-        </BackgroundPattern>
+                {/* Desktop Timeline */}
+                <div className="hidden lg:block">
+                  <svg width="100%" height="160" viewBox="0 0 1000 160" className="w-full">
+                    {/* Timeline Line */}
+                    <line 
+                      x1="50" y1="80" x2="950" y2="80" 
+                      stroke="#dc2626" 
+                      strokeWidth="4"
+                    />
+                    
+                    {/* Jul 2023 - ITI BI Track */}
+                    <circle cx="170" cy="80" r="12" fill="#dc2626" />
+                    <circle cx="170" cy="80" r="8" fill="#ffffff" />
+                    <text x="170" y="105" textAnchor="middle" className="fill-gray-900 dark:fill-white text-lg font-bold">Jul 2023</text>
+                    <text x="170" y="50" textAnchor="middle" className="fill-red-600 dark:fill-red-400 text-lg font-semibold">ITI BI Track</text>
+                    
+                    {/* Nov 2023 - ASDC Internship */}
+                    <circle cx="370" cy="80" r="12" fill="#dc2626" />
+                    <circle cx="370" cy="80" r="8" fill="#ffffff" />
+                    <text x="370" y="105" textAnchor="middle" className="fill-gray-900 dark:fill-white text-lg font-bold">Nov 2023</text>
+                    <text x="370" y="50" textAnchor="middle" className="fill-red-600 dark:fill-red-400 text-lg font-semibold">ASDC Internship</text>
+                    
+                    {/* Jul 2024 - BI Analyst */}
+                    <circle cx="570" cy="80" r="12" fill="#dc2626" />
+                    <circle cx="570" cy="80" r="8" fill="#ffffff" />
+                    <text x="570" y="105" textAnchor="middle" className="fill-gray-900 dark:fill-white text-lg font-bold">Jul 2024</text>
+                    <text x="570" y="50" textAnchor="middle" className="fill-red-600 dark:fill-red-400 text-lg font-semibold">BI Analyst</text>
+                    
+                    {/* Jan 2025 - DE Zoomcamp */}
+                    <circle cx="770" cy="80" r="12" fill="#dc2626" />
+                    <circle cx="770" cy="80" r="8" fill="#ffffff" />
+                    <text x="770" y="105" textAnchor="middle" className="fill-gray-900 dark:fill-white text-lg font-bold">Jan 2025</text>
+                    <text x="770" y="50" textAnchor="middle" className="fill-red-600 dark:fill-red-400 text-lg font-semibold">DE Zoomcamp</text>
+                  </svg>
+                      </div>
+                
+                {/* Mobile Timeline */}
+                <div className="block lg:hidden">
+                  <svg width="100%" height="320" viewBox="0 0 350 320" className="w-full">
+                    {/* Vertical Timeline Line */}
+                    <line 
+                      x1="150" y1="40" x2="150" y2="280" 
+                      stroke="#dc2626" 
+                      strokeWidth="4"
+                    />
+                    
+                    {/* Jul 2023 */}
+                    <circle cx="150" cy="80" r="10" fill="#dc2626" />
+                    <circle cx="150" cy="80" r="6" fill="#ffffff" />
+                    <text x="100" y="85" textAnchor="middle" className="fill-gray-900 dark:fill-white text-base font-bold">Jul 2023</text>
+                    <text x="200" y="85" textAnchor="start" className="fill-red-600 dark:fill-red-400 text-base font-semibold">ITI BI Track</text>
+                    
+                    {/* Nov 2023 */}
+                    <circle cx="150" cy="140" r="10" fill="#dc2626" />
+                    <circle cx="150" cy="140" r="6" fill="#ffffff" />
+                    <text x="100" y="145" textAnchor="middle" className="fill-gray-900 dark:fill-white text-base font-bold">Nov 2023</text>
+                    <text x="200" y="145" textAnchor="start" className="fill-red-600 dark:fill-red-400 text-base font-semibold">ASDC Internship</text>
+                    
+                    {/* Jul 2024 */}
+                    <circle cx="150" cy="200" r="10" fill="#dc2626" />
+                    <circle cx="150" cy="200" r="6" fill="#ffffff" />
+                    <text x="100" y="205" textAnchor="middle" className="fill-gray-900 dark:fill-white text-base font-bold">Jul 2024</text>
+                    <text x="200" y="205" textAnchor="start" className="fill-red-600 dark:fill-red-400 text-base font-semibold">BI Analyst</text>
+                    
+                    {/* Jan 2025 */}
+                    <circle cx="150" cy="260" r="10" fill="#dc2626" />
+                    <circle cx="150" cy="260" r="6" fill="#ffffff" />
+                    <text x="100" y="265" textAnchor="middle" className="fill-gray-900 dark:fill-white text-base font-bold">Jan 2025</text>
+                    <text x="200" y="265" textAnchor="start" className="fill-red-600 dark:fill-red-400 text-base font-semibold">DE Zoomcamp</text>
+                  </svg>
+                  </div>
+                </motion.div>
+            </div>
 
-        {/* Unified Career & Tech Stack Timeline Section */}
-        <section id="career-timeline" className="section-padding section-bg-pattern">
-          <div className="content-width-1750">
+          </div>
+          </section>
+
+        {/* About Section - Clean & Simple like Zyad's */}
+        <section id="about" className="py-20 bg-gray-50 dark:bg-gray-800">
+          <div className="max-w-6xl mx-auto px-4">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
+              {/* Section Header */}
               <div className="text-center mb-16">
-                <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-                  Career & Tech Stack <span className="gradient-text">Timeline</span>
-                </h2>
-                <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-                  My complete journey in data engineering, analytics, and BI—combining education, experience, and tech adoption
-                </p>
+                <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">About Me</h2>
               </div>
               
-              {/* Enhanced Timeline Visualization */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
-              >
-                <div className="relative timeline-enhanced">
-                  {/* Enhanced Timeline Line with Gradient */}
-                  <div className="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-blue-600 via-green-500 via-orange-500 via-red-500 to-indigo-600 h-full hidden md:block rounded-full shadow-lg"></div>
-                  
-                  <div className="space-y-16">
-                    <motion.div 
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5 }}
-                      viewport={{ once: true }}
-                    >
-                      {/* 2021-2025: Education Foundation - LEFT SIDE */}
-                      <div className="relative flex items-center justify-between">
-                    {/* Content on LEFT */}
-                    <div className="md:w-5/12 w-full">
-                      <EnhancedCard 
-                        delay={0.1}
-                        className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
-                      >
-                        <div className="bg-gradient-to-br from-blue-500 to-blue-700 p-8 text-white relative overflow-hidden">
-                          {/* Background Pattern */}
-                          <div className="absolute inset-0 opacity-10">
-                            <div className="absolute top-4 right-4 w-20 h-20 border-2 border-white rounded-full"></div>
-                            <div className="absolute bottom-4 left-4 w-16 h-16 border-2 border-white rounded-full"></div>
+              {/* Main Content Grid */}
+              <div className="grid lg:grid-cols-2 gap-12 items-center">
+                {/* Left Side - Profile Image */}
+                <div className="flex justify-center lg:justify-start">
+                  <div className="w-80 h-80 relative">
+                    <div className="w-full h-full rounded-full overflow-hidden shadow-lg border-4 border-red-500">
+                      <Image
+                        src="/images/profile-photo.jpg"
+                        alt="Mahmoud Mamdoh - Data Engineer"
+                        width={320}
+                        height={320}
+                        className="w-full h-full object-cover"
+                        priority
+                        placeholder="blur"
+                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                      />
                           </div>
-                          
-                          <div className="relative z-10">
-                            <div className="flex items-center justify-between mb-6">
-                              <div className="p-4 bg-white/20 rounded-xl backdrop-blur-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8">
-                                  <path d="M22 10v6M2 10l10-5 10 5z"></path>
-                                  <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-                                </svg>
-                              </div>
-                              <div className="flex items-center space-x-3 bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                  <path d="m9 11 3 3L22 4"></path>
-                                </svg>
-                                <span className="text-sm font-semibold">Completed</span>
                               </div>
                             </div>
                             
-                            <div className="mb-4">
-                              <h3 className="text-2xl font-bold mb-3 leading-tight">University Education</h3>
-                              <p className="text-blue-100 font-medium text-lg">Menofia University</p>
-                              <p className="text-blue-200 text-sm mt-1">Computer Science & Mathematics</p>
+                {/* Right Side - About Text */}
+                <div className="text-center lg:text-left">
+                  <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-8">
+                    As a <span className="font-semibold text-red-600 dark:text-red-400">Computer Science</span> graduate specializing in 
+                    <span className="font-semibold text-red-600 dark:text-red-400"> data engineering</span>, I have a strong foundation in 
+                    <span className="font-semibold text-red-600 dark:text-red-400">database systems</span>, 
+                    <span className="font-semibold text-red-600 dark:text-red-400">data structures</span>, and 
+                    <span className="font-semibold text-red-600 dark:text-red-400">algorithms</span>. My expertise spans across 
+                    <span className="font-semibold text-red-600 dark:text-red-400">software engineering principles</span>, with hands-on experience in 
+                    designing scalable data pipelines, optimizing database performance, and implementing efficient algorithms for 
+                    large-scale data processing. I'm passionate about building robust, maintainable systems that transform raw data 
+                    into actionable insights through clean code and architectural best practices.
+                  </p>
+                            </div>
+                    </div>
+                    
+              {/* Education Timeline - Simple SVG like Zyad's */}
+              <div className="mt-20">
+                {/* Desktop Timeline */}
+                <div className="hidden md:block">
+                  <svg width="100%" height="120" viewBox="0 0 800 120" className="w-full">
+                    {/* Timeline Line */}
+                    <line 
+                      x1="50" y1="60" x2="750" y2="60" 
+                      stroke="#dc2626" 
+                      strokeWidth="2"
+                    />
+                    
+                    {/* 2021 - Start University */}
+                    <circle cx="200" cy="60" r="8" fill="#dc2626" />
+                    <text x="200" y="85" textAnchor="middle" className="fill-gray-900 dark:fill-white text-sm font-semibold">2021</text>
+                    <text x="200" y="35" textAnchor="middle" className="fill-gray-700 dark:fill-gray-300 text-xs">Started CS</text>
+                    <text x="200" y="100" textAnchor="middle" className="fill-gray-700 dark:fill-gray-300 text-xs">Menofia University</text>
+                    
+                    {/* 2023 - Data Focus */}
+                    <circle cx="400" cy="60" r="8" fill="#dc2626" />
+                    <text x="400" y="85" textAnchor="middle" className="fill-gray-900 dark:fill-white text-sm font-semibold">2023</text>
+                    <text x="400" y="35" textAnchor="middle" className="fill-gray-700 dark:fill-gray-300 text-xs">Data Engineering</text>
+                    <text x="400" y="100" textAnchor="middle" className="fill-gray-700 dark:fill-gray-300 text-xs">Specialization</text>
+                    
+                    {/* 2025 - Graduation */}
+                    <circle cx="600" cy="60" r="8" fill="#dc2626" />
+                    <text x="600" y="85" textAnchor="middle" className="fill-gray-900 dark:fill-white text-sm font-semibold">2025</text>
+                    <text x="600" y="35" textAnchor="middle" className="fill-gray-700 dark:fill-gray-300 text-xs">Graduation</text>
+                    <text x="600" y="100" textAnchor="middle" className="fill-gray-700 dark:fill-gray-300 text-xs">CS Degree</text>
+                                </svg>
+                            </div>
+                            
+                {/* Mobile Timeline */}
+                <div className="block md:hidden">
+                  <svg width="100%" height="280" viewBox="0 0 300 280" className="w-full">
+                    {/* Vertical Timeline Line */}
+                    <line 
+                      x1="150" y1="40" x2="150" y2="240" 
+                      stroke="#dc2626" 
+                      strokeWidth="2"
+                    />
+                    
+                    {/* 2021 */}
+                    <circle cx="150" cy="80" r="6" fill="#dc2626" />
+                    <text x="110" y="85" textAnchor="middle" className="fill-gray-900 dark:fill-white text-sm font-semibold">2021</text>
+                    <text x="200" y="70" textAnchor="start" className="fill-gray-700 dark:fill-gray-300 text-xs">Started CS</text>
+                    <text x="200" y="85" textAnchor="start" className="fill-gray-700 dark:fill-gray-300 text-xs">Menofia University</text>
+                    
+                    {/* 2023 */}
+                    <circle cx="150" cy="160" r="6" fill="#dc2626" />
+                    <text x="110" y="165" textAnchor="middle" className="fill-gray-900 dark:fill-white text-sm font-semibold">2023</text>
+                    <text x="200" y="150" textAnchor="start" className="fill-gray-700 dark:fill-gray-300 text-xs">Data Engineering</text>
+                    <text x="200" y="165" textAnchor="start" className="fill-gray-700 dark:fill-gray-300 text-xs">Specialization</text>
+                    
+                    {/* 2025 */}
+                    <circle cx="150" cy="220" r="6" fill="#dc2626" />
+                    <text x="110" y="225" textAnchor="middle" className="fill-gray-900 dark:fill-white text-sm font-semibold">2025</text>
+                    <text x="200" y="210" textAnchor="start" className="fill-gray-700 dark:fill-gray-300 text-xs">Graduation</text>
+                    <text x="200" y="225" textAnchor="start" className="fill-gray-700 dark:fill-gray-300 text-xs">CS Degree</text>
+                                </svg>
+                              </div>
+                            </div>
+                            
+              {/* Simplified Role Cards - Compact & Easy to Read */}
+              <div className="mt-16">
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">Professional Roles</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Data Engineer Card */}
+                  <div className="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-xl p-4 border border-gray-200/30 dark:border-gray-700/40 shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-red-500/5 to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="relative z-10 flex items-center space-x-4">
+                      <div className="p-3 bg-gradient-to-r from-red-500 to-orange-500 rounded-xl flex-shrink-0 group-hover:scale-105 transition-transform duration-300 shadow-md">
+                        <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 448 512" className="text-white text-lg" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M448 73.143v45.714C448 159.143 347.667 192 224 192S0 159.143 0 118.857V73.143C0 32.857 100.333 0 224 0s224 32.857 224 73.143zM448 176v102.857C448 319.143 347.667 352 224 352S0 319.143 0 278.857V176c48.125 33.143 136.208 48.572 224 48.572S399.874 209.143 448 176zm0 160v102.857C448 479.143 347.667 512 224 512S0 479.143 0 438.857V336c48.125 33.143 136.208 48.572 224 48.572S399.874 369.143 448 336z"></path>
+                                </svg>
+                              </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1 group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors duration-300">Data Engineer</h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-300 mb-2 leading-tight">Building scalable ETL pipelines & data warehouses</p>
+                        <div className="flex flex-wrap gap-2">
+                          <span className="px-2 py-1 bg-gradient-to-r from-red-100 to-orange-100 dark:from-red-900/40 dark:to-orange-900/40 text-red-700 dark:text-red-300 rounded-md text-xs font-medium border border-red-200/50 dark:border-red-700/50">Spark</span>
+                          <span className="px-2 py-1 bg-gradient-to-r from-red-100 to-orange-100 dark:from-red-900/40 dark:to-orange-900/40 text-red-700 dark:text-red-300 rounded-md text-xs font-medium border border-red-200/50 dark:border-red-700/50">Hadoop</span>
+                          <span className="px-2 py-1 bg-gradient-to-r from-red-100 to-orange-100 dark:from-red-900/40 dark:to-orange-900/40 text-red-700 dark:text-red-300 rounded-md text-xs font-medium border border-red-200/50 dark:border-red-700/50">Kafka</span>
+                            </div>
+                          </div>
+                            </div>
+                    </div>
+                    
+                  {/* Analytics Engineer Card */}
+                  <div className="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-xl p-4 border border-gray-200/30 dark:border-gray-700/40 shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-green-500/5 to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="relative z-10 flex items-center space-x-4">
+                      <div className="p-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl flex-shrink-0 group-hover:scale-105 transition-transform duration-300 shadow-md">
+                        <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 512 512" className="text-white text-lg" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M496 384H64V80c0-8.84-7.16-16-16-16H16C7.16 64 0 71.16 0 80v336c0 17.67 14.33 32 32 32h464c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16zM464 96H345.94c-21.38 0-32.09 25.85-16.97 40.97l32.4 32.4L288 242.75l-73.37-73.37c-12.5-12.5-32.76-12.5-45.25 0l-68.69 68.69c-6.25 6.25-6.25 16.38 0 22.63l22.62 22.62c6.25 6.25 16.38 6.25 22.63 0L192 237.25l73.37 73.37c12.5 12.5 32.76 12.5 45.25 0l96-96 32.4 32.4c15.12 15.12 40.97 4.41 40.97-16.97V112c.01-8.84-7.15-16-15.99-16z"></path>
+                                </svg>
+                              </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors duration-300">Analytics Engineer</h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-300 mb-2 leading-tight">Designing data models for advanced analytics</p>
+                        <div className="flex flex-wrap gap-2">
+                          <span className="px-2 py-1 bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900/40 dark:to-emerald-900/40 text-green-700 dark:text-green-300 rounded-md text-xs font-medium border border-green-200/50 dark:border-green-700/50">dbt</span>
+                          <span className="px-2 py-1 bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900/40 dark:to-emerald-900/40 text-green-700 dark:text-green-300 rounded-md text-xs font-medium border border-green-200/50 dark:border-green-700/50">Snowflake</span>
+                          <span className="px-2 py-1 bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900/40 dark:to-emerald-900/40 text-green-700 dark:text-green-300 rounded-md text-xs font-medium border border-green-200/50 dark:border-green-700/50">SQL</span>
+                              </div>
                             </div>
                           </div>
                         </div>
                         
-                        <div className="p-8">
-                          <div className="flex items-center justify-between mb-6">
-                            <div className="flex items-center space-x-3 text-gray-600 dark:text-gray-300">
-                              <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                  <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                                  <line x1="16" x2="16" y1="2" y2="6"></line>
-                                  <line x1="8" x2="8" y1="2" y2="6"></line>
-                                  <line x1="3" x2="21" y1="10" y2="10"></line>
+                  {/* BI Developer Card */}
+                  <div className="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-xl p-4 border border-gray-200/30 dark:border-gray-700/40 shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 to-violet-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="relative z-10 flex items-center space-x-4">
+                      <div className="p-3 bg-gradient-to-r from-purple-500 to-violet-500 rounded-xl flex-shrink-0 group-hover:scale-105 transition-transform duration-300 shadow-md">
+                        <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 352 512" className="text-white text-lg" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M96.06 454.35c.01 6.29 1.87 12.45 5.36 17.69l17.09 25.69a31.99 31.99 0 0 0 26.64 14.28h61.71a31.99 31.99 0 0 0 26.64-14.28l17.09-25.69a31.989 31.989 0 0 0 5.36-17.69l.04-38.35H96.01l.05 38.35zM0 176c0 44.37 16.45 84.85 43.56 115.78 16.52 18.85 42.36 58.23 52.21 91.45.04.26.07.52.11.78h160.24c.04-.26.07-.51.11-.78 9.85-33.22 35.69-72.6 52.21-91.45C335.55 260.85 352 220.37 352 176 352 78.61 272.91-.3 175.45 0 73.44.31 0 82.97 0 176zm176-80c-44.11 0-80 35.89-80 80 0 8.84-7.16 16-16 16s-16-7.16-16-16c0-61.76 50.24-112 112-112 8.84 0 16 7.16 16 16s-7.16 16-16 16z"></path>
                                 </svg>
                               </div>
-                              <span className="font-semibold">2021 - 2025</span>
-                            </div>
-                            <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">ID: CS-MATH-2025</span>
-                          </div>
-                          
-                          <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 text-base">
-                            Bachelor's degree providing a strong foundation in computer science principles, 
-                            mathematical concepts, and analytical thinking essential for data engineering.
-                          </p>
-                          
-                          <div className="mb-6">
-                            <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
-                              <div className="w-2 h-2 bg-blue-600 rounded-full mr-3"></div>
-                              Key Areas of Study
-                            </h4>
-                            <div className="flex flex-wrap gap-3">
-                              <span className="px-4 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 text-sm rounded-lg font-medium border border-blue-200 dark:border-blue-700">Data Structures</span>
-                              <span className="px-4 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 text-sm rounded-lg font-medium border border-blue-200 dark:border-blue-700">Algorithms</span>
-                              <span className="px-4 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 text-sm rounded-lg font-medium border border-blue-200 dark:border-blue-700">Database Design</span>
-                              <span className="px-4 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 text-sm rounded-lg font-medium border border-blue-200 dark:border-blue-700">Mathematics</span>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300">BI Developer</h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-300 mb-2 leading-tight">Creating interactive dashboards & reports</p>
+                        <div className="flex flex-wrap gap-2">
+                          <span className="px-2 py-1 bg-gradient-to-r from-purple-100 to-violet-100 dark:from-purple-900/40 dark:to-violet-900/40 text-purple-700 dark:text-purple-300 rounded-md text-xs font-medium border border-purple-200/50 dark:border-purple-700/50">Power BI</span>
+                          <span className="px-2 py-1 bg-gradient-to-r from-purple-100 to-violet-100 dark:from-purple-900/40 dark:to-violet-900/40 text-purple-700 dark:text-purple-300 rounded-md text-xs font-medium border border-purple-200/50 dark:border-purple-700/50">Tableau</span>
+                          <span className="px-2 py-1 bg-gradient-to-r from-purple-100 to-violet-100 dark:from-purple-900/40 dark:to-violet-900/40 text-purple-700 dark:text-purple-300 rounded-md text-xs font-medium border border-purple-200/50 dark:border-purple-700/50">DAX</span>
                             </div>
                           </div>
-                        </div>
-                      </EnhancedCard>
-                    </div>
-                    
-                    {/* Enhanced Timeline Dot */}
-                    <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-r from-blue-600 to-blue-700 rounded-full border-4 border-white dark:border-gray-900 shadow-xl z-10">
-                      <div className="w-full h-full bg-gradient-to-r from-blue-600 to-blue-700 rounded-full animate-pulse flex items-center justify-center">
-                        <div className="w-3 h-3 bg-white rounded-full"></div>
-                      </div>
-                    </div>
-                    
-                    {/* Empty space on RIGHT */}
-                    <div className="hidden md:block md:w-5/12"></div>
-                  </div>
-
-                  {/* 2023: ITI Bootcamp - RIGHT SIDE */}
-                  <div className="relative flex items-center justify-between">
-                    {/* Empty space on LEFT */}
-                    <div className="hidden md:block md:w-5/12"></div>
-                    
-                    {/* Enhanced Timeline Dot */}
-                    <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-r from-green-600 to-green-700 rounded-full border-4 border-white dark:border-gray-900 shadow-xl z-10">
-                      <div className="w-full h-full bg-gradient-to-r from-green-600 to-green-700 rounded-full animate-pulse flex items-center justify-center">
-                        <div className="w-3 h-3 bg-white rounded-full"></div>
-                      </div>
-                    </div>
-                    
-                    {/* Content on RIGHT */}
-                    <div className="md:w-5/12 w-full">
-                      <EnhancedCard 
-                        delay={0.2}
-                        className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
-                      >
-                        <div className="bg-gradient-to-br from-green-500 to-green-700 p-8 text-white relative overflow-hidden">
-                          {/* Background Pattern */}
-                          <div className="absolute inset-0 opacity-10">
-                            <div className="absolute top-4 right-4 w-20 h-20 border-2 border-white rounded-full"></div>
-                            <div className="absolute bottom-4 left-4 w-16 h-16 border-2 border-white rounded-full"></div>
-                          </div>
-                          
-                          <div className="relative z-10">
-                            <div className="flex items-center justify-between mb-6">
-                              <div className="p-4 bg-white/20 rounded-xl backdrop-blur-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8">
-                                  <path d="M3 3v18h18"></path>
-                                  <path d="M18 17V9"></path>
-                                  <path d="M13 17V5"></path>
-                                  <path d="M8 17v-3"></path>
-                                </svg>
-                              </div>
-                              <div className="flex items-center space-x-3 bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                  <path d="m9 11 3 3L22 4"></path>
-                                </svg>
-                                <span className="text-sm font-semibold">Completed</span>
-                              </div>
-                            </div>
-                            
-                            <div className="mb-4">
-                              <h3 className="text-2xl font-bold mb-3 leading-tight">BI Track Bootcamp</h3>
-                              <p className="text-green-100 font-medium text-lg">Information Technology Institute (ITI)</p>
-                              <p className="text-green-200 text-sm mt-1">Business Intelligence Intensive Training</p>
-                            </div>
-                          </div>
-                        </div>
-                        
-                        <div className="p-8">
-                          <div className="flex items-center justify-between mb-6">
-                            <div className="flex items-center space-x-3 text-gray-600 dark:text-gray-300">
-                              <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                  <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                                  <line x1="16" x2="16" y1="2" y2="6"></line>
-                                  <line x1="8" x2="8" y1="2" y2="6"></line>
-                                  <line x1="3" x2="21" y1="10" y2="10"></line>
-                                </svg>
-                              </div>
-                              <span className="font-semibold">Jul 2023 - Aug 2023</span>
-                            </div>
-                            <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">ID: ITI-BC-2023</span>
-                          </div>
-                          
-                          <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 text-base">
-                            Intensive business intelligence bootcamp with hands-on projects, real-world applications, 
-                            and comprehensive training in modern BI tools and methodologies.
-                          </p>
-                          
-                          <div className="mb-6">
-                            <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
-                              <div className="w-2 h-2 bg-green-600 rounded-full mr-3"></div>
-                              Technologies Learned
-                            </h4>
-                            <div className="flex flex-wrap gap-3">
-                              <span className="px-4 py-2 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 text-sm rounded-lg font-medium border border-green-200 dark:border-green-700">Power BI</span>
-                              <span className="px-4 py-2 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 text-sm rounded-lg font-medium border border-green-200 dark:border-green-700">SQL Server</span>
-                              <span className="px-4 py-2 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 text-sm rounded-lg font-medium border border-green-200 dark:border-green-700">SSIS</span>
-                              <span className="px-4 py-2 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 text-sm rounded-lg font-medium border border-green-200 dark:border-green-700">Data Modeling</span>
-                            </div>
-                          </div>
-                        </div>
-                      </EnhancedCard>
                     </div>
                   </div>
 
-                  {/* 2023-2024: ASDC Internship - LEFT SIDE */}
-                  <div className="relative flex items-center justify-between">
-                    {/* Content on LEFT */}
-                    <div className="md:w-5/12 w-full">
-                      <EnhancedCard 
-                        delay={0.3}
-                        className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
-                      >
-                        <div className="bg-gradient-to-br from-purple-500 to-purple-700 p-8 text-white relative overflow-hidden">
-                          {/* Background Pattern */}
-                          <div className="absolute inset-0 opacity-10">
-                            <div className="absolute top-4 right-4 w-20 h-20 border-2 border-white rounded-full"></div>
-                            <div className="absolute bottom-4 left-4 w-16 h-16 border-2 border-white rounded-full"></div>
-                          </div>
-                          
-                          <div className="relative z-10">
-                            <div className="flex items-center justify-between mb-6">
-                              <div className="p-4 bg-white/20 rounded-xl backdrop-blur-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8">
-                                  <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
-                                  <path d="M3 5V19A9 3 0 0 0 21 19V5"></path>
-                                  <path d="M3 12A9 3 0 0 0 21 12"></path>
+                  {/* Data Analyst Card */}
+                  <div className="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-xl p-4 border border-gray-200/30 dark:border-gray-700/40 shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-orange-500/5 to-amber-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="relative z-10 flex items-center space-x-4">
+                      <div className="p-3 bg-gradient-to-r from-orange-500 to-amber-500 rounded-xl flex-shrink-0 group-hover:scale-105 transition-transform duration-300 shadow-md">
+                        <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 640 512" className="text-white text-lg" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M96 224c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zm448 0c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zm32 32h-64c-17.6 0-33.5 7.1-45.1 18.6 40.3 22.1 68.9 62 75.1 109.4h66c17.7 0 32-14.3 32-32v-32c0-35.3-28.7-64-64-64zm-256 0c61.9 0 112-50.1 112-112S381.9 32 320 32 208 82.1 208 144s50.1 112 112 112zm76.8 32h-8.3c-20.8 10-43.9 16-68.5 16s-47.6-6-68.5-16h-8.3C179.6 288 128 339.6 128 403.2V432c0 26.5 21.5 48 48 48h288c26.5 0 48-21.5 48-48v-28.8c0-63.6-51.6-115.2-115.2-115.2zm-223.7-13.4C161.5 263.1 145.6 256 128 256H64c-35.3 0-64 28.7-64 64v32c0 17.7 14.3 32 32 32h65.9c6.3-47.4 34.9-87.3 75.2-109.4z"></path>
                                 </svg>
                               </div>
-                              <div className="flex items-center space-x-3 bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                  <path d="m9 11 3 3L22 4"></path>
-                                </svg>
-                                <span className="text-sm font-semibold">Completed</span>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors duration-300">Data Analyst</h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-300 mb-2 leading-tight">Transforming data into actionable insights</p>
+                        <div className="flex flex-wrap gap-2">
+                          <span className="px-2 py-1 bg-gradient-to-r from-orange-100 to-amber-100 dark:from-orange-900/40 dark:to-amber-900/40 text-orange-700 dark:text-orange-300 rounded-md text-xs font-medium border border-orange-200/50 dark:border-orange-700/50">Python</span>
+                          <span className="px-2 py-1 bg-gradient-to-r from-orange-100 to-amber-100 dark:from-orange-900/40 dark:to-amber-900/40 text-orange-700 dark:text-orange-300 rounded-md text-xs font-medium border border-orange-200/50 dark:border-orange-700/50">Pandas</span>
+                          <span className="px-2 py-1 bg-gradient-to-r from-orange-100 to-amber-100 dark:from-orange-900/40 dark:to-amber-900/40 text-orange-700 dark:text-orange-300 rounded-md text-xs font-medium border border-orange-200/50 dark:border-orange-700/50">SQL</span>
                               </div>
                             </div>
-                            
-                            <div className="mb-4">
-                              <h3 className="text-2xl font-bold mb-3 leading-tight">Data Analysis Internship</h3>
-                              <p className="text-purple-100 font-medium text-lg">ASDC</p>
-                              <p className="text-purple-200 text-sm mt-1">All SERVICE DATA CONTROL</p>
                             </div>
                           </div>
                         </div>
-                        
-                        <div className="p-8">
-                          <div className="flex items-center justify-between mb-6">
-                            <div className="flex items-center space-x-3 text-gray-600 dark:text-gray-300">
-                              <div className="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                  <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                                  <line x1="16" x2="16" y1="2" y2="6"></line>
-                                  <line x1="8" x2="8" y1="2" y2="6"></line>
-                                  <line x1="3" x2="21" y1="10" y2="10"></line>
-                                </svg>
                               </div>
-                              <span className="font-semibold">Nov 2023 - Jan 2024</span>
-                            </div>
-                            <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">ID: ASDC-INT-2024</span>
-                          </div>
-                          
-                          <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 text-base">
-                            Professional internship focused on data analysis fundamentals and business intelligence 
-                            solutions for effective business metrics visualization and decision-making.
-                          </p>
-                          
-                          <div className="mb-6">
-                            <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
-                              <div className="w-2 h-2 bg-purple-600 rounded-full mr-3"></div>
-                              Skills Developed
-                            </h4>
-                            <div className="flex flex-wrap gap-3">
-                              <span className="px-4 py-2 bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 text-sm rounded-lg font-medium border border-purple-200 dark:border-purple-700">Power BI</span>
-                              <span className="px-4 py-2 bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 text-sm rounded-lg font-medium border border-purple-200 dark:border-purple-700">Python</span>
-                              <span className="px-4 py-2 bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 text-sm rounded-lg font-medium border border-purple-200 dark:border-purple-700">Data Modeling</span>
-                              <span className="px-4 py-2 bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 text-sm rounded-lg font-medium border border-purple-200 dark:border-purple-700">ETL Development</span>
-                            </div>
-                          </div>
-                        </div>
-                      </EnhancedCard>
-                    </div>
-                    
-                    {/* Enhanced Timeline Dot */}
-                    <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-r from-purple-600 to-purple-700 rounded-full border-4 border-white dark:border-gray-900 shadow-xl z-10">
-                      <div className="w-full h-full bg-gradient-to-r from-purple-600 to-purple-700 rounded-full animate-pulse flex items-center justify-center">
-                        <div className="w-3 h-3 bg-white rounded-full"></div>
-                      </div>
-                    </div>
-                    
-                    {/* Empty space on RIGHT */}
-                    <div className="hidden md:block md:w-5/12"></div>
-                  </div>
-
-                  {/* 2023-2024: GDSC Vice Head - RIGHT SIDE */}
-                  <div className="relative flex items-center justify-between">
-                    {/* Empty space on LEFT */}
-                    <div className="hidden md:block md:w-5/12"></div>
-                    
-                    {/* Enhanced Timeline Dot */}
-                    <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-r from-orange-600 to-orange-700 rounded-full border-4 border-white dark:border-gray-900 shadow-xl z-10">
-                      <div className="w-full h-full bg-gradient-to-r from-orange-600 to-orange-700 rounded-full animate-pulse flex items-center justify-center">
-                        <div className="w-3 h-3 bg-white rounded-full"></div>
-                      </div>
-                    </div>
-                    
-                    {/* Content on RIGHT */}
-                    <div className="md:w-5/12 w-full">
-                      <EnhancedCard 
-                        delay={0.35}
-                        className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
-                      >
-                        <div className="bg-gradient-to-br from-orange-500 to-orange-700 p-8 text-white relative overflow-hidden">
-                          {/* Background Pattern */}
-                          <div className="absolute inset-0 opacity-10">
-                            <div className="absolute top-4 right-4 w-20 h-20 border-2 border-white rounded-full"></div>
-                            <div className="absolute bottom-4 left-4 w-16 h-16 border-2 border-white rounded-full"></div>
-                          </div>
-                          
-                          <div className="relative z-10">
-                            <div className="flex items-center justify-between mb-6">
-                              <div className="p-4 bg-white/20 rounded-xl backdrop-blur-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8">
-                                  <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-                                  <rect width="8" height="4" x="8" y="2" rx="1" ry="1"></rect>
-                                  <path d="M12 11h4"></path>
-                                  <path d="M12 16h4"></path>
-                                  <path d="M8 11h.01"></path>
-                                  <path d="M8 16h.01"></path>
-                                </svg>
-                              </div>
-                              <div className="flex items-center space-x-3 bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                  <path d="m9 11 3 3L22 4"></path>
-                                </svg>
-                                <span className="text-sm font-semibold">Completed</span>
-                              </div>
-                            </div>
-                            
-                            <div className="mb-4">
-                              <h3 className="text-2xl font-bold mb-3 leading-tight">Vice Head Data Analysis</h3>
-                              <p className="text-orange-100 font-medium text-lg">GDSC</p>
-                              <p className="text-orange-200 text-sm mt-1">Google Developer Student Clubs</p>
-                            </div>
-                          </div>
-                        </div>
-                        
-                        <div className="p-8">
-                          <div className="flex items-center justify-between mb-6">
-                            <div className="flex items-center space-x-3 text-gray-600 dark:text-gray-300">
-                              <div className="p-2 bg-orange-100 dark:bg-orange-900/30 rounded-lg">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                  <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                                  <line x1="16" x2="16" y1="2" y2="6"></line>
-                                  <line x1="8" x2="8" y1="2" y2="6"></line>
-                                  <line x1="3" x2="21" y1="10" y2="10"></line>
-                                </svg>
-                              </div>
-                              <span className="font-semibold">Sep 2023 - Mar 2024</span>
-                            </div>
-                            <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">ID: GDSC-VH-2024</span>
-                          </div>
-                          
-                          <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 text-base">
-                            Leadership role as mentor and instructor, teaching data analysis skills focused on 
-                            BI, SQL, Power BI, databases, and data warehousing to fellow students.
-                          </p>
-                          
-                          <div className="mb-6">
-                            <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
-                              <div className="w-2 h-2 bg-orange-600 rounded-full mr-3"></div>
-                              Leadership & Teaching
-                            </h4>
-                            <div className="flex flex-wrap gap-3">
-                              <span className="px-4 py-2 bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300 text-sm rounded-lg font-medium border border-orange-200 dark:border-orange-700">Mentoring</span>
-                              <span className="px-4 py-2 bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300 text-sm rounded-lg font-medium border border-orange-200 dark:border-orange-700">SQL</span>
-                              <span className="px-4 py-2 bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300 text-sm rounded-lg font-medium border border-orange-200 dark:border-orange-700">Power BI</span>
-                              <span className="px-4 py-2 bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-300 text-sm rounded-lg font-medium border border-orange-200 dark:border-orange-700">Teaching</span>
-                            </div>
-                          </div>
-                        </div>
-                      </EnhancedCard>
-                    </div>
-                  </div>
-
-                  {/* 2024: ATC Internship - LEFT SIDE */}
-                  <div className="relative flex items-center justify-between">
-                    {/* Content on LEFT */}
-                    <div className="md:w-5/12 w-full">
-                      <EnhancedCard 
-                        delay={0.4}
-                        className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
-                      >
-                        <div className="bg-gradient-to-br from-red-500 to-red-700 p-8 text-white relative overflow-hidden">
-                          {/* Background Pattern */}
-                          <div className="absolute inset-0 opacity-10">
-                            <div className="absolute top-4 right-4 w-20 h-20 border-2 border-white rounded-full"></div>
-                            <div className="absolute bottom-4 left-4 w-16 h-16 border-2 border-white rounded-full"></div>
-                          </div>
-                          
-                          <div className="relative z-10">
-                            <div className="flex items-center justify-between mb-6">
-                              <div className="p-4 bg-white/20 rounded-xl backdrop-blur-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8">
-                                  <path d="M3 3v18h18"></path>
-                                  <path d="M18 17V9"></path>
-                                  <path d="M13 17V5"></path>
-                                  <path d="M8 17v-3"></path>
-                                </svg>
-                              </div>
-                              <div className="flex items-center space-x-3 bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                  <path d="m9 11 3 3L22 4"></path>
-                                </svg>
-                                <span className="text-sm font-semibold">Completed</span>
-                              </div>
-                            </div>
-                            
-                            <div className="mb-4">
-                              <h3 className="text-2xl font-bold mb-3 leading-tight">BI Analyst Internship</h3>
-                              <p className="text-red-100 font-medium text-lg">Addiction Treatment Center</p>
-                              <p className="text-red-200 text-sm mt-1">Healthcare Analytics & Dashboards</p>
-                            </div>
-                          </div>
-                        </div>
-                        
-                        <div className="p-8">
-                          <div className="flex items-center justify-between mb-6">
-                            <div className="flex items-center space-x-3 text-gray-600 dark:text-gray-300">
-                              <div className="p-2 bg-red-100 dark:bg-red-900/30 rounded-lg">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                  <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                                  <line x1="16" x2="16" y1="2" y2="6"></line>
-                                  <line x1="8" x2="8" y1="2" y2="6"></line>
-                                  <line x1="3" x2="21" y1="10" y2="10"></line>
-                                </svg>
-                              </div>
-                              <span className="font-semibold">Jul 2024 - Oct 2024</span>
-                            </div>
-                            <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">ID: ATC-INT-2024</span>
-                          </div>
-                          
-                          <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 text-base">
-                            Hands-on experience in Power BI dashboard development and data visualization 
-                            for healthcare operations monitoring and performance analytics.
-                          </p>
-                          
-                          <div className="mb-6">
-                            <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
-                              <div className="w-2 h-2 bg-red-600 rounded-full mr-3"></div>
-                              Skills Applied
-                            </h4>
-                            <div className="flex flex-wrap gap-3">
-                              <span className="px-4 py-2 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 text-sm rounded-lg font-medium border border-red-200 dark:border-red-700">Dashboard Design</span>
-                              <span className="px-4 py-2 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 text-sm rounded-lg font-medium border border-red-200 dark:border-red-700">Power BI</span>
-                              <span className="px-4 py-2 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 text-sm rounded-lg font-medium border border-red-200 dark:border-red-700">DAX</span>
-                              <span className="px-4 py-2 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300 text-sm rounded-lg font-medium border border-red-200 dark:border-red-700">KPI Development</span>
-                            </div>
-                          </div>
-                        </div>
-                      </EnhancedCard>
-                    </div>
-                    
-                    {/* Enhanced Timeline Dot */}
-                    <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-r from-red-600 to-red-700 rounded-full border-4 border-white dark:border-gray-900 shadow-xl z-10 pulse-glow">
-                      <div className="w-full h-full bg-gradient-to-r from-red-600 to-red-700 rounded-full animate-pulse flex items-center justify-center">
-                        <div className="w-3 h-3 bg-white rounded-full"></div>
-                      </div>
-                    </div>
-                    
-                    {/* Empty space on RIGHT */}
-                    <div className="hidden md:block md:w-5/12"></div>
-                  </div>
-
-                  {/* 2025: Data Engineering Zoomcamp - RIGHT SIDE */}
-                  <div className="relative flex items-center justify-between">
-                    {/* Empty space on LEFT */}
-                    <div className="hidden md:block md:w-5/12"></div>
-                    
-                    {/* Enhanced Timeline Dot */}
-                    <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 w-10 h-10 bg-gradient-to-r from-indigo-600 to-indigo-700 rounded-full border-4 border-white dark:border-gray-900 shadow-xl z-10">
-                      <div className="w-full h-full bg-gradient-to-r from-indigo-600 to-indigo-700 rounded-full animate-pulse flex items-center justify-center">
-                        <div className="w-3 h-3 bg-white rounded-full"></div>
-                      </div>
-                    </div>
-                    
-                    {/* Content on RIGHT */}
-                    <div className="md:w-5/12 w-full">
-                      <EnhancedCard 
-                        delay={0.5}
-                        className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
-                      >
-                        <div className="bg-gradient-to-br from-indigo-500 to-indigo-700 p-8 text-white relative overflow-hidden">
-                          {/* Background Pattern */}
-                          <div className="absolute inset-0 opacity-10">
-                            <div className="absolute top-4 right-4 w-20 h-20 border-2 border-white rounded-full"></div>
-                            <div className="absolute bottom-4 left-4 w-16 h-16 border-2 border-white rounded-full"></div>
-                          </div>
-                          
-                          <div className="relative z-10">
-                            <div className="flex items-center justify-between mb-6">
-                              <div className="p-4 bg-white/20 rounded-xl backdrop-blur-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8">
-                                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                                </svg>
-                              </div>
-                              <div className="flex items-center space-x-3 bg-white/20 px-4 py-2 rounded-full backdrop-blur-sm">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                  <path d="m9 11 3 3L22 4"></path>
-                                </svg>
-                                <span className="text-sm font-semibold">Completed</span>
-                              </div>
-                            </div>
-                            
-                            <div className="mb-4">
-                              <h3 className="text-2xl font-bold mb-3 leading-tight">Data Engineering Zoomcamp</h3>
-                              <p className="text-indigo-100 font-medium text-lg">DataTalks Club</p>
-                              <p className="text-indigo-200 text-sm mt-1">Modern Data Engineering Bootcamp</p>
-                            </div>
-                          </div>
-                        </div>
-                        
-                        <div className="p-8">
-                          <div className="flex items-center justify-between mb-6">
-                            <div className="flex items-center space-x-3 text-gray-600 dark:text-gray-300">
-                              <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                                  <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                                  <line x1="16" x2="16" y1="2" y2="6"></line>
-                                  <line x1="8" x2="8" y1="2" y2="6"></line>
-                                  <line x1="3" x2="21" y1="10" y2="10"></line>
-                                </svg>
-                              </div>
-                              <span className="font-semibold">Jan 2025 - May 2025</span>
-                            </div>
-                            <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">ID: DTC-ZC-2025</span>
-                          </div>
-                          
-                          <p className="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 text-base">
-                            Comprehensive modern data engineering bootcamp with cloud deployment, 
-                            containerization, and advanced data pipeline orchestration techniques.
-                          </p>
-                          
-                          <div className="mb-6">
-                            <h4 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center">
-                              <div className="w-2 h-2 bg-indigo-600 rounded-full mr-3"></div>
-                              Technologies Mastered
-                            </h4>
-                            <div className="flex flex-wrap gap-3">
-                              <span className="px-4 py-2 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 text-sm rounded-lg font-medium border border-indigo-200 dark:border-indigo-700">Apache Airflow</span>
-                              <span className="px-4 py-2 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 text-sm rounded-lg font-medium border border-indigo-200 dark:border-indigo-700">dbt</span>
-                              <span className="px-4 py-2 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 text-sm rounded-lg font-medium border border-indigo-200 dark:border-indigo-700">Docker</span>
-                              <span className="px-4 py-2 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 text-sm rounded-lg font-medium border border-indigo-200 dark:border-indigo-700">GCP</span>
-                            </div>
-                          </div>
-                        </div>
-                      </EnhancedCard>
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
-              </div>
-              </motion.div>
             </motion.div>
-          </div>
+                            </div>
         </section>
-
-      {/* About Section */}
-      <section id="about" className="section-padding relative overflow-hidden">
-        {/* Enhanced Background Pattern - Improved Light Mode */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-50/80 via-white/90 to-indigo-50/70 dark:from-slate-900/90 dark:via-gray-900/95 dark:to-slate-800/90"></div>
-          <div className="absolute inset-0 bg-gradient-to-tl from-purple-50/60 via-transparent to-pink-50/50 dark:from-transparent dark:to-transparent"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.12)_0%,transparent_60%)] dark:bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.1)_0%,transparent_50%)]"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(239,68,68,0.10)_0%,transparent_60%)] dark:bg-[radial-gradient(circle_at_70%_80%,rgba(239,68,68,0.08)_0%,transparent_50%)]"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(139,92,246,0.08)_0%,transparent_65%)] dark:bg-[radial-gradient(circle_at_50%_40%,rgba(139,92,246,0.06)_0%,transparent_55%)]"></div>
-        </div>
-
-        {/* Floating Visual Elements */}
-        <div className="absolute inset-0 pointer-events-none">
-          {/* Floating Icons */}
-          <motion.div
-            animate={{ 
-              y: [0, -20, 0],
-              rotate: [0, 5, 0]
-            }}
-            transition={{ 
-              duration: 6,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-            className="absolute top-20 left-10 w-12 h-12 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-blue-200/30 dark:border-blue-700/30"
-          >
-            <FaDatabase className="text-blue-600 dark:text-blue-400" />
-          </motion.div>
-          
-          <motion.div
-            animate={{ 
-              y: [0, 15, 0],
-              rotate: [0, -3, 0]
-            }}
-            transition={{ 
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1
-            }}
-            className="absolute top-32 right-16 w-10 h-10 bg-gradient-to-br from-red-500/20 to-orange-500/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-red-200/30 dark:border-red-700/30"
-          >
-            <FaChartLine className="text-red-600 dark:text-red-400 text-sm" />
-          </motion.div>
-
-          <motion.div
-            animate={{ 
-              y: [0, -25, 0],
-              rotate: [0, 8, 0]
-            }}
-            transition={{ 
-              duration: 7,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 2
-            }}
-            className="absolute bottom-32 left-20 w-8 h-8 bg-gradient-to-br from-purple-500/20 to-violet-500/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-purple-200/30 dark:border-purple-700/30"
-          >
-            <FaCode className="text-purple-600 dark:text-purple-400 text-xs" />
-          </motion.div>
-
-          <motion.div
-            animate={{ 
-              y: [0, 10, 0],
-              rotate: [0, -5, 0]
-            }}
-            transition={{ 
-              duration: 5,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 3
-            }}
-            className="absolute bottom-20 right-10 w-14 h-14 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-green-200/30 dark:border-green-700/30"
-          >
-            <FaLightbulb className="text-green-600 dark:text-green-400" />
-          </motion.div>
-
-          {/* Geometric Shapes */}
-          <motion.div
-            animate={{ 
-              rotate: [0, 360],
-              scale: [1, 1.1, 1]
-            }}
-            transition={{ 
-              duration: 20,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-            className="absolute top-1/4 left-1/4 w-32 h-32 border border-blue-200/20 dark:border-blue-700/20 rounded-full"
-          />
-
-          <motion.div
-            animate={{ 
-              rotate: [0, -360],
-              scale: [1, 0.9, 1]
-            }}
-            transition={{ 
-              duration: 25,
-              repeat: Infinity,
-              ease: "linear"
-            }}
-            className="absolute bottom-1/4 right-1/4 w-24 h-24 border border-red-200/20 dark:border-red-700/20 rounded-full"
-          />
-        </div>
-        
-        <div className="content-width-1750 relative z-10">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            {/* Section Header */}
-            <div className="text-center mb-20">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                viewport={{ once: true }}
-                className="inline-block mb-6"
-              >
-                <span className="px-6 py-3 bg-gradient-to-r from-blue-500/10 to-red-500/10 dark:from-blue-500/20 dark:to-red-500/20 rounded-full text-sm font-semibold text-blue-600 dark:text-blue-400 border border-blue-200/20 dark:border-blue-500/20 backdrop-blur-sm">
-                  <FaUser className="inline mr-2" />
-                  About Me
-                </span>
-              </motion.div>
-
-              {/* Profile Photo */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.5 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-                viewport={{ once: true }}
-                className="mb-8"
-              >
-                <div className="relative w-32 h-32 mx-auto mb-6">
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-red-500 to-purple-500 rounded-full p-1">
-                    <div className="w-full h-full bg-white dark:bg-gray-800 rounded-full flex items-center justify-center overflow-hidden">
-                      <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-red-500 rounded-full flex items-center justify-center text-white text-3xl font-bold">
-                        MM
-                      </div>
-                    </div>
-                  </div>
-                  {/* Floating Elements */}
-                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white text-sm animate-pulse">
-                    <FaCheckCircle />
-                  </div>
-                </div>
-              </motion.div>
-
-              <h2 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
-                <span className="block mb-2">Mahmoud Mamdoh</span>
-                <span className="text-3xl md:text-4xl bg-gradient-to-r from-blue-600 via-red-500 to-purple-600 bg-clip-text text-transparent">
-                  Data Engineer
-                </span>
-              </h2>
-              <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto font-light leading-relaxed mb-8">
-                Passionate Data Engineer dedicated to building scalable solutions that drive strategic decisions and accelerate business growth
-              </p>
-
-              {/* Achievement Badges */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-                viewport={{ once: true }}
-                className="flex flex-wrap justify-center gap-4 mb-8"
-              >
-                <div className="flex items-center px-4 py-2 bg-gradient-to-r from-blue-100 to-blue-50 dark:from-blue-900/30 dark:to-blue-800/20 rounded-full text-blue-700 dark:text-blue-300 text-sm font-medium border border-blue-200/50 dark:border-blue-700/50">
-                  <FaAward className="mr-2" />
-                  5+ Certifications
-            </div>
-                <div className="flex items-center px-4 py-2 bg-gradient-to-r from-green-100 to-green-50 dark:from-green-900/30 dark:to-green-800/20 rounded-full text-green-700 dark:text-green-300 text-sm font-medium border border-green-200/50 dark:border-green-700/50">
-                  <FaProjectDiagram className="mr-2" />
-                  30+ Projects
-                </div>
-                <div className="flex items-center px-4 py-2 bg-gradient-to-r from-purple-100 to-purple-50 dark:from-purple-900/30 dark:to-purple-800/20 rounded-full text-purple-700 dark:text-purple-300 text-sm font-medium border border-purple-200/50 dark:border-purple-700/50">
-                  <FaRocket className="mr-2" />
-                  Available for Hire
-                </div>
-              </motion.div>
-
-              {/* Call to Action Buttons */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                viewport={{ once: true }}
-                className="flex flex-wrap justify-center gap-4"
-              >
-                <motion.button
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={downloadResume}
-                  className="group flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-red-600 hover:from-blue-700 hover:to-red-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-transparent"
-                >
-                  <FaDownload className="mr-2 group-hover:animate-bounce" />
-                  Download Resume
-                </motion.button>
-                <motion.a
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  href="#contact"
-                  className="group flex items-center px-8 py-4 bg-white/80 dark:bg-gray-800/80 hover:bg-white dark:hover:bg-gray-700 text-gray-900 dark:text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-700 backdrop-blur-sm"
-                >
-                  <FaEnvelope className="mr-2 group-hover:animate-pulse" />
-                  Get In Touch
-                </motion.a>
-              </motion.div>
-            </div>
-
-            <div className="grid lg:grid-cols-2 gap-20 items-start">
-              {/* Left Side - Content */}
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-                viewport={{ once: true }}
-                className="space-y-8"
-              >
-                {/* Main Description */}
-                <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl rounded-2xl p-8 border border-gray-200/20 dark:border-gray-700/30 shadow-xl">
-                  <div className="flex items-start space-x-4 mb-6">
-                    <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-blue-500 to-red-500 rounded-xl flex items-center justify-center">
-                      <FaUser className="text-white text-lg" />
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Professional Summary</h3>
-                      <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-red-500 rounded-full"></div>
-                    </div>
-                  </div>
-                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-lg mb-6 font-medium">
-                    Data Engineer focused on transforming data into actionable insights that drive strategic decisions and accelerate business growth. 
-                    Skilled in designing and optimizing complex data pipelines and workflows using modern data stacks.
-                  </p>
-                  
-                  <p className="text-gray-600 dark:text-gray-400 leading-relaxed text-base">
-                    Collaborative and impact-driven professional with experience in building scalable data solutions 
-                    that enable organizations to make informed decisions.
-                  </p>
-                </div>
-                
-                {/* Key Information */}
-                <div className="grid md:grid-cols-2 gap-6">
-                  {/* Education */}
-                  <motion.div
-                    whileHover={{ y: -5, scale: 1.02 }}
-                    transition={{ duration: 0.3 }}
-                    className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl p-6 border border-gray-200/30 dark:border-gray-700/40 shadow-lg hover:shadow-xl transition-all duration-300"
-                  >
-                    <div className="flex items-center mb-4">
-                      <div className="p-2 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg mr-4">
-                        <FaGraduationCap className="text-white text-lg" />
-                    </div>
-                      <h4 className="font-bold text-gray-900 dark:text-white text-lg">Education</h4>
-                    </div>
-                    <p className="text-gray-700 dark:text-gray-300 font-medium">
-                      Computer Science & Mathematics
-                    </p>
-                    <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
-                      Menofia University (2021-2025)
-                    </p>
-                  </motion.div>
-
-                  {/* Location */}
-                  <motion.div
-                    whileHover={{ y: -5, scale: 1.02 }}
-                    transition={{ duration: 0.3 }}
-                    className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl p-6 border border-gray-200/30 dark:border-gray-700/40 shadow-lg hover:shadow-xl transition-all duration-300"
-                  >
-                    <div className="flex items-center mb-4">
-                      <div className="p-2 bg-gradient-to-br from-green-500 to-teal-500 rounded-lg mr-4">
-                        <FaMapMarkerAlt className="text-white text-lg" />
-                    </div>
-                      <h4 className="font-bold text-gray-900 dark:text-white text-lg">Location</h4>
-                    </div>
-                    <p className="text-gray-700 dark:text-gray-300 font-medium">
-                      Cairo, Egypt
-                    </p>
-                    <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
-                      Open to relocate
-                    </p>
-                  </motion.div>
-                </div>
-
-                {/* Quick Stats */}
-                <motion.div
-                  whileHover={{ y: -5 }}
-                  transition={{ duration: 0.3 }}
-                  className="bg-gradient-to-br from-white/90 via-blue-50/50 to-purple-50/30 dark:from-gray-800/90 dark:via-gray-800/70 dark:to-gray-700/50 backdrop-blur-xl rounded-2xl p-8 border border-gray-200/30 dark:border-gray-700/40 shadow-xl relative overflow-hidden"
-                >
-                  {/* Background Pattern */}
-                  <div className="absolute inset-0 opacity-5">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-orange-500 to-red-500 rounded-full -translate-y-16 translate-x-16"></div>
-                    <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full translate-y-12 -translate-x-12"></div>
-                  </div>
-                  
-                  <div className="relative z-10">
-                    <div className="flex items-center mb-6">
-                      <div className="p-3 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl mr-4 shadow-lg">
-                        <FaTrophy className="text-white text-xl" />
-                    </div>
-                    <div>
-                        <h4 className="font-bold text-gray-900 dark:text-white text-xl">Career Highlights</h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-400">Key achievements & milestones</p>
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-3 gap-6 text-center">
-                      <motion.div 
-                        className="group"
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <div className="relative">
-                          <div className="text-4xl font-bold bg-gradient-to-r from-red-500 to-pink-500 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-300">30+</div>
-                          <div className="absolute inset-0 bg-gradient-to-r from-red-500/20 to-pink-500/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
-                        </div>
-                        <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Projects</div>
-                        <div className="w-full h-1 bg-gradient-to-r from-red-500 to-pink-500 rounded-full mt-2 opacity-60"></div>
-                      </motion.div>
-                      <motion.div 
-                        className="group"
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <div className="relative">
-                          <div className="text-4xl font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-300">5+</div>
-                          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
-                        </div>
-                        <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Certifications</div>
-                        <div className="w-full h-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full mt-2 opacity-60"></div>
-                      </motion.div>
-                      <motion.div 
-                        className="group"
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <div className="relative">
-                          <div className="text-4xl font-bold bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform duration-300">2+</div>
-                          <div className="absolute inset-0 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
-                        </div>
-                        <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">Years Learning</div>
-                        <div className="w-full h-1 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full mt-2 opacity-60"></div>
-                      </motion.div>
-                    </div>
-                  </div>
-                </motion.div>
-
-                {/* Core Skills Preview */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                  viewport={{ once: true }}
-                  className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl rounded-2xl p-8 border border-gray-200/20 dark:border-gray-700/30 shadow-xl"
-                >
-                  <div className="flex items-start space-x-4 mb-6">
-                    <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl flex items-center justify-center">
-                      <FaTools className="text-white text-lg" />
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Core Technologies</h3>
-                      <div className="w-16 h-1 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full"></div>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    {[
-                      { name: 'Python', icon: FaPython, color: 'from-yellow-400 to-blue-500' },
-                      { name: 'SQL', icon: FaDatabase, color: 'from-blue-500 to-cyan-500' },
-                      { name: 'Docker', icon: FaDocker, color: 'from-blue-400 to-blue-600' },
-                      { name: 'Git', icon: FaGitAlt, color: 'from-orange-500 to-red-500' }
-                    ].map((tech, index) => (
-                      <motion.div
-                        key={tech.name}
-                        whileHover={{ scale: 1.05, y: -2 }}
-                        transition={{ duration: 0.2 }}
-                        className="flex flex-col items-center p-4 bg-gray-50/80 dark:bg-gray-700/50 rounded-xl hover:bg-gray-100/80 dark:hover:bg-gray-600/60 transition-all duration-300 group"
-                      >
-                        <div className={`p-3 bg-gradient-to-r ${tech.color} rounded-lg mb-2 group-hover:scale-110 transition-transform duration-300`}>
-                          <tech.icon className="text-white text-lg" />
-                </div>
-                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{tech.name}</span>
-                      </motion.div>
-                    ))}
-              </div>
-                </motion.div>
-              </motion.div>
-              
-              {/* Right Side - Role Cards */}
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.5 }}
-                viewport={{ once: true }}
-                className="space-y-8"
-              >
-                {/* Data Engineer */}
-                <motion.div
-                  whileHover={{ y: -8, scale: 1.02 }}
-                  transition={{ duration: 0.4, ease: "easeOut" }}
-                  className="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl p-8 border border-gray-200/30 dark:border-gray-700/40 shadow-xl hover:shadow-2xl transition-all duration-500 relative overflow-hidden"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 via-transparent to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="relative z-10">
-                    <div className="flex items-start space-x-6">
-                      <div className="p-4 bg-gradient-to-br from-red-500 to-orange-500 rounded-2xl flex-shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                        <FaDatabase className="text-white text-2xl" />
-                    </div>
-                      <div className="flex-1">
-                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors duration-300">Data Engineer</h3>
-                        <p className="text-gray-600 dark:text-gray-300 text-base mb-6 leading-relaxed">
-                        Building scalable ETL pipelines, data warehouses, and real-time streaming solutions
-                      </p>
-                        <div className="flex flex-wrap gap-3">
-                          <span className="px-4 py-2 bg-gradient-to-r from-red-100 to-orange-100 dark:from-red-900/40 dark:to-orange-900/40 text-red-700 dark:text-red-300 rounded-full text-sm font-medium border border-red-200/50 dark:border-red-700/50">Spark</span>
-                          <span className="px-4 py-2 bg-gradient-to-r from-red-100 to-orange-100 dark:from-red-900/40 dark:to-orange-900/40 text-red-700 dark:text-red-300 rounded-full text-sm font-medium border border-red-200/50 dark:border-red-700/50">Hadoop</span>
-                          <span className="px-4 py-2 bg-gradient-to-r from-red-100 to-orange-100 dark:from-red-900/40 dark:to-orange-900/40 text-red-700 dark:text-red-300 rounded-full text-sm font-medium border border-red-200/50 dark:border-red-700/50">Kafka</span>
-                          <span className="px-4 py-2 bg-gradient-to-r from-red-100 to-orange-100 dark:from-red-900/40 dark:to-orange-900/40 text-red-700 dark:text-red-300 rounded-full text-sm font-medium border border-red-200/50 dark:border-red-700/50">Airflow</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                </motion.div>
-
-                {/* Analytics Engineer */}
-                <motion.div
-                  whileHover={{ y: -8, scale: 1.02 }}
-                  transition={{ duration: 0.4, ease: "easeOut" }}
-                  className="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl p-8 border border-gray-200/30 dark:border-gray-700/40 shadow-xl hover:shadow-2xl transition-all duration-500 relative overflow-hidden"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 via-transparent to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="relative z-10">
-                    <div className="flex items-start space-x-6">
-                      <div className="p-4 bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl flex-shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                        <FaChartLine className="text-white text-2xl" />
-                    </div>
-                      <div className="flex-1">
-                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors duration-300">Analytics Engineer</h3>
-                        <p className="text-gray-600 dark:text-gray-300 text-base mb-6 leading-relaxed">
-                        Designing data models for advanced analytics and business intelligence
-                      </p>
-                        <div className="flex flex-wrap gap-3">
-                          <span className="px-4 py-2 bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900/40 dark:to-emerald-900/40 text-green-700 dark:text-green-300 rounded-full text-sm font-medium border border-green-200/50 dark:border-green-700/50">dbt</span>
-                          <span className="px-4 py-2 bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900/40 dark:to-emerald-900/40 text-green-700 dark:text-green-300 rounded-full text-sm font-medium border border-green-200/50 dark:border-green-700/50">Snowflake</span>
-                          <span className="px-4 py-2 bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900/40 dark:to-emerald-900/40 text-green-700 dark:text-green-300 rounded-full text-sm font-medium border border-green-200/50 dark:border-green-700/50">SQL</span>
-                          <span className="px-4 py-2 bg-gradient-to-r from-green-100 to-emerald-100 dark:from-green-900/40 dark:to-emerald-900/40 text-green-700 dark:text-green-300 rounded-full text-sm font-medium border border-green-200/50 dark:border-green-700/50">Python</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                </motion.div>
-
-                {/* BI Developer */}
-                <motion.div
-                  whileHover={{ y: -8, scale: 1.02 }}
-                  transition={{ duration: 0.4, ease: "easeOut" }}
-                  className="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl p-8 border border-gray-200/30 dark:border-gray-700/40 shadow-xl hover:shadow-2xl transition-all duration-500 relative overflow-hidden"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-violet-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="relative z-10">
-                    <div className="flex items-start space-x-6">
-                      <div className="p-4 bg-gradient-to-br from-purple-500 to-violet-500 rounded-2xl flex-shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                        <FaLightbulb className="text-white text-2xl" />
-                    </div>
-                      <div className="flex-1">
-                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300">BI Developer</h3>
-                        <p className="text-gray-600 dark:text-gray-300 text-base mb-6 leading-relaxed">
-                        Creating interactive dashboards and reports for data-driven decisions
-                      </p>
-                        <div className="flex flex-wrap gap-3">
-                          <span className="px-4 py-2 bg-gradient-to-r from-purple-100 to-violet-100 dark:from-purple-900/40 dark:to-violet-900/40 text-purple-700 dark:text-purple-300 rounded-full text-sm font-medium border border-purple-200/50 dark:border-purple-700/50">Power BI</span>
-                          <span className="px-4 py-2 bg-gradient-to-r from-purple-100 to-violet-100 dark:from-purple-900/40 dark:to-violet-900/40 text-purple-700 dark:text-purple-300 rounded-full text-sm font-medium border border-purple-200/50 dark:border-purple-700/50">Tableau</span>
-                          <span className="px-4 py-2 bg-gradient-to-r from-purple-100 to-violet-100 dark:from-purple-900/40 dark:to-violet-900/40 text-purple-700 dark:text-purple-300 rounded-full text-sm font-medium border border-purple-200/50 dark:border-purple-700/50">DAX</span>
-                          <span className="px-4 py-2 bg-gradient-to-r from-purple-100 to-violet-100 dark:from-purple-900/40 dark:to-violet-900/40 text-purple-700 dark:text-purple-300 rounded-full text-sm font-medium border border-purple-200/50 dark:border-purple-700/50">SSAS</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                </motion.div>
-
-                {/* Data Analyst */}
-                <motion.div
-                  whileHover={{ y: -8, scale: 1.02 }}
-                  transition={{ duration: 0.4, ease: "easeOut" }}
-                  className="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl p-8 border border-gray-200/30 dark:border-gray-700/40 shadow-xl hover:shadow-2xl transition-all duration-500 relative overflow-hidden"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-orange-500/5 via-transparent to-amber-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="relative z-10">
-                    <div className="flex items-start space-x-6">
-                      <div className="p-4 bg-gradient-to-br from-orange-500 to-amber-500 rounded-2xl flex-shrink-0 group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                        <FaUsers className="text-white text-2xl" />
-                    </div>
-                      <div className="flex-1">
-                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors duration-300">Data Analyst</h3>
-                        <p className="text-gray-600 dark:text-gray-300 text-base mb-6 leading-relaxed">
-                        Transforming raw data into actionable insights for business strategy
-                      </p>
-                        <div className="flex flex-wrap gap-3">
-                          <span className="px-4 py-2 bg-gradient-to-r from-orange-100 to-amber-100 dark:from-orange-900/40 dark:to-amber-900/40 text-orange-700 dark:text-orange-300 rounded-full text-sm font-medium border border-orange-200/50 dark:border-orange-700/50">Python</span>
-                          <span className="px-4 py-2 bg-gradient-to-r from-orange-100 to-amber-100 dark:from-orange-900/40 dark:to-amber-900/40 text-orange-700 dark:text-orange-300 rounded-full text-sm font-medium border border-orange-200/50 dark:border-orange-700/50">Pandas</span>
-                          <span className="px-4 py-2 bg-gradient-to-r from-orange-100 to-amber-100 dark:from-orange-900/40 dark:to-amber-900/40 text-orange-700 dark:text-orange-300 rounded-full text-sm font-medium border border-orange-200/50 dark:border-orange-700/50">SQL</span>
-                          <span className="px-4 py-2 bg-gradient-to-r from-orange-100 to-amber-100 dark:from-orange-900/40 dark:to-amber-900/40 text-orange-700 dark:text-orange-300 rounded-full text-sm font-medium border border-orange-200/50 dark:border-orange-700/50">Jupyter</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                </motion.div>
-              </motion.div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
       {/* Projects Section */}
       <section id="projects" className="section-padding relative overflow-hidden">
-        {/* Enhanced Background - Improved Light Mode */}
+        {/* Clean Background */}
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/80 via-white/95 to-purple-50/70 dark:from-gray-900/95 dark:via-slate-900/98 dark:to-indigo-900/80"></div>
-          <div className="absolute inset-0 bg-gradient-to-tl from-emerald-50/60 via-transparent to-cyan-50/50 dark:from-transparent dark:to-transparent"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_25%,rgba(79,70,229,0.12)_0%,transparent_60%)] dark:bg-[radial-gradient(circle_at_25%_25%,rgba(79,70,229,0.15)_0%,transparent_50%)]"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_75%,rgba(16,185,129,0.10)_0%,transparent_60%)] dark:bg-[radial-gradient(circle_at_75%_75%,rgba(16,185,129,0.12)_0%,transparent_50%)]"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_10%,rgba(139,92,246,0.08)_0%,transparent_65%)] dark:bg-[radial-gradient(circle_at_50%_10%,rgba(139,92,246,0.06)_0%,transparent_55%)]"></div>
-        </div>
-
+          <div className="absolute inset-0 bg-white dark:bg-gray-900"></div>
+                          </div>
+                          
         {/* Floating Elements for Projects */}
         <div className="absolute inset-0 pointer-events-none">
-          <motion.div
-            animate={{ 
+                      <motion.div 
+                        animate={{ 
               y: [0, -15, 0],
               rotate: [0, 3, 0]
-            }}
-            transition={{ 
+                        }}
+                        transition={{ 
               duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
             className="absolute top-32 left-12 w-16 h-16 bg-gradient-to-br from-indigo-500/20 to-purple-500/20 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-indigo-200/30 dark:border-indigo-700/30"
-          >
+                      >
             <FaProjectDiagram className="text-indigo-600 dark:text-indigo-400 text-xl" />
-          </motion.div>
-          
-          <motion.div
-            animate={{ 
+                      </motion.div>
+                      
+                      <motion.div 
+                        animate={{ 
               y: [0, 20, 0],
               rotate: [0, -5, 0]
-            }}
-            transition={{ 
+                        }}
+                        transition={{ 
               duration: 10,
-              repeat: Infinity,
-              ease: "easeInOut",
+                          repeat: Infinity,
+                          ease: "easeInOut",
               delay: 2
-            }}
+                        }}
             className="absolute top-20 right-20 w-12 h-12 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-full flex items-center justify-center backdrop-blur-sm border border-green-200/30 dark:border-green-700/30"
-          >
+                      >
             <FaRocket className="text-green-600 dark:text-green-400" />
-          </motion.div>
-
-          <motion.div
-            animate={{ 
+                      </motion.div>
+                      
+                      <motion.div 
+                        animate={{ 
               y: [0, -10, 0],
               scale: [1, 1.1, 1]
-            }}
-            transition={{ 
+                        }}
+                        transition={{ 
               duration: 6,
-              repeat: Infinity,
-              ease: "easeInOut",
+                          repeat: Infinity,
+                          ease: "easeInOut",
               delay: 4
-            }}
+                        }}
             className="absolute bottom-32 left-16 w-14 h-14 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-xl flex items-center justify-center backdrop-blur-sm border border-orange-200/30 dark:border-orange-700/30"
-          >
+                      >
             <FaTools className="text-orange-600 dark:text-orange-400" />
-          </motion.div>
-        </div>
+                </motion.div>
+              </div>
 
         <div className="content-width-1750 relative z-10">
           <motion.div 
@@ -3290,7 +2276,7 @@ export default function Home() {
           >
             {/* Enhanced Header */}
             <div className="text-center mb-20">
-              <motion.div
+              <motion.div 
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
@@ -3301,7 +2287,7 @@ export default function Home() {
                   <FaProjectDiagram className="inline mr-2" />
                   Portfolio Showcase
                 </span>
-              </motion.div>
+                </motion.div>
               <h2 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
                 Featured <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-green-600 bg-clip-text text-transparent">Projects</span>
               </h2>
@@ -3311,11 +2297,11 @@ export default function Home() {
             </div>
 
             {/* Enhanced Category Filter */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              viewport={{ once: true }}
+            viewport={{ once: true }}
               className="flex justify-center mb-16"
             >
               <div className="flex flex-wrap gap-3 bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl rounded-2xl p-3 border border-gray-200/30 dark:border-gray-700/40 shadow-lg">
@@ -3402,13 +2388,9 @@ export default function Home() {
 
               {/* Skills Section */}
         <section id="skills" className="section-padding relative overflow-hidden">
-          {/* Enhanced Background - Improved Light Mode */}
+          {/* Clean Background */}
           <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-gradient-to-br from-emerald-50/80 via-white/95 to-cyan-50/80 dark:from-emerald-900/80 dark:via-gray-900/95 dark:to-cyan-900/85"></div>
-            <div className="absolute inset-0 bg-gradient-to-tl from-teal-50/70 via-transparent to-green-50/60 dark:from-transparent dark:to-transparent"></div>
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(16,185,129,0.12)_0%,transparent_60%)] dark:bg-[radial-gradient(circle_at_30%_40%,rgba(16,185,129,0.15)_0%,transparent_50%)]"></div>
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_60%,rgba(6,182,212,0.10)_0%,transparent_60%)] dark:bg-[radial-gradient(circle_at_70%_60%,rgba(6,182,212,0.12)_0%,transparent_50%)]"></div>
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_80%,rgba(34,197,94,0.08)_0%,transparent_65%)] dark:bg-[radial-gradient(circle_at_50%_80%,rgba(34,197,94,0.06)_0%,transparent_55%)]"></div>
+            <div className="absolute inset-0 bg-gray-50/50 dark:bg-slate-800/80"></div>
           </div>
 
           {/* Floating Tech Icons */}
@@ -3862,13 +2844,9 @@ export default function Home() {
 
       {/* Contact Section */}
       <section id="contact" className="section-padding relative overflow-hidden">
-        {/* Enhanced Background - Improved Light Mode */}
+        {/* Clean Background */}
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-rose-50/80 via-white/95 to-pink-50/70 dark:from-slate-900/95 dark:via-gray-900/98 dark:to-rose-900/80"></div>
-          <div className="absolute inset-0 bg-gradient-to-tl from-red-50/60 via-transparent to-orange-50/50 dark:from-transparent dark:to-transparent"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(239,68,68,0.12)_0%,transparent_60%)] dark:bg-[radial-gradient(circle_at_20%_30%,rgba(239,68,68,0.15)_0%,transparent_50%)]"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_70%,rgba(99,102,241,0.10)_0%,transparent_60%)] dark:bg-[radial-gradient(circle_at_80%_70%,rgba(99,102,241,0.12)_0%,transparent_50%)]"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(236,72,153,0.08)_0%,transparent_65%)] dark:bg-[radial-gradient(circle_at_50%_50%,rgba(236,72,153,0.06)_0%,transparent_55%)]"></div>
+          <div className="absolute inset-0 bg-white dark:bg-gray-900"></div>
         </div>
 
         {/* Floating Contact Elements */}
