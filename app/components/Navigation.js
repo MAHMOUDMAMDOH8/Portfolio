@@ -16,6 +16,7 @@ export default function Navigation({ isDarkMode, toggleTheme, activeSection, smo
     { id: 'about', label: 'About' },
     { id: 'projects', label: 'Projects' },
     { id: 'skills', label: 'Skills' },
+    { id: 'dashboards', label: 'Dashboards' },
     { id: 'contact', label: 'Contact' }
   ]
 

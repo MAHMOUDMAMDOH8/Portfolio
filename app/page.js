@@ -206,6 +206,47 @@ const FloatingNumbers = () => {
           ))}
         </motion.div>
       ))}
+
+      {/* Subtle drifting color blobs (very low opacity) */}
+      <motion.div
+        className="absolute -top-32 -left-24 w-[420px] h-[420px] bg-red-500/10 dark:bg-red-500/10 rounded-full blur-3xl"
+        animate={{ x: [-20, 20, -10], y: [0, 20, 0] }}
+        transition={{ duration: 30, repeat: Infinity, ease: 'easeInOut' }}
+        style={{ opacity: 0.15 }}
+      />
+      <motion.div
+        className="absolute -bottom-40 -right-24 w-[480px] h-[480px] bg-blue-500/10 dark:bg-blue-500/10 rounded-full blur-3xl"
+        animate={{ x: [20, -20, 10], y: [0, -25, 0] }}
+        transition={{ duration: 34, repeat: Infinity, ease: 'easeInOut' }}
+        style={{ opacity: 0.12 }}
+      />
+      <motion.div
+        className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[360px] h-[360px] bg-emerald-500/10 dark:bg-emerald-500/10 rounded-full blur-3xl"
+        animate={{ x: [0, 15, -15, 0], y: [10, -10, 10] }}
+        transition={{ duration: 28, repeat: Infinity, ease: 'easeInOut' }}
+        style={{ opacity: 0.10 }}
+      />
+
+      {/* Light floating tech icons (very subtle) */}
+      {([
+        { Icon: FaDatabase, top: '18%', left: '12%', bg: 'bg-red-500/10', text: 'text-red-500/30', d: 18 },
+        { Icon: FaChartLine, top: '26%', left: '78%', bg: 'bg-blue-500/10', text: 'text-blue-500/30', d: 20 },
+        { Icon: FaCloud, top: '68%', left: '22%', bg: 'bg-purple-500/10', text: 'text-purple-500/30', d: 16 },
+        { Icon: FaPython, top: '72%', left: '70%', bg: 'bg-emerald-500/10', text: 'text-emerald-500/30', d: 22 },
+        { Icon: FaDocker, top: '40%', left: '50%', bg: 'bg-cyan-500/10', text: 'text-cyan-500/30', d: 19 }
+      ]).map(({ Icon, top, left, bg, text, d }, idx) => (
+        <motion.div
+          key={`floating-icon-${idx}`}
+          className="absolute pointer-events-none select-none"
+          style={{ top, left }}
+          animate={{ y: [0, -12, 0], rotate: [0, 6, -6, 0] }}
+          transition={{ duration: d, repeat: Infinity, ease: 'easeInOut', delay: idx * 1.2 }}
+        >
+          <div className={`w-10 h-10 ${bg} rounded-xl flex items-center justify-center ${text}`} style={{ opacity: 0.25 }}>
+            <Icon size={16} />
+          </div>
+        </motion.div>
+      ))}
     </div>
   );
 };
@@ -485,10 +526,12 @@ const CertificateModal = ({ isOpen, onClose, certificate }) => {
                 alt={`${certificate.title} Certificate`}
                 width={800}
                 height={600}
-                className="max-w-full max-h-full object-contain"
+                className="max-w-full max-h-full object-contain will-change-transform"
                 onError={handleImageError}
                 onLoad={handleImageLoad}
-                priority
+                priority={false}
+                loading="lazy"
+                decoding="async"
                 unoptimized
               />
               
@@ -638,7 +681,7 @@ const ProjectCard = ({ project, index, getProjectCategory, getCategoryColor, get
   return (
     <EnhancedCard 
       delay={index * 0.1}
-      className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
+      className="bg-white dark:bg-gray-800 rounded-xl shadow-[0_8px_24px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_24px_rgba(0,0,0,0.35)] border border-gray-200/80 dark:border-gray-700/60 overflow-hidden transition-transform duration-400 hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500/40"
     >
       {/* Header with Gradient Background */}
       <div className={`bg-gradient-to-r ${color} p-6 text-white`}>
@@ -746,6 +789,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true)
   const [selectedCertificate, setSelectedCertificate] = useState(null)
   const [isCertificateModalOpen, setIsCertificateModalOpen] = useState(false)
+  const [scrollProgress, setScrollProgress] = useState(0)
 
   // Loading effect
   useEffect(() => {
@@ -784,7 +828,7 @@ export default function Home() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'about', 'projects', 'dashboards', 'skills', 'contact']
+      const sections = ['home', 'about', 'projects', 'skills', 'dashboards', 'contact']
       const scrollPosition = window.scrollY + 100
 
       for (const section of sections) {
@@ -800,6 +844,12 @@ export default function Home() {
 
       // Show back to top button when scrolled down
       setShowBackToTop(window.scrollY > 500)
+
+      // Update scroll progress percentage
+      const scrollTop = window.scrollY
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0
+      setScrollProgress(progress)
     }
 
     window.addEventListener('scroll', handleScroll)
@@ -863,8 +913,8 @@ export default function Home() {
     { id: 'home', label: 'Home' },
     { id: 'about', label: 'About' },
     { id: 'projects', label: 'Projects' },
-    { id: 'dashboards', label: 'Dashboards' },
     { id: 'skills', label: 'Skills' },
+    { id: 'dashboards', label: 'Dashboards' },
     { id: 'contact', label: 'Contact' }
   ]
 
@@ -1576,8 +1626,28 @@ export default function Home() {
 
   return (
     <div className="min-h-screen transition-colors duration-300 relative">
+      {/* Scroll Progress Bar */}
+      <div className="fixed top-0 left-0 right-0 h-1 z-[60] bg-transparent">
+        <div
+          className="h-full bg-red-600 dark:bg-red-500 transition-all duration-100"
+          style={{ width: `${scrollProgress}%` }}
+        />
+      </div>
       {/* Floating Numbers Background */}
       <FloatingNumbers />
+      {/* Noise overlay */}
+      <div className="noise-overlay"></div>
+      {/* Light Parallax Background Elements */}
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <div
+          className="absolute top-10 -left-10 w-72 h-72 rounded-full bg-red-500/10 blur-3xl"
+          style={{ transform: `translateY(${Math.min(scrollProgress * 0.2, 14)}px)` }}
+        />
+        <div
+          className="absolute bottom-20 -right-10 w-80 h-80 rounded-full bg-blue-500/10 blur-3xl"
+          style={{ transform: `translateY(-${Math.min(scrollProgress * 0.18, 12)}px)` }}
+        />
+      </div>
       
       {/* Loading Screen */}
       <LoadingScreen isLoading={isLoading} />
@@ -1637,7 +1707,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-r from-red-500/5 via-transparent to-blue-500/5 opacity-0 hover:opacity-100 transition-opacity duration-1000" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="w-4/5 mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-8">
               <motion.div 
@@ -1653,9 +1723,9 @@ export default function Home() {
                   <button
                     key={item.id}
                     onClick={() => smoothScroll(item.id)}
-                    className={`text-sm transition-colors ${
+                    className={`relative text-sm transition-colors after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:bg-red-600 after:transition-transform after:duration-300 after:origin-left after:scale-x-0 hover:after:scale-x-100 focus-visible:after:scale-x-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500/40 rounded-sm ${
                       activeSection === item.id 
-                        ? 'text-red-600' 
+                        ? 'text-red-600 after:scale-x-100' 
                         : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
                     }`}
                   >
@@ -1789,9 +1859,9 @@ export default function Home() {
         {/* Hero Section - Big Text Left, Photo Right, Timeline Bottom */}
         <section id="home" className="min-h-screen flex flex-col justify-center pt-16 relative">
           {/* Clean Background */}
-          <div className="absolute inset-0 bg-white dark:bg-gray-900"></div>
+          <div className="absolute inset-0 bg-white/70 dark:bg-gray-900/70"></div>
 
-          <div className="max-w-7xl mx-auto px-4 relative z-10 flex-1 flex flex-col justify-center">
+          <div className="w-4/5 mx-auto px-4 relative z-10 flex-1 flex flex-col justify-center">
             
             {/* Top Section - Text Left, Photo Right */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
@@ -1865,12 +1935,14 @@ export default function Home() {
                     {/* Frame with gradient effect */}
                     <div className="w-full h-full rounded-full overflow-hidden shadow-2xl border-8 border-red-500 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
                       <Image
-                        src="/images/profile-photo.jpg"
+                        src="/images/Untitled.jpeg"
                         alt="Mahmoud Mamdoh - Data Engineer"
                         width={384}
                         height={384}
                         className="w-full h-full object-cover"
                         priority
+                        sizes="(max-width: 768px) 200px, (max-width: 1024px) 320px, 384px"
+                        decoding="async"
                         placeholder="blur"
                         blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                       />
@@ -1897,9 +1969,11 @@ export default function Home() {
                         target="_blank" 
                         rel="noopener noreferrer"
                   whileHover={{ scale: 1.1, y: -2 }}
-                  className="w-16 h-16 bg-gray-100 dark:bg-gray-800 hover:bg-blue-100 dark:hover:bg-blue-900/30 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 shadow-lg"
+                  aria-label="LinkedIn"
+                  className="group relative w-16 h-16 bg-gray-100 dark:bg-gray-800 hover:bg-blue-100 dark:hover:bg-blue-900/30 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/50"
                       >
                   <FaLinkedin size={28} />
++                        <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-gray-900 text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity">LinkedIn</span>
                       </motion.a>
           
                       <motion.a 
@@ -1907,17 +1981,23 @@ export default function Home() {
                         target="_blank" 
                         rel="noopener noreferrer"
                   whileHover={{ scale: 1.1, y: -2 }}
-                  className="w-16 h-16 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-all duration-300 shadow-lg"
+                  aria-label="GitHub"
+                  className="group relative w-16 h-16 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-all duration-300 shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-300/50"
                       >
                   <FaGithub size={28} />
++                        <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-gray-900 text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity">GitHub</span>
                       </motion.a>
           
                       <motion.a 
                         href="mailto:mahmoud.mamdoh0812@gmail.com"
                   whileHover={{ scale: 1.1, y: -2 }}
-                  className="w-16 h-16 bg-gray-100 dark:bg-gray-800 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-all duration-300 shadow-lg"
+                  aria-label="Email"
+                  className="group relative w-16 h-16 bg-gray-100 dark:bg-gray-800 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-all duration-300 shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400/50"
                       >
-                  <FaEnvelope size={24} />
+                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12h.01M12 12h.01M8 12h.01M21 12c0 4.418-4.03 8-9 8s-9-3.582-9-8 4.03-8 9-8 9 3.582 9 8z" />
+                         </svg>
++                        <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-gray-900 text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity">Email</span>
                       </motion.a>
                   </motion.div>
                   
@@ -1926,7 +2006,7 @@ export default function Home() {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.4, duration: 0.8 }}
-                className="max-w-6xl mx-auto"
+                className="w-4/5 mx-auto"
               >
                 {/* Desktop Timeline */}
                 <div className="hidden lg:block">
@@ -2007,7 +2087,7 @@ export default function Home() {
 
         {/* About Section - Clean & Simple like Zyad's */}
         <section id="about" className="py-20 bg-gray-50 dark:bg-gray-800">
-          <div className="max-w-6xl mx-auto px-4">
+          <div className="w-4/5 mx-auto px-4">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -2016,7 +2096,7 @@ export default function Home() {
             >
               {/* Section Header */}
               <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">About Me</h2>
+                <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4 heading-sweep">About Me</h2>
               </div>
               
               {/* Main Content Grid */}
@@ -2026,12 +2106,14 @@ export default function Home() {
                   <div className="w-80 h-80 relative">
                     <div className="w-full h-full rounded-full overflow-hidden shadow-lg border-4 border-red-500">
                       <Image
-                        src="/images/profile-photo.jpg"
+                        src="/images/5888898383773554737.jpg"
                         alt="Mahmoud Mamdoh - Data Engineer"
                         width={320}
                         height={320}
                         className="w-full h-full object-cover"
                         priority
+                        sizes="(max-width: 768px) 160px, (max-width: 1024px) 240px, 320px"
+                        decoding="async"
                         placeholder="blur"
                         blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                       />
@@ -2214,7 +2296,7 @@ export default function Home() {
       <section id="projects" className="section-padding relative overflow-hidden">
         {/* Clean Background */}
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-white dark:bg-gray-900"></div>
+          <div className="absolute inset-0 bg-white/70 dark:bg-gray-900/70"></div>
                           </div>
                           
         {/* Floating Elements for Projects */}
@@ -2288,7 +2370,7 @@ export default function Home() {
                   Portfolio Showcase
                 </span>
                 </motion.div>
-              <h2 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+              <h2 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight heading-sweep">
                 Featured <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-green-600 bg-clip-text text-transparent">Projects</span>
               </h2>
               <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto font-light leading-relaxed">
@@ -2480,7 +2562,7 @@ export default function Home() {
                   Technical Expertise
                 </span>
               </motion.div>
-              <h2 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+              <h2 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight heading-sweep">
                 Professional <span className="bg-gradient-to-r from-emerald-600 via-cyan-600 to-blue-600 bg-clip-text text-transparent">Skills</span>
               </h2>
               <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto font-light leading-relaxed">
@@ -2595,7 +2677,7 @@ export default function Home() {
             viewport={{ once: true }}
           >
             <div className="text-center mb-16">
-              <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+              <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4 heading-sweep">
                 Interactive <span className="gradient-text">Dashboards</span>
               </h2>
               <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
@@ -2727,7 +2809,7 @@ export default function Home() {
 
       {/* Certifications Section */}
       <section className="section-padding">
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
+        <div className="w-4/5 mx-auto px-6 sm:px-8 lg:px-10">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -2735,7 +2817,7 @@ export default function Home() {
             viewport={{ once: true }}
           >
             <div className="text-center mb-16">
-              <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+              <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4 heading-sweep">
                 Certifications & <span className="gradient-text">Achievements</span>
               </h2>
               <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
@@ -2920,7 +3002,7 @@ export default function Home() {
                   Let's Connect
                 </span>
               </motion.div>
-              <h2 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+              <h2 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6 leading-tight heading-sweep">
                 Get in <span className="bg-gradient-to-r from-red-600 via-pink-600 to-purple-600 bg-clip-text text-transparent">Touch</span>
               </h2>
               <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto font-light leading-relaxed">
@@ -3106,7 +3188,14 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="footer-light dark:from-gray-900/80 dark:via-gray-900/90 dark:to-gray-900/80 backdrop-blur-md border-t border-gray-200/80 dark:border-gray-700/50 py-8 shadow-sm">
+      <footer className="relative overflow-hidden footer-light dark:from-gray-900/80 dark:via-gray-900/90 dark:to-gray-900/80 backdrop-blur-md border-t border-gray-200/80 dark:border-gray-700/50 py-8 shadow-sm">
+        {/* Starfield */}
+        <div className="pointer-events-none absolute inset-0 -z-0">
+          <div className="absolute top-6 left-10 w-1 h-1 bg-white/30 rounded-full"></div>
+          <div className="absolute top-12 right-24 w-1 h-1 bg-white/20 rounded-full"></div>
+          <div className="absolute bottom-10 left-1/3 w-1 h-1 bg-white/25 rounded-full"></div>
+          <div className="absolute bottom-6 right-1/4 w-1 h-1 bg-white/30 rounded-full"></div>
+        </div>
         <div className="content-width-1750 text-center">
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -3117,6 +3206,18 @@ export default function Home() {
           >
             © 2024 <span className="gradient-text-enhanced">Mahmoud Mamdoh Soliman</span>. All rights reserved.
           </motion.p>
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-4 text-sm text-gray-600 dark:text-gray-300">
+            {['home','about','projects','skills','dashboards','contact'].map((id) => (
+              <button
+                key={id}
+                onClick={() => smoothScroll(id)}
+                className="hover:text-red-600 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500/40 rounded-sm"
+              >
+                {id.charAt(0).toUpperCase() + id.slice(1)}
+              </button>
+            ))}
+            <Link href="/case-studies" className="hover:text-red-600 transition-colors">Case Studies</Link>
+          </div>
         </div>
       </footer>
       </main>
