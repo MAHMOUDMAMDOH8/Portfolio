@@ -642,7 +642,7 @@ const Section = ({ id, children }) => (
 )
 
 export default function Home() {
-  const [theme, setTheme] = useState('dark')
+  const [theme, setTheme] = useState('light')
   const [activeOrigin, setActiveOrigin] = useState(0)
 
   useEffect(() => {
