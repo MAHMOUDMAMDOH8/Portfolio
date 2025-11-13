@@ -74,6 +74,163 @@ export default function CaseStudies() {
 
   const caseStudies = [
     {
+      id: 'multisystem-etl-lakehouse',
+      title: 'Multisystem ETL Lakehouse for Business Insights',
+      subtitle: 'Iceberg-powered analytics foundation for Magento, Odoo, and Freshdesk',
+      category: 'Data Engineering',
+      difficulty: 'Advanced',
+      status: 'Completed',
+      featured: true,
+      problem: {
+        title: 'The Challenge',
+        description: 'A scale-up needed a governed analytics backbone that could consolidate operational data from Magento commerce, Odoo ERP, and Freshdesk support into a single source of truth without sacrificing auditability or speed.',
+        challenges: [
+          'Harmonizing heterogeneous schemas and refresh cadences across three SaaS platforms',
+          'Preserving CDC history while keeping Raw storage immutable',
+          'Guaranteeing ACID guarantees on object storage for curated datasets',
+          'Designing reusable Silver entities that serve both batch and ad-hoc analytics',
+          'Building actionable, BI-ready star schema models with automated quality checks'
+        ]
+      },
+      solution: {
+        title: 'The Solution',
+        description: 'Implemented a production-style lakehouse using Apache Spark and Iceberg on MinIO, layered with Airflow orchestration and Streamlit monitoring to deliver curated Silver and Gold tables for downstream BI.',
+        architecture: {
+          overview: 'Iceberg-backed Lakehouse on MinIO with Silver/Gold catalogs',
+          components: [
+            {
+              name: 'Ingestion & Raw Landing',
+              tech: ['S3A', 'Change Data Capture'],
+              description: 'CDC exports from Magento, Odoo, and Freshdesk land as immutable parquet in Raw zones.'
+            },
+            {
+              name: 'Silver Curation',
+              tech: ['Apache Spark', 'Apache Iceberg'],
+              description: 'Spark jobs clean, deduplicate, and standardize source-specific entities into the `local` Iceberg catalog.'
+            },
+            {
+              name: 'Gold Modeling',
+              tech: ['Apache Spark', 'Dimensional Modeling'],
+              description: 'Fact and dimension tables published to the `my_catalog.gold` namespace with conformed business logic.'
+            },
+            {
+              name: 'Orchestration',
+              tech: ['Apache Airflow'],
+              description: 'DAGs manage Silver refreshes, Gold builds, data quality hooks, and catalog maintenance.'
+            },
+            {
+              name: 'Observability',
+              tech: ['Streamlit', 'MinIO Console'],
+              description: 'Lightweight status dashboards track pipeline health, schema drifts, and SLA adherence.'
+            }
+          ]
+        },
+        keyFeatures: [
+          'Dual Iceberg catalogs isolating Silver and Gold layers',
+          'Automated CDC reconciliation and late-arriving data handling',
+          'Reusable Spark session bootstrap utilities for storage/catalog parity',
+          'Self-service dimensional marts aligned to BI consumption patterns',
+          'Codespaces-based dev environment with Dockerized dependencies'
+        ]
+      },
+      results: {
+        title: 'The Results',
+        description: 'The lakehouse reduced data onboarding friction, ensured trustworthy analytics, and established a template for future domain onboarding.',
+        metrics: [
+          {
+            metric: '3',
+            label: 'Source Systems Unified',
+            description: 'Magento, Odoo, and Freshdesk harmonized in Silver.'
+          },
+          {
+            metric: '<15 min',
+            label: 'Silver Refresh',
+            description: 'End-to-end CDC to curated tables per cycle.'
+          },
+          {
+            metric: '100%',
+            label: 'ACID Guarantees',
+            description: 'Iceberg-managed tables with snapshot rollback.'
+          },
+          {
+            metric: '5',
+            label: 'Gold Star Entities',
+            description: 'Dim/fact tables powering BI dashboards.'
+          }
+        ],
+        businessImpact: [
+          'Single semantic layer for revenue, inventory, and support analytics',
+          'Improved trust via automated data quality checks and schema drift alerts',
+          'Faster stakeholder onboarding through reusable Codespaces templates',
+          'Reduced manual reconciliation between teams with unified catalog',
+          'Foundation for future machine learning features leveraging curated data'
+        ]
+      },
+      technicalDetails: {
+        technologies: ['Apache Spark', 'Apache Iceberg', 'MinIO', 'Apache Airflow', 'Streamlit', 'Docker', 'Python', 'GitHub Codespaces', 'Aibyte'],
+        codeSnippets: [
+          {
+            title: 'Spark Session with Iceberg Catalogs',
+            language: 'python',
+            code: `from pyspark.sql import SparkSession
+
+spark = (
+    SparkSession.builder
+        .appName("gold_modeling")
+        .config("spark.sql.catalog.local", "org.apache.iceberg.spark.SparkCatalog")
+        .config("spark.sql.catalog.local.type", "hadoop")
+        .config("spark.sql.catalog.local.warehouse", "s3a://multusystem/silver_layer")
+        .config("spark.sql.catalog.my_catalog", "org.apache.iceberg.spark.SparkCatalog")
+        .config("spark.sql.catalog.my_catalog.type", "hadoop")
+        .config("spark.sql.catalog.my_catalog.warehouse", "s3a://multusystem/gold_layer")
+        .getOrCreate()
+)`
+          },
+          {
+            title: 'Airflow DAG Orchestrating Silver Refresh',
+            language: 'python',
+            code: `with DAG(
+    dag_id="silver_transform",
+    schedule_interval="@hourly",
+    start_date=datetime(2024, 7, 1),
+    catchup=False,
+) as dag:
+    latest_raw = PythonOperator(
+        task_id="discover_latest_raw",
+        python_callable=get_latest_table_paths,
+    )
+
+    curate_magento = SparkSubmitOperator(
+        task_id="transform_magento",
+        application="/opt/jobs/scripts/silver_layer/transform_magento.py",
+    )
+
+    latest_raw >> curate_magento`
+          }
+        ],
+        diagrams: [
+          {
+            title: 'Lakehouse Layers',
+            description: 'Visualization of Raw, Silver, and Gold layers across catalogs.',
+            imageUrl: 'https://github.com/MAHMOUDMAMDOH8/multisystem-etl-lakehouse/blob/main/Data%20Architecture/layers.png?raw=true'
+          },
+          {
+            title: 'Low-level Data Flow',
+            description: 'Detailed pipeline flow from ingestion to dimensional models.',
+            imageUrl: 'https://github.com/MAHMOUDMAMDOH8/multisystem-etl-lakehouse/blob/main/Data%20Architecture/data%20flow%20low%20level.png?raw=true'
+          }
+        ]
+      },
+      github: 'https://github.com/MAHMOUDMAMDOH8/Multisystem-ETL-Lakehouse_for-Business-Insights',
+      demo: '',
+      lessons: [
+        'Adopting dual Iceberg catalogs accelerates governance and change control',
+        'Containerized dev environments keep Spark, Iceberg, and MinIO configuration consistent',
+        'CDC-aware ingestion patterns simplify reconciliation between SaaS platforms',
+        'Lightweight observability with Streamlit increases stakeholder trust in the data'
+      ]
+    },
+    {
       id: 'ecommerce-pipeline',
       title: 'End-to-End Big Data Pipeline for E-commerce Event Logs',
       subtitle: 'Real-time streaming architecture with comprehensive analytics',
