@@ -8,6 +8,10 @@ export const metadata = {
   description: 'Data Engineer specializing in transforming data into actionable insights. Skilled in designing and optimizing complex data pipelines and workflows using modern data stacks.',
   keywords: 'Data Engineer, Cairo Egypt, Data Pipeline, Apache Airflow, Snowflake, Power BI, Kafka, Spark',
   authors: [{ name: 'Mahmoud Mamdoh Soliman' }],
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+  },
   openGraph: {
     title: 'Mahmoud Mamdoh Soliman - Data Engineer',
     description: 'Data Engineer specializing in transforming data into actionable insights',

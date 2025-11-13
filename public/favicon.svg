@@ -1,22 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#DC2626;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#B91C1C;stop-opacity:1" />
+    <linearGradient id="bg" x1="12" y1="8" x2="54" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FF6A95" />
+      <stop offset="1" stop-color="#4F9BFF" />
     </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientTransform="matrix(0 28 -28 0 32 32)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" stop-opacity="0.45" />
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0" />
+    </radialGradient>
   </defs>
-  <!-- Database cylinders -->
-  <ellipse cx="10" cy="8" rx="6" ry="3" fill="url(#grad)" />
-  <rect x="4" y="8" width="12" height="6" fill="url(#grad)" />
-  <ellipse cx="10" cy="14" rx="6" ry="3" fill="#DC2626" />
-  
-  <!-- Data flow lines -->
-  <line x1="16" y1="10" x2="22" y2="10" stroke="#3B82F6" stroke-width="2" />
-  <line x1="16" y1="12" x2="20" y2="12" stroke="#3B82F6" stroke-width="2" />
-  
-  <!-- Analytics chart -->
-  <path d="M22 18 L26 14 L28 16 L30 12" stroke="#10B981" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="22" cy="18" r="1.5" fill="#10B981" />
-  <circle cx="26" cy="14" r="1.5" fill="#10B981" />
-  <circle cx="30" cy="12" r="1.5" fill="#10B981" />
+  <rect x="4" y="4" width="56" height="56" rx="18" fill="url(#bg)" />
+  <rect x="4" y="4" width="56" height="56" rx="18" fill="url(#glow)" />
+  <path fill="#0B111E" fill-opacity="0.2" d="M13 44L18 20H22L26 32L30 20H34L38 32L42 20H46L51 44H45L41 28L36 44H32L28 28L23 44H17Z" />
+  <path fill="#FFFFFF" d="M18 44V20h5.6l5.4 18.4L34.4 20H40v24h-4.8V31.6L30.2 44h-3.8L22.8 31.6V44H18Z" />
 </svg> 
