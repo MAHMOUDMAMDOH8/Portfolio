@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import {
   FaGithub,
@@ -21,9 +22,9 @@ import { Quicksand } from 'next/font/google'
 import { AnimatePresence } from 'framer-motion'
 
 const heroStats = [
-  { label: 'End-to-end projects shipped', value: '18+' },
-  { label: 'Pipeline SLAs achieved', value: '99.8%' },
-  { label: 'Analytics teams enabled', value: '6' }
+  { label: 'End-to-End Pipelines', value: '18+' },
+  { label: 'From Raw Data → Insight' },
+  { label: 'Dashboards Delivered', value: '6+' }
 ]
 
 const offerings = [
@@ -32,12 +33,12 @@ const offerings = [
     body: 'Connecting commerce, ERP, and support sources into a single Iceberg-backed analytics lakehouse.'
   },
   {
-    title: 'Curated Silver & Gold layers',
-    body: 'Designing reusable medallion tiers, dimensional marts, and CDC-aware models built with Spark and dbt.'
+    title: 'From Raw to Ready',
+    body: 'Transforming raw Kafka or HDFS data into analytics-ready layers using Spark, dbt, and Snowflake — complete with validation, lineage, and schema evolution handling.'
   },
   {
-    title: 'Observability & Enablement',
-    body: 'Delivering Streamlit monitoring, Airflow orchestration, and documentation so teams can ship faster.'
+    title: 'Automation & Observability',
+    body: 'Automating data workflows with Airflow DAGs, adding real-time quality checks, and exposing metrics and pipeline health through Streamlit and logging dashboards.'
   }
 ]
 
@@ -307,7 +308,7 @@ const navLinks = [
   { id: 'projects', label: 'Projects' },
   { id: 'tools', label: 'Tools' },
   { id: 'impact', label: 'Impact' },
-  { id: 'testimonials', label: 'Voices' },
+  { id: 'certifications', label: 'Certifications' },
   { id: 'contact', label: 'Contact' }
 ]
 const toolNodes = [
@@ -492,21 +493,61 @@ const impactStats = [
   }
 ]
 
-const testimonials = [
+const certifications = [
   {
-    quote:
-      'Mahmoud didn’t just build pipelines—he built trust. Our leadership reads dashboards with confidence now.',
-    author: 'Head of Analytics · Ecommerce Scale-Up'
+    name: 'Data Engineering Zoomcamp',
+    provider: 'DataTalksClub',
+    image: '/Certifications/dezoomcamp.png'
   },
   {
-    quote:
-      'He turned messy SaaS exports into a governed lakehouse and left us with the playbook to keep iterating.',
-    author: 'Director of Data · Retail Ops'
+    name: 'Data Engineering',
+    provider: 'IBM',
+    image: '/Certifications/Data Engineering ibm.png'
   },
   {
-    quote:
-      'Every deliverable came with documentation, lineage, and a purpose. It made onboarding the business effortless.',
-    author: 'BI Lead · Telecom Provider'
+    name: 'Data Engineer Using Python',
+    provider: 'DataCamp',
+    image: '/Certifications/data enginer using python data camp.png'
+  },
+  {
+    name: 'Google Business Intelligence',
+    provider: 'Google',
+    image: '/Certifications/Google Business Intelligence.jpeg'
+  },
+  {
+    name: 'Associate Data Analyst in SQL',
+    provider: 'DataCamp',
+    image: '/Certifications/Associate Data Analyst in SQL datacamp.png'
+  },
+  {
+    name: 'SQL for Business Analysts',
+    provider: 'DataCamp',
+    image: '/Certifications/SQL for Business Analysts datacamp.png'
+  },
+  {
+    name: 'SQL Fundamentals',
+    provider: 'DataCamp',
+    image: '/Certifications/SQL Fundamentals datacamp.png'
+  },
+  {
+    name: 'Data Analysis Challenger',
+    provider: 'Udacity',
+    image: '/Certifications/data analysis challenger udacity.png'
+  },
+  {
+    name: 'Power BI Fundamentals',
+    provider: 'DataCamp',
+    image: '/Certifications/Power BI Fundamentals datacamp.png'
+  },
+  {
+    name: 'Excel Fundamentals',
+    provider: 'DataCamp',
+    image: '/Certifications/Excel Fundamentals datacamp.png'
+  },
+  {
+    name: 'ITI',
+    provider: 'ITI',
+    image: '/Certifications/iti.jpeg'
   }
 ]
 
@@ -905,7 +946,7 @@ export default function Home() {
         </Section>
 
         <Section id="origin">
-          <div className={`${sectionCardClasses} relative overflow-hidden bg-white/95 text-center shadow-lg ring-1 ring-zinc-100 transition dark:bg-white/[0.06] dark:shadow-none dark:ring-0`}>
+          <div className={`${sectionCardClasses} relative overflow-hidden text-center transition-all duration-300 hover:-translate-y-2`}>
             <div className="pointer-events-none absolute -top-32 left-1/4 h-72 w-72 rounded-full bg-rose-400/20 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-40 right-1/4 h-80 w-80 rounded-full bg-sky-400/20 blur-3xl" />
             <AnimatePresence mode="wait">
@@ -964,7 +1005,7 @@ export default function Home() {
         </Section>
 
         <Section id="skills">
-          <div className={`${sectionCardClasses} relative overflow-hidden bg-white/95 shadow-lg ring-1 ring-zinc-100 transition dark:bg-white/[0.06] dark:shadow-none dark:ring-0`}>
+          <div className={`${sectionCardClasses} relative overflow-hidden transition-all duration-300 hover:-translate-y-2`}>
             <div className="pointer-events-none absolute -top-28 left-10 h-60 w-60 rounded-full bg-sky-400/15 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-28 right-14 h-56 w-56 rounded-full bg-rose-400/15 blur-3xl" />
             <div className="relative z-10 space-y-6">
@@ -978,7 +1019,7 @@ export default function Home() {
                 {skillMatrix.map((skill) => (
                   <div
                     key={skill.label}
-                    className="rounded-3xl border border-zinc-100 bg-white p-6 shadow-sm transition hover:border-rose-200 hover:shadow-lg dark:border-white/10 dark:bg-white/[0.05] dark:hover:border-rose-300/40"
+                    className="rounded-3xl border border-zinc-100 bg-white p-6 transition hover:-translate-y-1 hover:border-rose-200 dark:border-white/10 dark:bg-white/[0.05] dark:hover:border-rose-300/40"
                   >
                     <div className="flex items-center justify-between text-sm font-semibold uppercase tracking-[0.25em] text-zinc-500 dark:text-zinc-400">
                       <span>{skill.label}</span>
@@ -1008,7 +1049,7 @@ export default function Home() {
         </Section>
 
         <Section id="learning">
-          <div className={`${sectionCardClasses} relative overflow-hidden bg-white/95 shadow-lg ring-1 ring-zinc-100 transition dark:bg-white/[0.06] dark:shadow-none dark:ring-0`}>
+          <div className={`${sectionCardClasses} relative overflow-hidden transition-all duration-300 hover:-translate-y-2`}>
             <div className="pointer-events-none absolute -top-24 right-12 h-60 w-60 rounded-full bg-purple-400/15 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-24 left-10 h-56 w-56 rounded-full bg-sky-400/15 blur-3xl" />
             <div className="relative z-10 space-y-6">
@@ -1022,7 +1063,7 @@ export default function Home() {
                 {learningFocus.map((row) => (
                   <div
                     key={row.label}
-                    className="rounded-3xl border border-zinc-100 bg-white p-6 shadow-sm transition hover:border-sky-200 hover:shadow-lg dark:border-white/10 dark:bg-white/[0.05]"
+                    className="rounded-3xl border border-zinc-100 bg-white p-6 transition hover:-translate-y-1 hover:border-sky-200 dark:border-white/10 dark:bg-white/[0.05]"
                   >
                     <p className="text-xs uppercase tracking-[0.3em] text-sky-500 dark:text-sky-300">{row.label}</p>
                     <ul className="mt-4 space-y-2 text-sm text-zinc-600 dark:text-zinc-300">
@@ -1041,7 +1082,7 @@ export default function Home() {
         </Section>
 
         <Section id="about">
-          <div className={sectionCardClasses}>
+          <div className={`${sectionCardClasses} transition-all duration-300 hover:-translate-y-2`}>
             <div className="pointer-events-none absolute -top-24 right-10 h-52 w-52 rounded-full bg-emerald-400/15 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-24 left-6 h-56 w-56 rounded-full bg-rose-400/15 blur-3xl" />
             <div className="relative z-10 space-y-10">
@@ -1055,7 +1096,7 @@ export default function Home() {
                 <p className="text-base leading-relaxed text-zinc-700 dark:text-zinc-300 sm:text-lg">
                   With a Computer Science background and deep hands-on exposure to modern data tooling, I specialise in stitching together the messy middle of the data lifecycle: ingestion, modelling, documentation, and activation. I’ve supported ecommerce, telecom, and support teams by delivering trustworthy datasets, living documentation, and dashboards that actually get used.
                 </p>
-                <div className="space-y-4 rounded-2xl bg-white shadow-sm dark:bg-white/[0.05] dark:shadow-none p-6">
+                <div className="space-y-4 rounded-2xl bg-white dark:bg-white/[0.05] p-6">
                   <h3 className="text-sm uppercase tracking-[0.25em] text-rose-600 dark:text-rose-300">Latest experience</h3>
                   <ul className="space-y-5 text-sm text-zinc-700 dark:text-zinc-300">
                     {experience.map((item) => (
@@ -1073,7 +1114,7 @@ export default function Home() {
         </Section>
 
         <Section id="services">
-          <div className={sectionCardClasses}>
+          <div className={`${sectionCardClasses} transition-all duration-300 hover:-translate-y-2`}>
             <div className="pointer-events-none absolute -top-28 left-12 h-56 w-56 rounded-full bg-sky-400/15 blur-3xl" />
             <div className="relative z-10 space-y-8">
               <h2 className="text-sm uppercase tracking-[0.3em] text-zinc-500 dark:text-zinc-500">What I deliver</h2>
@@ -1081,7 +1122,7 @@ export default function Home() {
                 {offerings.map((item, index) => (
                   <div
                     key={item.title}
-                    className="group relative overflow-hidden rounded-3xl bg-white/95 p-6 shadow-lg ring-1 ring-zinc-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:bg-white/[0.06] dark:ring-0 dark:hover:bg-white/[0.08]"
+                    className="group relative overflow-hidden rounded-3xl bg-white/95 p-6 ring-1 ring-zinc-100 transition-all duration-300 hover:-translate-y-1 dark:bg-white/[0.06] dark:ring-0 dark:hover:bg-white/[0.08]"
                   >
                     <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                       <div className="absolute inset-0 bg-gradient-to-br from-rose-500/15 via-transparent to-sky-400/15 dark:from-rose-500/25 dark:to-sky-400/25" />
@@ -1103,7 +1144,7 @@ export default function Home() {
         </Section>
 
         <Section id="projects">
-          <div className={sectionCardClasses}>
+          <div className={`${sectionCardClasses} transition-all duration-300 hover:-translate-y-2`}>
             <div className="pointer-events-none absolute -top-24 left-10 h-52 w-52 rounded-full bg-rose-400/15 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-24 right-6 h-56 w-56 rounded-full bg-sky-400/15 blur-3xl" />
             <div className="relative z-10 space-y-8">
@@ -1124,36 +1165,8 @@ export default function Home() {
                       </div>
         </Section>
 
-        <Section id="testimonials">
-          <div className={`${sectionCardClasses} relative overflow-hidden bg-white/95 shadow-lg ring-1 ring-zinc-100 transition dark:bg-white/[0.06] dark:shadow-none dark:ring-0`}>
-            <div className="pointer-events-none absolute -top-24 left-12 h-60 w-60 rounded-full bg-emerald-400/15 blur-3xl" />
-            <div className="pointer-events-none absolute -bottom-24 right-16 h-64 w-64 rounded-full bg-rose-400/15 blur-3xl" />
-            <div className="relative z-10 space-y-6">
-              <div className="space-y-2 text-center">
-                <h2 className="text-sm uppercase tracking-[0.3em] text-zinc-500 dark:text-zinc-500">Voices from the work</h2>
-                <p className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
-                  Partners and teams on what changed when data spoke clearly.
-                </p>
-              </div>
-              <div className="grid gap-6 md:grid-cols-3">
-                {testimonials.map((t, index) => (
-                  <div
-                    key={`${t.author}-${index}`}
-                    className="flex h-full flex-col justify-between rounded-3xl border border-zinc-100 bg-white p-6 text-left shadow-sm transition hover:border-rose-200 hover:shadow-lg dark:border-white/10 dark:bg-white/[0.05]"
-                  >
-                    <p className="text-base italic text-zinc-700 dark:text-zinc-300">“{t.quote}”</p>
-                    <p className="mt-4 text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-500">
-                      {t.author}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </Section>
-
         <Section id="tools">
-          <div className={sectionCardClasses}>
+          <div className={`${sectionCardClasses} transition-all duration-300 hover:-translate-y-2`}>
             <div className="pointer-events-none absolute -top-28 right-1/4 h-60 w-60 rounded-full bg-purple-400/20 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-32 left-1/4 h-64 w-64 rounded-full bg-sky-400/15 blur-3xl" />
             <div className="relative z-10 space-y-12">
@@ -1231,7 +1244,7 @@ export default function Home() {
                   
               <div className="grid gap-6 text-center text-sm text-zinc-600 dark:text-zinc-400 sm:grid-cols-3">
                 {toolStats.map((stat) => (
-                  <div key={stat.label} className="rounded-2xl bg-white p-6 shadow-sm dark:bg-white/[0.05] dark:shadow-none">
+                  <div key={stat.label} className="rounded-2xl bg-white p-6 transition hover:-translate-y-1 dark:bg-white/[0.05]">
                     <div className="text-xl font-semibold text-zinc-900 dark:text-zinc-50">{stat.value}</div>
                     <div className="mt-2 uppercase tracking-[0.25em] text-xs text-zinc-500 dark:text-zinc-500">{stat.label}</div>
                     </div>
@@ -1242,7 +1255,7 @@ export default function Home() {
         </Section>
 
         <Section id="impact">
-          <div className={`${sectionCardClasses} relative overflow-hidden bg-white/95 text-center shadow-lg ring-1 ring-zinc-100 transition dark:bg-white/[0.06] dark:shadow-none dark:ring-0`}>
+          <div className={`${sectionCardClasses} relative overflow-hidden text-center transition-all duration-300 hover:-translate-y-2`}>
             <div className="pointer-events-none absolute -top-32 left-1/3 h-72 w-72 rounded-full bg-rose-400/15 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-36 right-1/3 h-80 w-80 rounded-full bg-sky-400/15 blur-3xl" />
             <div className="relative z-10 space-y-6">
@@ -1254,7 +1267,7 @@ export default function Home() {
                 {impactStats.map((impact) => (
                   <div
                     key={impact.title}
-                    className="rounded-3xl border border-zinc-100 bg-white p-6 shadow-sm transition hover:border-emerald-200 hover:shadow-lg dark:border-white/10 dark:bg-white/[0.05]"
+                    className="rounded-3xl border border-zinc-100 bg-white p-6 transition hover:-translate-y-1 hover:border-emerald-200 dark:border-white/10 dark:bg-white/[0.05]"
                   >
                     <p className="text-sm uppercase tracking-[0.3em] text-emerald-400 dark:text-emerald-300">{impact.title}</p>
                     <p className="mt-2 text-3xl font-semibold text-zinc-900 dark:text-zinc-50">{impact.value}</p>
@@ -1266,8 +1279,45 @@ export default function Home() {
           </div>
         </Section>
 
+        <Section id="certifications">
+          <div className={`${sectionCardClasses} relative overflow-hidden transition-all duration-300 hover:-translate-y-2`}>
+            <div className="pointer-events-none absolute -top-24 left-12 h-60 w-60 rounded-full bg-purple-400/15 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-24 right-16 h-64 w-64 rounded-full bg-emerald-400/15 blur-3xl" />
+            <div className="relative z-10 space-y-6">
+              <div className="space-y-2 text-center">
+                <h2 className="text-sm uppercase tracking-[0.3em] text-zinc-500 dark:text-zinc-500">Certifications</h2>
+                <p className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
+                  Recognized expertise across data engineering, analytics, and business intelligence.
+                </p>
+              </div>
+              <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                {certifications.map((cert) => (
+                  <div
+                    key={cert.name}
+                    className="group relative overflow-hidden rounded-3xl border border-zinc-100 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-rose-200 hover:shadow-lg dark:border-white/10 dark:bg-white/[0.05] dark:hover:border-rose-300/40 cursor-pointer"
+                  >
+                    <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-zinc-50 dark:bg-white/5">
+                      <Image
+                        src={cert.image}
+                        alt={cert.name}
+                        fill
+                        className="object-contain transition-transform duration-500 ease-out group-hover:scale-125"
+                        sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                      />
+                    </div>
+                    <div className="mt-4 space-y-1">
+                      <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">{cert.name}</h3>
+                      <p className="text-xs uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">{cert.provider}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </Section>
+
         <Section id="contact">
-          <div className={`${sectionCardClasses} text-center`}>
+          <div className={`${sectionCardClasses} text-center transition-all duration-300 hover:-translate-y-2`}>
             <div className="pointer-events-none absolute -top-24 right-16 h-60 w-60 rounded-full bg-rose-400/20 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-24 left-10 h-56 w-56 rounded-full bg-emerald-400/15 blur-3xl" />
             <div className="relative z-10 space-y-8">
