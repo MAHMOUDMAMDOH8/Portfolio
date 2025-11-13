@@ -3,17 +3,19 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { 
-  FaGithub, 
-  FaLinkedin, 
-  FaEnvelope, 
+import {
+  FaGithub,
+  FaLinkedin,
+  FaEnvelope,
   FaDownload,
   FaExternalLinkAlt,
   FaChevronDown,
   FaSun,
   FaMoon,
   FaArrowLeft,
-  FaArrowRight
+  FaArrowRight,
+  FaBars,
+  FaTimes
 } from 'react-icons/fa'
 import { Quicksand } from 'next/font/google'
 import { AnimatePresence } from 'framer-motion'
@@ -293,7 +295,7 @@ const experience = [
 ]
 
 const heroHeadline = "I don’t just move data — I move meaning."
-const sectionCardClasses = 'relative overflow-hidden px-6 py-16 sm:px-10 lg:px-16'
+const sectionCardClasses = 'relative overflow-hidden px-4 py-16 sm:px-10 lg:px-16'
 
 const navLinks = [
   { id: 'home', label: 'Home' },
@@ -387,10 +389,10 @@ const toolNodes = [
 ]
 
 const categoryStyles = {
-  Platform: 'text-sky-300',
-  Orchestration: 'text-emerald-300',
-  Activation: 'text-amber-200',
-  Automation: 'text-purple-300'
+  Platform: 'text-sky-500 dark:text-sky-300',
+  Orchestration: 'text-emerald-500 dark:text-emerald-300',
+  Activation: 'text-amber-500 dark:text-amber-200',
+  Automation: 'text-purple-500 dark:text-purple-300'
 }
 
 const toolStats = [
@@ -644,6 +646,7 @@ const Section = ({ id, children }) => (
 export default function Home() {
   const [theme, setTheme] = useState('light')
   const [activeOrigin, setActiveOrigin] = useState(0)
+  const [isNavOpen, setIsNavOpen] = useState(false)
 
   useEffect(() => {
     if (theme === 'dark') {
@@ -654,11 +657,34 @@ export default function Home() {
   }, [theme])
 
   useEffect(() => {
+    if (isNavOpen) {
+      document.body.classList.add('mobile-nav-open')
+    } else {
+      document.body.classList.remove('mobile-nav-open')
+    }
+
+    return () => {
+      document.body.classList.remove('mobile-nav-open')
+    }
+  }, [isNavOpen])
+
+  useEffect(() => {
     const timer = setInterval(() => {
       setActiveOrigin((prev) => (prev + 1) % originPanels.length)
     }, 20000)
 
     return () => clearInterval(timer)
+  }, [])
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setIsNavOpen(false)
+      }
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
   }, [])
 
   const toggleTheme = () => {
@@ -704,7 +730,11 @@ export default function Home() {
           </Link>
           <nav className="hidden items-center gap-6 text-sm text-zinc-500 dark:text-zinc-400 md:flex">
             {navLinks.map(({ id, label }) => (
-              <Link key={id} href={`#${id}`} className="transition-colors hover:text-zinc-100">
+              <Link
+                key={id}
+                href={`#${id}`}
+                className="transition-colors hover:text-zinc-900 dark:hover:text-zinc-100"
+              >
                 {label}
               </Link>
             ))}
@@ -718,21 +748,63 @@ export default function Home() {
               {theme === 'dark' ? <FaSun /> : <FaMoon />}
             </button>
             <Link
-                        href="mailto:mahmoud.mamdoh0812@gmail.com"
+              href="mailto:mahmoud.mamdoh0812@gmail.com"
               className="hidden items-center gap-2 text-zinc-600 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 sm:flex"
             >
               <FaEnvelope className="text-rose-500 dark:text-rose-300" />
               mahmoud.mamdoh0812@gmail.com
             </Link>
             <span className="hidden h-4 w-px bg-zinc-200 dark:bg-white/10 md:block" />
-            <span className="text-xs uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-500">
+            <span className="hidden text-xs uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-500 sm:inline">
               Cairo · Remote
             </span>
-                      </div>
-                  </div>
+            <button
+              onClick={() => setIsNavOpen((prev) => !prev)}
+              aria-label="Toggle navigation"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-zinc-200 text-zinc-600 transition hover:bg-zinc-100 dark:border-white/10 dark:text-zinc-200 dark:hover:bg-white/5 md:hidden"
+            >
+              {isNavOpen ? <FaTimes /> : <FaBars />}
+            </button>
+          </div>
+        </div>
+        {isNavOpen ? (
+          <div className="md:hidden border-t border-zinc-200 bg-white/95 px-6 py-4 shadow-sm dark:border-white/10 dark:bg-[#07090f]/95">
+            <nav className="flex flex-col gap-3 text-sm text-zinc-600 dark:text-zinc-300">
+              {navLinks.map(({ id, label }) => (
+                <Link
+                  key={`mobile-${id}`}
+                  href={`#${id}`}
+                  onClick={() => setIsNavOpen(false)}
+                  className="rounded-full border border-zinc-200 px-4 py-2 uppercase tracking-[0.25em] transition hover:border-rose-200 hover:text-rose-500 dark:border-white/10 dark:hover:border-rose-300/40"
+                >
+                  {label}
+                </Link>
+              ))}
+            </nav>
+            <div className="mt-4 flex flex-wrap gap-3 text-sm">
+              <Link
+                href="mailto:mahmoud.mamdoh0812@gmail.com"
+                onClick={() => setIsNavOpen(false)}
+                className="inline-flex flex-1 min-w-[140px] items-center justify-center gap-2 rounded-full bg-rose-500 px-4 py-2 font-semibold text-white transition hover:bg-rose-400"
+              >
+                <FaEnvelope />
+                Email me
+              </Link>
+              <Link
+                href="https://cal.com/"
+                target="_blank"
+                onClick={() => setIsNavOpen(false)}
+                className="inline-flex flex-1 min-w-[140px] items-center justify-center gap-2 rounded-full border border-zinc-200 px-4 py-2 font-semibold text-zinc-800 transition hover:border-zinc-300 dark:border-white/10 dark:text-zinc-100 dark:hover:border-white/30"
+              >
+                <FaExternalLinkAlt />
+                Schedule
+              </Link>
+            </div>
+          </div>
+        ) : null}
       </header>
 
-      <main className="mx-auto w-full space-y-32 px-6 sm:px-10 lg:px-16 py-20">
+      <main className="mx-auto w-full space-y-32 px-4 py-20 sm:px-10 lg:px-16">
         <Section id="home">
           <div className={`${sectionCardClasses} flex flex-col items-center gap-10 text-center`}>
             <div className="pointer-events-none absolute -top-32 -left-28 h-72 w-72 rounded-full bg-rose-500/25 blur-3xl" />
@@ -1009,13 +1081,12 @@ export default function Home() {
                 {offerings.map((item, index) => (
                   <div
                     key={item.title}
-                    className="group relative overflow-hidden rounded-3xl bg-white/95 p-6 shadow-lg ring-1 ring-zinc-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:bg-white/[0.06] dark:p-6 dark:ring-0 dark:hover:bg-white/[0.08]"
+                    className="group relative overflow-hidden rounded-3xl bg-white/95 p-6 shadow-lg ring-1 ring-zinc-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:bg-white/[0.06] dark:ring-0 dark:hover:bg-white/[0.08]"
                   >
-                    <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300">
+                    <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                       <div className="absolute inset-0 bg-gradient-to-br from-rose-500/15 via-transparent to-sky-400/15 dark:from-rose-500/25 dark:to-sky-400/25" />
                       <div className="absolute -top-20 right-0 h-32 w-32 rounded-full bg-white/40 blur-3xl dark:bg-white/20" />
-                    </div
-                  >
+                    </div>
                     <span className="relative block w-fit rounded-full border border-zinc-200 bg-zinc-50 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.35em] text-zinc-600 dark:border-white/10 dark:bg-white/10 dark:text-zinc-200">
                       0{index + 1}
                     </span>
@@ -1023,8 +1094,9 @@ export default function Home() {
                       {item.title}
                     </h3>
                     <p className="relative mt-3 text-sm text-zinc-600 dark:text-zinc-400">{item.body}</p>
-                    </div>
-                    ))}
+                  </div>
+                ))}
+
                         </div>
                         </div>
                       </div>
@@ -1087,12 +1159,12 @@ export default function Home() {
             <div className="relative z-10 space-y-12">
               <div className="space-y-3 text-center">
                 <h2 className="text-sm uppercase tracking-[0.3em] text-zinc-500 dark:text-zinc-500">Tools in motion</h2>
-                <p className="mx-auto.max-w-2xl text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
+                <p className="mx-auto max-w-2xl text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
                   The ecosystem I lean on to turn raw events into trusted stories.
                 </p>
             </div>
 
-              <div className="relative mx-auto flex min-h-[520px] w-full max-w-[700px] items-center justify-center">
+              <div className="relative mx-auto hidden min-h-[520px] w-full max-w-[700px] items-center justify-center md:flex">
                 <div className="absolute h-[460px] w-[460px] rounded-full border border-zinc-200 dark:border-white/10" />
                 <div className="absolute h-[340px] w-[340px] rounded-full border border-zinc-200 dark:border-white/10" />
                 <div className="absolute h-[220px] w-[220px] rounded-full border border-zinc-200 dark:border-white/10" />
@@ -1106,10 +1178,10 @@ export default function Home() {
                       className={`absolute -translate-x-1/2 -translate-y-1/2 rounded-full bg-black/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-zinc-700 transition-colors hover:bg-black/20 dark:bg-black/40 dark:text-zinc-100 ${categoryStyles[tool.category]}`}
                       style={{ top: tool.style.top, left: tool.style.left }}
                       animate={{ y: [0, -12, 0] }}
-            transition={{ 
+                      transition={{
                         duration: floatDuration,
                         ease: 'easeInOut',
-              repeat: Infinity,
+                        repeat: Infinity,
                         delay: floatDelay
                       }}
                       whileHover={{ scale: 1.12 }}
@@ -1121,8 +1193,22 @@ export default function Home() {
 
                 <div className="relative flex h-32 w-32 items-center justify-center rounded-full border border-zinc-200 bg-white text-center text-xs uppercase tracking-[0.25em] text-zinc-600 dark:border-white/15 dark:bg-white/[0.06] dark:text-zinc-300">
                   Trusted Platform
-        </div>
-            </div>
+                </div>
+              </div>
+
+              <div className="mt-6 grid gap-3 md:hidden">
+                {toolNodes.map((tool) => (
+                  <div
+                    key={`stack-${tool.label}`}
+                    className="flex items-center justify-between rounded-2xl border border-zinc-200 bg-white/90 px-4 py-3 shadow-sm transition hover:border-rose-200 dark:border-white/10 dark:bg-white/[0.05]"
+                  >
+                    <span className="text-sm font-semibold text-zinc-800 dark:text-zinc-100">{tool.label}</span>
+                    <span className={`text-[10px] uppercase tracking-[0.3em] ${categoryStyles[tool.category]}`}>
+                      {tool.category}
+                    </span>
+                  </div>
+                ))}
+              </div>
 
               <div className="flex flex-wrap justify-center gap-6 text-xs uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-500">
                 <div className="flex items-center gap-2">
@@ -1158,7 +1244,7 @@ export default function Home() {
         <Section id="impact">
           <div className={`${sectionCardClasses} relative overflow-hidden bg-white/95 text-center shadow-lg ring-1 ring-zinc-100 transition dark:bg-white/[0.06] dark:shadow-none dark:ring-0`}>
             <div className="pointer-events-none absolute -top-32 left-1/3 h-72 w-72 rounded-full bg-rose-400/15 blur-3xl" />
-            <div className="pointer-events-none.absolute -bottom-36 right-1/3 h-80 w-80 rounded-full bg-sky-400/15 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-36 right-1/3 h-80 w-80 rounded-full bg-sky-400/15 blur-3xl" />
             <div className="relative z-10 space-y-6">
               <h2 className="text-sm uppercase tracking-[0.3em] text-zinc-500 dark:text-zinc-500">Impact snapshot</h2>
               <p className="text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
@@ -1242,7 +1328,7 @@ export default function Home() {
       <footer className="border-t border-white/10 py-6">
         <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-3 px-6 text-xs text-zinc-500 sm:flex-row">
           <p>© {new Date().getFullYear()} Mahmoud Mamdoh. Crafted with purpose.</p>
-          <div className="flex items-center gap-4 uppercase tracking-[0.2em]">
+          <div className="flex flex-wrap justify-center gap-4 uppercase tracking-[0.2em]">
             {navLinks.map(({ id, label }) => (
               <Link key={`footer-${id}`} href={`#${id}`} className="hover:text-zinc-300">
                 {label}
