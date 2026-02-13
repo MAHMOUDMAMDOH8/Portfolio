@@ -58,7 +58,7 @@ If you are a data engineer, analyst, or hiring manager, this repository is meant
 
 ## 🔄 NiFi Flow Design & Error Handling
 
-- **Kafka Topic Coverage**: NiFi manages **55 Kafka topics**, with each topic handled by its own flow so that ingestion, monitoring, and replay can be controlled independently.  
+- **Kafka Topic Coverage**: NiFi manages **5 Kafka topics**, with each topic handled by its own flow so that ingestion, monitoring, and replay can be controlled independently.  
 - **JSON Evaluation & Cleaning**: Each flow consumes messages from its Kafka topic, evaluates the JSON payload, normalizes fields, and applies validation rules (required fields, data types, ranges, and business checks).  
 - **Routing of Valid Data**: Records that pass validation are routed to `row_event` tables in PostgreSQL, one per business table (Calls, SMS, Payment, Recharge, Support, etc.), ready for downstream Bronze/dbt processing.  
 - **Centralized Error Handling**: Invalid or malformed records are routed to an error path that inserts a detailed error record into a dedicated database table (including topic name, partition/offset, error reason, and timestamp).  

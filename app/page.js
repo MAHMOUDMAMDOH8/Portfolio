@@ -67,12 +67,12 @@ const experience = [
       'End-to-end telecom analytics platform ingesting events from Kafka into PostgreSQL via NiFi, modelled with a Bronze/Gold medallion pattern in dbt and surfaced for BI.',
     stack: ['NiFi', 'Kafka', 'PostgreSQL', 'dbt', 'Docker', 'Power BI'],
     highlights: [
-      '55-topic NiFi ingestion fabric with JSON validation, routing, and centralized error handling into PostgreSQL raw event tables.',
+      '5-topic NiFi ingestion fabric with JSON validation, routing, and centralized error handling into PostgreSQL raw event tables.',
       'Medallion architecture with Bronze and Gold layers, including fully modelled facts and dimensions for calls, SMS, payments, recharges, and support.',
       'dbt project with incremental models, CDC snapshots, star-schema design, and extensive data quality tests for keys, relationships, and referential integrity.'
     ],
     metrics: [
-      { label: 'Kafka topics', value: '55+' },
+      { label: 'Kafka topics', value: '5' },
       { label: 'Gold models', value: '5 facts · 6 dims' },
       { label: 'dbt tests', value: 'Comprehensive' }
     ]

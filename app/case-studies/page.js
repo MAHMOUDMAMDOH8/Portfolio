@@ -86,7 +86,7 @@ export default function CaseStudies() {
         description:
           'Telecom operators need trustworthy, analytics-ready data across calls, SMS, payments, recharges, and support, but often operate with fragmented Kafka topics, inconsistent JSON payloads, and limited data quality guarantees.',
         challenges: [
-          'Ingesting and validating dozens of heterogeneous Kafka topics with independent control over each pipeline',
+          'Ingesting and validating 5 heterogeneous Kafka topics with independent control over each pipeline',
           'Transforming raw JSON into a consistent medallion model while preserving auditability and error traceability',
           'Designing a dimensional schema that supports QoS analysis, customer behavior, and financial KPIs',
           'Implementing robust dbt testing across facts and dimensions to prevent bad data from reaching BI',
@@ -104,7 +104,7 @@ export default function CaseStudies() {
               name: 'NiFi Ingestion & Validation',
               tech: ['Apache NiFi', 'Kafka'],
               description:
-                '55 Kafka topics ingested via dedicated NiFi flows that validate JSON, normalize fields, and route valid vs. error records into PostgreSQL.'
+                '5 Kafka topics ingested via dedicated NiFi flows that validate JSON, normalize fields, and route valid vs. error records into PostgreSQL.'
             },
             {
               name: 'Raw & Bronze Storage',
@@ -133,7 +133,7 @@ export default function CaseStudies() {
           ]
         },
         keyFeatures: [
-          '55-topic NiFi ingestion fabric with centralized error handling and replay-friendly design',
+          '5-topic NiFi ingestion fabric with centralized error handling and replay-friendly design',
           'Bronze and Gold schemas covering calls, SMS, payments, recharges, and support interactions',
           'Star schema with five fact tables and six conformed dimensions tuned for telecom analytics',
           'dbt snapshots implementing SCD Type 2 history for core entities like users, devices, and agents',
@@ -146,7 +146,7 @@ export default function CaseStudies() {
           'The hub demonstrates how a telco can move from noisy Kafka events to governed, analytics-ready marts with strong guarantees on keys, relationships, and historical tracking.',
         metrics: [
           {
-            metric: '55+',
+            metric: '5',
             label: 'Kafka Topics',
             description: 'Independently managed NiFi flows per topic with validation and routing.'
           },
