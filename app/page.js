@@ -58,6 +58,44 @@ const experience = [
 ]
 
   const projects = [
+  {
+    title: 'Telecom Data Analytics Hub',
+    badge: 'TA',
+    category: 'Telecom Analytics Platform',
+    timeline: 'Feb 2026',
+    summary:
+      'End-to-end telecom analytics platform ingesting events from Kafka into PostgreSQL via NiFi, modelled with a Bronze/Gold medallion pattern in dbt and surfaced for BI.',
+    stack: ['NiFi', 'Kafka', 'PostgreSQL', 'dbt', 'Docker', 'Power BI'],
+    highlights: [
+      '55-topic NiFi ingestion fabric with JSON validation, routing, and centralized error handling into PostgreSQL raw event tables.',
+      'Medallion architecture with Bronze and Gold layers, including fully modelled facts and dimensions for calls, SMS, payments, recharges, and support.',
+      'dbt project with incremental models, CDC snapshots, star-schema design, and extensive data quality tests for keys, relationships, and referential integrity.'
+    ],
+    metrics: [
+      { label: 'Kafka topics', value: '55+' },
+      { label: 'Gold models', value: '5 facts · 6 dims' },
+      { label: 'dbt tests', value: 'Comprehensive' }
+    ]
+  },
+  {
+    title: 'Event-Driven Telecom Data Lakehouse Platform',
+    badge: 'TL',
+    category: 'Lakehouse Platform',
+    timeline: 'Feb 2026',
+    summary:
+      'Event-driven telecom data lakehouse that lands Kafka events in MinIO, processes them with Spark into Iceberg Bronze/Silver/Gold tables, and loads a galaxy-schema warehouse in ClickHouse.',
+    stack: ['Spark', 'Kafka', 'NiFi', 'Airflow', 'Iceberg', 'ClickHouse', 'MinIO'],
+    highlights: [
+      'Kafka → NiFi → MinIO ingestion with S3-compatible storage backing an Iceberg lakehouse catalog across bronze, silver, and gold namespaces.',
+      'Silver-layer validation and enrichment with rejection tracking, plus galaxy-schema fact constellation for calls, SMS, payments, recharges, and support.',
+      'Airflow DAGs orchestrating Spark jobs from raw landing through dimensional modelling and loading into ClickHouse for downstream Power BI analytics.'
+    ],
+    metrics: [
+      { label: 'Medallion layers', value: 'Bronze/Silver/Gold' },
+      { label: 'Fact tables', value: '5+' },
+      { label: 'Dimensions', value: '6+' }
+    ]
+  },
     {
     title: 'Multisystem ETL Lakehouse',
     badge: 'ML',
@@ -789,11 +827,12 @@ export default function Home() {
               {theme === 'dark' ? <FaSun /> : <FaMoon />}
             </button>
             <Link
-              href="mailto:mahmoud.mamdoh0812@gmail.com"
+              href="/case-studies"
               className="hidden items-center gap-2 text-zinc-600 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 sm:flex"
             >
-              <FaEnvelope className="text-rose-500 dark:text-rose-300" />
-              mahmoud.mamdoh0812@gmail.com
+              <span className="text-xs uppercase tracking-[0.25em] text-rose-500 dark:text-rose-300">
+                Use cases
+              </span>
             </Link>
             <span className="hidden h-4 w-px bg-zinc-200 dark:bg-white/10 md:block" />
             <span className="hidden text-xs uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-500 sm:inline">

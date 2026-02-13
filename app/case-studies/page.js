@@ -74,6 +74,324 @@ export default function CaseStudies() {
 
   const caseStudies = [
     {
+      id: 'telecom-data-analytics-hub',
+      title: 'Telecom Data Analytics Hub',
+      subtitle: 'Kafka → NiFi → PostgreSQL → dbt powering telco-ready facts and dimensions',
+      category: 'Telecom Analytics',
+      difficulty: 'Advanced',
+      status: 'Completed',
+      featured: true,
+      problem: {
+        title: 'The Challenge',
+        description:
+          'Telecom operators need trustworthy, analytics-ready data across calls, SMS, payments, recharges, and support, but often operate with fragmented Kafka topics, inconsistent JSON payloads, and limited data quality guarantees.',
+        challenges: [
+          'Ingesting and validating dozens of heterogeneous Kafka topics with independent control over each pipeline',
+          'Transforming raw JSON into a consistent medallion model while preserving auditability and error traceability',
+          'Designing a dimensional schema that supports QoS analysis, customer behavior, and financial KPIs',
+          'Implementing robust dbt testing across facts and dimensions to prevent bad data from reaching BI',
+          'Keeping the platform easy to run locally with Docker while still reflecting real telco complexity'
+        ]
+      },
+      solution: {
+        title: 'The Solution',
+        description:
+          'Built an end-to-end telecom analytics hub where NiFi manages topic-level ingestion into PostgreSQL, dbt implements a Bronze/Gold medallion pattern with facts and dimensions, and extensive tests enforce data quality before analytics.',
+        architecture: {
+          overview: 'NiFi + Kafka ingestion into PostgreSQL with dbt Bronze/Gold star schema and CDC snapshots',
+          components: [
+            {
+              name: 'NiFi Ingestion & Validation',
+              tech: ['Apache NiFi', 'Kafka'],
+              description:
+                '55 Kafka topics ingested via dedicated NiFi flows that validate JSON, normalize fields, and route valid vs. error records into PostgreSQL.'
+            },
+            {
+              name: 'Raw & Bronze Storage',
+              tech: ['PostgreSQL'],
+              description:
+                'Per-domain `row_event` tables store raw-but-structured events for Calls, SMS, Payment, Recharge, and Support, feeding Bronze dbt models.'
+            },
+            {
+              name: 'dbt Medallion Modeling',
+              tech: ['dbt', 'SQL'],
+              description:
+                'Bronze models clean and standardize events; Gold models implement star-schema facts and dimensions with surrogate keys and SCD Type 2 snapshots.'
+            },
+            {
+              name: 'Testing & Documentation',
+              tech: ['dbt tests', 'dbt docs'],
+              description:
+                'Column-level docs plus `not_null`, `unique`, and `relationships` tests across all facts and dimensions with failure storage for investigation.'
+            },
+            {
+              name: 'Containerized Runtime',
+              tech: ['Docker', 'Docker Compose'],
+              description:
+                'Docker Compose spins up NiFi, Kafka, PostgreSQL, and tooling so the full telco scenario can be reproduced locally.'
+            }
+          ]
+        },
+        keyFeatures: [
+          '55-topic NiFi ingestion fabric with centralized error handling and replay-friendly design',
+          'Bronze and Gold schemas covering calls, SMS, payments, recharges, and support interactions',
+          'Star schema with five fact tables and six conformed dimensions tuned for telecom analytics',
+          'dbt snapshots implementing SCD Type 2 history for core entities like users, devices, and agents',
+          'Comprehensive dbt testing strategy with failure storage for rapid data quality triage'
+        ]
+      },
+      results: {
+        title: 'The Results',
+        description:
+          'The hub demonstrates how a telco can move from noisy Kafka events to governed, analytics-ready marts with strong guarantees on keys, relationships, and historical tracking.',
+        metrics: [
+          {
+            metric: '55+',
+            label: 'Kafka Topics',
+            description: 'Independently managed NiFi flows per topic with validation and routing.'
+          },
+          {
+            metric: '5',
+            label: 'Fact Tables',
+            description: 'Gold facts for Calls, SMS, Payment, Recharge, and Support.'
+          },
+          {
+            metric: '6',
+            label: 'Dimensions',
+            description: 'Conformed dimensions for Date, Time, Users, Devices, Cell Sites, and Agents.'
+          },
+          {
+            metric: '100%',
+            label: 'Test Coverage',
+            description: 'Primary and foreign keys protected by dbt tests with stored failures.'
+          }
+        ],
+        businessImpact: [
+          'Shows telecom stakeholders exactly how QoS, churn risk, and revenue can be modeled off clean dimensional data',
+          'Provides a template for implementing SCD Type 2 and CDC in real operator environments',
+          'Reduces risk of bad data reaching dashboards through rigorous testing and error-routing patterns',
+          'Enables rapid iteration on new KPIs by building on a well-documented medallion and star schema',
+          'Improves engineering handoff by codifying logic and lineage in dbt and SQL instead of ad-hoc scripts'
+        ]
+      },
+      technicalDetails: {
+        technologies: [
+          'Apache NiFi',
+          'Apache Kafka',
+          'PostgreSQL',
+          'dbt',
+          'Docker',
+          'SQL',
+          'Medallion Architecture',
+          'Star Schema',
+          'SCD Type 2'
+        ],
+        codeSnippets: [
+          {
+            title: 'Bronze Call Model with Incremental Merge Logic',
+            language: 'sql',
+            code: `-- Complex JSON extraction and transformation
+from_json::jsonb ->> 'imei' as from_imei,
+substr(from_json::jsonb ->> 'imei',1,8) as from_tac,
+billing_info::jsonb ->> 'amount' as amount,
+qos_metrics::jsonb ->> 'codec' as codec
+
+-- Incremental logic with merge strategy
+{% if is_incremental() %}
+select * from Call_with_sk
+where Call_sk not in (select distinct Call_sk from {{ this }})
+{% else %}
+select * from Call_with_sk
+{% endif %}`
+          },
+          {
+            title: 'Fact Call Joins to Dimensions',
+            language: 'sql',
+            code: `LEFT join {{ ref('DIM_cell_site')}} as from_cell
+  on from_cell_site = from_cell.cell_id
+LEFT join {{ ref('DIM_cell_site')}} as to_cell
+  on to_cell_site = to_cell.cell_id
+LEFT join {{ ref('DIM_Users')}} as from_user
+  on from_phone_number = from_user.phone_number`
+          }
+        ],
+        diagrams: [
+          {
+            title: 'dbt Lineage Graph',
+            description: 'Lineage from raw row_event sources through Bronze to Gold facts and dimensions.',
+            imageUrl: '/readme/image/dbt%20lineage.png'
+          }
+        ]
+      },
+      github: 'https://github.com/MAHMOUDMAMDOH8/Telecom-Data-Analytics-Hub',
+      demo: '',
+      lessons: [
+        'Designing topic-per-flow ingestion in NiFi makes operations and observability far easier at telco scale',
+        'Treating Bronze as a disciplined, structured layer simplifies downstream dimensional modeling',
+        'dbt tests and snapshots are essential to keep telecom facts and dimensions trustworthy over time',
+        'Aligning schema design with actual operator KPIs (QoS, churn, ARPU) keeps the warehouse relevant'
+      ]
+    },
+    {
+      id: 'telecom-data-platform-lakehouse',
+      title: 'Event-Driven Telecom Data Lakehouse Platform',
+      subtitle: 'Spark + Iceberg medallion lakehouse with ClickHouse galaxy schema for telecom analytics',
+      category: 'Data Lakehouse',
+      difficulty: 'Advanced',
+      status: 'Completed',
+      featured: true,
+      problem: {
+        title: 'The Challenge',
+        description:
+          'Telcos increasingly need both scalable data lakehouse storage and fast OLAP-style query performance, but struggle to bridge raw Kafka events, object storage, and a dimensional model that supports complex telecom use cases.',
+        challenges: [
+          'Landing high-volume Kafka events into cost-effective object storage without sacrificing schema evolution',
+          'Implementing a clear Bronze/Silver/Gold pattern on top of Iceberg tables for telecom domains',
+          'Designing a galaxy schema that supports multiple fact tables sharing conformed dimensions',
+          'Coordinating Spark jobs and data movement between Iceberg and ClickHouse with repeatable orchestration',
+          'Ensuring rejected/invalid records are tracked while keeping core paths efficient'
+        ]
+      },
+      solution: {
+        title: 'The Solution',
+        description:
+          'Implemented an event-driven lakehouse where NiFi lands Kafka events into MinIO, Spark builds Iceberg Bronze/Silver/Gold tables, and curated facts and dimensions are loaded into ClickHouse as a galaxy schema for analytics.',
+        architecture: {
+          overview: 'Kafka → NiFi → MinIO → Spark-on-Iceberg medallion → ClickHouse galaxy schema for BI',
+          components: [
+            {
+              name: 'Streaming Ingestion',
+              tech: ['Apache Kafka', 'Apache NiFi', 'MinIO'],
+              description:
+                'Kafka topics deliver telecom events; NiFi writes them into MinIO using S3-compatible storage for downstream Iceberg tables.'
+            },
+            {
+              name: 'Iceberg Medallion Layers',
+              tech: ['Apache Spark', 'Apache Iceberg'],
+              description:
+                'Spark jobs create and maintain Bronze, Silver, and Gold Iceberg tables in a `my_catalog` warehouse with telecom-specific namespaces.'
+            },
+            {
+              name: 'Silver Validation & Rejection',
+              tech: ['Spark SQL'],
+              description:
+                'Silver layer enforces validation rules, flags rejected records with `is_rejected` and `rejection_reason`, and enriches events with additional attributes.'
+            },
+            {
+              name: 'Galaxy Schema Warehouse',
+              tech: ['ClickHouse', 'Dimensional Modeling'],
+              description:
+                'Facts for calls, SMS, payment, recharge, and support share conformed date, time, user, device, cell site, and agent dimensions.'
+            },
+            {
+              name: 'Orchestration & Automation',
+              tech: ['Apache Airflow', 'PowerShell'],
+              description:
+                'Airflow DAGs and PowerShell scripts coordinate Spark jobs and ClickHouse loads, keeping data products fresh end-to-end.'
+            }
+          ]
+        },
+        keyFeatures: [
+          'Full medallion implementation on Iceberg with Bronze, Silver, and Gold namespaces',
+          'Galaxy schema in ClickHouse with multiple facts sharing conformed dimensions',
+          'Explicit rejection tracking in Silver so bad events never silently disappear',
+          'Reusable Spark modeling layer for both dimensions and facts',
+          'Containerized environment for running the full telco lakehouse locally'
+        ]
+      },
+      results: {
+        title: 'The Results',
+        description:
+          'The platform proves how a modern telecom lakehouse can combine cheap object storage, robust table formats, and a dimensional OLAP store to serve varied analytical needs.',
+        metrics: [
+          {
+            metric: '3',
+            label: 'Medallion Layers',
+            description: 'Bronze, Silver, and Gold Iceberg tables with clear contracts.'
+          },
+          {
+            metric: '5',
+            label: 'Fact Tables',
+            description: 'Fact tables for calls, SMS, payments, recharges, and support in ClickHouse.'
+          },
+          {
+            metric: '6',
+            label: 'Dimensions',
+            description: 'Conformed dimensions across all telecom subject areas.'
+          },
+          {
+            metric: 'Event-Driven',
+            label: 'Architecture',
+            description: 'Streaming-friendly design from Kafka through to BI.'
+          }
+        ],
+        businessImpact: [
+          'Demonstrates a practical blueprint for telcos adopting lakehouse and OLAP together',
+          'Enables fast, multi-fact analytics on network, billing, and support domains',
+          'Improves transparency by exposing both accepted and rejected records throughout the flow',
+          'Reduces time-to-insight by standardizing how new telecom subject areas are onboarded',
+          'Prepares the ground for advanced analytics and ML by centralizing clean, historical data'
+        ]
+      },
+      technicalDetails: {
+        technologies: [
+          'Apache Kafka',
+          'Apache NiFi',
+          'Apache Spark',
+          'Apache Iceberg',
+          'MinIO',
+          'ClickHouse',
+          'Apache Airflow',
+          'Power BI',
+          'Python',
+          'PowerShell'
+        ],
+        codeSnippets: [
+          {
+            title: 'Iceberg Catalog Configuration',
+            language: 'sql',
+            code: `-- Iceberg catalog configuration (conceptual)
+SET spark.sql.catalog.my_catalog=org.apache.iceberg.spark.SparkCatalog;
+SET spark.sql.catalog.my_catalog.type=hadoop;
+SET spark.sql.catalog.my_catalog.warehouse='s3a://telecomlakehouse/iceberg';`
+          },
+          {
+            title: 'Date Dimension Generation with generate_series',
+            language: 'sql',
+            code: `select
+    md5(TO_CHAR(g.date_series, 'YYYY-MM-DD')) AS date_sk,
+    extract(year from g.date_series) as year,
+    extract(quarter from g.date_series) as quarter,
+    extract(month from g.date_series) as month,
+    to_char(g.date_series, 'Month') as month_name,
+    case when extract(dow from g.date_series) in (0,6) 
+         then true else false end as is_weekend
+from generate_date_cte g;`
+          }
+        ],
+        diagrams: [
+          {
+            title: 'Lakehouse Architecture',
+            description: 'End-to-end architecture from Kafka through NiFi, MinIO, Iceberg layers, and into ClickHouse.',
+            imageUrl: '/readme/image/arch.jpg'
+          },
+          {
+            title: 'Gold Galaxy Schema',
+            description: 'Galaxy schema showing dim_date, dim_time, dim_user, dim_device, dim_cell_site, and dim_agent shared across facts.',
+            imageUrl: '/readme/image/UntitledDiagramlayers.png'
+          }
+        ]
+      },
+      github: 'https://github.com/MAHMOUDMAMDOH8/Telecom-Data-Platform',
+      demo: '',
+      lessons: [
+        'Iceberg plus object storage creates a powerful foundation for telecom medallion architectures',
+        'Galaxy schemas fit telco use cases well because they share conformed dimensions across many facts',
+        'Separation between lakehouse storage (Iceberg) and OLAP serving (ClickHouse) keeps each layer focused',
+        'Automating Spark and load jobs with Airflow and scripts is key to keeping the lakehouse reliable'
+      ]
+    },
+    {
       id: 'multisystem-etl-lakehouse',
       title: 'Multisystem ETL Lakehouse for Business Insights',
       subtitle: 'Iceberg-powered analytics foundation for Magento, Odoo, and Freshdesk',
