@@ -1,9 +1,9 @@
+![Pipeline Architecture](https://raw.githubusercontent.com/MAHMOUDMAMDOH8/Telecom-Data-Analytics-Hub/main/image/pipeline%20arch.png)
+
 ## Telecom Data Analytics Hub
 
 An end-to-end **telecom analytics platform** that I designed and built to show how real-world telco data can be transformed into trustworthy, analytics-ready insights.  
 This project brings together streaming, orchestration, warehousing, and modelling into one cohesive story—from raw events on Kafka all the way to business-ready facts and dimensions.
-
-![Pipeline Architecture](image/pipeline%20arch.png)
 
 ## 📚 Project Index
 

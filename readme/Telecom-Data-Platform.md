@@ -1,6 +1,7 @@
+![Architecture Diagram](https://raw.githubusercontent.com/MAHMOUDMAMDOH8/Telecom-Data-Platform/main/image/arch.jpg)
+
 # Event-Driven Telecom Data Lakehouse Platform
 ## Architecture
-![Architecture Diagram](image/arch.jpg)
 
 ## Table of Contents
 

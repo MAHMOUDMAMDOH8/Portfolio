@@ -217,9 +217,14 @@ LEFT join {{ ref('DIM_Users')}} as from_user
         ],
         diagrams: [
           {
+            title: 'Pipeline Architecture Flow',
+            description: 'End-to-end flow from NiFi and Kafka into PostgreSQL and dbt Bronze/Gold layers.',
+            imageUrl: 'https://raw.githubusercontent.com/MAHMOUDMAMDOH8/Telecom-Data-Analytics-Hub/main/image/pipeline%20arch.png'
+          },
+          {
             title: 'dbt Lineage Graph',
-            description: 'Lineage from raw row_event sources through Bronze to Gold facts and dimensions.',
-            imageUrl: '/readme/image/dbt%20lineage.png'
+            description: 'Lineage from raw row_event sources through Bronze models into Gold facts and dimensions.',
+            imageUrl: 'https://github.com/MAHMOUDMAMDOH8/Telecom-Data-Analytics-Hub/raw/main/image/dbt%20lineage.png'
           }
         ]
       },
