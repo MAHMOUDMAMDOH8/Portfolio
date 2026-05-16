@@ -35,6 +35,29 @@
   animation: hero-cursor 1.1s steps(2, start) infinite;
 }
 
+@keyframes hero-flow-pulse {
+  0%,
+  100% {
+    opacity: 0.15;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.8);
+  }
+}
+
+.hero-flow-pulse {
+  animation: hero-flow-pulse 2.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-flow-pulse {
+    animation: none;
+    opacity: 0.6;
+  }
+}
+
 @keyframes marquee-scroll {
   0% {
     transform: translateX(0);
@@ -58,6 +81,40 @@
 @media (prefers-reduced-motion: reduce) {
   .marquee {
     animation: none !important;
+  }
+}
+
+/* Theme toggle — circular reveal (View Transitions API) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 9999;
+}
+
+html.theme-switching,
+html.theme-switching * {
+  transition-property: background-color, border-color, color, fill, stroke, box-shadow, outline-color;
+  transition-duration: 550ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+
+  html.theme-switching,
+  html.theme-switching * {
+    transition-duration: 0.01ms !important;
   }
 }
 

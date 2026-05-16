@@ -3,6 +3,19 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
+import { CaseStudiesListHero } from './components/CaseStudiesListHero'
+import { CaseStudiesNav } from './components/CaseStudiesNav'
+import { CaseStudiesPageShell } from './components/CaseStudiesPageShell'
+import {
+  csBody,
+  csBodyMuted,
+  csCard,
+  csCardInner,
+  csChip,
+  csCodeBlock,
+  csFloatingNav,
+  csHeading
+} from './components/caseStudyStyles'
 import { 
   FaGithub, 
   FaExternalLinkAlt,
@@ -2310,55 +2323,30 @@ CREATE TABLE dim_date (
 
   if (!isLoaded) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#050508] text-zinc-100">
-        <div className="text-center">
-          <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-2 border-white/10 border-t-cyan-400" />
-          <p className="text-sm text-zinc-500">Loading case studies…</p>
+      <CaseStudiesPageShell>
+        <div className="flex min-h-screen items-center justify-center">
+          <div className="text-center">
+            <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-2 border-zinc-300 border-t-cyan-600 dark:border-white/10 dark:border-t-cyan-400" />
+            <p className="text-sm text-zinc-500">Loading case studies…</p>
+          </div>
         </div>
-      </div>
+      </CaseStudiesPageShell>
     )
   }
 
   if (selectedCaseStudy) {
+    const currentIndex = caseStudies.findIndex((cs) => cs.id === selectedCase) + 1
+
     return (
-      <div className="min-h-screen bg-[#050508] text-zinc-100">
-        <nav className="sticky top-0 z-40 border-b border-white/[0.06] bg-[#050508]/90 backdrop-blur-xl">
-          <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4 sm:h-16 sm:px-6 lg:px-8">
-            <button
-              type="button"
-              onClick={() => setSelectedCase(null)}
-              className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-sm text-zinc-300 transition hover:border-cyan-500/40 hover:text-white"
-            >
-              <FaArrowLeft />
-              <span className="hidden sm:inline">All case studies</span>
-              <span className="sm:hidden">Back</span>
-            </button>
-            <div className="flex items-center gap-3">
-              <span className="text-xs font-medium tabular-nums text-zinc-500">
-                {(() => {
-                  const currentIndex = caseStudies.findIndex((cs) => cs.id === selectedCase) + 1
-                  return `${currentIndex} / ${caseStudies.length}`
-                })()}
-              </span>
-              <button
-                type="button"
-                onClick={goToPreviousCase}
-                className="rounded-lg border border-white/10 p-2 text-zinc-400 transition hover:border-cyan-500/40 hover:text-cyan-300"
-                aria-label="Previous case study"
-              >
-                <FaArrowLeft size={14} />
-              </button>
-              <button
-                type="button"
-                onClick={goToNextCase}
-                className="rounded-lg border border-white/10 p-2 text-zinc-400 transition hover:border-cyan-500/40 hover:text-cyan-300"
-                aria-label="Next case study"
-              >
-                <FaArrowRight size={14} />
-              </button>
-            </div>
-          </div>
-        </nav>
+      <CaseStudiesPageShell>
+        <CaseStudiesNav
+          variant="detail"
+          onBack={() => setSelectedCase(null)}
+          onPrev={goToPreviousCase}
+          onNext={goToNextCase}
+          currentIndex={currentIndex}
+          total={caseStudies.length}
+        />
 
         <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
           <AnimatePresence>
@@ -2393,14 +2381,14 @@ CREATE TABLE dim_date (
               </div>
 
               {/* Problem-Solution Story Section */}
-              <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 sm:p-8 mb-8 backdrop-blur-md">
+              <div className={csCard}>
                 <div className="flex items-center space-x-3 mb-6">
                   <div className="rounded-lg border border-amber-500/25 bg-amber-500/10 p-3">
                     <FaLightbulb className="text-xl text-amber-300" />
                   </div>
-                  <h2 className="text-2xl font-bold text-white">Problem-Solution Story</h2>
+                  <h2 className={csHeading}>Problem-Solution Story</h2>
                 </div>
-                <div className="text-zinc-300 leading-relaxed space-y-4">
+                <div className={`${csBodyMuted} leading-relaxed space-y-4`}>
                   <p><span className="font-semibold text-rose-400">The Challenge:</span> {selectedCaseStudy.problem.description}</p>
                   <p><span className="font-semibold text-cyan-400">My Approach:</span> {selectedCaseStudy.solution.description}</p>
                   <p><span className="font-semibold text-emerald-400">The Outcome:</span> {selectedCaseStudy.results.description}</p>
@@ -2408,33 +2396,33 @@ CREATE TABLE dim_date (
               </div>
 
               {/* Problem Section */}
-              <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 sm:p-8 mb-8 backdrop-blur-md">
+              <div className={csCard}>
                 <div className="flex items-center space-x-3 mb-6">
                   <div className="rounded-lg border border-rose-500/25 bg-rose-500/10 p-3">
                     <FaLightbulb className="text-xl text-rose-300" />
                   </div>
-                  <h2 className="text-2xl font-bold text-white">{selectedCaseStudy.problem.title}</h2>
+                  <h2 className={csHeading}>{selectedCaseStudy.problem.title}</h2>
                 </div>
-                <p className="text-zinc-400 mb-6 leading-relaxed">{selectedCaseStudy.problem.description}</p>
+                <p className={`${csBody} mb-6 leading-relaxed`}>{selectedCaseStudy.problem.description}</p>
                 <div className="space-y-3">
                   {selectedCaseStudy.problem.challenges.map((challenge, index) => (
                     <div key={index} className="flex items-start space-x-3">
                       <FaCheckCircle className="mt-1 flex-shrink-0 text-rose-400" />
-                      <span className="text-zinc-300">{challenge}</span>
+                      <span className={csBodyMuted}>{challenge}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* Solution Section */}
-              <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 sm:p-8 mb-8 backdrop-blur-md">
+              <div className={csCard}>
                 <div className="flex items-center space-x-3 mb-6">
                   <div className="rounded-lg border border-cyan-500/25 bg-cyan-500/10 p-3">
                     <FaCogs className="text-xl text-cyan-300" />
                   </div>
-                  <h2 className="text-2xl font-bold text-white">{selectedCaseStudy.solution.title}</h2>
+                  <h2 className={csHeading}>{selectedCaseStudy.solution.title}</h2>
                 </div>
-                <p className="text-zinc-400 mb-6 leading-relaxed">{selectedCaseStudy.solution.description}</p>
+                <p className={`${csBody} mb-6 leading-relaxed`}>{selectedCaseStudy.solution.description}</p>
                 
                 {/* Architecture */}
                 <div className="mb-8">
@@ -2442,11 +2430,11 @@ CREATE TABLE dim_date (
                   <p className="text-zinc-400 mb-6">{selectedCaseStudy.solution.architecture.overview}</p>
                   <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {selectedCaseStudy.solution.architecture.components.map((component, index) => (
-                      <div key={index} className="rounded-xl border border-white/[0.06] bg-white/[0.03] p-5">
+                      <div key={index} className={csCardInner}>
                         <h4 className="mb-2 font-semibold text-white">{component.name}</h4>
                         <div className="mb-3 flex flex-wrap gap-2">
                           {component.tech.map((tech, techIndex) => (
-                            <span key={techIndex} className="rounded-md border border-cyan-500/25 bg-cyan-500/10 px-2 py-1 text-xs font-medium text-cyan-200">
+                            <span key={techIndex} className={csChip}>
                               {tech}
                             </span>
                           ))}
@@ -2464,7 +2452,7 @@ CREATE TABLE dim_date (
                     {selectedCaseStudy.solution.keyFeatures.map((feature, index) => (
                       <div key={index} className="flex items-center space-x-3">
                         <FaCheckCircle className="flex-shrink-0 text-cyan-400" />
-                        <span className="text-zinc-300">{feature}</span>
+                        <span className={csBodyMuted}>{feature}</span>
                       </div>
                     ))}
                   </div>
@@ -2472,12 +2460,12 @@ CREATE TABLE dim_date (
               </div>
 
               {/* Results Section */}
-              <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 sm:p-8 mb-8 backdrop-blur-md">
+              <div className={csCard}>
                 <div className="flex items-center space-x-3 mb-6">
                   <div className="rounded-lg border border-emerald-500/25 bg-emerald-500/10 p-3">
                     <FaTrophy className="text-xl text-emerald-300" />
                   </div>
-                  <h2 className="text-2xl font-bold text-white">{selectedCaseStudy.results.title}</h2>
+                  <h2 className={csHeading}>{selectedCaseStudy.results.title}</h2>
                 </div>
                 <p className="text-zinc-400 mb-8 leading-relaxed">{selectedCaseStudy.results.description}</p>
                 
@@ -2499,7 +2487,7 @@ CREATE TABLE dim_date (
                     {selectedCaseStudy.results.businessImpact.map((impact, index) => (
                       <div key={index} className="flex items-center space-x-3">
                         <FaCheckCircle className="flex-shrink-0 text-cyan-400" />
-                        <span className="text-zinc-300">{impact}</span>
+                        <span className={csBodyMuted}>{impact}</span>
                       </div>
                     ))}
                   </div>
@@ -2507,12 +2495,12 @@ CREATE TABLE dim_date (
               </div>
 
               {/* Technical Details */}
-              <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 sm:p-8 mb-8 backdrop-blur-md">
+              <div className={csCard}>
                 <div className="flex items-center space-x-3 mb-6">
                   <div className="rounded-lg border border-violet-500/25 bg-violet-500/10 p-3">
                     <FaCode className="text-xl text-violet-300" />
                   </div>
-                  <h2 className="text-2xl font-bold text-white">Technical Details</h2>
+                  <h2 className={csHeading}>Technical Details</h2>
                 </div>
                 
                 {/* Technologies */}
@@ -2545,10 +2533,10 @@ CREATE TABLE dim_date (
                     <h3 className="text-xl font-semibold text-white mb-4">Diagrams</h3>
                     <div className="grid gap-6">
                       {selectedCaseStudy.technicalDetails.diagrams.map((diagram, index) => (
-                        <div key={index} className="rounded-xl border border-white/[0.06] bg-white/[0.03] p-5">
+                        <div key={index} className={csCardInner}>
                           <h4 className="mb-2 font-semibold text-white">{diagram.title}</h4>
                           <p className="mb-4 text-sm text-zinc-400">{diagram.description}</p>
-                          <div className="overflow-hidden rounded-lg border border-white/[0.06] bg-[#08080a] p-3">
+                          <div className={csCodeBlock}>
                             <img
                               src={diagram.imageUrl}
                               alt={diagram.title}
@@ -2564,18 +2552,18 @@ CREATE TABLE dim_date (
               </div>
 
               {/* Lessons Learned */}
-              <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 sm:p-8 mb-8 backdrop-blur-md">
+              <div className={csCard}>
                 <div className="flex items-center space-x-3 mb-6">
                   <div className="rounded-lg border border-amber-500/25 bg-amber-500/10 p-3">
                     <FaLightbulb className="text-xl text-amber-300" />
                   </div>
-                  <h2 className="text-2xl font-bold text-white">Lessons Learned</h2>
+                  <h2 className={csHeading}>Lessons Learned</h2>
                 </div>
                 <div className="grid md:grid-cols-2 gap-4">
                   {selectedCaseStudy.lessons.map((lesson, index) => (
                     <div key={index} className="flex items-start space-x-3">
                       <FaCheckCircle className="mt-1 flex-shrink-0 text-amber-400" />
-                      <span className="text-zinc-300">{lesson}</span>
+                      <span className={csBodyMuted}>{lesson}</span>
                     </div>
                   ))}
                 </div>
@@ -2597,7 +2585,7 @@ CREATE TABLE dim_date (
                     href={selectedCaseStudy.demo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-white/15 bg-white/[0.06] px-6 py-3 text-sm font-semibold text-white transition hover:border-cyan-500/40"
+                    className="flex flex-1 items-center justify-center gap-2 rounded-lg border border-zinc-300 bg-zinc-50 px-6 py-3 text-sm font-semibold text-zinc-900 transition hover:border-cyan-500/40 dark:border-white/15 dark:bg-white/[0.06] dark:text-white"
                   >
                     <FaExternalLinkAlt />
                     <span>Live demo</span>
@@ -2605,11 +2593,11 @@ CREATE TABLE dim_date (
                 )}
               </div>
 
-              <div className="fixed bottom-6 left-1/2 z-50 flex -translate-x-1/2 items-center gap-3 rounded-full border border-white/[0.1] bg-[#050508]/95 px-4 py-2 shadow-xl shadow-black/40 backdrop-blur-xl">
+              <div className={csFloatingNav}>
                 <button
                   type="button"
                   onClick={goToPreviousCase}
-                  className="rounded-full border border-white/10 p-2 text-zinc-400 transition hover:border-cyan-500/40 hover:text-cyan-300"
+                  className="rounded-full border border-zinc-200 p-2 text-zinc-600 transition hover:border-cyan-500/40 hover:text-cyan-700 dark:border-white/10 dark:text-zinc-400 dark:hover:text-cyan-300"
                   aria-label="Previous case study"
                 >
                   <FaArrowLeft size={16} />
@@ -2625,7 +2613,7 @@ CREATE TABLE dim_date (
                 <button
                   type="button"
                   onClick={goToNextCase}
-                  className="rounded-full border border-white/10 p-2 text-zinc-400 transition hover:border-cyan-500/40 hover:text-cyan-300"
+                  className="rounded-full border border-zinc-200 p-2 text-zinc-600 transition hover:border-cyan-500/40 hover:text-cyan-700 dark:border-white/10 dark:text-zinc-400 dark:hover:text-cyan-300"
                   aria-label="Next case study"
                 >
                   <FaArrowRight size={16} />
@@ -2634,64 +2622,19 @@ CREATE TABLE dim_date (
             </motion.div>
           </AnimatePresence>
         </div>
-      </div>
+      </CaseStudiesPageShell>
     )
   }
 
-  return (
-    <div className="relative min-h-screen bg-[#050508] text-zinc-100">
-      <div
-        className="pointer-events-none fixed inset-0 -z-10 opacity-30"
-        aria-hidden
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)
-          `,
-          backgroundSize: '72px 72px',
-          maskImage: 'radial-gradient(ellipse 80% 50% at 50% 0%, black 25%, transparent 70%)'
-        }}
-      />
-      <nav className="sticky top-0 z-40 border-b border-white/[0.06] bg-[#050508]/90 backdrop-blur-xl">
-        <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:h-16 sm:px-6 lg:px-8">
-          <a
-            href="/#projects"
-            className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-sm text-zinc-300 transition hover:border-cyan-500/40 hover:text-white"
-          >
-            <FaHome className="text-xs" />
-            <span>Portfolio</span>
-          </a>
-          <h1 className="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-400/90">Case studies</h1>
-          <a
-            href="/"
-            className="text-sm font-medium text-zinc-400 transition hover:text-cyan-300"
-          >
-            Home
-          </a>
-        </div>
-      </nav>
+  const featuredCount = caseStudies.filter((cs) => cs.featured).length
 
-      <section className="py-12 sm:py-16">
+  return (
+    <CaseStudiesPageShell showDataFlow>
+      <CaseStudiesNav />
+
+      <section className="relative py-12 sm:py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <AnimatePresence>
-            {isLoaded && (
-              <motion.div
-                key="hero-section"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="mb-14 text-center"
-              >
-                <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-cyan-400/90">Deep dives</p>
-                <h1 className="mt-3 text-balance text-3xl font-semibold tracking-tight text-white sm:text-4xl md:text-5xl">
-                  Case studies
-                </h1>
-                <p className="mx-auto mt-5 max-w-2xl text-pretty text-base leading-relaxed text-zinc-400 sm:text-lg">
-                  Detailed breakdowns of my most impactful data engineering projects, showcasing problem-solving approaches, technical implementations, and business outcomes.
-                </p>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          {isLoaded ? <CaseStudiesListHero count={caseStudies.length} featuredCount={featuredCount} /> : null}
 
           {/* Case Studies Grid */}
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -2710,7 +2653,7 @@ CREATE TABLE dim_date (
                       setSelectedCase(caseStudy.id)
                     }
                   }}
-                  className="group cursor-pointer overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] transition hover:border-cyan-500/25 hover:bg-white/[0.04]"
+                  className="group cursor-pointer overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition hover:border-cyan-500/35 hover:shadow-md dark:border-white/[0.06] dark:bg-white/[0.02] dark:shadow-none dark:hover:border-cyan-500/25 dark:hover:bg-white/[0.04]"
                   onClick={() => setSelectedCase(caseStudy.id)}
                 >
                   <div className="relative h-44 bg-gradient-to-br from-cyan-600/90 via-violet-700/80 to-[#0a1628] sm:h-48">
@@ -2733,19 +2676,19 @@ CREATE TABLE dim_date (
                     </div>
                   </div>
 
-                  <div className="border-t border-white/[0.06] p-5">
+                  <div className="border-t border-zinc-200 p-5 dark:border-white/[0.06]">
                     <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-zinc-500">
                       <span className="inline-flex items-center gap-1.5">
                         <FaClock />
                         {caseStudy.status}
                       </span>
-                      <span className="rounded-md border border-emerald-500/25 bg-emerald-500/10 px-2 py-0.5 font-medium text-emerald-200">
+                      <span className="rounded-md border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 font-medium text-emerald-800 dark:text-emerald-200">
                         {caseStudy.difficulty}
                       </span>
                     </div>
                     <button
                       type="button"
-                      className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/[0.06] py-2.5 text-sm font-semibold text-white transition group-hover:border-cyan-500/35 group-hover:text-cyan-200"
+                      className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg border border-zinc-200 bg-zinc-50 py-2.5 text-sm font-semibold text-zinc-900 transition group-hover:border-cyan-500/35 group-hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.06] dark:text-white dark:group-hover:text-cyan-200"
                     >
                       <FaEye className="text-xs" />
                       View details
@@ -2757,6 +2700,6 @@ CREATE TABLE dim_date (
           </div>
         </div>
       </section>
-    </div>
+    </CaseStudiesPageShell>
   )
 } 

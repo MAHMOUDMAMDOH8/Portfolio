@@ -1,5 +1,6 @@
 import './globals.css'
 import { Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google'
+import { Providers } from './providers'
 
 const sans = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -51,7 +52,8 @@ export const metadata = {
       'Data Engineer in Cairo: architecting and automating pipelines with Airflow, dbt, Spark, Kafka, and Power BI — ETL/ELT, warehousing, lakehouse patterns, and actionable analytics.',
     siteName: 'Mahmoud Mamdoh Portfolio',
     locale: 'en_US',
-    type: 'website'
+    type: 'website',
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Mahmoud Mamdoh — Data Engineer' }]
   },
   twitter: {
     card: 'summary_large_image',
@@ -65,7 +67,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${sans.variable} ${mono.variable}`} suppressHydrationWarning>
-      <body className="min-h-screen bg-zinc-100 font-sans text-zinc-950 antialiased dark:bg-[#050508] dark:text-zinc-100">{children}</body>
+      <body className="min-h-screen bg-zinc-100 font-sans text-zinc-950 antialiased dark:bg-[#050508] dark:text-zinc-100">
+        <Providers>{children}</Providers>
+      </body>
     </html>
   )
 }

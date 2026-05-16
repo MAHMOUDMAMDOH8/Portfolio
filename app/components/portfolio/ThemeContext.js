@@ -1,14 +1,23 @@
 'use client'
 
-import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { flushSync } from 'react-dom'
+import { runThemeTransition } from './themeTransition'
 
 const STORAGE_KEY = 'portfolio-theme'
 
 const ThemeContext = createContext(null)
 
+function applyDomTheme(theme) {
+  document.documentElement.classList.toggle('dark', theme === 'dark')
+  document.documentElement.dataset.theme = theme
+}
+
 export function ThemeProvider({ children }) {
   const [theme, setThemeState] = useState('dark')
   const [mounted, setMounted] = useState(false)
+  const [isTransitioning, setIsTransitioning] = useState(false)
+  const themeRef = useRef('dark')
 
   useLayoutEffect(() => {
     let t = 'dark'
@@ -18,14 +27,16 @@ export function ThemeProvider({ children }) {
     } catch {
       /* ignore */
     }
-    document.documentElement.classList.toggle('dark', t === 'dark')
+    applyDomTheme(t)
+    themeRef.current = t
     setThemeState(t)
     setMounted(true)
   }, [])
 
   useEffect(() => {
     if (!mounted) return
-    document.documentElement.classList.toggle('dark', theme === 'dark')
+    applyDomTheme(theme)
+    themeRef.current = theme
     try {
       localStorage.setItem(STORAGE_KEY, theme)
     } catch {
@@ -37,12 +48,23 @@ export function ThemeProvider({ children }) {
     if (next === 'light' || next === 'dark') setThemeState(next)
   }, [])
 
-  const toggleTheme = useCallback(() => {
-    setThemeState((t) => (t === 'dark' ? 'light' : 'dark'))
-  }, [])
+  const toggleTheme = useCallback((event) => {
+    if (isTransitioning) return
+
+    const next = themeRef.current === 'dark' ? 'light' : 'dark'
+    setIsTransitioning(true)
+
+    runThemeTransition(() => {
+      applyDomTheme(next)
+      themeRef.current = next
+      flushSync(() => setThemeState(next))
+    }, event).finally(() => {
+      setIsTransitioning(false)
+    })
+  }, [isTransitioning])
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, toggleTheme, mounted }}>
+    <ThemeContext.Provider value={{ theme, setTheme, toggleTheme, mounted, isTransitioning }}>
       {children}
     </ThemeContext.Provider>
   )

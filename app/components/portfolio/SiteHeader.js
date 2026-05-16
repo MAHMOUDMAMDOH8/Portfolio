@@ -1,12 +1,11 @@
 'use client'
 
 import Link from 'next/link'
-import { FaBars, FaTimes, FaEnvelope, FaExternalLinkAlt, FaMoon, FaSun } from 'react-icons/fa'
+import { FaBars, FaTimes, FaEnvelope, FaExternalLinkAlt } from 'react-icons/fa'
 import { navLinks } from './data'
-import { useTheme } from './ThemeContext'
+import { ThemeToggleButton } from './ThemeToggleButton'
 
 export function SiteHeader({ isNavOpen, setIsNavOpen }) {
-  const { theme, toggleTheme } = useTheme()
 
   return (
     <header className="sticky top-0 z-50 border-b border-zinc-200/80 bg-white/85 backdrop-blur-xl backdrop-saturate-150 dark:border-white/[0.06] dark:bg-[#050508]/80">
@@ -39,14 +38,7 @@ export function SiteHeader({ isNavOpen, setIsNavOpen }) {
           <span className="hidden text-[10px] font-medium uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-500 lg:inline">
             Cairo · Remote
           </span>
-          <button
-            type="button"
-            onClick={toggleTheme}
-            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-            className="flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-200 bg-white text-zinc-700 transition hover:border-cyan-400/50 hover:text-cyan-700 dark:border-white/10 dark:bg-white/[0.04] dark:text-zinc-200 dark:hover:border-cyan-500/40 dark:hover:text-cyan-300"
-          >
-            {theme === 'dark' ? <FaSun className="text-base" /> : <FaMoon className="text-base" />}
-          </button>
+          <ThemeToggleButton />
           <Link
             href="/case-studies"
             className="hidden rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-xs font-medium text-zinc-700 transition hover:border-cyan-400/50 sm:inline lg:hidden dark:border-white/10 dark:bg-transparent dark:text-zinc-300 dark:hover:border-cyan-500/40"

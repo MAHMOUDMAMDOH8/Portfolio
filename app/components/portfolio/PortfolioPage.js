@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { ThemeProvider } from './ThemeContext'
 import { SiteHeader } from './SiteHeader'
 import { HeroSection } from './HeroSection'
 import { AboutSection } from './AboutSection'
@@ -88,9 +87,5 @@ function PortfolioShell() {
 }
 
 export default function PortfolioPage() {
-  return (
-    <ThemeProvider>
-      <PortfolioShell />
-    </ThemeProvider>
-  )
+  return <PortfolioShell />
 }

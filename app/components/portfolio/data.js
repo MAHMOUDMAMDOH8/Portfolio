@@ -339,7 +339,40 @@ export const projects = [
   }
 ]
 
+export const heroPortraits = [
+  { src: '/photos/me.png', alt: 'Mahmoud Mamdoh — Data Engineer' },
+  { src: '/photos/me-2.jpg', alt: 'Mahmoud Mamdoh — professional portrait' },
+  { src: '/photos/me-3.jpg', alt: 'Mahmoud Mamdoh — profile photo' },
+  { src: '/photos/me-4.jpeg', alt: 'Mahmoud Mamdoh — Data Platform Engineer' }
+]
+
 export const heroHeadline = "I don’t just move data — I move meaning."
+
+export const heroSubline =
+  'Lakehouse & streaming pipelines for telecom, ecommerce, and ops — Kafka → Spark / dbt → dashboards teams trust.'
+
+export const heroWhyLine =
+  'From curiosity about how data flows to platforms stakeholders actually adopt.'
+
+export const trustedByDomains = ['Telecom', 'Ecommerce', 'Healthcare BI', 'Education']
+
+export const heroTestimonial = {
+  quote:
+    'Improved visibility into KPIs and cut manual reporting time by roughly 30% through interactive dashboards.',
+  attribution: 'Healthcare operations',
+  context: 'Power BI · BI internship · Cairo'
+}
+
+export const featuredProject = {
+  title: 'Event-Driven Telecom Data Lakehouse Platform',
+  category: 'Lakehouse Platform',
+  summary:
+    'Kafka → MinIO → Spark on Iceberg (Bronze/Silver/Gold) → ClickHouse galaxy schema — built for real-time telecom analytics.',
+  architectureImage: '/project_image/Event-Driven%20Telecom%20Data%20Lakehouse%20Platform.jpg',
+  metric: { label: 'Medallion layers', value: 'Bronze · Silver · Gold' },
+  href: '#projects',
+  caseStudyHref: '/case-studies'
+}
 
 export const navLinks = [
   { id: 'home', label: 'Home' },
