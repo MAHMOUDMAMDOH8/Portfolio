@@ -14,7 +14,7 @@ export function ThemeToggleButton({ className = '' }) {
       disabled={isTransitioning}
       aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
       aria-busy={isTransitioning}
-      className={`relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-lg border border-zinc-200 bg-white text-zinc-700 transition hover:border-cyan-400/50 hover:text-cyan-700 disabled:pointer-events-none disabled:opacity-70 dark:border-white/10 dark:bg-white/[0.04] dark:text-zinc-200 dark:hover:border-cyan-500/40 dark:hover:text-cyan-300 ${className}`}
+      className={`relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-lg border border-zinc-200 bg-white text-zinc-700 transition hover:border-brand-400/50 hover:text-brand-700 disabled:pointer-events-none disabled:opacity-70 dark:border-white/10 dark:bg-white/[0.04] dark:text-zinc-200 dark:hover:border-brand-500/40 dark:hover:text-brand-300 ${className}`}
     >
       <AnimatePresence mode="wait" initial={false}>
         <motion.span

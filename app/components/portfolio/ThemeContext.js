@@ -10,6 +10,7 @@ const ThemeContext = createContext(null)
 
 function applyDomTheme(theme) {
   document.documentElement.classList.toggle('dark', theme === 'dark')
+  document.documentElement.classList.toggle('light', theme === 'light')
   document.documentElement.dataset.theme = theme
 }
 

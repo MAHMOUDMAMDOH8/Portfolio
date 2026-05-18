@@ -12,7 +12,7 @@ export const csBody = 'text-zinc-600 dark:text-zinc-400'
 export const csBodyMuted = 'text-zinc-700 dark:text-zinc-300'
 
 export const csChip =
-  'rounded-md border border-cyan-600/25 bg-cyan-500/10 px-2 py-1 text-xs font-medium text-cyan-800 dark:border-cyan-500/25 dark:text-cyan-200'
+  'rounded-md border border-brand-600/25 bg-brand-500/10 px-2 py-1 text-xs font-medium text-brand-800 dark:border-brand-500/25 dark:text-brand-200'
 
 export const csCodeBlock = 'overflow-hidden rounded-lg border border-zinc-200 bg-zinc-100 p-3 dark:border-white/[0.06] dark:bg-[#08080a]'
 

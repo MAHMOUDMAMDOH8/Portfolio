@@ -38,13 +38,13 @@ export function HeroPortrait({ images, caption = 'Mahmoud Mamdoh · Cairo' }) {
       onBlur={() => setPaused(false)}
     >
       <motion.div
-        className="absolute -inset-1 rounded-[1.75rem] bg-gradient-to-br from-cyan-500/50 via-teal-400/30 to-violet-500/40 opacity-80 blur-sm dark:from-cyan-400/40 dark:via-teal-500/25 dark:to-violet-500/35"
+        className="absolute -inset-1 rounded-[1.75rem] bg-gradient-to-br from-brand-500/50 via-blue-500/30 to-brand-600/40 opacity-80 blur-sm dark:from-brand-400/40 dark:via-blue-500/25 dark:to-brand-500/35"
         animate={{ opacity: [0.5, 0.85, 0.5] }}
         transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
         aria-hidden
       />
       <motion.div
-        className="relative overflow-hidden rounded-[1.5rem] border border-zinc-200/80 bg-zinc-100 shadow-xl shadow-cyan-500/10 dark:border-white/10 dark:bg-zinc-900/80 dark:shadow-cyan-500/5"
+        className="relative overflow-hidden rounded-[1.5rem] border border-zinc-200/80 bg-zinc-100 shadow-xl shadow-brand-500/10 dark:border-white/10 dark:bg-zinc-900/80 dark:shadow-brand-500/5"
         role="region"
         aria-label="Profile photos"
         aria-live="polite"
@@ -84,7 +84,7 @@ export function HeroPortrait({ images, caption = 'Mahmoud Mamdoh · Cairo' }) {
               type="button"
               onClick={() => setIndex(i)}
               className={`h-1.5 rounded-full transition-all ${
-                i === index ? 'w-5 bg-cyan-600 dark:bg-cyan-400' : 'w-1.5 bg-zinc-300 dark:bg-zinc-600'
+                i === index ? 'w-5 bg-brand-600 dark:bg-brand-400' : 'w-1.5 bg-zinc-300 dark:bg-zinc-600'
               }`}
               aria-label={`Show photo ${i + 1} of ${count}`}
             />

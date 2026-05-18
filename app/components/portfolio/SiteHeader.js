@@ -1,66 +1,109 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { FaBars, FaTimes, FaEnvelope, FaExternalLinkAlt } from 'react-icons/fa'
+import { motion } from 'framer-motion'
+import { FaBars, FaTimes } from 'react-icons/fa'
 import { navLinks } from './data'
 import { ThemeToggleButton } from './ThemeToggleButton'
+import { cn } from './lib/cn'
 
 export function SiteHeader({ isNavOpen, setIsNavOpen }) {
+  const [activeSection, setActiveSection] = useState('hero')
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    const ids = navLinks.map((l) => l.id)
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActiveSection(entry.target.id)
+        }
+      },
+      { rootMargin: '-40% 0px -55% 0px', threshold: 0 }
+    )
+
+    ids.map((id) => document.getElementById(id)).filter(Boolean).forEach((el) => observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
 
   return (
-    <header className="sticky top-0 z-50 border-b border-zinc-200/80 bg-white/85 backdrop-blur-xl backdrop-saturate-150 dark:border-white/[0.06] dark:bg-[#050508]/80">
-      <div className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between gap-4 px-4 sm:h-16 sm:px-6 lg:px-8">
+    <header
+      className={cn(
+        'sticky top-0 z-50 border-b border-[var(--border-subtle)] backdrop-blur-xl transition-[height,box-shadow] duration-300',
+        scrolled ? 'h-14 shadow-[var(--shadow-card)]' : 'h-16'
+      )}
+      style={{ backgroundColor: scrolled ? 'var(--bg-elevated)' : 'color-mix(in srgb, var(--bg-base) 82%, transparent)' }}
+    >
+      <div className="mx-auto flex h-full w-full max-w-6xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <Link
-          href="#home"
-          className="text-sm font-semibold tracking-tight text-zinc-900 transition hover:text-cyan-700 dark:text-white dark:hover:text-cyan-300 sm:text-base"
+          href="#hero"
+          className="text-sm font-semibold tracking-tight text-[var(--text-primary)] transition hover:text-[var(--accent)] sm:text-base"
         >
-          Mahmoud Mamdoh
+          <span className="hidden sm:inline">Mahmoud Mamdoh</span>
+          <span className="sm:hidden">M. Mamdoh</span>
         </Link>
-        <nav className="hidden items-center gap-1 md:flex" aria-label="Primary">
+
+        <nav className="hidden items-center gap-0.5 md:flex" aria-label="Primary">
           {navLinks.map(({ id, label }) => (
             <Link
               key={id}
               href={`#${id}`}
-              className="rounded-lg px-3 py-2 text-xs font-medium text-zinc-600 transition hover:bg-zinc-200/80 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-white/[0.06] dark:hover:text-white"
+              className={`relative rounded-lg px-3 py-2 text-xs font-medium transition ${
+                activeSection === id
+                  ? 'text-[var(--accent)]'
+                  : 'text-[var(--text-secondary)] hover:bg-[var(--surface-muted)] hover:text-[var(--text-primary)]'
+              }`}
             >
               {label}
+              {activeSection === id ? (
+                <motion.span
+                  layoutId="nav-indicator"
+                  className="absolute bottom-0 left-1/2 h-0.5 w-4 -translate-x-1/2 rounded-full bg-[var(--accent)]"
+                />
+              ) : null}
             </Link>
           ))}
-          <span className="mx-2 h-4 w-px bg-zinc-300 dark:bg-white/10" aria-hidden />
+          <span className="mx-2 h-4 w-px bg-[var(--border-subtle)]" aria-hidden />
           <Link
             href="/case-studies"
-            className="rounded-lg px-3 py-2 text-xs font-medium text-cyan-700 transition hover:bg-zinc-200/80 dark:text-cyan-400/90 dark:hover:bg-white/[0.06] dark:hover:text-cyan-300"
-          >
-            Case studies
-          </Link>
-        </nav>
-        <div className="flex items-center gap-2">
-          <span className="hidden text-[10px] font-medium uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-500 lg:inline">
-            Cairo · Remote
-          </span>
-          <ThemeToggleButton />
-          <Link
-            href="/case-studies"
-            className="hidden rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-xs font-medium text-zinc-700 transition hover:border-cyan-400/50 sm:inline lg:hidden dark:border-white/10 dark:bg-transparent dark:text-zinc-300 dark:hover:border-cyan-500/40"
+            className="rounded-lg px-3 py-2 text-xs font-medium text-[var(--text-secondary)] transition hover:bg-[var(--surface-muted)] hover:text-[var(--text-primary)]"
           >
             Cases
           </Link>
+        </nav>
+
+        <div className="flex items-center gap-2">
+          <span className="hidden text-[10px] font-medium uppercase tracking-[0.2em] text-[var(--text-muted)] lg:inline">
+            Cairo · Remote
+          </span>
+          <ThemeToggleButton />
           <button
             type="button"
             onClick={() => setIsNavOpen((p) => !p)}
             aria-expanded={isNavOpen}
             aria-controls="mobile-nav"
             aria-label={isNavOpen ? 'Close menu' : 'Open menu'}
-            className="flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-200 text-zinc-800 transition hover:bg-zinc-100 md:hidden dark:border-white/10 dark:text-zinc-200 dark:hover:bg-white/[0.06]"
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-subtle)] text-[var(--text-secondary)] transition hover:bg-[var(--surface-muted)] md:hidden"
           >
             {isNavOpen ? <FaTimes /> : <FaBars />}
           </button>
         </div>
       </div>
+
       {isNavOpen ? (
-        <div
+        <motion.div
           id="mobile-nav"
-          className="border-t border-zinc-200 bg-white/98 px-4 py-4 md:hidden dark:border-white/[0.06] dark:bg-[#050508]/95"
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: 'auto' }}
+          className="border-t border-[var(--border-subtle)] bg-[var(--bg-elevated)] px-4 py-4 md:hidden"
         >
           <nav className="flex flex-col gap-1" aria-label="Mobile primary">
             {navLinks.map(({ id, label }) => (
@@ -68,40 +111,34 @@ export function SiteHeader({ isNavOpen, setIsNavOpen }) {
                 key={`m-${id}`}
                 href={`#${id}`}
                 onClick={() => setIsNavOpen(false)}
-                className="rounded-lg px-3 py-2.5 text-sm text-zinc-700 transition hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-white/[0.06] dark:hover:text-white"
+                className={`rounded-lg px-3 py-2.5 text-sm transition ${
+                  activeSection === id
+                    ? 'bg-[var(--accent-soft)] font-semibold text-[var(--accent)]'
+                    : 'text-[var(--text-secondary)] hover:bg-[var(--surface-muted)]'
+                }`}
               >
                 {label}
               </Link>
             ))}
-            <Link
-              href="/case-studies"
-              onClick={() => setIsNavOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm text-cyan-700 transition hover:bg-zinc-100 dark:text-cyan-400 dark:hover:bg-white/[0.06]"
-            >
-              Case studies
-            </Link>
           </nav>
-          <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+          <div className="mt-4 flex gap-2">
             <Link
               href="mailto:mahmoud.mamdoh0812@gmail.com"
               onClick={() => setIsNavOpen(false)}
-              className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-cyan-500 to-teal-500 px-4 py-2.5 text-sm font-semibold text-[#050508]"
+              className="flex-1 rounded-lg bg-brand-600 px-4 py-2.5 text-center text-sm font-semibold text-white transition hover:bg-brand-700"
             >
-              <FaEnvelope />
               Email
             </Link>
             <Link
-              href="https://cal.com/"
+              href="/Mahmoud_Mamdoh_data_engineer.pdf"
               target="_blank"
-              rel="noopener noreferrer"
               onClick={() => setIsNavOpen(false)}
-              className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg border border-zinc-200 px-4 py-2.5 text-sm font-medium text-zinc-800 dark:border-white/15 dark:text-white"
+              className="flex-1 rounded-lg border border-[var(--border-subtle)] px-4 py-2.5 text-center text-sm font-medium text-[var(--text-primary)]"
             >
-              <FaExternalLinkAlt className="text-xs" />
-              Schedule
+              Resume
             </Link>
           </div>
-        </div>
+        </motion.div>
       ) : null}
     </header>
   )

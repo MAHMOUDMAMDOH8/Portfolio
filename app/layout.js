@@ -66,8 +66,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${sans.variable} ${mono.variable}`} suppressHydrationWarning>
-      <body className="min-h-screen bg-zinc-100 font-sans text-zinc-950 antialiased dark:bg-[#050508] dark:text-zinc-100">
+    <html lang="en" className={`dark ${sans.variable} ${mono.variable}`} suppressHydrationWarning>
+      <body className="min-h-screen font-sans antialiased">
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -11,7 +11,7 @@ export function CaseStudiesListHero({ count, featuredCount }) {
       transition={{ duration: 0.6 }}
       className="relative z-10 mb-14 text-center"
     >
-      <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-cyan-700 dark:text-cyan-400/90">Deep dives</p>
+      <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-brand-600 dark:text-brand-400">Deep dives</p>
       <h1 className="mt-3 text-balance text-3xl font-semibold tracking-tight text-zinc-900 dark:text-white sm:text-4xl md:text-5xl">
         Architecture, impact, and how the pipelines ship
       </h1>

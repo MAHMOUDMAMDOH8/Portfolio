@@ -10,9 +10,9 @@ export function HeroDataFlow() {
     >
       <defs>
         <linearGradient id="flow-line" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="rgb(6 182 212)" stopOpacity="0" />
-          <stop offset="50%" stopColor="rgb(6 182 212)" stopOpacity="0.5" />
-          <stop offset="100%" stopColor="rgb(139 92 246)" stopOpacity="0" />
+          <stop offset="0%" stopColor="rgb(220 38 38)" stopOpacity="0" />
+          <stop offset="50%" stopColor="rgb(220 38 38)" stopOpacity="0.4" />
+          <stop offset="100%" stopColor="rgb(37 99 235)" stopOpacity="0" />
         </linearGradient>
       </defs>
       <path
@@ -27,7 +27,7 @@ export function HeroDataFlow() {
         fill="none"
         stroke="currentColor"
         strokeWidth="1"
-        className="text-violet-600/25 dark:text-violet-400/15"
+        className="text-blue-600/25 dark:text-blue-400/15"
         opacity="0.2"
       />
       {[
@@ -37,12 +37,12 @@ export function HeroDataFlow() {
         { cx: 1020, cy: 232, delay: '2.4s' }
       ].map((dot) => (
         <g key={dot.delay}>
-          <circle cx={dot.cx} cy={dot.cy} r="3" className="fill-cyan-500/40 dark:fill-cyan-400/50" />
-          <circle
-            cx={dot.cx}
-            cy={dot.cy}
-            r="3"
-            className="fill-cyan-500 dark:fill-cyan-400 hero-flow-pulse"
+          <circle cx={dot.cx} cy={dot.cy} r="3" className="fill-brand-500/40 dark:fill-brand-400/50" />
+            <circle
+              cx={dot.cx}
+              cy={dot.cy}
+              r="3"
+              className="fill-brand-500 dark:fill-brand-400 hero-flow-pulse"
             style={{ animationDelay: dot.delay }}
           />
         </g>
