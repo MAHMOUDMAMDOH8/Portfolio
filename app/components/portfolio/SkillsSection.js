@@ -1,9 +1,10 @@
-﻿'use client'
+'use client'
 
 import { motion } from 'framer-motion'
 import { Section, SectionHeader, FadeInView } from './Section'
 import { categoryStyles, skillMatrix, toolNodes, toolStats } from './data'
 import { surfaceCard, surfaceCardHover, sectionDivider } from './lib/styles'
+import { RadarChart } from './RadarChart'
 
 const strengthStyles = {
   Core: 'border-[var(--accent)]/40 bg-[var(--accent-soft)] text-[var(--accent)]',
@@ -57,6 +58,23 @@ export function SkillsSection() {
             </motion.article>
           ))}
         </div>
+
+        <FadeInView className="mt-16">
+          <div className="mx-auto grid max-w-3xl items-center gap-10 md:grid-cols-2">
+            <div>
+              <p className="text-center text-[11px] font-semibold uppercase tracking-[0.28em] text-[var(--text-muted)] md:text-left">
+                Radar profile
+              </p>
+              <h3 className="mt-2 text-balance text-xl font-semibold text-[var(--text-primary)]">
+                Four pillars of the data stack
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
+                Each axis represents a core capability area. The overlay shows relative depth across the platform, orchestration, activation, and engineering layers that define a modern data practice.
+              </p>
+            </div>
+            <RadarChart skills={skillMatrix} />
+          </div>
+        </FadeInView>
 
         <FadeInView delay={0.2} className="mt-16">
           <p className="mb-8 text-center text-[11px] font-semibold uppercase tracking-[0.28em] text-[var(--text-muted)]">

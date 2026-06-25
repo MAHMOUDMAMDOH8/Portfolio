@@ -121,12 +121,12 @@ export const marqueeTools = [
 ]
 
 export const featuredProject = {
-  title: 'Event-Driven Telecom Data Lakehouse Platform',
-  category: 'Lakehouse Platform',
+  title: 'DataMind AI',
+  category: 'Enterprise Data & AI Platform',
   summary:
-    'Kafka → MinIO → Spark on Iceberg (Bronze/Silver/Gold) → ClickHouse galaxy schema — built for real-time telecom analytics.',
-  architectureImage: '/project_image/Event-Driven%20Telecom%20Data%20Lakehouse%20Platform.jpg',
-  metric: { label: 'Medallion layers', value: 'Bronze · Silver · Gold' },
+    '7-source telecom lakehouse unifying analytics, ML, and GenAI — Kafka → Iceberg Bronze/Silver/Gold → Trino → Semantic Layer / Text-to-SQL / RAG.',
+  architectureImage: '/project_image/DataMind-AI.png',
+  metric: { label: 'Platform convergence', value: 'Analytics · ML · GenAI' },
   href: '#projects',
   caseStudyHref: '/case-studies',
 }
@@ -220,21 +220,25 @@ export const skillMatrix = [
   {
     label: 'Platforms & Storage',
     strength: 'Core',
+    level: 92,
     tags: ['Apache Spark', 'Apache Iceberg', 'Hadoop', 'Hive', 'Snowflake', 'S3 / MinIO'],
   },
   {
     label: 'Orchestration & Modelling',
     strength: 'Core',
+    level: 90,
     tags: ['Apache Airflow', 'Mage', 'Airbyte', 'dbt', 'Change Data Capture', 'Dimensional Design'],
   },
   {
     label: 'Observability & Activation',
     strength: 'Strong',
+    level: 85,
     tags: ['Streamlit', 'Power BI', 'SSIS', 'SSAS', 'Data Quality SLAs', 'Documentation'],
   },
   {
     label: 'Engineering Foundations',
     strength: 'Core',
+    level: 88,
     tags: ['Python', 'SQL', 'Bash', 'Docker', 'Git', 'GitHub', 'PySpark', 'Pandas'],
   },
 ]
@@ -307,6 +311,33 @@ export const offerings = [
 
 // ─── Projects ───────────────────────────────────
 export const projects = [
+  {
+    title: 'DataMind AI',
+    badge: 'DM',
+    category: 'Enterprise Data & AI Platform',
+    timeline: 'Jun 2025',
+    summary:
+      'Enterprise-grade lakehouse platform unifying 7 telecom source systems (CRM, Billing, Network, Payments, Roaming, Support) with Bronze/Silver/Gold medallion architecture, RAG-based Text-to-SQL, ML lifecycle management, and full governance — processing millions of records daily.',
+    stack: ['Kafka', 'NiFi', 'Spark', 'Iceberg', 'MinIO', 'Trino', 'Airflow', 'Python', 'Qdrant', 'Ollama', 'OpenMetadata', 'MLflow'],
+    highlights: [
+      '7 simulated enterprise source systems feeding 9+ Kafka topics with 70 partitions, Avro serialization, and Schema Registry — handling ~8,000 events/sec peak and 2–5M events/day.',
+      'End-to-end lakehouse on Apache Iceberg with MinIO S3 storage, Bronze/Silver/Gold medallion layers, and Project Nessie catalog for Git-like versioning.',
+      'Spark ETL pipelines for Bronze→Silver cleansing, dedup, enrichment, and Silver→Gold dimensional modeling with 5+ fact tables and 6+ conformed dimensions for telecom KPIs.',
+      'Federated SQL query engine via Trino over Iceberg Gold tables, serving Power BI dashboards, a YAML-defined Semantic Layer, and a Text-to-SQL AI assistant with read-only guardrails.',
+      'GenAI pipeline: Silver→Gold RAG models → Qdrant vector DB → Ollama/OpenAI LLM for natural-language analytics, with evidence-backed citations and 5 retrieval modes.',
+      'Full governance with OpenMetadata for data catalog/lineage, Great Expectations for data quality, MLflow for experiment tracking, and Airflow DAG orchestration across 9 Docker Compose profiles.',
+    ],
+    metrics: [
+      { label: 'Source systems', value: '7 unified' },
+      { label: 'Events/day', value: '2–5M' },
+      { label: 'Medallion layers', value: 'B/S/G' },
+      { label: 'Stack profiles', value: '9 Docker' },
+    ],
+    links: [
+      { label: 'View GitHub', href: 'https://github.com/MAHMOUDMAMDOH8/DataMind-AI', external: true },
+    ],
+    architectureImage: '/project_image/DataMind-AI.png',
+  },
   {
     title: 'Telecom Data Analytics Hub',
     badge: 'TA',

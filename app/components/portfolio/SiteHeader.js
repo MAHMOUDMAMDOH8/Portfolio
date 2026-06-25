@@ -3,12 +3,12 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { FaBars, FaTimes } from 'react-icons/fa'
+import { FaBars, FaTimes, FaTerminal } from 'react-icons/fa'
 import { navLinks } from './data'
 import { ThemeToggleButton } from './ThemeToggleButton'
 import { cn } from './lib/cn'
 
-export function SiteHeader({ isNavOpen, setIsNavOpen }) {
+export function SiteHeader({ isNavOpen, setIsNavOpen, onOpenTerminal }) {
   const [activeSection, setActiveSection] = useState('hero')
   const [scrolled, setScrolled] = useState(false)
 
@@ -84,6 +84,14 @@ export function SiteHeader({ isNavOpen, setIsNavOpen }) {
           <span className="hidden text-[10px] font-medium uppercase tracking-[0.2em] text-[var(--text-muted)] lg:inline">
             Cairo · Remote
           </span>
+          <button
+            type="button"
+            onClick={onOpenTerminal}
+            aria-label="Open Terminal Mode"
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-[var(--border-subtle)] text-[var(--text-secondary)] transition hover:bg-[var(--surface-muted)] hover:text-green-500"
+          >
+            <FaTerminal />
+          </button>
           <ThemeToggleButton />
           <button
             type="button"

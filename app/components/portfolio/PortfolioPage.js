@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useEffect, useState } from 'react'
 import { SiteHeader } from './SiteHeader'
@@ -14,21 +14,24 @@ import { CertificationsSection } from './CertificationsSection'
 import { ContactSection } from './ContactSection'
 import { SiteFooter } from './SiteFooter'
 import { ScrollProgress } from './ScrollProgress'
+import { BackToTop } from './BackToTop'
 import { DEBackground } from './DEBackground'
 import { useScrollAnimations } from './motion/useScrollAnimations'
+import { TerminalMode } from './TerminalMode'
 
 function PortfolioShell() {
   const [isNavOpen, setIsNavOpen] = useState(false)
+  const [isTerminalOpen, setIsTerminalOpen] = useState(false)
   useScrollAnimations()
 
   useEffect(() => {
-    if (isNavOpen) {
+    if (isNavOpen || isTerminalOpen) {
       document.body.classList.add('overflow-hidden', 'fixed', 'w-full')
     } else {
       document.body.classList.remove('overflow-hidden', 'fixed', 'w-full')
     }
     return () => document.body.classList.remove('overflow-hidden', 'fixed', 'w-full')
-  }, [isNavOpen])
+  }, [isNavOpen, isTerminalOpen])
 
   useEffect(() => {
     const onResize = () => {
@@ -42,13 +45,14 @@ function PortfolioShell() {
     <div className="relative min-h-screen bg-[var(--bg-base)] text-[var(--text-primary)]">
       <DEBackground />
       <ScrollProgress />
+      <TerminalMode isOpen={isTerminalOpen} onClose={() => setIsTerminalOpen(false)} />
       <a
         href="#main"
         className="pointer-events-none fixed left-4 top-4 z-[100] -translate-y-20 rounded bg-[var(--accent)] px-3 py-2 text-sm font-semibold text-[#04040a] opacity-0 transition focus:pointer-events-auto focus:translate-y-0 focus:opacity-100"
       >
         Skip to content
       </a>
-      <SiteHeader isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} />
+      <SiteHeader isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} onOpenTerminal={() => setIsTerminalOpen(true)} />
       <main id="main">
         <HeroSection />
         <PlatformStorySection />
@@ -78,6 +82,7 @@ function PortfolioShell() {
         </div>
       </main>
       <SiteFooter />
+      <BackToTop />
     </div>
   )
 }

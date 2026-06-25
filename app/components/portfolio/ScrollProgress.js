@@ -1,20 +1,25 @@
 'use client'
 
-import { motion, useScroll, useSpring } from 'framer-motion'
-import { usePrefersReducedMotion } from './lib/usePrefersReducedMotion'
+import { useEffect, useState } from 'react'
 
 export function ScrollProgress() {
-  const reduced = usePrefersReducedMotion()
-  const { scrollYProgress } = useScroll()
-  const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 })
+  const [progress, setProgress] = useState(0)
 
-  if (reduced) return null
+  useEffect(() => {
+    const onScroll = () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight
+      setProgress(h > 0 ? Math.min(window.scrollY / h, 1) : 0)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
-    <motion.div
-      className="fixed left-0 right-0 top-0 z-[60] h-[2px] origin-left bg-gradient-to-r from-[var(--accent)] via-cyan-400 to-blue-500"
-      style={{ scaleX }}
-      aria-hidden
-    />
+    <div className="pointer-events-none fixed top-0 left-0 right-0 z-[60] h-[3px] bg-transparent">
+      <div
+        className="h-full bg-gradient-to-r from-brand-500 to-brand-600 transition-[width] duration-150 ease-out"
+        style={{ width: `${progress * 100}%` }}
+      />
+    </div>
   )
 }

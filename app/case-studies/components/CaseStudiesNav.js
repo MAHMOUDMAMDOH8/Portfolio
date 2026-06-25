@@ -25,7 +25,7 @@ export function CaseStudiesNav({ variant = 'list', onBack, onPrev, onNext, curre
             <button
               type="button"
               onClick={onPrev}
-              className="rounded-lg border border-zinc-200 p-2 text-zinc-600 transition hover:border-cyan-500/40 hover:text-cyan-700 dark:border-white/10 dark:text-zinc-400 dark:hover:text-cyan-300"
+              className="rounded-lg border border-zinc-200 p-2 text-zinc-600 transition hover:border-brand-500/40 hover:text-brand-700 dark:border-white/10 dark:text-zinc-400 dark:hover:text-brand-300"
               aria-label="Previous case study"
             >
               <FaArrowLeft size={14} />
