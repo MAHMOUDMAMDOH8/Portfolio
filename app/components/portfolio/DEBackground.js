@@ -1,9 +1,22 @@
 'use client'
 
-/** Lightweight global background — CSS only (no full-page canvas). */
+import { DataFlowCanvas } from './DataFlowCanvas'
+
+/** Living global background — animated data-flow network under CSS grid + grain. */
 export function DEBackground() {
   return (
     <div className="pointer-events-none fixed inset-0 -z-20 overflow-hidden" aria-hidden>
+      {/* animated data-flow network, masked to edges so text stays clean */}
+      <div
+        className="absolute inset-0 opacity-60"
+        style={{
+          maskImage: 'radial-gradient(ellipse 75% 75% at 50% 40%, transparent 25%, black 95%)',
+          WebkitMaskImage: 'radial-gradient(ellipse 75% 75% at 50% 40%, transparent 25%, black 95%)',
+        }}
+      >
+        <DataFlowCanvas />
+      </div>
+
       {/* fine grid, radially masked at top */}
       <div
         className="absolute inset-0 opacity-[0.3]"

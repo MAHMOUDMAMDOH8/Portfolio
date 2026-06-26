@@ -5,9 +5,42 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { FaArrowRight, FaChevronDown, FaExternalLinkAlt, FaGithub } from 'react-icons/fa'
 import { TiltCard, GlowBorder } from './motion/Primitives'
 
+/** Animated mini-pipeline built from the project's real stack. */
+function ProjectPipeline({ stack }) {
+  const stages = stack.slice(0, 4)
+  return (
+    <div className="mt-4">
+      <p className="mb-2 font-mono text-[9px] font-semibold uppercase tracking-[0.18em] text-[var(--text-muted)]">
+        Pipeline
+      </p>
+      <div className="relative flex items-center">
+        {/* flowing connector line */}
+        <span className="absolute left-2 right-2 top-1/2 h-px -translate-y-1/2 bg-[var(--border-subtle)]" aria-hidden />
+        <span
+          className="absolute left-2 right-2 top-1/2 h-px -translate-y-1/2 bg-[linear-gradient(90deg,transparent,var(--accent),transparent)] bg-[length:40%_100%] bg-no-repeat [animation:shimmer_2.6s_linear_infinite]"
+          aria-hidden
+        />
+        <div className="relative flex w-full items-center justify-between gap-1">
+          {stages.map((tech, i) => (
+            <span
+              key={tech}
+              className="relative z-10 flex items-center gap-1.5 rounded-md border border-[var(--border-subtle)] bg-[var(--bg-elevated)] px-2 py-1 font-mono text-[9px] font-medium text-[var(--text-secondary)]"
+            >
+              <span className="h-1 w-1 rounded-full bg-[var(--accent)]" />
+              {tech}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export function ProjectCard({ project, index = 0 }) {
   const [expanded, setExpanded] = useState(false)
   const indexLabel = String(index + 1).padStart(2, '0')
+  const isLive = (project.links || []).some((l) => /live|demo/i.test(l.label))
+  const status = isLive ? 'Live' : 'Shipped'
 
   return (
     <TiltCard tiltDegree={4} className="h-full">
@@ -40,6 +73,15 @@ export function ProjectCard({ project, index = 0 }) {
               <span className="absolute right-4 top-3 z-20 font-mono text-2xl font-bold text-white/15 tabular-nums">
                 {indexLabel}
               </span>
+
+              {/* Status badge */}
+              <span className="absolute bottom-4 left-4 z-20 inline-flex items-center gap-1.5 rounded-full border border-[var(--border-accent)] bg-black/50 px-2.5 py-1 font-mono text-[9px] font-semibold uppercase tracking-[0.16em] text-[var(--accent)] backdrop-blur-md">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--accent)] opacity-70" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[var(--accent)]" />
+                </span>
+                {status}
+              </span>
             </div>
           )}
 
@@ -65,6 +107,9 @@ export function ProjectCard({ project, index = 0 }) {
             <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)]">
               {project.summary}
             </p>
+
+            {/* Animated pipeline from real stack */}
+            <ProjectPipeline stack={project.stack} />
 
             {/* Stack chips */}
             <div className="mt-4 flex flex-wrap gap-1.5">

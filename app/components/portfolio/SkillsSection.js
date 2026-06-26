@@ -89,8 +89,9 @@ export function SkillsSection() {
 
           <div className="relative mx-auto aspect-square w-full max-w-[440px]">
             <div className="absolute inset-[15%] flex items-center justify-center">
-              <div className="text-center">
-                <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[var(--text-muted)]">
+              <div className="relative flex h-24 w-24 items-center justify-center rounded-full border border-[var(--border-accent)] bg-[var(--accent-soft)] text-center [animation:pulse-glow_3.5s_ease-in-out_infinite]">
+                <div className="absolute inset-0 rounded-full bg-[var(--accent)]/10 blur-xl" />
+                <p className="relative px-2 font-mono text-[10px] font-semibold uppercase leading-tight tracking-[0.14em] text-[var(--accent)]">
                   Trusted Platform
                 </p>
               </div>
@@ -99,6 +100,19 @@ export function SkillsSection() {
               <circle cx="220" cy="220" r="170" fill="none" stroke="var(--border-subtle)" strokeWidth="0.5" />
               <circle cx="220" cy="220" r="120" fill="none" stroke="var(--border-subtle)" strokeWidth="0.5" />
               <circle cx="220" cy="220" r="70" fill="none" stroke="var(--border-subtle)" strokeWidth="0.5" />
+              {/* rotating scan rings */}
+              <circle
+                cx="220" cy="220" r="170" fill="none" stroke="var(--accent)" strokeWidth="0.5"
+                strokeDasharray="2 18" strokeOpacity="0.5" style={{ transformOrigin: 'center', animation: 'spin-slow 26s linear infinite' }}
+              />
+              <circle
+                cx="220" cy="220" r="120" fill="none" stroke="var(--accent)" strokeWidth="0.6"
+                strokeDasharray="1 14" strokeOpacity="0.4" style={{ transformOrigin: 'center', animation: 'spin-slow 18s linear infinite reverse' }}
+              />
+              <circle
+                cx="220" cy="220" r="70" fill="none" stroke="var(--accent)" strokeWidth="0.6"
+                strokeDasharray="1 10" strokeOpacity="0.6" style={{ transformOrigin: 'center', animation: 'spin-slow 12s linear infinite' }}
+              />
             </svg>
             {toolNodes.map((node, i) => (
               <FadeInView key={node.label} delay={i * 0.03}>

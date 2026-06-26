@@ -8,6 +8,7 @@ import { AnimatedStatValue } from './CountUp'
 import { FeaturedProjectHero } from './FeaturedProjectHero'
 import { HeroPortrait } from './HeroPortrait'
 import { Magnetic, WordReveal, ParallaxTilt, GlowBorder } from './motion/Primitives'
+import { HeroArchitectureNodes } from './HeroArchitectureNodes'
 import {
   featuredProject,
   heroIntro,
@@ -83,6 +84,7 @@ export function HeroSection() {
       className="relative overflow-hidden pt-28 pb-20 sm:pt-32"
     >
       <HeroAtmosphere />
+      <HeroArchitectureNodes />
 
       <div className="relative z-10 mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12">
         {/* ── Top status bar ───────────────────────── */}
