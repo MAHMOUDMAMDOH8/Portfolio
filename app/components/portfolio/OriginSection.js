@@ -1,85 +1,112 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
-import { Section, SectionHeader, FadeInView } from './Section'
+import { Section, SectionHeader } from './Section'
+import { CardHover } from './motion/Primitives'
 import { originPanels } from './data'
 
 export function OriginSection() {
-  const [activeOrigin, setActiveOrigin] = useState(0)
+  const [current, setCurrent] = useState(0)
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveOrigin((prev) => (prev + 1) % originPanels.length)
-    }, 20000)
-    return () => clearInterval(timer)
-  }, [])
-
-  const panel = originPanels[activeOrigin]
+  const next = () => setCurrent((c) => (c + 1) % originPanels.length)
+  const prev = () => setCurrent((c) => (c - 1 + originPanels.length) % originPanels.length)
 
   return (
-    <Section
-      id="origin"
-      labelledBy="origin-title"
-      className="border-t border-zinc-200 py-16 dark:border-white/[0.04] md:py-20"
-    >
-      <FadeInView className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <Section id="origin" labelledBy="origin-title" className="section-gap">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <SectionHeader
           eyebrow="Origin"
           title="How curiosity became craft — the thread behind the pipelines."
           titleId="origin-title"
         />
-        <div className="relative overflow-hidden rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm sm:p-10 dark:border-white/[0.06] dark:bg-white/[0.02]">
-          <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-brand-400/20 blur-3xl dark:bg-brand-600/15" />
-          <div className="pointer-events-none absolute -bottom-24 -left-16 h-64 w-64 rounded-full bg-blue-400/20 blur-3xl dark:bg-blue-500/10" />
+
+        <div className="relative mx-auto max-w-3xl">
           <AnimatePresence mode="wait">
             <motion.div
-              key={panel.title}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.4, ease: 'easeOut' }}
-              className="relative z-10 mx-auto max-w-3xl text-center"
+              key={current}
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -40 }}
+              transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
             >
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-zinc-500">{panel.title}</p>
-              <p className="mt-4 text-balance text-lg font-semibold text-zinc-900 dark:text-white sm:text-xl">{panel.subtitle}</p>
-              <div className="mx-auto mt-8 max-w-xl overflow-hidden rounded-xl border border-zinc-200 bg-zinc-950 text-left shadow-xl dark:border-white/10 dark:bg-[#020203] dark:shadow-2xl">
-                <div className="flex items-center gap-2 border-b border-zinc-800 px-4 py-2.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-zinc-500 dark:border-white/[0.06]">
-                  <span className="h-2 w-2 rounded-full bg-red-400/90" />
-                  <span className="h-2 w-2 rounded-full bg-amber-400/90" />
-                  <span className="h-2 w-2 rounded-full bg-emerald-400/90" />
-                  <span className="ml-1 text-zinc-400">{panel.header}</span>
+             <CardHover className="card-premium p-8" glowColor="rgba(198, 242, 78, 0.08)">
+              <div className="flex items-center gap-3 mb-6">
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  className="flex h-10 w-10 items-center justify-center rounded-lg border border-[var(--border-accent)] bg-[var(--accent-soft)]"
+                >
+                  <span className="font-mono text-xs font-bold text-[var(--accent)]">
+                    {String(current + 1).padStart(2, '0')}
+                  </span>
+                </motion.div>
+                <div>
+                  <p className="text-sm font-semibold text-[var(--text-primary)]">
+                    {originPanels[current].title}
+                  </p>
+                  <p className="text-xs text-[var(--text-muted)]">
+                    {originPanels[current].header}
+                  </p>
                 </div>
-                <pre className="overflow-x-auto p-4 font-mono text-xs leading-relaxed text-cyan-100/90 sm:text-sm">
-                  {panel.code}
-                </pre>
               </div>
+
+              <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
+                {originPanels[current].subtitle}
+              </p>
+
+              <pre className="mt-6 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-base)] p-4 font-mono text-xs leading-relaxed text-[var(--accent)] overflow-x-auto">
+                <code>{originPanels[current].code}</code>
+              </pre>
+             </CardHover>
             </motion.div>
           </AnimatePresence>
-          <div className="relative z-10 mt-8 flex items-center justify-center gap-4">
-            <button
+
+          <div className="mt-6 flex items-center justify-center gap-4">
+            <motion.button
               type="button"
-              onClick={() => setActiveOrigin((p) => (p - 1 + originPanels.length) % originPanels.length)}
+              onClick={prev}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border-subtle)] text-[var(--text-muted)] transition hover:border-[var(--border-accent)] hover:text-[var(--accent)] hover:bg-[var(--accent-soft)]"
               aria-label="Previous story"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-zinc-200 bg-zinc-50 text-zinc-600 transition hover:border-brand-500/40 hover:text-zinc-900 dark:border-white/10 dark:bg-white/[0.04] dark:text-zinc-400 dark:hover:border-brand-500/40 dark:hover:text-white"
             >
-              <FaArrowLeft />
-            </button>
-            <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-zinc-500">
-              {String(activeOrigin + 1).padStart(2, '0')} / {String(originPanels.length).padStart(2, '0')}
-            </span>
-            <button
+              <FaArrowLeft size={12} />
+            </motion.button>
+
+            <div className="flex gap-1.5">
+              {originPanels.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => setCurrent(i)}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    i === current
+                      ? 'w-6 bg-[var(--accent)]'
+                      : 'w-1.5 bg-[var(--border-subtle)] hover:bg-[var(--text-muted)]'
+                  }`}
+                  aria-label={`Go to story ${i + 1} of ${originPanels.length}`}
+                />
+              ))}
+            </div>
+
+            <motion.button
               type="button"
-              onClick={() => setActiveOrigin((p) => (p + 1) % originPanels.length)}
+              onClick={next}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border-subtle)] text-[var(--text-muted)] transition hover:border-[var(--border-accent)] hover:text-[var(--accent)] hover:bg-[var(--accent-soft)]"
               aria-label="Next story"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-zinc-200 bg-zinc-50 text-zinc-600 transition hover:border-brand-500/40 hover:text-zinc-900 dark:border-white/10 dark:bg-white/[0.04] dark:text-zinc-400 dark:hover:border-brand-500/40 dark:hover:text-white"
             >
-              <FaArrowRight />
-            </button>
+              <FaArrowRight size={12} />
+            </motion.button>
           </div>
+
+          <p className="mt-3 text-center text-[10px] font-medium tabular-nums text-[var(--text-muted)]">
+            {String(current + 1).padStart(2, '0')} / {String(originPanels.length).padStart(2, '0')}
+          </p>
         </div>
-      </FadeInView>
+      </div>
     </Section>
   )
 }

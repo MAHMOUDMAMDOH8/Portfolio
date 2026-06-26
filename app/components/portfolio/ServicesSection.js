@@ -1,41 +1,48 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Section, SectionHeader } from './Section'
+import { Section, SectionHeader, StaggerWrapper, staggerItemFast } from './Section'
 import { offerings } from './data'
+import { FaLayerGroup, FaStream, FaRobot } from 'react-icons/fa'
+import { CardHover } from './motion/Primitives'
 
-import { sectionDivider } from './lib/styles'
-
-const divider = sectionDivider
+const icons = [FaLayerGroup, FaStream, FaRobot]
 
 export function ServicesSection() {
   return (
-    <Section id="services" labelledBy="services-title" className={divider}>
+    <Section id="services" labelledBy="services-title" className="section-gap">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <SectionHeader
           eyebrow="What I deliver"
           title="Capabilities I bring to data platform teams."
           titleId="services-title"
+          align="left"
         />
-        <div className="grid gap-5 md:grid-cols-3">
-          {offerings.map((item, index) => (
-            <motion.article
-              key={item.title}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.4, delay: index * 0.08 }}
-              className="group relative flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-white/[0.06] dark:bg-white/[0.02]"
-            >
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-brand-500/5 via-transparent to-blue-500/10 opacity-0 transition group-hover:opacity-100 dark:from-brand-500/5" />
-              <span className="relative inline-flex w-fit rounded-md border border-zinc-200 bg-zinc-50 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-zinc-400">
-                {String(index + 1).padStart(2, '0')}
-              </span>
-              <h3 className="relative mt-5 text-lg font-semibold text-zinc-900 dark:text-white">{item.title}</h3>
-              <p className="relative mt-3 flex-1 text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">{item.body}</p>
-            </motion.article>
-          ))}
-        </div>
+
+        <StaggerWrapper className="grid gap-4 sm:grid-cols-3">
+          {offerings.map((offering, i) => {
+            const Icon = icons[i]
+            return (
+              <motion.div key={offering.title} variants={staggerItemFast} whileHover={{ y: -6 }}>
+                <CardHover className="card-premium group relative h-full overflow-hidden p-7" glowColor="rgba(198, 242, 78, 0.08)">
+                  <span className="pointer-events-none absolute -right-2 top-2 font-mono text-6xl font-bold text-[var(--text-primary)] opacity-[0.04]">
+                    0{i + 1}
+                  </span>
+                  <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--border-accent)] bg-[var(--accent-soft)] transition-all duration-300 group-hover:bg-[var(--accent)]">
+                    <Icon className="text-[var(--accent)] transition-colors duration-300 group-hover:text-[var(--accent-ink)]" size={18} />
+                  </div>
+                  <h3 className="text-lg font-semibold tracking-tight text-[var(--text-primary)]">
+                    {offering.title}
+                  </h3>
+                  <p className="mt-2.5 text-sm leading-relaxed text-[var(--text-secondary)]">
+                    {offering.body}
+                  </p>
+                  <span className="mt-5 block h-px w-full origin-left scale-x-0 bg-gradient-to-r from-[var(--accent)] to-transparent transition-transform duration-500 group-hover:scale-x-100" />
+                </CardHover>
+              </motion.div>
+            )
+          })}
+        </StaggerWrapper>
       </div>
     </Section>
   )

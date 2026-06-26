@@ -1,19 +1,21 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Section, SectionHeader, FadeInView } from './Section'
+import { Section, SectionHeader, FadeInView, StaggerWrapper, staggerItemFast } from './Section'
 import { categoryStyles, skillMatrix, toolNodes, toolStats } from './data'
-import { surfaceCard, surfaceCardHover, sectionDivider } from './lib/styles'
 import { RadarChart } from './RadarChart'
+import { Magnetic } from './motion/Primitives'
 
 const strengthStyles = {
-  Core: 'border-[var(--accent)]/40 bg-[var(--accent-soft)] text-[var(--accent)]',
-  Strong: 'border-emerald-500/35 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300',
+  Core: 'border-[var(--border-accent)] bg-[var(--accent-soft)] text-[var(--accent)]',
+  Strong: 'border-[var(--border-subtle)] bg-[var(--surface-muted)] text-[var(--text-primary)]',
+  Proficient: 'border-[var(--border-subtle)] bg-[var(--surface-elevated)] text-[var(--text-secondary)]',
+  Familiar: 'border-[var(--border-subtle)] bg-transparent text-[var(--text-muted)]',
 }
 
 export function SkillsSection() {
   return (
-    <Section id="skills" labelledBy="skills-title" className={sectionDivider}>
+    <Section id="skills" labelledBy="skills-title" className="section-gap">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <SectionHeader
           eyebrow="Technical arsenal"
@@ -21,55 +23,61 @@ export function SkillsSection() {
           titleId="skills-title"
         />
 
-        <div className="grid gap-5 md:grid-cols-2">
-          {skillMatrix.map((skill, i) => (
-            <motion.article
-              key={skill.label}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.4, delay: i * 0.08 }}
-              whileHover={{ y: -3 }}
-              className={`${surfaceCard} ${surfaceCardHover} p-6`}
+        <StaggerWrapper className="grid gap-4 sm:grid-cols-2">
+          {skillMatrix.map((group) => (
+            <motion.div
+              key={group.label}
+              variants={staggerItemFast}
+              whileHover={{ y: -4, scale: 1.01 }}
+              className="card-premium p-5"
             >
-<div className="flex items-center justify-between gap-4">
-                <h3 className="text-sm font-semibold text-[var(--text-primary)]">{skill.label}</h3>
+              <div className="flex items-center justify-between gap-3 mb-3">
+                <h3 className="text-sm font-semibold text-[var(--text-primary)]">
+                  {group.label}
+                </h3>
                 <span
-                  className={`rounded-md border px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.16em] ${strengthStyles[skill.strength] || strengthStyles.Strong}`}
+                  className={`rounded-md border px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.1em] ${
+                    strengthStyles[group.strength] || ''
+                  }`}
                 >
-                  {skill.strength}
+                  {group.strength}
                 </span>
               </div>
-              <div className="mt-4 flex flex-wrap gap-1.5">
-                {skill.tags.map((tag, tagIdx) => (
-                  <motion.span
-                    key={tag}
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.15 + tagIdx * 0.03 }}
-                    whileHover={{ scale: 1.04, borderColor: 'var(--border-accent)' }}
-                    className="cursor-default rounded-md border border-[var(--border-subtle)] bg-[var(--surface-muted)] px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.1em] text-[var(--text-secondary)] transition-colors"
-                  >
-                    {tag}
-                  </motion.span>
+
+              <div className="mb-3 h-1.5 w-full overflow-hidden rounded-full bg-[var(--surface-muted)]">
+                <motion.div
+                  initial={{ width: 0 }}
+                  whileInView={{ width: `${group.level}%` }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+                  className="h-full rounded-full bg-gradient-to-r from-[var(--accent-dim)] to-[var(--accent)]"
+                />
+              </div>
+
+              <div className="flex flex-wrap gap-1.5">
+                {group.tags.map((tag) => (
+                  <Magnetic key={tag} strength={0.15}>
+                    <span className="inline-block rounded-md border border-[var(--border-subtle)] bg-[var(--surface-elevated)] px-2 py-1 font-mono text-[10px] font-medium text-[var(--text-secondary)] transition hover:border-[var(--border-accent)] hover:text-[var(--accent)] hover:scale-[1.05]">
+                      {tag}
+                    </span>
+                  </Magnetic>
                 ))}
               </div>
-            </motion.article>
+            </motion.div>
           ))}
-        </div>
+        </StaggerWrapper>
 
         <FadeInView className="mt-16">
           <div className="mx-auto grid max-w-3xl items-center gap-10 md:grid-cols-2">
             <div>
-              <p className="text-center text-[11px] font-semibold uppercase tracking-[0.28em] text-[var(--text-muted)] md:text-left">
-                Radar profile
-              </p>
+              <p className="eyebrow">Radar profile</p>
               <h3 className="mt-2 text-balance text-xl font-semibold text-[var(--text-primary)]">
                 Four pillars of the data stack
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
-                Each axis represents a core capability area. The overlay shows relative depth across the platform, orchestration, activation, and engineering layers that define a modern data practice.
+                Each axis represents a core capability area. The overlay shows relative depth
+                across the platform, orchestration, activation, and engineering layers that define
+                a modern data practice.
               </p>
             </div>
             <RadarChart skills={skillMatrix} />
@@ -77,93 +85,47 @@ export function SkillsSection() {
         </FadeInView>
 
         <FadeInView delay={0.2} className="mt-16">
-          <p className="mb-8 text-center text-[11px] font-semibold uppercase tracking-[0.28em] text-[var(--text-muted)]">
-            Ecosystem at a glance
-          </p>
-          <div className="relative mx-auto hidden min-h-[480px] w-full max-w-[640px] md:block lg:min-h-[520px] lg:max-w-[700px]">
-            <div
-              className="absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[var(--border-subtle)]"
-              aria-hidden
-            />
-            <motion.div
-              className="absolute left-1/2 top-1/2 h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-[var(--border-subtle)] opacity-80"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 120, repeat: Infinity, ease: 'linear' }}
-              aria-hidden
-            />
-            {toolNodes.map((tool, index) => {
-              const floatDuration = 8 + (index % 4)
-              const floatDelay = (index % 5) * 0.6
-              return (
-                <motion.span
-                  key={tool.label}
-                  className={`absolute -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border border-[var(--border-subtle)] bg-[var(--surface-elevated)] px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] shadow-lg backdrop-blur-sm ${categoryStyles[tool.category]}`}
-                  style={{ top: tool.style.top, left: tool.style.left }}
-                  animate={{ y: [0, -6, 0] }}
-                  transition={{
-                    duration: floatDuration,
-                    ease: 'easeInOut',
-                    repeat: Infinity,
-                    delay: floatDelay,
-                  }}
-                  whileHover={{ scale: 1.1, zIndex: 10 }}
-                >
-                  {tool.label}
-                </motion.span>
-              )
-            })}
-            <motion.div
-              className="absolute left-1/2 top-1/2 flex h-28 w-28 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--border-accent)] bg-[var(--surface-elevated)] text-center text-[10px] font-semibold uppercase leading-tight tracking-[0.2em] text-[var(--text-muted)] backdrop-blur-md"
-              whileHover={{ scale: 1.05 }}
-            >
-              Trusted Platform
-            </motion.div>
+          <p className="mb-8 text-center eyebrow">Ecosystem at a glance</p>
+
+          <div className="relative mx-auto aspect-square w-full max-w-[440px]">
+            <div className="absolute inset-[15%] flex items-center justify-center">
+              <div className="text-center">
+                <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[var(--text-muted)]">
+                  Trusted Platform
+                </p>
+              </div>
+            </div>
+            <svg className="absolute inset-0 h-full w-full" viewBox="0 0 440 440" aria-hidden>
+              <circle cx="220" cy="220" r="170" fill="none" stroke="var(--border-subtle)" strokeWidth="0.5" />
+              <circle cx="220" cy="220" r="120" fill="none" stroke="var(--border-subtle)" strokeWidth="0.5" />
+              <circle cx="220" cy="220" r="70" fill="none" stroke="var(--border-subtle)" strokeWidth="0.5" />
+            </svg>
+            {toolNodes.map((node, i) => (
+              <FadeInView key={node.label} delay={i * 0.03}>
+                <Magnetic strength={0.12}>
+                  <span
+                    className={`absolute -translate-x-1/2 -translate-y-1/2 cursor-default whitespace-nowrap rounded-md border border-[var(--border-subtle)] bg-[var(--bg-elevated)] px-2 py-1 font-mono text-[10px] font-medium transition hover:border-[var(--border-accent)] hover:text-[var(--accent)] hover:scale-[1.05] ${
+                      categoryStyles[node.category] || ''
+                    }`}
+                    style={node.style}
+                  >
+                    {node.label}
+                  </span>
+                </Magnetic>
+              </FadeInView>
+            ))}
           </div>
 
-          <motion.div className="mt-2 grid gap-2 md:hidden">
-            {toolNodes.map((tool) => (
-              <motion.div
-                key={`m-${tool.label}`}
-                whileTap={{ scale: 0.98 }}
-                className={`${surfaceCard} flex items-center justify-between px-4 py-3`}
-              >
-                <span className="text-sm font-medium text-[var(--text-primary)]">{tool.label}</span>
-                <span className={`text-[10px] font-semibold uppercase tracking-[0.18em] ${categoryStyles[tool.category]}`}>
-                  {tool.category}
-                </span>
-              </motion.div>
-            ))}
-          </motion.div>
-
-          <motion.div className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--text-muted)]">
-            <span className="flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-sky-500" /> Platform
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-emerald-500" /> Orchestration
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-amber-500" /> Activation
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-violet-500" /> Automation
-            </span>
-          </motion.div>
-
-          <motion.div className="mt-10 grid gap-4 sm:grid-cols-3">
+          <div className="mt-8 flex flex-wrap justify-center gap-6">
             {toolStats.map((stat) => (
-              <motion.div
-                key={stat.label}
-                whileHover={{ y: -2 }}
-                className={`${surfaceCard} p-5 text-center`}
-              >
-                <p className="text-xl font-semibold text-[var(--text-primary)]">{stat.value}</p>
-                <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[var(--text-muted)]">
+              <div key={stat.label} className="text-center">
+                <p className="text-lg font-semibold text-[var(--text-primary)]">{stat.value}</p>
+                <p className="text-[10px] font-medium uppercase tracking-[0.15em] text-[var(--text-muted)]">
                   {stat.label}
                 </p>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </FadeInView>
       </div>
     </Section>

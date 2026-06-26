@@ -1,42 +1,44 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { AnimatedStatValue } from './CountUp'
-import { Section, SectionHeader, FadeInView } from './Section'
+import { Section, SectionHeader, StaggerWrapper, staggerItemFast } from './Section'
 import { impactStats } from './data'
-
-import { sectionDivider, surfaceCard } from './lib/styles'
-
-const divider = sectionDivider
+import { AnimatedStatValue } from './CountUp'
+import { CardHover } from './motion/Primitives'
 
 export function ImpactSection() {
   return (
-    <Section id="impact" labelledBy="impact-title" className={divider}>
-      <FadeInView className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <Section id="impact" labelledBy="impact-title" className="section-gap">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <SectionHeader
           eyebrow="Impact snapshot"
           title="Data work rooted in outcomes: trusted platforms, confident stakeholders, measurable change."
           titleId="impact-title"
+          align="left"
         />
-        <div data-reveal-stagger className="grid gap-5 md:grid-cols-3">
-          {impactStats.map((impact) => (
-            <motion.div
-              key={impact.title}
-              data-reveal-item
-              whileHover={{ y: -4 }}
-              className={`${surfaceCard} bg-gradient-to-br from-[var(--surface-elevated)] to-transparent p-6`}
-            >
-              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--accent)]">
-                {impact.title}
-              </p>
-              <p className="mt-3 text-3xl font-semibold tabular-nums text-[var(--text-primary)]">
-                <AnimatedStatValue value={impact.value} />
-              </p>
-              <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)]">{impact.description}</p>
+
+        <StaggerWrapper className="grid gap-px overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-[var(--border-subtle)] sm:grid-cols-3">
+          {impactStats.map((stat, i) => (
+            <motion.div key={stat.title} variants={staggerItemFast}>
+              <CardHover className="group relative h-full bg-[var(--bg-elevated)] p-8" glowColor="rgba(198, 242, 78, 0.07)">
+                <span className="pointer-events-none absolute right-5 top-4 font-mono text-xs font-semibold text-[var(--text-muted)] opacity-40">
+                  0{i + 1}
+                </span>
+                <p className="text-[clamp(2.4rem,5vw,3.4rem)] font-bold leading-none tracking-[-0.03em] text-[var(--accent)]">
+                  <AnimatedStatValue value={stat.value} />
+                </p>
+                <p className="mt-4 text-base font-semibold text-[var(--text-primary)]">
+                  {stat.title}
+                </p>
+                <p className="mt-1.5 text-sm leading-relaxed text-[var(--text-muted)]">
+                  {stat.description}
+                </p>
+                <span className="mt-5 block h-px w-full origin-left scale-x-0 bg-gradient-to-r from-[var(--accent)] to-transparent transition-transform duration-500 group-hover:scale-x-100" />
+              </CardHover>
             </motion.div>
           ))}
-        </div>
-      </FadeInView>
+        </StaggerWrapper>
+      </div>
     </Section>
   )
 }

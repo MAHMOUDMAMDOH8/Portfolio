@@ -7,25 +7,25 @@ import { ThemeToggleButton } from '../../components/portfolio/ThemeToggleButton'
 export function CaseStudiesNav({ variant = 'list', onBack, onPrev, onNext, currentIndex, total }) {
   if (variant === 'detail') {
     return (
-      <nav className="sticky top-0 z-40 border-b border-zinc-200/80 bg-white/85 backdrop-blur-xl dark:border-white/[0.06] dark:bg-[#050508]/90">
+      <nav className="sticky top-0 z-40 border-b border-[var(--border-subtle)] bg-[var(--bg-base)]/85 backdrop-blur-xl">
         <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 px-4 sm:h-16 sm:px-6 lg:px-8">
           <button
             type="button"
             onClick={onBack}
-            className="inline-flex items-center gap-2 rounded-lg border border-zinc-200 px-3 py-2 text-sm text-zinc-700 transition hover:border-brand-500/40 hover:text-zinc-900 dark:border-white/10 dark:text-zinc-300 dark:hover:text-white"
+            className="inline-flex items-center gap-2 rounded-lg border border-[var(--border-subtle)] px-3 py-2 text-sm text-[var(--text-secondary)] transition hover:border-[var(--border-accent)] hover:text-[var(--text-primary)]"
           >
             <FaArrowLeft />
             <span className="hidden sm:inline">All case studies</span>
             <span className="sm:hidden">Back</span>
           </button>
           <div className="flex items-center gap-2 sm:gap-3">
-            <span className="hidden text-xs font-medium tabular-nums text-zinc-500 sm:inline">
+            <span className="hidden text-xs font-medium tabular-nums text-[var(--text-muted)] sm:inline">
               {currentIndex} / {total}
             </span>
             <button
               type="button"
               onClick={onPrev}
-              className="rounded-lg border border-zinc-200 p-2 text-zinc-600 transition hover:border-brand-500/40 hover:text-brand-700 dark:border-white/10 dark:text-zinc-400 dark:hover:text-brand-300"
+              className="rounded-lg border border-[var(--border-subtle)] p-2 text-[var(--text-muted)] transition hover:border-[var(--border-accent)] hover:text-[var(--accent)]"
               aria-label="Previous case study"
             >
               <FaArrowLeft size={14} />
@@ -33,7 +33,7 @@ export function CaseStudiesNav({ variant = 'list', onBack, onPrev, onNext, curre
             <button
               type="button"
               onClick={onNext}
-              className="rounded-lg border border-zinc-200 p-2 text-zinc-600 transition hover:border-brand-500/40 hover:text-brand-700 dark:border-white/10 dark:text-zinc-400 dark:hover:text-brand-300"
+              className="rounded-lg border border-[var(--border-subtle)] p-2 text-[var(--text-muted)] transition hover:border-[var(--border-accent)] hover:text-[var(--accent)]"
               aria-label="Next case study"
             >
               <FaArrowRight size={14} />
@@ -46,20 +46,22 @@ export function CaseStudiesNav({ variant = 'list', onBack, onPrev, onNext, curre
   }
 
   return (
-    <nav className="sticky top-0 z-40 border-b border-zinc-200/80 bg-white/85 backdrop-blur-xl dark:border-white/[0.06] dark:bg-[#050508]/90">
+    <nav className="sticky top-0 z-40 border-b border-[var(--border-subtle)] bg-[var(--bg-base)]/85 backdrop-blur-xl">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 px-4 sm:h-16 sm:px-6 lg:px-8">
         <Link
           href="/#projects"
-          className="inline-flex items-center gap-2 rounded-lg border border-zinc-200 px-3 py-2 text-sm text-zinc-700 transition hover:border-brand-500/40 hover:text-zinc-900 dark:border-white/10 dark:text-zinc-300 dark:hover:text-white"
+          className="inline-flex items-center gap-2 rounded-lg border border-[var(--border-subtle)] px-3 py-2 text-sm text-[var(--text-secondary)] transition hover:border-[var(--border-accent)] hover:text-[var(--text-primary)]"
         >
           <FaHome className="text-xs" />
           <span className="hidden sm:inline">Portfolio</span>
         </Link>
-        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-600 dark:text-brand-400">Case studies</p>
+        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--accent)]">
+          Case studies
+        </p>
         <div className="flex items-center gap-2">
           <Link
             href="/"
-            className="hidden text-sm font-medium text-zinc-600 transition hover:text-brand-700 sm:inline dark:text-zinc-400 dark:hover:text-brand-300"
+            className="hidden text-sm font-medium text-[var(--text-muted)] transition hover:text-[var(--accent)] sm:inline"
           >
             Home
           </Link>

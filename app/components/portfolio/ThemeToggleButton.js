@@ -1,33 +1,31 @@
 'use client'
 
-import { AnimatePresence, motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
 import { FaMoon, FaSun } from 'react-icons/fa'
-import { useTheme } from './ThemeContext'
 
-export function ThemeToggleButton({ className = '' }) {
-  const { theme, toggleTheme, isTransitioning } = useTheme()
+export function ThemeToggleButton() {
+  const [dark, setDark] = useState(true)
+
+  useEffect(() => {
+    const isDark = document.documentElement.classList.contains('dark')
+    setDark(isDark)
+  }, [])
+
+  const toggle = () => {
+    const next = !dark
+    setDark(next)
+    document.documentElement.classList.toggle('dark', next)
+    document.documentElement.classList.toggle('light', !next)
+  }
 
   return (
     <button
       type="button"
-      onClick={(e) => toggleTheme(e)}
-      disabled={isTransitioning}
-      aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-      aria-busy={isTransitioning}
-      className={`relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-lg border border-zinc-200 bg-white text-zinc-700 transition hover:border-brand-400/50 hover:text-brand-700 disabled:pointer-events-none disabled:opacity-70 dark:border-white/10 dark:bg-white/[0.04] dark:text-zinc-200 dark:hover:border-brand-500/40 dark:hover:text-brand-300 ${className}`}
+      onClick={toggle}
+      aria-label={dark ? 'Switch to light mode' : 'Switch to dark mode'}
+      className="flex h-8 w-8 items-center justify-center rounded-lg text-[var(--text-muted)] transition hover:bg-[var(--surface-muted)] hover:text-[var(--text-primary)]"
     >
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.span
-          key={theme}
-          initial={{ rotate: -120, opacity: 0, scale: 0.4 }}
-          animate={{ rotate: 0, opacity: 1, scale: 1 }}
-          exit={{ rotate: 120, opacity: 0, scale: 0.4 }}
-          transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
-          className="flex items-center justify-center"
-        >
-          {theme === 'dark' ? <FaSun className="text-base" /> : <FaMoon className="text-base" />}
-        </motion.span>
-      </AnimatePresence>
+      {dark ? <FaSun size={13} /> : <FaMoon size={13} />}
     </button>
   )
 }

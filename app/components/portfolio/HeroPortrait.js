@@ -37,26 +37,31 @@ export function HeroPortrait({ images, caption = 'Mahmoud Mamdoh · Cairo' }) {
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
     >
+      {/* rotating conic glow border */}
+      <div className="pointer-events-none absolute -inset-[2px] overflow-hidden rounded-[1.65rem]" aria-hidden>
+        <div
+          className="absolute left-1/2 top-1/2 h-[180%] w-[180%] -translate-x-1/2 -translate-y-1/2 opacity-70 [animation:spin-slow_9s_linear_infinite]"
+          style={{
+            background:
+              'conic-gradient(from 0deg, transparent 0deg, var(--accent) 45deg, var(--cyan) 90deg, transparent 150deg, transparent 360deg)',
+          }}
+        />
+      </div>
+
       <motion.div
-        className="absolute -inset-1 rounded-[1.75rem] bg-gradient-to-br from-brand-500/50 via-blue-500/30 to-brand-600/40 opacity-80 blur-sm dark:from-brand-400/40 dark:via-blue-500/25 dark:to-brand-500/35"
-        animate={{ opacity: [0.5, 0.85, 0.5] }}
-        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-        aria-hidden
-      />
-      <motion.div
-        className="relative overflow-hidden rounded-[1.5rem] border border-zinc-200/80 bg-zinc-100 shadow-xl shadow-brand-500/10 dark:border-white/10 dark:bg-zinc-900/80 dark:shadow-brand-500/5"
+        className="relative rounded-[1.5rem] border border-[var(--border-subtle)] bg-[var(--bg-elevated)] p-1.5 shadow-[var(--shadow-elevated)]"
         role="region"
         aria-label="Profile photos"
         aria-live="polite"
       >
-        <div className="relative aspect-[4/5] w-[200px] sm:w-[220px] md:w-[240px] lg:w-[260px]">
+        <div className="relative aspect-[4/5] w-[210px] overflow-hidden rounded-[1.15rem] bg-[var(--bg-base)] sm:w-[230px] md:w-[250px] lg:w-[270px]">
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={current.src}
-              initial={{ opacity: 0, scale: 1.04 }}
+              initial={{ opacity: 0, scale: 1.06 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.98 }}
-              transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
+              transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
               className="absolute inset-0"
             >
               <Image
@@ -65,34 +70,52 @@ export function HeroPortrait({ images, caption = 'Mahmoud Mamdoh · Cairo' }) {
                 fill
                 priority={index === 0}
                 className="object-cover object-[center_18%]"
-                sizes="(max-width: 640px) 200px, (max-width: 1024px) 240px, 260px"
+                sizes="(max-width: 640px) 210px, (max-width: 1024px) 250px, 270px"
               />
             </motion.div>
           </AnimatePresence>
+
+          {/* tonal floor + acid tint */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--bg-base)]/70 via-transparent to-transparent" aria-hidden />
+          <div className="pointer-events-none absolute inset-0 bg-[var(--accent)]/[0.04] mix-blend-overlay" aria-hidden />
+
+          {/* moving scan sheen */}
           <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-zinc-900/20 via-transparent to-transparent dark:from-[#050508]/35"
+            className="pointer-events-none absolute inset-x-0 -top-1/2 h-1/2 bg-[linear-gradient(to_bottom,transparent,var(--accent-soft),transparent)] [animation:portrait-scan_5s_ease-in-out_infinite]"
             aria-hidden
           />
+
+          {/* corner viewfinder brackets */}
+          <span className="pointer-events-none absolute left-2.5 top-2.5 h-4 w-4 border-l border-t border-[var(--accent)]/70" aria-hidden />
+          <span className="pointer-events-none absolute right-2.5 top-2.5 h-4 w-4 border-r border-t border-[var(--accent)]/70" aria-hidden />
+          <span className="pointer-events-none absolute bottom-2.5 left-2.5 h-4 w-4 border-b border-l border-[var(--accent)]/70" aria-hidden />
+          <span className="pointer-events-none absolute bottom-2.5 right-2.5 h-4 w-4 border-b border-r border-[var(--accent)]/70" aria-hidden />
+
+          {/* live tag */}
+          <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-black/40 px-2 py-0.5 font-mono text-[8px] font-semibold uppercase tracking-[0.18em] text-white/90 backdrop-blur-sm">
+            <span className="h-1 w-1 rounded-full bg-[var(--accent)] [animation:pulse-glow_2s_ease-in-out_infinite]" />
+            Cairo
+          </span>
         </div>
       </motion.div>
 
       {count > 1 ? (
-        <motion.div className="mt-3 flex justify-center gap-1.5">
+        <div className="mt-3.5 flex justify-center gap-1.5">
           {images.map((img, i) => (
             <button
               key={img.src}
               type="button"
               onClick={() => setIndex(i)}
-              className={`h-1.5 rounded-full transition-all ${
-                i === index ? 'w-5 bg-brand-600 dark:bg-brand-400' : 'w-1.5 bg-zinc-300 dark:bg-zinc-600'
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                i === index ? 'w-5 bg-[var(--accent)]' : 'w-1.5 bg-[var(--border-subtle)] hover:bg-[var(--text-muted)]'
               }`}
               aria-label={`Show photo ${i + 1} of ${count}`}
             />
           ))}
-        </motion.div>
+        </div>
       ) : null}
 
-      <p className="mt-2 text-center text-[10px] font-semibold uppercase tracking-[0.22em] text-zinc-500 dark:text-zinc-500">
+      <p className="mt-2.5 text-center font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-[var(--text-muted)]">
         {caption}
       </p>
     </motion.div>

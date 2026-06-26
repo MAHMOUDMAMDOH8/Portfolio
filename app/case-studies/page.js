@@ -93,8 +93,8 @@ export default function CaseStudies() {
       <CaseStudiesPageShell>
         <div className="flex min-h-screen items-center justify-center">
           <div className="text-center">
-            <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-2 border-zinc-300 border-t-brand-600 dark:border-white/10 dark:border-t-brand-400" />
-            <p className="text-sm text-zinc-500">Loading case studiesâ€¦</p>
+            <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-2 border-[var(--border-subtle)] border-t-[var(--accent)]" />
+            <p className="text-sm text-[var(--text-muted)]">Loading case studies…</p>
           </div>
         </div>
       </CaseStudiesPageShell>
@@ -420,7 +420,7 @@ export default function CaseStudies() {
                       setSelectedCase(caseStudy.id)
                     }
                   }}
-                  className="group cursor-pointer overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition hover:border-brand-500/35 hover:shadow-md dark:border-white/[0.06] dark:bg-white/[0.02] dark:shadow-none dark:hover:border-brand-500/25 dark:hover:bg-white/[0.04]"
+                  className="card-premium group cursor-pointer overflow-hidden"
                   onClick={() => setSelectedCase(caseStudy.id)}
                 >
                   <div className="relative h-44 bg-gradient-to-br from-brand-600/90 via-brand-800/80 to-[#0a1628] sm:h-48">
@@ -443,7 +443,7 @@ export default function CaseStudies() {
                     </div>
                   </div>
 
-                  <div className="border-t border-zinc-200 p-5 dark:border-white/[0.06]">
+                  <div className="border-t border-[var(--border-subtle)] p-5">
                     <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-zinc-500">
                       <span className="inline-flex items-center gap-1.5">
                         <FaClock />
@@ -455,7 +455,7 @@ export default function CaseStudies() {
                     </div>
                     <button
                       type="button"
-                      className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg border border-zinc-200 bg-zinc-50 py-2.5 text-sm font-semibold text-zinc-900 transition group-hover:border-brand-500/35 group-hover:text-brand-800 dark:border-white/10 dark:bg-white/[0.06] dark:text-white dark:group-hover:text-brand-200"
+                      className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg border border-[var(--border-subtle)] bg-[var(--surface-elevated)] py-2.5 text-sm font-semibold text-[var(--text-primary)] transition group-hover:border-brand-500/35 group-hover:text-brand-800 dark:group-hover:text-brand-200"
                     >
                       <FaEye className="text-xs" />
                       View details

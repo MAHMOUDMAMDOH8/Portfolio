@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { FaArrowRight, FaExternalLinkAlt } from 'react-icons/fa'
@@ -8,57 +7,57 @@ import { FaArrowRight, FaExternalLinkAlt } from 'react-icons/fa'
 export function FeaturedProjectHero({ project }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.3 }}
-      className="mt-10 w-full max-w-4xl text-left"
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-40px' }}
+      whileHover={{ y: -2 }}
+      transition={{ duration: 0.5, delay: 0.25 }}
+      className="card-premium group relative mt-6 overflow-hidden"
     >
-      <p className="text-center text-[10px] font-semibold uppercase tracking-[0.28em] text-zinc-400 dark:text-zinc-500">
-        Featured build
-      </p>
-      <Link
-        href={project.href}
-        className="group mt-3 flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition hover:border-brand-500/40 hover:shadow-lg dark:border-white/[0.08] dark:bg-white/[0.03] dark:hover:border-brand-500/30 sm:flex-row"
-      >
-        <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden bg-zinc-100 sm:aspect-auto sm:h-auto sm:w-[42%] sm:min-h-[200px] dark:bg-zinc-950/80">
-          <Image
-            src={project.architectureImage}
-            alt={`Architecture — ${project.title}`}
-            fill
-            className="object-contain p-3 transition duration-500 group-hover:scale-[1.02]"
-            sizes="(max-width: 640px) 100vw, 420px"
-          />
-        </div>
-        <div className="flex flex-1 flex-col justify-center p-5 sm:p-6">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-brand-600 dark:text-brand-400/90">
+      <div className="pointer-events-none absolute inset-0 bg-[var(--accent-soft)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+      <div className="absolute -inset-1 rounded-[inherit] bg-[linear-gradient(110deg,var(--accent-dim),var(--accent),var(--cyan))] opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-20 pointer-events-none" />
+      <div className="relative flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+        <div className="flex-1">
+          <p className="eyebrow mb-2">Featured build</p>
+          <p className="text-xs font-medium uppercase tracking-[0.15em] text-[var(--text-muted)]">
             {project.category}
           </p>
-          <h2 className="mt-2 text-lg font-semibold text-zinc-900 dark:text-white sm:text-xl">{project.title}</h2>
-          <p className="mt-2 text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">{project.summary}</p>
-          <div className="mt-4 inline-flex w-fit items-center gap-2 rounded-lg border border-emerald-500/25 bg-emerald-500/10 px-3 py-1.5">
-            <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-emerald-800 dark:text-emerald-300/90">
+          <h3 className="mt-1 text-xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-2xl">
+            {project.title}
+          </h3>
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[var(--text-secondary)]">
+            {project.summary}
+          </p>
+          <div className="mt-4 flex flex-wrap items-center gap-4">
+            <Link
+              href={project.href}
+              className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--accent)] transition hover:brightness-110 hover:gap-3"
+            >
+              Explore projects
+              <FaArrowRight size={10} />
+            </Link>
+            {project.caseStudyHref && (
+              <Link
+                href={project.caseStudyHref}
+                className="inline-flex items-center gap-2 text-sm font-medium text-[var(--text-muted)] transition hover:text-[var(--text-secondary)]"
+              >
+                Deep dive in case studies
+                <FaExternalLinkAlt size={10} />
+              </Link>
+            )}
+          </div>
+        </div>
+        {project.metric && (
+          <div className="flex flex-col items-center rounded-xl border border-[var(--border-subtle)] bg-[var(--surface-elevated)] px-5 py-4 text-center transition group-hover:border-[var(--border-accent)] sm:flex-shrink-0">
+            <span className="text-xs font-medium uppercase tracking-[0.12em] text-[var(--text-muted)]">
               {project.metric.label}
             </span>
-            <span className="text-sm font-semibold text-emerald-900 dark:text-emerald-200">{project.metric.value}</span>
+            <span className="mt-1 text-sm font-bold text-[var(--accent)]">
+              {project.metric.value}
+            </span>
           </div>
-          <span className="mt-4 inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-600 transition group-hover:gap-3 dark:text-brand-400">
-            Explore projects
-            <FaArrowRight className="text-[10px]" />
-          </span>
-        </div>
-      </Link>
-      {project.caseStudyHref ? (
-        <p className="mt-3 text-center text-xs text-zinc-500">
-          Deep dive in{' '}
-          <Link
-            href={project.caseStudyHref}
-            className="inline-flex items-center gap-1 font-medium text-brand-600 underline-offset-2 hover:underline dark:text-brand-400"
-          >
-            case studies
-            <FaExternalLinkAlt className="text-[9px]" />
-          </Link>
-        </p>
-      ) : null}
+        )}
+      </div>
     </motion.div>
   )
 }

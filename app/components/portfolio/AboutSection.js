@@ -1,64 +1,55 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Section, SectionHeader, FadeInView } from './Section'
+import { Section, SectionHeader, FadeInView, StaggerWrapper, staggerItemFast } from './Section'
 import { aboutBody, aboutLead, bootcampTraining, education, experience, learningFocus } from './data'
-
-import { sectionDivider } from './lib/styles'
-
-const divider = sectionDivider
 
 export function AboutSection() {
   return (
-    <Section id="about" labelledBy="about-title" className={divider}>
+    <Section id="about" labelledBy="about-title" className="section-gap">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <SectionHeader
           eyebrow="About"
           title={aboutLead}
           description={aboutBody}
           titleId="about-title"
+          align="left"
         />
 
         <div className="grid gap-8 lg:grid-cols-5">
-          {/* Left: Education + Learning */}
           <div className="lg:col-span-2">
-            <FadeInView className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-white/[0.06] dark:bg-white/[0.02]">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-brand-600 dark:text-brand-400">
-                Education
+            <FadeInView className="card-premium p-6">
+              <p className="eyebrow mb-3">Education</p>
+              <p className="text-lg font-semibold text-[var(--text-primary)]">{education.degree}</p>
+              <p className="mt-1 text-sm text-[var(--text-muted)]">{education.institution}</p>
+              <p className="mt-2 text-xs font-medium uppercase tracking-[0.15em] text-[var(--text-secondary)]">
+                {education.period}
               </p>
-              <p className="mt-2 text-lg font-semibold text-zinc-900 dark:text-white">{education.degree}</p>
-              <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{education.institution}</p>
-              <p className="mt-2 text-xs font-medium uppercase tracking-[0.15em] text-zinc-400">{education.period}</p>
-              <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">{education.detail}</p>
+              <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)]">
+                {education.detail}
+              </p>
             </FadeInView>
 
             <FadeInView delay={0.1} className="mt-5 space-y-4">
               {learningFocus.map((group) => (
-                <div
-                  key={group.label}
-                  className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-white/[0.06] dark:bg-white/[0.02]"
-                >
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-zinc-500 dark:text-zinc-400">
-                    {group.label}
-                  </p>
-                  <ul className="mt-3 space-y-2 text-sm text-zinc-600 dark:text-zinc-300">
+                <div key={group.label} className="card-premium p-5">
+                  <p className="eyebrow text-[11px]">{group.label}</p>
+                  <ul className="mt-3 space-y-2 text-sm text-[var(--text-secondary)]">
                     {group.items.map((item) => (
                       <li key={item} className="flex gap-3">
-                        <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-brand-500" aria-hidden />
+                        <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-[var(--accent)]" aria-hidden />
                         <span>{item}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
               ))}
-              <div className="rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-white/[0.06] dark:bg-white/[0.02]">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-zinc-500 dark:text-zinc-400">
-                  {bootcampTraining[0].label}
-                </p>
-                <ul className="mt-3 space-y-2 text-sm text-zinc-600 dark:text-zinc-300">
+              <div className="card-premium p-5">
+                <p className="eyebrow text-[11px]">{bootcampTraining[0].label}</p>
+                <ul className="mt-3 space-y-2 text-sm text-[var(--text-secondary)]">
                   {bootcampTraining[0].items.map((item) => (
                     <li key={item} className="flex gap-3">
-                      <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-brand-500" aria-hidden />
+                      <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-[var(--accent)]" aria-hidden />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -67,33 +58,42 @@ export function AboutSection() {
             </FadeInView>
           </div>
 
-          {/* Right: Experience timeline */}
           <div className="lg:col-span-3">
             <FadeInView>
               <div className="relative">
-                <div
-                  className="absolute bottom-4 left-[15px] top-2 w-px bg-gradient-to-b from-brand-500/50 via-zinc-200 to-transparent dark:from-brand-500/40 dark:via-white/10"
+                <motion.div
+                  initial={{ scaleY: 0 }}
+                  whileInView={{ scaleY: 1 }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}
+                  className="absolute bottom-4 left-[15px] top-2 w-px origin-top bg-gradient-to-b from-[var(--accent)] via-[var(--accent)]/30 to-transparent shadow-[0_0_8px_var(--accent-glow)]"
                   aria-hidden
                 />
-                <ol className="space-y-8">
+                <StaggerWrapper className="space-y-8">
                   {experience.map((item, i) => (
-                    <motion.li
+                    <motion.div
                       key={`${item.role}-${item.period}`}
-                      initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true, margin: '-40px' }}
-                      transition={{ duration: 0.4, delay: i * 0.1 }}
-                      className="relative pl-12"
+                      variants={staggerItemFast}
+                      className="group relative pl-12"
                     >
-                      <span className="absolute left-0 top-1 flex h-7 w-7 items-center justify-center rounded-full border border-brand-500/40 bg-white text-xs font-bold text-brand-700 dark:border-brand-500/35 dark:bg-[#08080a] dark:text-brand-400">
+                      <motion.span
+                        whileHover={{ scale: 1.12 }}
+                        className="absolute left-0 top-1 flex h-7 w-7 items-center justify-center rounded-full border border-[var(--border-accent)] bg-[var(--bg-elevated)] text-xs font-bold text-[var(--accent)] transition-all duration-300 group-hover:bg-[var(--accent)] group-hover:text-[var(--accent-ink)] group-hover:shadow-[0_0_16px_var(--accent-glow)]"
+                      >
                         {i + 1}
-                      </span>
-                      <p className="text-xs font-medium uppercase tracking-[0.15em] text-zinc-400">{item.period}</p>
-                      <p className="mt-1 text-lg font-semibold text-zinc-900 dark:text-white">{item.role}</p>
-                      <p className="mt-2 text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">{item.summary}</p>
-                    </motion.li>
+                      </motion.span>
+                      <p className="text-xs font-medium uppercase tracking-[0.15em] text-[var(--text-muted)]">
+                        {item.period}
+                      </p>
+                      <p className="mt-1 text-lg font-semibold text-[var(--text-primary)]">
+                        {item.role}
+                      </p>
+                      <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
+                        {item.summary}
+                      </p>
+                    </motion.div>
                   ))}
-                </ol>
+                </StaggerWrapper>
               </div>
             </FadeInView>
           </div>
